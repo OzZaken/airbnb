@@ -1,17 +1,14 @@
 import React from 'react'
-
+import routes from './routes'
 // const { Switch, Route } = ReactRouterDOM
 import { Routes, Route } from 'react-router'
-
-import routes from './routes'
-
-
+import { AppHeader } from './cmps/app-header'
 export class RootCmp extends React.Component {
 
   render() {
     return (
       <div>
-        {/* <AppHeader /> */}
+        <AppHeader />
         <main>
           <Routes>
             {routes.map(route => <Route

@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Airbnb is the best!!!
         </a>
       </header>
     </div>

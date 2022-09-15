@@ -3,9 +3,9 @@ const db = {
   "stay": [
     {
       "_id": "10006546",
-      "name": "Ribeira Charming Duplex",
+      "name": "1[No Clean fee] Manhattan Central Park Time square",
       "type": "House",
-      "imgUrls": ["https://a0.muscache.com/im/pictures/e83e702f-ef49-40fb-8fa0-6512d7e26e9b.jpg?aki_policy=large", "otherImg.jpg"],
+      // "imgUrls": ["https://a0.muscache.com/im/pictures/e83e702f-ef49-40fb-8fa0-6512d7e26e9b.jpg?aki_policy=large", "otherImg.jpg"],
       "price": 80.00,
       "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
       "capacity": 8,
@@ -43,8 +43,52 @@ const db = {
         }
       ],
       "likedByUsers" : ['mini-user'] // for user-wishlist : use $in
+    },
+
+    {
+      "_id": "10006546",
+      "name": "Apartment in DownTown Manhattan",
+      "type": "Apartment",
+      "price": 120.00,
+      "summary": "Charming Studio's located in the heart of Lower East Side of Manhattan..",
+      "capacity": 8,
+      "amenities": [
+        "TV",
+        "Wifi",
+        "Kitchen",
+        "Smoking allowed",
+        "Pets allowed",
+        "Cooking basics"
+      ],
+      "host": {
+        "_id": "u101",
+        "fullname": "Davit Pok",
+        "imgUrl": "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
+      },
+      "loc": {
+        "country": "Portugal",
+        "countryCode": "PT",
+        "city": "Porto",
+        "address": "17 Kombo st",
+        "lat": -8.61308,
+        "lng": 41.1413
+      },
+      "reviews": [
+        {
+          "id": "madeId",
+          "txt": "Very helpful hosts. Cooked traditional...",
+          "rate": 4,
+          "by": {
+            "_id": "u102",
+            "fullname": "user2",
+            "imgUrl": "/img/img2.jpg"
+          }
+        }
+      ],
+      "likedByUsers" : ['mini-user'] // for user-wishlist : use $in
     }
   ],
+
   "order": [
     {
       "_id": "o1225",
@@ -69,6 +113,7 @@ const db = {
       "status": "pending"
     }    
   ],
+
   "user": [
     {
       "_id": "u101",
@@ -76,9 +121,6 @@ const db = {
       "imgUrl": "/img/img1.jpg",
       "username" : "user1",
       "password" : "secret",
-      //?wishlist,
-      //?stays?
-
     },
     {
       "_id": "u102",
@@ -93,6 +135,7 @@ const db = {
 
 // Homepage: TOP categories: Best Rate / Houses / Kitchen
 // Renders a <StayList> with <StayPreview> with Link to <StayDetails>   url: /stay/123
+
 // See More => /explore?topRate=true
 // See More => /explore?type=House
 // See More => /explore?amenities=Kitchen

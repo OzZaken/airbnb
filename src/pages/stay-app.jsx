@@ -7,8 +7,6 @@ export function ExplorePage() {
                 label | label | label | label | label | label
                 <button>btn-main-filter</button>
             </div>
-
-
         </section >
     )
 }

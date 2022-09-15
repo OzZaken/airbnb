@@ -12,18 +12,18 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
             <div className="logo">logo airBnb</div>
 
 
-            <div className="btns-filter-container">
-                Anywhere
+            <div className="header-filter">
+            header-filter
             </div>
 
-<div className="btns-user-container">
-    <button>Switch to hosting</button>
-   
-<div className="btn-user-options">
-    menuBar
-    userImg
-</div>
-</div>
+            <div className="btns-user-container">
+                <button>Switch to hosting</button>
+
+                <div className="btn-user-options">
+                    menuBar
+                    userImg
+                </div>
+            </div>
 
 
             {/* {user &&

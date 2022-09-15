@@ -1,11 +1,11 @@
-import { HomePage } from './pages/stay-app.jsx'
+import { ExplorePage } from './pages/stay-app.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
     {
         path: '/',
-        component: <HomePage />,
-        label: 'Home 🏠',
+        component: <ExplorePage />,
+        label: 'Home',
     },
     {
         path: 'stay/:stayId',

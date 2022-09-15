@@ -1,6 +1,6 @@
 import { ExplorePage } from './pages/stay-app.jsx'
 
-// Routes accesible from the main navigation (in AppHeader)
+// Routes accessible from the main navigation (in AppHeader)
 const routes = [
     {
         path: '/',
@@ -12,7 +12,6 @@ const routes = [
         component: <stayDetails />,
         label: 'Detail',
     },
-
 
 ]
 

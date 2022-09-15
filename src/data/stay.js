@@ -76,9 +76,6 @@ const db = {
       "imgUrl": "/img/img1.jpg",
       "username" : "user1",
       "password" : "secret",
-      //?wishlist,
-      //?stays?
-
     },
     {
       "_id": "u102",
@@ -93,6 +90,7 @@ const db = {
 
 // Homepage: TOP categories: Best Rate / Houses / Kitchen
 // Renders a <StayList> with <StayPreview> with Link to <StayDetails>   url: /stay/123
+
 // See More => /explore?topRate=true
 // See More => /explore?type=House
 // See More => /explore?amenities=Kitchen

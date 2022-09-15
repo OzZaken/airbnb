@@ -1,12 +1,39 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { StayFilter } from '../cmps/stay-filter'
+import { StayList } from '../cmps/stay-list'
+import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
-export function ExplorePage() {
+export const StayApp = () => {
+    const stays = useSelector((state) => state.stayModule.stays)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(loadStays())
+    }, [])
+
+    const onRemoveStay = (stayId) => {
+        dispatch(removeStay(stayId))
+    }
+
+    const onChangeFilter = (filterBy) => {
+        dispatch(setFilterBy(filterBy))
+        dispatch(loadStays())
+    }
+
+    const onChangeSort = (sortBy) => {
+        dispatch(sortByStays(sortBy))
+    }
+
+    if (!stays) return <h1>Loading...</h1>
     return (
         <section className="stay-app">
-            <div className="main-filter-container">
-                label | label | label | label | label | label
+             <div className="main-filter-container">
+                 label | label | label | label | label | label
                 <button>btn-main-filter</button>
             </div>
-        </section >
+            <StayFilter onChangeFilter={onChangeFilter} />
+            <StayList onRemoveStay={onRemoveStay} stays={stays} />
+        </section>
     )
 }

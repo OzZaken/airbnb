@@ -1,41 +1,48 @@
-// import { useEffect } from 'react'
-// import { useState } from 'react'
-// import { Link, useNavigate, useParams } from 'react-router-dom'
-// import { stayService } from '../services/stay.service'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { stayService } from '../services/stay.service'
 
-export const StayDetails = (props) => {
+export const StayDetails = () => {
+  const [stay, setStay] = useState(null)
+  const params = useParams()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-    // const [stay, setStay] = useState(null)
-    // const params = useParams()
-    // const navigate = useNavigate()
+  useEffect(() => {
+    loadStay()
+  }, [params.id])
 
-    // useEffect(() => {
-    //     loadStay()
-    // }, [params.id])
+  const loadStay = () => {
+    const stayId = params.id
+    stayService.getById(stayId).then((stay) => {
+      setStay(stay)
+    })
+  }
 
-    // // componentDidUpdate(prevProps, prevState) {
-    // //     if (prevparams.id !== params.id) {
-    // //         loadStay()
-    // //     }
-    // // }
+  const onBack = () => {
+    navigate('/stay')
+  }
 
-    // const loadStay = () => {
-    //     const stayId = params.id
-    //     stayService.getById(stayId).then(stay => {
-    //         setStay(stay)
-    //     })
-    // }
-
-    // const onBack = () => {
-    //     navigate('/')
-    // }
-
-    if (!stay) return <div>Loading...</div>
-    return (
-        <div className='stay-details'>
-            <h2>stay-details</h2>
-            {/* <button onClick={onBack}>Back</button> */}
-            {/* <Link to='/stay/r1' >Next Stay</Link> */}
-        </div>
-    )
+  if (!stay) return <div>Loading...</div>
+  return (
+    <div className="stay-details">
+      <section>
+        <h3>Name: {stay.name}</h3>
+      </section>
+      <section>
+        <h3>Price: {stay.price}</h3>
+      </section>
+      <section>
+        <h3>
+          Labels:
+          <ul>
+            {stay.labels &&
+              stay.labels.map((label) => <li key={label}>{label}</li>)}
+          </ul>
+        </h3>
+      </section>
+    </div>
+  )
 }

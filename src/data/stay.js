@@ -56,7 +56,6 @@ const db = {
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
 
-
     {
       "_id": "stay2",
       "name": "Central Park Nest, High Above The Trees!",
@@ -108,7 +107,6 @@ const db = {
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
 
-
     {
       "_id": "stay3",
       "name": "Spacious Studio Apartment in the Heart of Midtown",
@@ -159,7 +157,6 @@ const db = {
       ],
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
-
 
     {
       "_id": "stay4",
@@ -322,9 +319,6 @@ const db = {
     },
   ],
 
-
-
-
   "order": [
     {
       "_id": "o1225",
@@ -349,6 +343,7 @@ const db = {
       "status": "pending"
     }
   ],
+
   "user": [
     {
       "_id": "u101",

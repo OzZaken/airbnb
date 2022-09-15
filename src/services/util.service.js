@@ -37,4 +37,3 @@ function delay(ms = 1500) {
         setTimeout(resolve, ms)
     })
 }
-

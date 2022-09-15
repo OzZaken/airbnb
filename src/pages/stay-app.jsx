@@ -2,8 +2,8 @@ import React from 'react'
 
 export function HomePage() {
     return (
-        <section>
-            HomePage
+        <section className="stay-app">
+           stay-app
         </section >
     )
 }

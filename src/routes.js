@@ -7,11 +7,12 @@ const routes = [
         component: <HomePage />,
         label: 'Home 🏠',
     },
-    // {
-    //     path: '/',
-    //     component: <stayDetail />,
-    //     label: 'detail',
-    // },
+    {
+        path: 'stay/:stayId',
+        component: <stayDetails />,
+        label: 'Detail',
+    },
+
 
 ]
 

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-
 export function StayPreview({ stay, onRemoveStay }) {
   return (
     <div className="stay-preview">
@@ -15,6 +14,3 @@ export function StayPreview({ stay, onRemoveStay }) {
     </div>
   )
 }
-
-
-

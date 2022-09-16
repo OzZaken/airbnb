@@ -1,14 +1,22 @@
 .stay-preview {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background-color: lighten($clr2, 40%);
-    text-align: center;
-    box-shadow: 3px 4px 15px #00000026;
-    border-radius: 5px;
-    background-repeat: no-repeat;
-    background-size: 37%;
-    background-position: 50% calc(100% - 50px);
-    overflow-y: hidden;
-  
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: 3px 4px 15px #00000026;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-size: 37%;
+  background-position: 50% calc(100% - 50px);
+  overflow-y: hidden;
+  cursor: pointer;
+}
+
+.stay-preview>img {
+  width: 100%;
+}
+
+.stay__info {
+  text-align: center;
+  padding: 5px;
+  font-size: 0.8em
+}

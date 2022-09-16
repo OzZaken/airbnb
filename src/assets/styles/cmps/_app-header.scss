@@ -5,13 +5,10 @@
     background-color: antiquewhite;
 }
 
-/* Logo */
 .logo {
-    text-decoration: none;
     display: flex;
     color: var(--clr-);
     font-size: 2.5em;
-    font-weight: 400;
 }
 
 .logo::after {

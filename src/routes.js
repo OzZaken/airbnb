@@ -9,14 +9,19 @@ const routes = [
         label: 'Home',
     },
     {
-        path: 'stay/details/:stayId',
+        path: 'stay/:stayId',
         component: <StayDetails />,
         label: 'Detail',
     },
     {
+        path: 'stay/edit',
+        component: <StayEdit />,
+        label: 'New stay',
+    },
+    {
         path: 'stay/edit/:stayId',
         component: <StayEdit />,
-        label: 'Edit',
+        label: 'Edit exists stay',
     },
 
 ]

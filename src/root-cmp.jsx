@@ -16,7 +16,7 @@ function App() {
             key={route.path}
             element={route.component}
             path={route.path}
-            exact={true}
+            // exact={true}
           />)}
         </Routes>
       </main>

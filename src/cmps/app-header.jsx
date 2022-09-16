@@ -9,28 +9,28 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
 
     // const onClickBecomeHost = () => {
-    //     navigate('stay/edit/')
+    //     navigate('/stay/edit')
     // }
-    // onClick={onClickBecomeHost()}
 
     return (
         <header className="app-header">
 
-            <a className="logo" href="/">
+            <Link className="logo" to={'/'}>
                 <img src={logo}
                     alt="Logo image"
                     width="50px" height={'50px'}
                 />
-            </a>
+            </Link>
 
             <div className="header-filter">
                 header-filter
             </div>
 
             <div className="user-btns-container">
-                <a href="/stay/edit/new">
-                    <button >Become a host</button>
-                </a>
+
+                <Link to={`/stay/edit`} >
+                    Become a host
+                </Link>
                 <span className="btn-user-options">
                     menuBar | userImg
                 </span>

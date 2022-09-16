@@ -4,7 +4,7 @@ import { StayFilter } from '../cmps/stay-filter'
 import { StayList } from '../cmps/stay-list'
 import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
-export const StayApp = () => {
+export const App = () => {
     const stays = useSelector((state) => state.stayModule.stays)
     const dispatch = useDispatch()
 
@@ -28,6 +28,7 @@ export const StayApp = () => {
     if (!stays) return <h1>Loading...</h1>
     return (
         <section className="stay-app">
+            
              <div className="main-filter-container">
                  label | label | label | label | label | label
                 <button>btn-main-filter</button>

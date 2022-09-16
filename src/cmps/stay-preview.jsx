@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 export function StayPreview({ stay, onRemoveStay }) {
   return (
-    <div className="stay-preview">
+    <li className="stay-preview">
       <Link to={`/stay/${stay._id}`} className="info">
       <img src={stay.imgUrls} alt="image"/>
       <div className="stay__info">
@@ -11,6 +11,6 @@ export function StayPreview({ stay, onRemoveStay }) {
       </div>
       </Link>
         <Link to={`/stay/edit/${stay._id}`}>Edit</Link>
-    </div>
+    </li>
   )
 }

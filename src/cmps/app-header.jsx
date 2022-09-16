@@ -3,18 +3,18 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import { LoginSignup } from './login-signup.jsx'
-import logo from '../assets/img/logo.png'
+import logo from '../assets/img/logo.svg'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
 
     return (
         <header className="app-header">
 
-            <a className="logo-container" href="/">
-                {/* <div > */}
-                    <img src={logo} alt="logo img" />
-                {/* </div> */}
-                airBnb
+            <a href="/">
+                <div className="logo-container">
+                    <img width="50px" height={'50px'} src={logo} alt="logo img" />
+                    airBnb
+                </div>
             </a>
 
 

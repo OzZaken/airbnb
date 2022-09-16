@@ -1,6 +1,12 @@
-.app-header{
+.app-header {
     max-height: 10vh;
     display: flex;
     justify-content: space-between;
     background-color: antiquewhite;
+}
+
+.logo-container {
+    height: 100%;
+    width: 50px;
+    background-image: url('../../img/logo.png');
 }

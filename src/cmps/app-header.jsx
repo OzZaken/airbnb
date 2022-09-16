@@ -10,10 +10,10 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     return (
         <header className="app-header">
 
-            <a href="">
-                <div className="logo-container">
-                    <img src={logo} alt="logo" />
-                </div>
+            <a className="logo-container" href="/">
+                {/* <div > */}
+                    <img src={logo} alt="logo img" />
+                {/* </div> */}
                 airBnb
             </a>
 

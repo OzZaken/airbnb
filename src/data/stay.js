@@ -1,4 +1,3 @@
-
 const db = {
   "stay": [
 
@@ -361,7 +360,6 @@ const db = {
     }
   ]
 }
-
 
 // Homepage: TOP categories: Best Rate / Houses / Kitchen
 // Renders a <StayList> with <StayPreview> with Link to <StayDetails>   url: /stay/123

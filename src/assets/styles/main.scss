@@ -1,8 +1,11 @@
 // Setup
 @import './setup/normalize.css';
 @import './setup/variables';
+@import './setup/mixins';
+
 // Base
 @import './basics/base';
+@import './basics/helper';
 
 // Cmps
 @import './cmps/app-header';
@@ -11,4 +14,3 @@
 @import './cmps/stay-list';
 @import './cmps/stay-preview';
 @import './cmps/stay-edit';
-

@@ -21,6 +21,29 @@ export const StayEdit = () => {
         }
     )
 
+    const stayTypes = [
+        // 'apartment',
+        'house',
+        'apartment',
+        'secondary unit',
+        'Unique space',
+        'bad and breakfast',
+        'boutique hotel',
+    ]
+
+    const stayOptions = stayTypes.map(stayType =>{
+        return (
+            <option
+            key={`${stayType}`}
+            value={`${stayType}`}
+        >
+            {`${stayType}`}
+        </option>
+        )
+    }
+        
+    )
+
     return (
         <section className="stay-edit">
             <form action="add-stay">
@@ -28,15 +51,27 @@ export const StayEdit = () => {
                 <hr />
 
                 <label htmlFor="name">
-                    <input {...register('name', 'text')} />
+                    <input
+                        name="name"
+                        placeholder="Stay name"
+                        {...register('name', 'text')} />
                 </label>
 
-                {/* 
-                <label htmlFor="address">
-                    Address
-                    <input {...register('address', 'text')} />
-                    </label>
-                 */}
+                <div className="flex">
+                    ⭐
+                    New
+                    <span>
+                        (0 reviews)
+                    </span>
+
+                    <li>
+                        <label htmlFor="address">
+                            Address
+                            <input {...register('address', 'text')} />
+                        </label>
+                    </li>
+                </div>
+
 
                 <label htmlFor="imgs">
                     <div className="imgs-upload-container">
@@ -57,13 +92,20 @@ export const StayEdit = () => {
                         </div>
                     </div>
                 </label>
+                <select id="stayTypes" >
+
+                </select >
 
                 <label htmlFor="capacity">
-                    <input {...register('capacity', 'number')} />
+                    <input
+                        placeholder="Capacity"
+                        {...register('capacity', 'number')} />
                 </label>
 
                 <label htmlFor="stayType">
-                   {/* <select name="" id=""></select> */}
+                    <select name="stayTypes" id="stayTypes">
+                        {stayOptions}
+                    </select>
                 </label>
 
 

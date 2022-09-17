@@ -1,7 +1,6 @@
 // import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
-// const { Switch, Route } = ReactRouterDOM
 import './assets/styles/main.scss'
 import { AppHeader } from './cmps/app-header'
 import { AppFooter } from './cmps/app-footer'
@@ -26,18 +25,3 @@ function App() {
 }
 
 export default App
-
-// function App() {
-//   return (
-//     <div className="main-app main-layout">
-//       <AppHeader />
-//       <main className="container">
-//         <Routes>
-//           <Route path="stay/:id" element={<StayDetails />} />
-//           <Route path="" element={<StayApp />} />
-//         </Routes>
-//       </main>
-//       <AppFooter />
-//     </div>
-//   )
-// }

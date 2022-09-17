@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+
 export function StayPreview({ stay, onRemoveStay }) {
   return (
     <li className="stay-preview">

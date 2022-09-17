@@ -7,7 +7,7 @@
     grid-row-gap: 2px;
 
     >* {
-        min-height: 200px;
+        min-min-height: 200px;
         background-color: lightgray;
         display: flex;
         justify-content: center;
@@ -28,6 +28,4 @@
     grid-row: 1/-1;
 }
 
-.img-uploader:hover {
-    background-color: rgba(47, 45, 45, 0.396);
 }

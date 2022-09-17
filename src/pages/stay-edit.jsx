@@ -1,9 +1,12 @@
 import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { ImgUploader } from "../cmps/img-uploader1"
+import { useFormRegister } from '../hooks/useFormRegister'
+
 import { useForm } from "../hooks/useForm"
 import { Image } from 'cloudinary-react'
-import { useFormRegister } from '../hooks/useFormRegister'
+
+import { stayService } from '../services/stay.service.local'
 
 export const StayEdit = () => {
     const params = useParams()
@@ -16,11 +19,23 @@ export const StayEdit = () => {
             stayType: '',
             propertyType: '',
             price: '',
-            amenities: '',
+            amenities: [],
             summary: '',
         }
     )
+    useEffect(() => {
+        const stayId = params.id
+        if (!stayId) return
 
+        stayService.getById(stayId)
+            .then(stay => {
+                // setStay(stay)
+            })
+            .catch(err => {
+                console.log('err:', err);
+            })
+    }, [])
+    // const stayTypes = toysService.etStayTypes()
     const stayTypes = [
         'apartment',
         'house',
@@ -30,17 +45,17 @@ export const StayEdit = () => {
         'boutique hotel',
     ]
 
-    const stayOptions = stayTypes.map(stayType =>{
+    const stayOptions = stayTypes.map(stayType => {
         return (
             <option
-            key={`${stayType}`}
-            value={`${stayType}`}
-        >
-            {`${stayType}`}
-        </option>
+                key={`${stayType}`}
+                value={`${stayType}`}
+            >
+                {`${stayType}`}
+            </option>
         )
     }
-        
+
     )
 
     return (
@@ -56,50 +71,44 @@ export const StayEdit = () => {
                         {...register('name', 'text')} />
                 </label>
 
-                <div className="flex">
-                    ⭐
-                    New
-                    <span>
-                        (0 reviews)
-                    </span>
+                <div className="flex space-between">
 
-                    <li>
-                        <label htmlFor="address">
-                            Address
+                    <div>
+                        ⭐ New (0 reviews)
+                        <label
+                            htmlFor="address">
+                            · Address
                             <input {...register('address', 'text')} />
                         </label>
-                    </li>
+                    </div>
+
+                    <div>
+                        <span>share</span>
+                        <span>save</span>
+                    </div>
+
                 </div>
 
 
                 <label htmlFor="imgs">
                     <div className="imgs-upload-container">
-                        <div className="img-uploader1">
-                            item1
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader2">
-                        item2                           
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader3">
-                        item3
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader4">
-                        item4
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader5">
-                            
-                        item5
-                        <ImgUploader />
+                        <div>
+                            <ImgUploader />
                         </div>
                     </div>
                 </label>
-                <select id="stayTypes" >
-
-                </select >
 
                 <label htmlFor="capacity">
                     <input

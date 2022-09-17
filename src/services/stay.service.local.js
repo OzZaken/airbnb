@@ -18,7 +18,7 @@ const STORAGE_KEY = 'stays'
 //   'boutique hotel',
 // ]
 
-const labels = [
+const amenities = [
   "Hair dryer",
   "Essentials",
   "Air conditioning",

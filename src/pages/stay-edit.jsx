@@ -22,9 +22,8 @@ export const StayEdit = () => {
     )
 
     const stayTypes = [
-        // 'apartment',
-        'house',
         'apartment',
+        'house',
         'secondary unit',
         'Unique space',
         'bad and breakfast',

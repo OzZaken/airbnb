@@ -6,17 +6,15 @@ import { stayService } from '../services/stay.service.local'
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
     const params = useParams()
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
+    
     useEffect(() => {
         loadStay()
     }, [params.id])
 
 
     const loadStay = async () => {
-        const stayId = params.id
-        console.log('params.id', params.id);
+        const stayId = params.stayId
+        console.log('params', params);
         const stay = await stayService.getById(stayId)
         setStay(stay)
     }

@@ -9,6 +9,15 @@ export const stayService = {
 
 const STORAGE_KEY = 'stays'
 
+// const stayTypes = [
+//   'apartment',
+//   'house',
+//   'secondary unit',
+//   'Unique space',
+//   'bad and breakfast',
+//   'boutique hotel',
+// ]
+
 const labels = [
   "Hair dryer",
   "Essentials",

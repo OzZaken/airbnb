@@ -1,11 +1,16 @@
 // Setup
-@import './setup/normalize.css';
 @import './setup/variables';
 @import './setup/mixins';
+@import './setup/normalize.css';
+@import './setup/functions';
+@import './setup/typography';
 
-// Base
+// Basics
 @import './basics/base';
-@import './basics/helper';
+@import './basics/forms';
+@import './basics/helpers';
+@import './basics/layout';
+
 
 // Cmps
 @import './cmps/app-header';

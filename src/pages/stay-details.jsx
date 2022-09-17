@@ -22,11 +22,10 @@ export const StayDetails = () => {
 
     const loadStay = async () => {
         const stayId = params.id
+        console.log('stayId:', stayId)
         const stay = await stayService.getById(stayId)
         setStay(stay)
     }
-
-
 
     // const onBack = () => {
     //     navigate('/stay')

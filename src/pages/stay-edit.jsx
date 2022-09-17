@@ -6,7 +6,7 @@ import { useFormRegister } from '../hooks/useFormRegister'
 import { useForm } from "../hooks/useForm"
 import { Image } from 'cloudinary-react'
 
-import {stayService} from '../services/stay.service.local'
+import { stayService } from '../services/stay.service.local'
 
 export const StayEdit = () => {
     const params = useParams()
@@ -92,19 +92,19 @@ export const StayEdit = () => {
 
                 <label htmlFor="imgs">
                     <div className="imgs-upload-container">
-                        <div className="img-uploader item1">
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div>
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div>
                             <ImgUploader />
                         </div>
                     </div>

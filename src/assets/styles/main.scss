@@ -1,18 +1,15 @@
-// Setup
 @import './setup/variables';
 @import './setup/mixins';
 @import './setup/normalize.css';
 @import './setup/functions';
 @import './setup/typography';
 
-// Basics
 @import './basics/base';
 @import './basics/forms';
 @import './basics/helpers';
 @import './basics/layout';
 
 
-// Cmps
 @import './cmps/app-header';
 @import './cmps/app-footer';
 @import './cmps/user-msg';

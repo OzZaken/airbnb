@@ -10,29 +10,17 @@ export const StayDetails = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log('hello from useEfect');
         loadStay()
     }, [params.id])
 
-    // const loadStay = () => {
-    //     const stayId = params.id
-    //     stayService.getById(stayId).then((stay) => {
-    //         setStay(stay)
-    //     })
-    // }
 
     const loadStay = async () => {
         const stayId = params.id
-        console.log(stayId);
+        console.log('params.id', params.id);
         const stay = await stayService.getById(stayId)
         setStay(stay)
     }
 
-
-
-    // const onBack = () => {
-    //     navigate('/stay')
-    // }
 
     if (!stay) return <div>Loading...</div>
     return (

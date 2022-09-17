@@ -74,20 +74,26 @@ export const StayEdit = () => {
 
                 <label htmlFor="imgs">
                     <div className="imgs-upload-container">
-                        <div className="img-uploader item1">
+                        <div className="img-uploader1">
+                            item1
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div className="img-uploader2">
+                        item2                           
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div className="img-uploader3">
+                        item3
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
+                        <div className="img-uploader4">
+                        item4
                             <ImgUploader />
                         </div>
-                        <div className="img-uploader">
-                            <ImgUploader />
+                        <div className="img-uploader5">
+                            
+                        item5
+                        <ImgUploader />
                         </div>
                     </div>
                 </label>

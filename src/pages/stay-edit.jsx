@@ -91,7 +91,10 @@ export const StayEdit = () => {
 
 
                 <label htmlFor="imgs">
-                    <div className="imgs-upload-container">
+                    <div className="imgs-grid-container">
+                    
+                    {/* <div><ImgUploader /></div> */}
+
                         <div>
                             <ImgUploader />
                         </div>

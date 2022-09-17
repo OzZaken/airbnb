@@ -51,6 +51,32 @@
         justify-content: space-between
     }
 }
+.imgs-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
+
+    >* {
+        min-height: 200px;
+        background-color: lightgray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+    }
+    & >*:hover {
+        background-color: rgba(47, 45, 45, 0.396);
+    }
+
+    & :first-child {
+        grid-column: 1;
+        grid-row: 1/-1;
+    }
+
+}
+
 
 // Media helpers
 .square-ratio {

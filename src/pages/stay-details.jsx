@@ -27,6 +27,11 @@ export const StayDetails = () => {
     }
 
 
+
+    // const onBack = () => {
+    //     navigate('/stay')
+    // }
+
     if (!stay) return <div>Loading...</div>
     return (
         <section className="stay-details">
@@ -37,7 +42,13 @@ export const StayDetails = () => {
                 <h3>Price: {stay.price}</h3>
             </section>
             <section>
-                
+                <h3>
+                    Labels:
+                    <ul>
+                        {stay.labels &&
+                            stay.labels.map((label) => <li key={label}>{label}</li>)}
+                    </ul>
+                </h3>
             </section>
         </section>
     )

@@ -1,34 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/logo.svg'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
+    // const navigate = useNavigate()
+
+    // const onClickBecomeHost = () => {
+    //     navigate('/stay/edit')
+    // }
 
     return (
         <header className="app-header">
 
-            <a href="/">
-                <div className="logo-container">
-                    <img width="50px" height={'50px'} src={logo} alt="logo img" />
-                    airBnb
-                </div>
-            </a>
-
+            <Link className="logo" to={'/'}>
+                <img src={logo}
+                    alt="Logo image"
+                    width="50px" height={'50px'}
+                />
+            </Link>
 
             <div className="header-filter">
                 header-filter
             </div>
 
-            <div className="btns-user-container">
-                <button>Switch to hosting</button>
+            <div className="user-btns-container">
 
-                <div className="btn-user-options">
-                    menuBar
-                    userImg
-                </div>
+                <Link to={`/stay/edit`} >
+                    Become a host
+                </Link>
+                <span className="btn-user-options">
+                    menuBar | userImg
+                </span>
             </div>
 
 

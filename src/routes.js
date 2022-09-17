@@ -1,16 +1,27 @@
-import { ExplorePage } from './pages/stay-app.jsx'
+import { App } from './pages/stay-app.jsx'
+import { StayDetails } from './pages/stay-details.jsx'
+import { StayEdit } from './pages/stay-edit.jsx'
 
-// Routes accessible from the main navigation (in AppHeader)
 const routes = [
     {
         path: '/',
-        component: <ExplorePage />,
+        component: <App />,
         label: 'Home',
     },
     {
         path: 'stay/:stayId',
-        component: <stayDetails />,
+        component: <StayDetails />,
         label: 'Detail',
+    },
+    {
+        path: 'stay/edit',
+        component: <StayEdit />,
+        label: 'New stay',
+    },
+    {
+        path: 'stay/edit/:stayId',
+        component: <StayEdit />,
+        label: 'Edit exists stay',
     },
 
 ]

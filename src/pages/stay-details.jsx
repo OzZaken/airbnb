@@ -10,6 +10,7 @@ export const StayDetails = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        console.log('hello from useEfect');
         loadStay()
     }, [params.id])
 
@@ -22,6 +23,7 @@ export const StayDetails = () => {
 
     const loadStay = async () => {
         const stayId = params.id
+        console.log(stayId);
         const stay = await stayService.getById(stayId)
         setStay(stay)
     }

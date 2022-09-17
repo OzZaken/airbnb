@@ -10,6 +10,7 @@ export const StayDetails = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        console.log('hello from useEfect');
         loadStay()
     }, [params.id])
 

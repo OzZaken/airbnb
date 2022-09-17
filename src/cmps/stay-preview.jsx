@@ -10,7 +10,7 @@ export function StayPreview({ stay, onRemoveStay }) {
         <h6>{stay.price}</h6>
       </div>
       </Link>
-        <Link to={`/stay/edit/${stay._id}`}>Edit</Link>
+        {/* <Link to={`/stay/edit/${stay._id}`}>Edit</Link> */}
     </li>
   )
 }

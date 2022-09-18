@@ -6,19 +6,30 @@
   // background-repeat: no-repeat;
   // background-size: 37%;
   // background-position: 50% calc(100% - 50px);
-
   overflow-y: hidden;
   cursor: pointer;
 
   & .preview-img-container {
+    box-shadow: 3px 4px 8px #00000026;
+    border-radius: 10px;
+    position: relative;
+    overflow-y: hidden;
     height: 35vh;
     width: 35vh;
+    // height: minmax(250px, 1fr);
+    // width: minmax(250px, 1fr);
 
     & img {
-      box-shadow: 3px 4px 8px #00000026;
-      border-radius: 10px;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+
+    }
+
+    & .preview-img-like {
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
   }
 
@@ -28,6 +39,8 @@
   }
 
   & .stay-name {
+    display: flex;
+    justify-content: space-between;
     font-weight: 550;
   }
 
@@ -44,6 +57,7 @@
   //   margin-top: 8px;
   // }
 }
+
 
 // img {
 //   box-shadow: 3px 4px 15px #00000026;

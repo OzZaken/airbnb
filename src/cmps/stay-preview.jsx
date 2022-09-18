@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 export function StayPreview({ stay, onRemoveStay }) {
   return (
@@ -7,9 +8,10 @@ export function StayPreview({ stay, onRemoveStay }) {
       <Link to={`/stay/${stay._id}`}>
         <div className="preview-img-container">
           <img src={stay.imgUrls[0]} alt="image" />
+          <div className="preview-img-like"><FavoriteBorderIcon /></div>
         </div>
         <div className="stay-info">
-          <p className="stay-name">{`${stay.loc.city}, ${stay.loc.country}`}</p>
+          <p className="stay-name">{`${stay.loc.city}, ${stay.loc.country}`} <span><StarIcon/>4.95</span></p>
           <p className="stay-distance">1,109 kilometers</p>
           <p className="stay-date">Nov 30 - Dec 5</p>
         </div>

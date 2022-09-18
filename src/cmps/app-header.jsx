@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import { LoginSignup } from './login-signup.jsx'
-import logo from '../assets/img/logo.svg'
+import logo from '../assets/img/airbnb2.svg'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
-
     // const onClickBecomeHost = () => {
     //     navigate('/stay/edit')
     // }
@@ -22,17 +21,18 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 />
             </Link>
 
-            <div className="header-filter">
-                header-filter
-            </div>
+            <div className="header-filter"></div>
 
-            <div className="user-btns-container">
+            <div className="user-btns-container flex space-between">
 
                 <Link to={`/stay/edit`} >
                     Become a host
                 </Link>
                 <span className="btn-user-options">
-                    menuBar | userImg
+                ☰ |
+                <div className="userCmp">
+
+                </div>
                 </span>
             </div>
 

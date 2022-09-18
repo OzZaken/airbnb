@@ -5,18 +5,21 @@ export const stayService = {
   save,
   remove,
   getById,
+  getStayTypes,
 }
-
+function getStayTypes() {
+  return gStayTypes
+}
 const STORAGE_KEY = 'stays'
 
-// const stayTypes = [
-//   'apartment',
-//   'house',
-//   'secondary unit',
-//   'Unique space',
-//   'bad and breakfast',
-//   'boutique hotel',
-// ]
+const gStayTypes = [
+  'apartment',
+  'house',
+  'secondary unit',
+  'Unique space',
+  'bad and breakfast',
+  'boutique hotel',
+]
 
 const amenities = [
   "Hair dryer",
@@ -47,6 +50,11 @@ const gDefaultStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 3,
+    "stayMap": {
+      "bedroom": 1,
+      "bath": 2,
+      "bed": 1,
+    },
     "amenities": [
       "Hair dryer",
       "Essentials",
@@ -101,6 +109,12 @@ const gDefaultStays = [
     "price": 120.00,
     "summary": "Stunning views of Central Park, Upper West Side, and mid-town! Cozy studio apartment with full kitchen and bath. 1 block from the 2 & 3 Subway line, and 3 blocks from the 6 Subway line. CitiBike stand is half a block away, as well as several bus lines, like Museum Mile. Please don't hesitate to ask any questions . Note: Pricing includes NY city & state occupancy taxes. Thanks for understanding!",
     "capacity": 6,
+    "stayMap": {
+      "bedroom": 1,
+      "bath": 2,
+      "bed": 1,
+    },
+
     "amenities": [
       "Kitchen",
       "Wifi",
@@ -152,6 +166,11 @@ const gDefaultStays = [
     "price": 110.00,
     "summary": "Located in Herald Square with immediate access to BDFM, NQRW, & Path trains downstairs and walking distance to NY Penn Station, 123, & ACE trains. One block away from Koreatown and adjacent to the Empire State Building with plentiful access to restaurants and shops!",
     "capacity": 8,
+    "stayMap": {
+      "bedroom": 1,
+      "bath": 2,
+      "bed": 1,
+    },
     "amenities": [
       "Kitchen",
       "Wifi",
@@ -203,6 +222,11 @@ const gDefaultStays = [
     "price": 110.00,
     "summary": "Located right in the middle of Soho, Little Italy, Nolita, Lower East Side, and Chinatown, as well as minutes away from 3 main subway lines that will take you all around, this is the perfect place to experience all of NYC. Ask any local and they'd tell you the same! Amazing noteworthy restaurants, shopping, nightlife, and art galleries within minutes of walking distance.",
     "capacity": 8,
+    "stayMap": {
+      "bedroom": 1,
+      "bath": 2,
+      "bed": 1,
+    },
     "amenities": [
       "Bathtub",
       "Cleaning products",
@@ -291,6 +315,11 @@ const gDefaultStays = [
     "price": 120.00,
     "summary": "Loft style studio with high ceilings in South Williamsburg. Nice overhead views of the J/M/Z train on the Williamsburg Bridge. Close to great bars and restaurants, 5 min walk to Domino Park/Water and less than 10 min to either the JMZ or L subway. Would suit young couple.",
     "capacity": 8,
+    "stayMap": {
+      "bedroom": 1,
+      "bath": 2,
+      "bed": 1,
+    },
     "amenities": [
       "Hair dryer",
       "Cleaning products",

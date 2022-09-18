@@ -26,6 +26,11 @@ export const StayDetails = () => {
     //     nums.reduce((a, b) => (a + b)) / nums.length
     // }
 
+    const pluralTxt = (num) => {
+        if (!num) return ' '
+       return num > 0 ? 's ' : ' '
+    }
+
     console.log('stay:', stay)
     if (!stay) return <div>Loading...</div>
     return (
@@ -33,33 +38,42 @@ export const StayDetails = () => {
             <h1>{stay.name}</h1>
 
             <div className="flex space-between rate">
-               
+
                 <div>
                     <span><StarRateIcon /></span>
-                    <span>4.75</span>
-                    {/* <StayAvg/> */}
+                    <span>4.75</span>   {/* <StayAvg/> */}
                     <Link className="reviews"> 14 reviews</Link>
-                    <span className="address">{` ${stay.loc.address},${stay.loc.country}`}</span>
+                    <Link className="address">{` ${stay.loc.address},${stay.loc.country}`}</Link>
                 </div>
 
                 <div>
-                    <span><IosShareIcon /> share</span>
-                    <span><FavoriteBorderIcon />save</span>
+                    <button><IosShareIcon /> share</button>
+                    <button><FavoriteBorderIcon />save</button>
                 </div>
 
             </div>
 
-            <div className="saty-imgs-container">
-                {stay.imgUrls.splice(0, 5)
-                    .map(imgUrl => <div key={imgUrl}>
+            <div className="imgs-grid-container imgs-preview">
+                {stay.imgUrls.splice(0, 5).map(imgUrl =>
+                    <div key={imgUrl}>
                         <img src={imgUrl} alt="Stay image" />
-                    </div>
-                    )}
+                    </div>)}
             </div>
 
-            <h2>{`${stay.type} hosted by ${stay.host.fullname}`}</h2>
-            <h3>4 guests  1 bedroom  2 beds  1 bath </h3>
-            <h3>{`${stay.capacity} guests`}</h3>
+            <div className="flex space-between align-center">
+                <div>
+                    <h2>{`${stay.type} hosted by ${stay.host.fullname}`}</h2>
+                    <div>
+                        <span>{`${stay.capacity} guest${pluralTxt(stay.capacity)}`}</span>
+                        <span>{`${stay.stayMap.bedroom} bedroom${pluralTxt(stay.stayMap.bedroom)}`}</span>
+                        <span>{`${stay.stayMap.bed} bad${pluralTxt(stay.stayMap.bed)}`}</span>
+                        <span>{`${stay.stayMap.bath} bath${pluralTxt(stay.stayMap.bath)}`}</span>
+                    </div>
+                </div>
+                <div className="img-host">
+                    <img src={stay.host.imgUrl} alt="Host image" />
+                </div>
+            </div>
         </section>
     )
 }

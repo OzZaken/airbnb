@@ -1,13 +1,11 @@
 .app-header {
     display: flex;
     justify-content: space-between;
-    min-height: 5vh;
+    height: 5vh;
     border-bottom: 1px solid $clr5;
     align-items: center;
     position: sticky;
-    top: 0;
     background-color: white;
-    // z-index: 100;
     width: 100%;
 }
 

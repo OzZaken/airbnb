@@ -1,10 +1,11 @@
 .stay-cards-grid {
-    display: grid;
-    // padding: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 20px;
-  }
-  
-  // .stay-list {
-  //   margin-block: 30px;
-  // }
+  display: grid;
+  // padding: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+  overflow-y: scroll;
+}
+
+// .stay-list {
+//   margin-block: 30px;
+// }

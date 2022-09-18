@@ -33,6 +33,7 @@ export const StayDetails = () => {
             <h1>{stay.name}</h1>
 
             <div className="flex space-between rate">
+               
                 <div>
                     <span><StarRateIcon /></span>
                     <span>4.75</span>
@@ -45,6 +46,7 @@ export const StayDetails = () => {
                     <span><IosShareIcon /> share</span>
                     <span><FavoriteBorderIcon />save</span>
                 </div>
+
             </div>
 
             <div className="imgs-grid-container">
@@ -57,10 +59,7 @@ export const StayDetails = () => {
 
             <h2>{`${stay.type} hosted by ${stay.host.fullname}`}</h2>
             <h3>4 guests  1 bedroom  2 beds  1 bath </h3>
-            <h3>
-                {`${stay.capacity} guests`}
-
-            </h3>
+            <h3>{`${stay.capacity} guests`}</h3>
         </section>
     )
 }

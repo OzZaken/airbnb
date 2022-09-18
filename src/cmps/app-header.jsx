@@ -5,7 +5,7 @@ import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/use
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/airbnb2.svg'
 import SearchIcon from '@mui/icons-material/Search';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
@@ -33,9 +33,9 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
             <div className="user-btns-container">
                 <Link className="header-host-btn" to={`/stay/edit`} >
                     <p>Become a host</p>
-                    <ExpandMoreIcon />
                 </Link>
                 <Link className="btn-user-options">
+                    <MenuIcon />
                     <AccountCircleIcon />
                 </Link>
             </div>

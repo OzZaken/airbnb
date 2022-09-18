@@ -31,17 +31,17 @@ export const StayDetails = () => {
         <section className="grid details">
             <h1>{stay.name}</h1>
 
-            <div className="rate flex">
-                <StarRateIcon />
-                {/* <StayAvg/> */}
-                4.75
-                <Link className="reviews">(14 reviews)</Link>
+            <div className="flex space-between rate">
+               <div> <StarRateIcon /> 
+                <p>4.75</p>
+                {/* <StayAvg/> */} 
+                <Link className="reviews">(14 reviews) </Link></div>
             </div>
             <p className="address">{`${stay.loc.address},${stay.loc.country}`}</p>
 
             <div className="imgs-grid-container">
                 {stay.imgUrls.splice(0, 5)
-                    .map((imgUrl) => <div key={imgUrl}>
+                    .map(imgUrl => <div key={imgUrl}>
                             <img src={imgUrl} alt="Stay image" />
                         </div>
                    )}

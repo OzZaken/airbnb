@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+
 import { stayService } from '../services/stay.service.local'
 
 // MUI
 import IosShareIcon from '@mui/icons-material/IosShare';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { info } from 'sass';
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
@@ -28,16 +28,14 @@ export const StayDetails = () => {
     // }
 
     // const reviewsCount = () =>{
-    //     // if(!stay.reviews||stay.reviews===0) return 'New stay!'
-
+    // if(!stay.reviews||stay.reviews===0) return 'New stay!'
     // }
 
     const pluralTxt = (num) => {
         if (!num) return ' '
-       return num > 0 ? 's ' : ' '
+        return num > 1 ? 's ' : ' '
     }
 
-    console.log('stay:', stay)
     if (!stay) return <div>Loading...</div>
     return (
         <section className="stay-details">
@@ -48,8 +46,9 @@ export const StayDetails = () => {
                 <div>
                     <span><StarRateIcon /></span>
                     <span>4.75</span>   {/* <StayAvg/> */}
-                    <Link className="reviews"> 14 reviews</Link>
-                    <Link className="address">{` ${stay.loc.address},${stay.loc.country}`}</Link>
+                    <Link className="underline reviews"> 14 reviews</Link>
+                    <span>·</span>
+                    <Link className="underline address">{` ${stay.loc.address}, ${stay.loc.country}`}</Link>
                 </div>
 
                 <div>
@@ -76,10 +75,12 @@ export const StayDetails = () => {
                         <span>{`${stay.stayMap.bath} bath${pluralTxt(stay.stayMap.bath)}`}</span>
                     </div>
                 </div>
+
                 <div className="img-host">
                     <img src={stay.host.imgUrl} alt="Host image" />
                 </div>
             </div>
+            <hr />
 
         </section>
     )

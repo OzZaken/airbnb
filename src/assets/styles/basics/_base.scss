@@ -6,8 +6,6 @@ body {
     background-color: $clr1;
 }
 
-
-
 img {
     width: 100%;
 }
@@ -18,4 +16,10 @@ a:focus,
 a:active {
     text-decoration: none;
     color: inherit;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

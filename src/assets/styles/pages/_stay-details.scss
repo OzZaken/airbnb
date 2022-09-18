@@ -1,19 +1,12 @@
+.stay-details{
+    width: 80vw;
+}
 .imgs-grid-container.imgs-preview {
     grid-template-columns: repeat(4, 1fr);
-
+    // height: 30vh;
     & img {
         height: 100%;
         object-fit: cover;
-    }
-
-    & button {
-        background-color: transparent;
-        border: none;
-    }
-
-    & a {
-        text-decoration: unset;
-        // color: unset;
     }
 
     &>*:hover {

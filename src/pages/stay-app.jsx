@@ -28,12 +28,7 @@ export const App = () => {
     if (!stays) return <h1>Loading...</h1>
     return (
         <section className="stay-app">
-            
-             <div className="main-filter-container">
-                 label | label | label | label | label | label
-                <button>btn-main-filter</button>
-            </div>
-            <StayFilter onChangeFilter={onChangeFilter} />
+            {/* <StayFilter onChangeFilter={onChangeFilter} /> */}
             <StayList onRemoveStay={onRemoveStay} stays={stays} />
         </section>
     )

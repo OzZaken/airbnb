@@ -7,7 +7,6 @@ import logo from '../assets/img/airbnb1.svg'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
-
     // const onClickBecomeHost = () => {
     //     navigate('/stay/edit')
     // }
@@ -22,17 +21,18 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 />
             </Link>
 
-            <div className="header-filter">
-                header-filter
-            </div>
+            <div className="header-filter"></div>
 
-            <div className="user-btns-container">
+            <div className="user-btns-container flex space-between">
 
                 <Link to={`/stay/edit`} >
                     Become a host
                 </Link>
                 <span className="btn-user-options">
-                    menuBar | userImg
+                ☰ |
+                <div className="userCmp">
+
+                </div>
                 </span>
             </div>
 

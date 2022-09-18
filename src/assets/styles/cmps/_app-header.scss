@@ -1,15 +1,26 @@
 .app-header {
-    max-height: 10vh;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    min-height: 10vh;
+    border-bottom: 1px solid $clr5;
 }
 
 .logo {
     display: flex;
-    color: var(--clr-);
-    font-size: 2.5em;
 }
 
-.logo::after {
-    content: 'airbnb';
+// .logo::after {
+//     content: 'airbnb';
+// }
+
+.user-btns-container {
+    width: 200px;
+}
+
+.userCmp {
+    color: red;
+    border-radius: 50%;
+    min-width: 50px;
+    min-height: 50px;
 }

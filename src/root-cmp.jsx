@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <main className='main-container main-app'>
-      <AppHeader />
+      <AppHeader/>
         <Routes>
           {routes.map(route => <Route
             key={route.path}

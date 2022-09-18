@@ -22,6 +22,15 @@
 
   }
 
+  & .stay-name {
+    font-weight: 550;
+  }
+
+  & .stay-distance, .stay-date {
+    color: $clr5
+
+  }
+
   & .stay-info>* {
     margin-bottom: -13px;
   }

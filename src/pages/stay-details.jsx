@@ -7,6 +7,7 @@ import { stayService } from '../services/stay.service.local'
 import IosShareIcon from '@mui/icons-material/IosShare';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { info } from 'sass';
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
@@ -24,6 +25,11 @@ export const StayDetails = () => {
     // const StayAvg = () => {
     //     stay.reviews.rate
     //     nums.reduce((a, b) => (a + b)) / nums.length
+    // }
+
+    // const reviewsCount = () =>{
+    //     // if(!stay.reviews||stay.reviews===0) return 'New stay!'
+
     // }
 
     const pluralTxt = (num) => {
@@ -74,6 +80,7 @@ export const StayDetails = () => {
                     <img src={stay.host.imgUrl} alt="Host image" />
                 </div>
             </div>
+
         </section>
     )
 }

@@ -21,14 +21,52 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
             <Link className="logo" to={'/'}>
                 <img src={logo}
                     alt="Logo image"
-                    width="50px" height={'50px'}
+                // width="50px" height={'50px'}
                 />
             </Link>
 
             <div className="header-filter">
-                <input type="text" />
-                <SearchIcon />
+                <div className="location">
+                    <p>Location</p>
+                    <input type="text" placeholder="Where are you going?"/>
+                </div>
+                <div className="check-in">
+                    <p>Check in</p>
+                    <input type="text" placeholder="Add dates"/>
+                </div>
+                <div className="check-out">
+                    <p>Check out</p>
+                    <input type="text" placeholder="Add dates"/>
+                </div>
+                <div className="guests">
+                    <p>Guests</p>
+                    <input type="text" placeholder="Add guests"/>
+                        <span><SearchIcon className="search-icon" /></span>
+                </div>
             </div>
+
+            {/* <div className="header-filter">
+                <form>
+                    <div className='location-input'>
+                        <label htmlFor="anywhere">Anywhere</label>
+                        <input type="text" placeholder="Where are you going?" />
+                    </div>
+                    <div>
+                        <label htmlFor="check-in">Check in</label>
+                        <input type="text" placeholder="Add Date" />
+                    </div>
+                    <div>
+                        <label htmlFor="check-out">Check out</label>
+                        <input type="text" placeholder="Add Date" />
+                    </div>
+                    <div>
+                        <label htmlFor="guest">Guest</label>
+                        <input type="text" placeholder="Add Guest" />
+                    </div>
+                    <button><SearchIcon className="search-icon" /></button>
+
+                </form>
+            </div> */}
 
             <div className="user-btns-container">
                 <Link className="header-host-btn" to={`/stay/edit`} >

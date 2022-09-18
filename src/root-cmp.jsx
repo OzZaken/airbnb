@@ -8,8 +8,8 @@ import { AppFooter } from './cmps/app-footer'
 function App() {
   return (
     <div>
-      <AppHeader />
       <main className='main-container main-app'>
+      <AppHeader />
         <Routes>
           {routes.map(route => <Route
             key={route.path}

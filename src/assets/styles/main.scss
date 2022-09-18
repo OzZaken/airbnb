@@ -1,18 +1,24 @@
+// SETUP
 @import './setup/variables';
 @import './setup/mixins';
 @import './setup/normalize.css';
 @import './setup/functions';
 @import './setup/typography';
 
+// BASICS
 @import './basics/base';
 @import './basics/forms';
 @import './basics/helpers';
 @import './basics/layout';
 
-
+// CMPS
 @import './cmps/app-header';
 @import './cmps/app-footer';
 @import './cmps/user-msg';
 @import './cmps/stay-list';
 @import './cmps/stay-preview';
 @import './cmps/stay-edit';
+
+// PAGES
+@import './pages/stay-details';
+

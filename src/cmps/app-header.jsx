@@ -4,6 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/airbnb2.svg'
+import SearchIcon from '@mui/icons-material/Search';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
@@ -21,19 +25,19 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 />
             </Link>
 
-            <div className="header-filter"></div>
+            <div className="header-filter">
+                <input type="text" />
+                <SearchIcon />
+            </div>
 
-            <div className="user-btns-container flex space-between">
-
-                <Link to={`/stay/edit`} >
-                    Become a host
+            <div className="user-btns-container">
+                <Link className="header-host-btn" to={`/stay/edit`} >
+                    <p>Become a host</p>
+                    <ExpandMoreIcon />
                 </Link>
-                <span className="btn-user-options">
-                ☰ |
-                <div className="userCmp">
-
-                </div>
-                </span>
+                <Link className="btn-user-options">
+                    <AccountCircleIcon />
+                </Link>
             </div>
 
 
@@ -53,7 +57,8 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     <LoginSignup onLogin={onLogin} onSignup={onSignup} />
                 </section>
             } */}
-        </header>
+
+        </header >
     )
 }
 
@@ -75,3 +80,7 @@ const mapDispatchToProps = {
 }
 
 export const AppHeader = connect(mapStateToProps, mapDispatchToProps)(_AppHeader)
+
+
+
+

@@ -1,6 +1,6 @@
 .main-container {
     display: grid;
-    grid-template-columns: 20px 1fr 20px;
+    grid-template-columns: $layoutPadding 1fr $layoutPadding;
 
     > * {
         grid-column: 2;
@@ -12,21 +12,21 @@
 
     @include for-narrow-layout {
         grid-template-columns: 
-            minmax(20px, 1fr)
-            minmax(auto, $mobile-breakpoint)
-            minmax(20px, 1fr);
+            minmax($layoutPadding, 1fr)
+            minmax(auto,$break-narrow)
+            minmax($layoutPadding, 1fr);
     }
     @include for-normal-layout {
         grid-template-columns: 
-            minmax(20px, 1fr)
-            minmax(auto, $narrow-breakpoint)
-            minmax(20px, 1fr);
+            minmax($layoutPadding, 1fr)
+            minmax(auto, $break-normal)
+            minmax($layoutPadding, 1fr);
     }
     @include for-wide-layout {
         grid-template-columns: 
-            minmax(20px, 1fr)
-            minmax(auto, $normal-breakpoint)
-            minmax(20px, 1fr);
+            minmax($layoutPadding, 1fr)
+            minmax(auto, $break-wide)
+            minmax($layoutPadding, 1fr);
     }
 }
 

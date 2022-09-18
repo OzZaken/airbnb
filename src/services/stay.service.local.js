@@ -39,8 +39,8 @@ const gDefaultStays = [
     "type": "apartment",
     "imgUrls": [
       "https://res.cloudinary.com/pukicloud/image/upload/v1663258208/airbnb/50083db4-635e-443c-b15f-58e034b0f260_bgrrzt.webp?aki_policy=large",
-      "https://res.cloudinary.com/pukicloud/image/upload/v1663258208/airbnb/5af61229-8336-4183-a17a-fdd7fe0d16f4_ozhrbv.webp.jpg",
-      "https://res.cloudinary.com/pukicloud/image/upload/v1663258209/airbnb/e28fcd30-2c00-46e2-bc41-3850f99567f6_ralmtd.jpg",
+      "https://res.cloudinary.com/pukicloud/image/upload/v1663258208/airbnb/5af61229-8336-4183-a17a-fdd7fe0d16f4_ozhrbv.webp",
+      "https://res.cloudinary.com/pukicloud/image/upload/v1663258208/airbnb/711c7946-dd4f-4ae8-961a-60be67a709dd_ta5anh.webp",
       "https://res.cloudinary.com/pukicloud/image/upload/v1663258209/airbnb/e28fcd30-2c00-46e2-bc41-3850f99567f6_ralmtd.jpg",
       "https://res.cloudinary.com/pukicloud/image/upload/v1663258211/airbnb/8d479530-8361-4df2-ad1f-bcb9431f2094_bxhgxl.webp"
     ],
@@ -86,6 +86,7 @@ const gDefaultStays = [
     ],
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
+
   {
     "_id": "stay2",
     "name": "Central Park Nest, High Above The Trees!",
@@ -136,6 +137,7 @@ const gDefaultStays = [
     ],
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
+
   {
     "_id": "stay3",
     "name": "Spacious Studio Apartment in the Heart of Midtown",
@@ -186,6 +188,7 @@ const gDefaultStays = [
     ],
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
+
   {
     "_id": "stay4",
     "name": "Sunny Apartment in the Heart of Downtown NYC",
@@ -273,6 +276,7 @@ const gDefaultStays = [
     ],
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
+
   {
     "_id": "stay5",
     "name": "Brooklyn Loft with great train views",

@@ -1,25 +1,25 @@
 /* Breakpoint mixins */
 
 @mixin for-mobile-layout {
-    @media (max-width: calc($mobile-breakpoint )) {
+    @media (max-width: calc($break-mobile)) {
         @content;
     }
 }
 
 @mixin for-narrow-layout {
-    @media (min-width: calc($mobile-breakpoint )) {
+    @media (min-width: calc($break-narrow )) {
         @content;
     }
 }
 
 @mixin for-normal-layout {
-    @media (min-width: calc($narrow-breakpoint )) {
+    @media (min-width: calc($break-normal )) {
         @content;
     }
 }
 
 @mixin for-wide-layout {
-    @media (min-width: calc($normal-breakpoint )) {
+    @media (min-width: calc($break-wide)) {
         @content;
     }
 }

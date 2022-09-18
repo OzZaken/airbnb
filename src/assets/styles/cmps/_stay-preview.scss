@@ -14,30 +14,34 @@
     box-shadow: 3px 4px 15px #00000026;
     border-radius: 10px;
     width: 100%;
+
+  }
+
+  &>*:hover {
+    opacity: 0.9;
   }
 
   & .stay-info {
     margin-top: -8px;
     margin-bottom: 20px;
-
   }
 
   & .stay-name {
     font-weight: 550;
   }
 
-  & .stay-distance, .stay-date {
+  & .stay-distance,
+  .stay-date {
     color: $clr5
-
   }
 
   & .stay-info>* {
     margin-bottom: -13px;
   }
 
-    // & .stay-price{
-    //   margin-top: 8px;
-    // }
+  // & .stay-price{
+  //   margin-top: 8px;
+  // }
 }
 
 // img {

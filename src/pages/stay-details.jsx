@@ -29,10 +29,10 @@ export const StayDetails = () => {
     console.log('stay:', stay)
     if (!stay) return <div>Loading...</div>
     return (
-        <section className="grid details">
+        <section className="stay-details">
             <h1>{stay.name}</h1>
 
-            <div className="flex space-between rate">
+            <div className="stay-rate">
                 <div>
                     <span><StarRateIcon /></span>
                     <span>4.75</span>
@@ -47,7 +47,7 @@ export const StayDetails = () => {
                 </div>
             </div>
 
-            <div className="imgs-grid-container">
+            <div className="saty-imgs-container">
                 {stay.imgUrls.splice(0, 5)
                     .map(imgUrl => <div key={imgUrl}>
                         <img src={imgUrl} alt="Stay image" />

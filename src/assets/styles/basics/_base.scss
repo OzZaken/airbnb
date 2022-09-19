@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
   }
+=======
+* {
+    box-sizing: border-box;
+}
+>>>>>>> cb62cfabafb1dc83343401d169e4b223832bb0c4
 
 body {
     background-color: $clr1;
@@ -12,7 +18,16 @@ img {
     width: 100%;
 }
 
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
     text-decoration: none;
     color: inherit;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

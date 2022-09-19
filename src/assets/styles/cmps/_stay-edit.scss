@@ -1,0 +1,17 @@
+.imgs-edit {
+    grid-template-columns: repeat(3, 1fr);
+
+    min-height: 30vh;
+    >* {
+        display: flex;
+        height: 100%;
+        background-color: lightgray;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+    }
+
+    &>*:hover {
+        background-color: rgba(47, 45, 45, 0.396);
+    }
+}

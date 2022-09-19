@@ -72,9 +72,7 @@ export const StayEdit = () => {
                 </label>
 
                 <div className="flex space-between">
-
-                    <div>
-                        ⭐ New (0 reviews)
+                    <div> ⭐ New (0 reviews)
                         <label
                             htmlFor="address">
                             · Address
@@ -91,7 +89,7 @@ export const StayEdit = () => {
 
 
                 <label htmlFor="imgs">
-                    <div className="imgs-grid-container">
+                    <div className="imgs-grid-container imgs-edit">
                     
                     {/* <div><ImgUploader /></div> */}
 

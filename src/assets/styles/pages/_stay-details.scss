@@ -3,15 +3,7 @@
 }
 
 .imgs-grid-container.imgs-preview {
-    // height: 30vh;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 15vh 15vh;
-
-    img {
-        height: 100%;
-        object-fit: cover;
-    }
-
     >*:hover {
         opacity: 0.9;
     }

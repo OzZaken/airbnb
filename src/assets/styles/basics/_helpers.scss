@@ -41,15 +41,17 @@
 
     &.justify-center {
         justify-content: center;
-        
+
     }
 
     &.align-center {
         align-items: center;
     }
-    &.baseline{
+
+    &.baseline {
         align-items: baseline;
     }
+
     &.space-between {
         justify-content: space-between
     }
@@ -62,14 +64,14 @@
     gap: 5px;
     border-radius: 10px;
 
-    & :first-child {
-        grid-column: 1/-3;
-        grid-row: 1/-1;
-    }
-
-    & img {
+    img {
         height: 100%;
         object-fit: cover;
+    }
+
+    :first-child {
+        grid-column: 1/-3;
+        grid-row: 1/-1;
     }
 
 }
@@ -115,10 +117,10 @@
     opacity: 1;
 }
 
-.underline{
+.underline {
     text-decoration: underline;
 }
 
-.hr{
+.hr {
     border-bottom: 1px solid $clr5;
 }

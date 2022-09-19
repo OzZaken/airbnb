@@ -12,19 +12,9 @@
 
   .logo {
     display: flex;
-<<<<<<< HEAD
     object-fit: contain;
     height: 32px;
   }
-=======
-    justify-content: space-between;
-    height: 80px;
-    border-bottom: 1px solid $clr5;
-    align-items: center;
-    position: sticky;
-    background-color: white;
-    width: 100%;
->>>>>>> cb62cfabafb1dc83343401d169e4b223832bb0c4
 
   .header-filter {
     width: 650px;
@@ -76,7 +66,7 @@
       .search-icon {
         height: 15px;
         width: 15px;
-        
+
       }
     }
 
@@ -124,13 +114,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .header-host-btn {
+    margin-right: 25px;
+  }
+
+  .menu-icon{
+    margin-right: 10px;
+  }
+
+  .account-circle-icon{
+    width: 40px;
+  }
 }
 
 .btn-user-options {
   display: flex;
   align-items: center;
   // max-width: fit-content;
-  padding: 5px;
+  padding: 8px;
   border: 1px solid lightgray;
   border-radius: 50px;
 }

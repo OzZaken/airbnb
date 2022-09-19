@@ -48,12 +48,12 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
 
             
             <div className="user-btns-container">
-                <Link className="header-host" to={`/stay/edit`} >
+                <Link className="header-host-btn" to={`/stay/edit`} >
                     <p>Become a host</p>
                 </Link>
                 <div className="btn-user-options">
-                    <MenuIcon />
-                    <AccountCircleIcon />
+                    <MenuIcon className="menu-icon"/>
+                    <AccountCircleIcon className="account-circle-icon" />
                 </div>
             </div>
 

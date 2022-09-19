@@ -8,7 +8,6 @@ import WifiIcon from '@mui/icons-material/Wifi'
 
 export function IconsValue(iconKey) {
 
-
     icons = {
         // PAGE Basic Icons
         "shareBtn": {
@@ -20,7 +19,10 @@ export function IconsValue(iconKey) {
         "heart": {
             "icon": <FavoriteBorderIcon />,
         },
-        // Stay titles, heading, txt and icon
+
+
+    }
+    titles = {  // Stay titles, heading, txt and icon
         "fastWifi": {
             "heading": "Fast wifi",
             "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
@@ -56,9 +58,12 @@ export function IconsValue(iconKey) {
             "txt": "Bring your pets along for the stay.",
             "icon": "",
         },
+    }
+    amenities = [
         // Stay amenities, txt for start icon later
 
-    }
+    ]
+
     const getIcon = (iconKey) => {
         return icons[iconKey].icon
     }

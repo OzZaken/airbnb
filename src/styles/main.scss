@@ -21,3 +21,10 @@
 
 // PAGES
 @import './pages/stay-details';
+
+.viewport {
+    position: fixed;
+    color: bisque;
+    background-color: rgba(0, 0, 0, 0.562);
+    right: 0;
+}

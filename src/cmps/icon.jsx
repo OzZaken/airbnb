@@ -5,13 +5,15 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 // MUI stayTitles icons
 import WifiIcon from '@mui/icons-material/Wifi'
+
+
 const icons = {
     // PAGE Basic Icons
     "share": <IosShareIcon />,
     "starRate": <StarRateIcon />,
     "heart": <FavoriteBorderIcon />,
     // Titles
-    "fastWifi": '',
+    "fastWifi": <WifiIcon/>,
     "superHost": '',
     "greatLoc": '',
     "greatCheckIn": '',
@@ -21,6 +23,8 @@ const icons = {
     // Amenities 
     "Shampoo": '',
 }
-export function Icons(iconKey) {
+
+
+export function getIcon(iconKey) {
     return icons[iconKey]
 }

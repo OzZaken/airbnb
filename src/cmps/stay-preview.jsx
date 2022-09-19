@@ -6,7 +6,7 @@ import Carousel from 'react-material-ui-carousel'
 
 export function StayPreview({ stay, onRemoveStay }) {
   return (
-    <li className="stay-preview">
+    <li className="clean-list stay-preview">
       <Link to={`/stay/${stay._id}`}>
 
         {/* <div className="preview-img-container square-ratio">

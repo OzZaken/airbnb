@@ -71,6 +71,7 @@ export const StayDetails = () => {
     // if(stay.titles)console.log('stay.titles',stay.titles)
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
+        <stayTitle stay={stay}/>
         <h1>{stay.name}</h1>
         <div className="flex space-between rate">
             <div>
@@ -81,11 +82,10 @@ export const StayDetails = () => {
                 <Link className="underline address">{` ${stay.loc.address}, ${stay.loc.country}`}</Link>
             </div>
 
-            <div >
+            <div>
                 <button className="underline"><IosShareIcon /> share</button>
                 <button className="underline"><FavoriteBorderIcon />save</button>
             </div>
-
         </div>
 
         <div className="imgs-grid-container imgs-preview">

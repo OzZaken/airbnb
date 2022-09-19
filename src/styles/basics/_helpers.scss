@@ -117,3 +117,15 @@
     /* display: block; */
     opacity: 1;
 }
+
+.clean-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    // list-style: none;
+}
+
+::selection {
+    background-color:$clr3;
+    color: $clr1;
+}

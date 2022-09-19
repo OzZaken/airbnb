@@ -1,0 +1,47 @@
+.stay-preview {
+  cursor: pointer;
+
+  .preview-img-container {
+    box-shadow: 3px 4px 6px #00000026;
+    border-radius: 12px;
+
+    .preview-img-like {
+      color: $clr1;
+      top: 10%;
+      left: 80%;
+      font-size: 1.7rem;
+    }
+
+  }
+
+  // & .stay-info {
+  //   margin-top: -8px;
+  //   margin-bottom: 20px;
+  // }
+
+  & .stay-name {
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+    align-items: baseline;
+    margin-top: 10px;
+
+    .star {
+      font-size: 0.9rem;
+    }
+
+  }
+
+  & .stay-distance,
+  .stay-date {
+    color: $clr5
+  }
+
+  // & .stay-info>* {
+  //   margin-bottom: -13px;
+  // }
+
+  & .stay-price {
+    margin-top: 8px;
+  }
+}

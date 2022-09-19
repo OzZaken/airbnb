@@ -39,7 +39,7 @@ export const StayDetails = () => {
         return num > 1 ? 's ' : ' '
     }
 
-    if(stay.titles)console.log('stay.titles',stay.titles)
+    // if(stay.titles)console.log('stay.titles',stay.titles)
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
         <h1>{stay.name}</h1>
@@ -74,6 +74,7 @@ export const StayDetails = () => {
                     {`hosted by `}
                     <span>{`${stay.host.fullname}`}</span>
                 </h2>
+                
                 <div>
                     <span>{`${stay.capacity} guest${pluralTxt(stay.capacity)}`}</span>
                     <span>{`${stay.stayMap.bedroom} bedroom${pluralTxt(stay.stayMap.bedroom)}`}</span>

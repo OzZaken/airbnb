@@ -70,7 +70,7 @@
       .search-icon {
         height: 15px;
         width: 15px;
-        
+
       }
     }
 
@@ -118,13 +118,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .header-host-btn {
+    margin-right: 25px;
+  }
+
+  .menu-icon{
+    margin-right: 10px;
+  }
+
+  .account-circle-icon{
+    width: 40px;
+  }
 }
 
 .btn-user-options {
   display: flex;
   align-items: center;
   // max-width: fit-content;
-  padding: 5px;
+  padding: 8px;
   border: 1px solid lightgray;
   border-radius: 50px;
 }

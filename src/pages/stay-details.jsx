@@ -11,39 +11,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 // MUI stayTitles icons
 import WifiIcon from '@mui/icons-material/Wifi'
+import AppIcon from '../cmps/icon.jsx'
 
 export const StayDetails = () => {
-    // todo: ↓ export from other page?
-    const gStayTitles = {
-        "superHost": {
-            "heading": "is a Superhost",
-            "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-        },
-        "greatLoc": {
-            "heading": "Great location",
-            "txt": "100% of recent guests gave the location a 5-star rating.",
-        },
-        "greatCheckIn": {
-            "heading": "Great check-in experience",
-            "txt": "100% of recent guests gave the check-in process a 5-star rating.",
-        },
-        "workspace": {
-            "heading": "Dedicated workspace",
-            "txt": "A private room with wifi that`s well-suited for working.",
-        },
-        "selfCheckIn": {
-            "heading": "Self check-in",
-            "txt": "You can check in with the doorman.",
-        },
-        "petsFriendly": {
-            "heading": "Furry friends welcome",
-            "txt": "Bring your pets along for the stay.",
-        },
-        "fastWifi": {
-            "heading": "Fast wifi",
-            "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
-        },
-    }
+    const StayTitles = stayService.getStayTitles()
     const [stay, setStay] = useState(null)
     const params = useParams()
     useEffect(() => {
@@ -71,11 +42,12 @@ export const StayDetails = () => {
     // if(stay.titles)console.log('stay.titles',stay.titles)
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
-        <stayTitle stay={stay}/>
         <h1>{stay.name}</h1>
+        {/* <stayTitle stay={stay}/> */}
+
         <div className="flex space-between rate">
             <div>
-                <span><StarRateIcon /></span>
+                <span><AppIcon iconKey='star' /></span>
                 <span>4.75</span>   {/* <StayAvg/> */}
                 <Link to="/" className="underline reviews"> 14 reviews</Link>
                 <span>·</span>
@@ -131,22 +103,22 @@ export const StayDetails = () => {
             <div className="flex">
                 <div><WifiIcon /></div>
                 <div>
-                    <h4>{gStayTitles[stay.titles[0]].heading}</h4>
-                    <span>{gStayTitles[stay.titles[0]].txt}</span>
+                    <h4>{StayTitles[stay.titles[0]].heading}</h4>
+                    <span>{StayTitles[stay.titles[0]].txt}</span>
                 </div>
             </div>
             <div className="flex">
                 <div><WifiIcon /></div>
                 <div>
-                    <h4>{gStayTitles[stay.titles[1]].heading}</h4>
-                    <span>{gStayTitles[stay.titles[1]].txt}</span>
+                    <h4>{StayTitles[stay.titles[1]].heading}</h4>
+                    <span>{StayTitles[stay.titles[1]].txt}</span>
                 </div>
             </div>
             <div className="flex">
                 <div><WifiIcon /></div>
                 <div>
-                    <h4>{gStayTitles[stay.titles[2]].heading}</h4>
-                    <span>{gStayTitles[stay.titles[2]].txt}</span>
+                    <h4>{StayTitles[stay.titles[2]].heading}</h4>
+                    <span>{StayTitles[stay.titles[2]].txt}</span>
                 </div>
             </div>
         </div>

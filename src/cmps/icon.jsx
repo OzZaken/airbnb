@@ -10,10 +10,10 @@ import WifiIcon from '@mui/icons-material/Wifi'
 const icons = {
     // PAGE Basic Icons
     "share": <IosShareIcon />,
-    "starRate": <StarRateIcon />,
+    "star": <StarRateIcon />,
     "heart": <FavoriteBorderIcon />,
     // Titles
-    "fastWifi": <WifiIcon/>,
+    "fastWifi": <WifiIcon />,
     "superHost": '',
     "greatLoc": '',
     "greatCheckIn": '',
@@ -24,7 +24,6 @@ const icons = {
     "Shampoo": '',
 }
 
-
-export function getIcon(iconKey) {
+export default function AppIcon({ iconKey }) {
     return icons[iconKey]
 }

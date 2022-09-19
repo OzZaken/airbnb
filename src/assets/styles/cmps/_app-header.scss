@@ -1,14 +1,18 @@
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  height: 80px;
-  border-bottom: 1px solid $clr5;
-  align-items: center;
+header {
+  width: 100%;
   position: fixed;
   top: 0;
   background-color: white;
+  border-bottom: 1px solid $clr5;
+  // height: 80px;
+padding-block: 8px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   // z-index: 100;
-  width: 100%;
 
   .logo {
     display: flex;
@@ -17,7 +21,7 @@
   }
 
   .header-filter {
-    width: 650px;
+    width: 5 0%;
     background: white;
     box-shadow: 0 0 5px hsl(0 0% 78%);
     height: 50px;
@@ -25,6 +29,7 @@
     display: flex;
     justify-content: center;
     font-size: 0.6rem;
+
 
     div {
       border-radius: inherit;
@@ -119,11 +124,11 @@
     margin-right: 25px;
   }
 
-  .menu-icon{
+  .menu-icon {
     margin-right: 10px;
   }
 
-  .account-circle-icon{
+  .account-circle-icon {
     width: 40px;
   }
 }

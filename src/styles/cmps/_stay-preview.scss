@@ -28,13 +28,17 @@
 
     .star {
       font-size: 0.9rem;
+      font-family: cereal3;
+
     }
 
   }
 
   & .stay-distance,
   .stay-date {
-    color: $clr5
+    color: $clr5;
+    font-family: cereal3;
+
   }
 
   // & .stay-info>* {
@@ -43,5 +47,6 @@
 
   & .stay-price {
     margin-top: 8px;
+
   }
 }

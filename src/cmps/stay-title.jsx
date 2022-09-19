@@ -45,10 +45,10 @@ export function StayTitle({ stay }) {
                 </h2>
 
                 <div>
-                    <span>{`${stay.capacity} guest${pluralTxt(stay.capacity)}`}</span>
-                    <span>{`${stay.stayMap.bedroom} bedroom${pluralTxt(stay.stayMap.bedroom)}`}</span>
-                    <span>{`${stay.stayMap.bed} bad${pluralTxt(stay.stayMap.bed)}`}</span>
-                    <span>{`${stay.stayMap.bath} bath${pluralTxt(stay.stayMap.bath)}`}</span>
+                    <span>{`· ${stay.capacity} guest${pluralTxt(stay.capacity)}`}</span>
+                    <span>{`· ${stay.stayMap.bedroom} bedroom${pluralTxt(stay.stayMap.bedroom)}`}</span>
+                    <span>{`· ${stay.stayMap.bed} bad${pluralTxt(stay.stayMap.bed)}`}</span>
+                    <span>{`· ${stay.stayMap.bath} bath${pluralTxt(stay.stayMap.bath)}`}</span>
                 </div>
             </div>
 

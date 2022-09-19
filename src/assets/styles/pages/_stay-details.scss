@@ -1,6 +1,7 @@
 .stay-details{
     width: 80vw;
 }
+
 .imgs-grid-container.imgs-preview {
     grid-template-columns: repeat(4, 1fr);
     // height: 30vh;
@@ -15,6 +16,7 @@
 }
 
 .img-host {
+    align-self: flex-end;
     width: 56px;
     height: 56px;
     border-radius: 50%;

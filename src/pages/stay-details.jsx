@@ -42,11 +42,10 @@ export const StayDetails = () => {
             <h1>{stay.name}</h1>
 
             <div className="flex space-between rate">
-
                 <div>
                     <span><StarRateIcon /></span>
                     <span>4.75</span>   {/* <StayAvg/> */}
-                    <Link className="underline reviews"> 14 reviews</Link>
+                    <Link to="/" className="underline reviews"> 14 reviews</Link>
                     <span>·</span>
                     <Link className="underline address">{` ${stay.loc.address}, ${stay.loc.country}`}</Link>
                 </div>
@@ -65,7 +64,7 @@ export const StayDetails = () => {
                     </div>)}
             </div>
 
-            <div className="flex space-between align-center">
+            <div className="hr flex space-between">
                 <div>
                     <h2>{`${stay.type} hosted by ${stay.host.fullname}`}</h2>
                     <div>
@@ -80,7 +79,6 @@ export const StayDetails = () => {
                     <img src={stay.host.imgUrl} alt="Host image" />
                 </div>
             </div>
-            <hr />
 
         </section>
     )

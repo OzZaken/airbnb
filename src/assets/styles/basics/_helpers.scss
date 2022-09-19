@@ -41,12 +41,15 @@
 
     &.justify-center {
         justify-content: center;
+        
     }
 
     &.align-center {
         align-items: center;
     }
-
+    &.baseline{
+        align-items: baseline;
+    }
     &.space-between {
         justify-content: space-between
     }
@@ -113,4 +116,8 @@
 
 .underline{
     text-decoration: underline;
+}
+
+.hr{
+    border-bottom: 1px solid $clr5;
 }

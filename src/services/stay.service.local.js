@@ -6,7 +6,7 @@ export const stayService = {
   remove,
   getById,
   getStayTypes,
-  getStayTitles,
+  getStayAchievements,
 }
 
 const STORAGE_KEY = 'stays'
@@ -19,7 +19,7 @@ const gStayTypes = [
   'Bad and breakfast',
   'Boutique hotel',
 ]
-const gStayTitles = { // Stay titles, heading, txt and icon
+const gStayAchievements = { // Stay achievements, heading, txt and icon
   "fastWifi": {
     "heading": "Fast wifi",
     "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
@@ -127,7 +127,7 @@ const gDefaultStays = [
       "TV",
       "Long term stays allowed"
     ],
-    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
+    "achievements": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -184,7 +184,7 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
-    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
+    "achievements": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -241,7 +241,7 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
-    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
+    "achievements": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -335,7 +335,7 @@ const gDefaultStays = [
       "Lockbox",
 
     ],
-    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
+    "achievements": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -413,7 +413,7 @@ const gDefaultStays = [
       "Elevator",
       "Long term stays allowed",
     ],
-    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
+    "achievements": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -489,6 +489,6 @@ function getStayTypes() {
   return gStayTypes
 }
 
-function getStayTitles() {
-  return gStayTitles
+function getStayAchievements() {
+  return gStayAchievements
 }

@@ -3,16 +3,15 @@ import IosShareIcon from '@mui/icons-material/IosShare'
 import StarRateIcon from '@mui/icons-material/StarRate'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-// MUI stayTitles icons
+// MUI Achievements icons
 import WifiIcon from '@mui/icons-material/Wifi'
-
 
 const icons = {
     // PAGE Basic Icons
     "share": <IosShareIcon />,
     "star": <StarRateIcon />,
     "heart": <FavoriteBorderIcon />,
-    // Titles
+    // Achievements
     "fastWifi": <WifiIcon />,
     "superHost": '',
     "greatLoc": '',

@@ -9,7 +9,6 @@ import { BiSearch } from "react-icons/bi";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
     // const onClickBecomeHost = () => {

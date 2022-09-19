@@ -11,12 +11,16 @@
 }
 
 .imgs-grid-container.imgs-preview {
-    padding-top: 24px;
+    border-radius: 10px;
     grid-template-columns: repeat(4, 1fr);
 
     >*:hover {
-        opacity: 0.8;
+        background-color: rgba(34, 34, 34, 0.534);
     }
+
+    // background-color: red;
+    overflow: hidden;
+
 }
 
 .img-host {
@@ -34,7 +38,7 @@
     border-bottom: 1px solid $clr5;
 }
 
-.stay-titles {
+.stay-achievements {
     padding-top: 30px;
     padding-bottom: 30px;
 

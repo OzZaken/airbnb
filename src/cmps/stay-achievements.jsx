@@ -3,7 +3,7 @@ import AppIcon from "./icon"
 const stayAchievements = stayService.getStayAchievements()
 export function StayAchievements({ stay }) {
 
-    return <div className="hr flex column stay-achievements">
+    return <section className="flex column stay-achievements">
         {/* {stay.achievements.splice(0, 3).map(stayTitle =>
     <div className="flex">
         <div>{gStayAchievements[stay.achievements[0]].icon}</div>
@@ -34,5 +34,5 @@ export function StayAchievements({ stay }) {
                 <span>{stayAchievements[stay.achievements[2]].txt}</span>
             </div>
         </div>
-    </div>
+    </section>
 }

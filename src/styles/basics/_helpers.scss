@@ -58,6 +58,7 @@
 }
 
 .imgs-grid-container {
+    padding-top: 24px;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     grid-template-rows: 215px 215px;
@@ -79,10 +80,6 @@
 
 .underline {
     text-decoration: underline;
-}
-
-.hr {
-    border-bottom: 1px solid $clr5;
 }
 
 // Media helpers

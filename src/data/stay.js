@@ -15,6 +15,11 @@ const db = {
       "price": 80.00,
       "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
       "capacity": 3,
+      "stayMap": {
+        "bedroom": 1,
+        "bath": 2,
+        "bed": 1,
+      },
       "amenities": [
         "Hair dryer",
         "Essentials",
@@ -27,13 +32,15 @@ const db = {
         "TV",
         "Long term stays allowed"
       ],
-      "titles":[
-
-      ],
+      "titles":{
+        "is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+        "Great location": "100% of recent guests gave the location a 5-star rating.",
+        "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
+      },
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
-        "imgUrl": "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
+        "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small",
       },
       "loc": {
         "country": "New York",
@@ -57,7 +64,7 @@ const db = {
       ],
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
-
+  
     {
       "_id": "stay2",
       "name": "Central Park Nest, High Above The Trees!",
@@ -72,6 +79,11 @@ const db = {
       "price": 120.00,
       "summary": "Stunning views of Central Park, Upper West Side, and mid-town! Cozy studio apartment with full kitchen and bath. 1 block from the 2 & 3 Subway line, and 3 blocks from the 6 Subway line. CitiBike stand is half a block away, as well as several bus lines, like Museum Mile. Please don't hesitate to ask any questions . Note: Pricing includes NY city & state occupancy taxes. Thanks for understanding!",
       "capacity": 6,
+      "stayMap": {
+        "bedroom": 1,
+        "bath": 2,
+        "bed": 1,
+      },
       "amenities": [
         "Kitchen",
         "Wifi",
@@ -81,10 +93,16 @@ const db = {
         "Hot water",
         "iron",
       ],
+      "titles":{
+        "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
+        "Crystal is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+        "Free cancellation before Sep 30.": "",
+      },
+  
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
-        "imgUrl": "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
+        "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small",
       },
       "loc": {
         "country": "New York",
@@ -108,7 +126,7 @@ const db = {
       ],
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
-
+  
     {
       "_id": "stay3",
       "name": "Spacious Studio Apartment in the Heart of Midtown",
@@ -123,6 +141,11 @@ const db = {
       "price": 110.00,
       "summary": "Located in Herald Square with immediate access to BDFM, NQRW, & Path trains downstairs and walking distance to NY Penn Station, 123, & ACE trains. One block away from Koreatown and adjacent to the Empire State Building with plentiful access to restaurants and shops!",
       "capacity": 8,
+      "stayMap": {
+        "bedroom": 1,
+        "bath": 2,
+        "bed": 1,
+      },
       "amenities": [
         "Kitchen",
         "Wifi",
@@ -132,6 +155,11 @@ const db = {
         "Hot water",
         "iron",
       ],
+      "titles":{
+        "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
+        "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
+        "Self check-in":"You can check in with the doorman.",
+      },
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -159,7 +187,7 @@ const db = {
       ],
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
-
+  
     {
       "_id": "stay4",
       "name": "Sunny Apartment in the Heart of Downtown NYC",
@@ -174,6 +202,11 @@ const db = {
       "price": 110.00,
       "summary": "Located right in the middle of Soho, Little Italy, Nolita, Lower East Side, and Chinatown, as well as minutes away from 3 main subway lines that will take you all around, this is the perfect place to experience all of NYC. Ask any local and they'd tell you the same! Amazing noteworthy restaurants, shopping, nightlife, and art galleries within minutes of walking distance.",
       "capacity": 8,
+      "stayMap": {
+        "bedroom": 1,
+        "bath": 2,
+        "bed": 1,
+      },
       "amenities": [
         "Bathtub",
         "Cleaning products",
@@ -218,7 +251,13 @@ const db = {
         "Self check-in",
         "Cleaning before checkout",
         "Lockbox",
+  
       ],
+      "titles":{
+        "Great location": "100% of recent guests gave the location a 5-star rating.",
+        "Free cancellation before Sep 30.": "",
+        "Self check-in":"You can check in with the doorman.",
+      },
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -246,7 +285,7 @@ const db = {
       ],
       "likedByUsers": ['mini-user'] // for user-wishlist : use $in
     },
-
+  
     {
       "_id": "stay5",
       "name": "Brooklyn Loft with great train views",
@@ -261,6 +300,11 @@ const db = {
       "price": 120.00,
       "summary": "Loft style studio with high ceilings in South Williamsburg. Nice overhead views of the J/M/Z train on the Williamsburg Bridge. Close to great bars and restaurants, 5 min walk to Domino Park/Water and less than 10 min to either the JMZ or L subway. Would suit young couple.",
       "capacity": 8,
+      "stayMap": {
+        "bedroom": 1,
+        "bath": 2,
+        "bed": 1,
+      },
       "amenities": [
         "Hair dryer",
         "Cleaning products",
@@ -291,6 +335,11 @@ const db = {
         "Elevator",
         "Long term stays allowed",
       ],
+      "titles":{
+        "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
+        "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
+        "Free cancellation before Sep 30.": "",
+      },
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",

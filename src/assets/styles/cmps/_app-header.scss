@@ -12,11 +12,6 @@
 
   .logo {
     display: flex;
-<<<<<<< HEAD
-    object-fit: contain;
-    height: 32px;
-  }
-=======
     justify-content: space-between;
     height: 80px;
     border-bottom: 1px solid $clr5;
@@ -24,8 +19,7 @@
     position: sticky;
     background-color: white;
     width: 100%;
->>>>>>> cb62cfabafb1dc83343401d169e4b223832bb0c4
-
+  }
   .header-filter {
     width: 650px;
     background: white;

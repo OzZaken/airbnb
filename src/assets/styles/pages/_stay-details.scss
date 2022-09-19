@@ -4,8 +4,9 @@
 
 .imgs-grid-container.imgs-preview {
     grid-template-columns: repeat(4, 1fr);
+
     >*:hover {
-        opacity: 0.9;
+        opacity: 0.8;
     }
 }
 
@@ -15,3 +16,15 @@
     height: 56px;
     border-radius: 50%;
 }
+
+.stay-title {
+    h2 span {
+        text-transform: capitalize;
+    }
+
+    border-bottom: 1px solid $clr5;
+}
+
+// .stay-titles {
+
+// }

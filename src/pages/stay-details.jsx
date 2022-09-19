@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import AppIcon from '../cmps/icon.jsx'
 import { StayTitle } from '../cmps/stay-title'
 import { stayService } from '../services/stay.service.local'
 import { StayAmenities } from '../cmps/stay-amenities'
@@ -11,14 +9,14 @@ import { StayAchievements } from '../cmps/stay-achievements'
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
     const params = useParams()
+  
     useEffect(() => {
         loadStay()
     }, [params.id])
 
     const loadStay = async () => {
         const stayId = params.stayId
-        const stay = await stayService.getById(stayId)
-        setStay(stay)
+        setStay(await stayService.getById(stayId))
     }
 
     // Todo: ↓  const StayAvg = () => {
@@ -26,7 +24,6 @@ export const StayDetails = () => {
     //     stay.reviews.rate
     //     nums.reduce((a, b) => (a + b)) / nums.length
     // }
-
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
         <StayTitle stay={stay} />

@@ -1,16 +1,18 @@
-.stay-details{
+.stay-details {
     width: 80vw;
 }
 
 .imgs-grid-container.imgs-preview {
-    grid-template-columns: repeat(4, 1fr);
     // height: 30vh;
-    & img {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 15vh 15vh;
+
+    img {
         height: 100%;
         object-fit: cover;
     }
 
-    &>*:hover {
+    >*:hover {
         opacity: 0.9;
     }
 }

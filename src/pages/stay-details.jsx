@@ -81,9 +81,9 @@ export const StayDetails = () => {
                 <Link className="underline address">{` ${stay.loc.address}, ${stay.loc.country}`}</Link>
             </div>
 
-            <div>
-                <button>IconsService.getIcon<IosShareIcon /> share</button>
-                <button><FavoriteBorderIcon />save</button>
+            <div >
+                <button className="underline"><IosShareIcon /> share</button>
+                <button className="underline"><FavoriteBorderIcon />save</button>
             </div>
 
         </div>

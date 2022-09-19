@@ -17,64 +17,65 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // }
 
     return (
-        <header className="app-header">
+        <header className="main-container">
+            <div className='app-header'>
 
-            <Link className="logo" to={'/'}>
-                <img src={logo}
-                    alt="Logo image"
-                // width="50px" height={'50px'}
-                />
-            </Link>
-
-            <div className="header-filter">
-                <div className="location">
-                    <p>Location</p>
-                    <input type="text" placeholder="Where are you going?"/>
-                </div>
-                <div className="check-in">
-                    <p>Check in</p>
-                    <input type="text" placeholder="Add dates"/>
-                </div>
-                <div className="check-out">
-                    <p>Check out</p>
-                    <input type="text" placeholder="Add dates"/>
-                </div>
-                <div className="guests">
-                    <p>Guests</p>
-                    <input type="text" placeholder="Add guests"/>
-                        <span><BiSearch className="search-icon" /></span>
-                </div>
-            </div>
-
-            
-            <div className="user-btns-container">
-                <Link className="header-host-btn" to={`/stay/edit`} >
-                    <p>Become a host</p>
+                <Link className="logo" to={'/'}>
+                    <img src={logo}
+                        alt="Logo image"
+                    />
                 </Link>
-                <div className="btn-user-options">
-                    <MenuIcon className="menu-icon"/>
-                    <AccountCircleIcon className="account-circle-icon" />
+
+                <div className="header-filter">
+                    <div className="location">
+                        <p>Location</p>
+                        <input type="text" placeholder="Where are you going?" />
+                    </div>
+                    <div className="check-in">
+                        <p>Check in</p>
+                        <input type="text" placeholder="Add dates" />
+                    </div>
+                    <div className="check-out">
+                        <p>Check out</p>
+                        <input type="text" placeholder="Add dates" />
+                    </div>
+                    <div className="guests">
+                        <p>Guests</p>
+                        <input type="text" placeholder="Add guests" />
+                        <span><BiSearch className="search-icon" /></span>
+                    </div>
                 </div>
-            </div>
 
 
-            {/* {user &&
+                <div className="user-btns-container">
+                    <Link className="header-host-btn" to={`/stay/edit`} >
+                        <p>Become a host</p>
+                    </Link>
+                    <div className="btn-user-options">
+                        <MenuIcon className="menu-icon" />
+                        <AccountCircleIcon className="account-circle-icon" />
+                    </div>
+                </div>
+
+
+                {/* {user &&
                 <span className="user-info">
                     <Link to={`user/${user._id}`}>
-                        {user.imgUrl && <img src={user.imgUrl} />}
+                    {user.imgUrl && <img src={user.imgUrl} />}
                         {user.fullname}
                     </Link>
                     <span className="score">{user.score?.toLocaleString()}</span>
                     <button onClick={onLogout}>Logout</button>
-                </span>
-            }
-
-            {!user &&
-                <section className="user-info">
+                    </span>
+                }
+                
+                {!user &&
+                    <section className="user-info">
                     <LoginSignup onLogin={onLogin} onSignup={onSignup} />
-                </section>
-            } */}
+                    </section>
+                } */}
 
+            </div>
         </header >
     )
 }

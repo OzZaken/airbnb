@@ -10,13 +10,14 @@ export const stayService = {
 }
 
 const STORAGE_KEY = 'stays'
+
 const gStayTypes = [
-  'apartment',
-  'house',
-  'secondary unit',
+  'Apartment',
+  'House',
+  'Secondary unit',
   'Unique space',
-  'bad and breakfast',
-  'boutique hotel',
+  'Bad and breakfast',
+  'Boutique hotel',
 ]
 const gAmenities = [
   "Bathtub",
@@ -64,16 +65,43 @@ const gAmenities = [
   "Lockbox",
 ]
 const gStayTitles = {
-  "is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-  "Great location": "100% of recent guests gave the location a 5-star rating.",
-  "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
-  "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
-  "Crystal is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-  "Free cancellation before Sep 30.": "",
-  "Self check-in":"You can check in with the doorman.",
+  "superHost": {
+    "heading": "is a Superhost",
+    "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+    "icon": "",
+  },
+  "greatLoc": {
+    "heading": "Great location",
+    "txt": "100% of recent guests gave the location a 5-star rating.",
+    "icon": "",
+  },
+  "greatCheckIn": {
+    "heading": "Great check-in experience",
+    "txt": "100% of recent guests gave the check-in process a 5-star rating.",
+    "icon": "",
+  },
+  "workspace": {
+    "heading": "Dedicated workspace",
+    "txt": "A private room with wifi that`s well-suited for working.",
+    "icon": "",
+  },
+  "selfCheckIn": {
+    "heading": "Self check-in",
+    "txt": "You can check in with the doorman.",
+    "icon": "",
+  },
+  "petsFriendly": {
+    "heading": "Furry friends welcome",
+    "txt": "Bring your pets along for the stay.",
+    "icon": "",
+  },
+  "fastWifi": {
+    "heading": "Fast wifi",
+    "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
+    "icon": "WifiIcon",
+  },
 }
 const gDefaultStays = [
-
   {
     "_id": "stay1",
     "name": "Entire rental unit hosted by Untitled",
@@ -105,10 +133,11 @@ const gDefaultStays = [
       "TV",
       "Long term stays allowed"
     ],
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
-      "imgUrl": "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small",
     },
     "loc": {
       "country": "New York",
@@ -152,7 +181,6 @@ const gDefaultStays = [
       "bath": 2,
       "bed": 1,
     },
-
     "amenities": [
       "Kitchen",
       "Wifi",
@@ -162,10 +190,11 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
-      "imgUrl": "https://a0.muscache.com/im/pictures/fab79f25-2e10-4f0f-9711-663cb69dc7d8.jpg?aki_policy=profile_small",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small",
     },
     "loc": {
       "country": "New York",
@@ -218,6 +247,7 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -311,6 +341,7 @@ const gDefaultStays = [
       "Lockbox",
 
     ],
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -388,6 +419,7 @@ const gDefaultStays = [
       "Elevator",
       "Long term stays allowed",
     ],
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -463,7 +495,7 @@ function getStayTypes() {
   return gStayTypes
 }
 
-function getStayTitles(){
+function getStayTitles() {
   return gStayTitles
 }
 

@@ -7,13 +7,22 @@
   position: fixed;
   top: 0;
   background-color: white;
+<<<<<<< HEAD:src/assets/styles/cmps/_app-header.scss
   z-index: 100;
+=======
+  z-index: 1;
+>>>>>>> 5b1aab2620cac42e43f637e412a8474e8af4df0d:src/styles/cmps/_app-header.scss
   width: 100%;
 
   .logo {
     display: flex;
-    object-fit: contain;
-    height: 32px;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 1px solid $clr5;
+    align-items: center;
+    position: sticky;
+    background-color: white;
+    width: 100%;
   }
 
   .header-filter {
@@ -119,11 +128,11 @@
     margin-right: 25px;
   }
 
-  .menu-icon{
+  .menu-icon {
     margin-right: 10px;
   }
 
-  .account-circle-icon{
+  .account-circle-icon {
     width: 40px;
   }
 }

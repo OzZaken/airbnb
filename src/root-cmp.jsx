@@ -1,7 +1,7 @@
 // import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
-import './assets/styles/main.scss'
+import './styles/main.scss'
 import { AppHeader } from './cmps/app-header'
 import { AppFooter } from './cmps/app-footer'
 

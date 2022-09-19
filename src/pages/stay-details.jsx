@@ -82,7 +82,7 @@ export const StayDetails = () => {
             </div>
 
             <div>
-                <button><IosShareIcon /> share</button>
+                <button>IconsService.getIcon<IosShareIcon /> share</button>
                 <button><FavoriteBorderIcon />save</button>
             </div>
 
@@ -165,7 +165,7 @@ export const StayDetails = () => {
         <div className="stay-amenities">
             <h2>What this place offers</h2>
             {stay.amenities.slice(0, 6)
-                .map(amenity => <div>{amenity}</div>)}
+                .map(amenity => <div key={`${amenity}`}>{amenity}</div>)}
             <button className="btn btn-big">
                 Show all {stay.amenities.length} amenities
             </button>

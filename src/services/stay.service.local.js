@@ -19,51 +19,6 @@ const gStayTypes = [
   'Bad and breakfast',
   'Boutique hotel',
 ]
-const gAmenities = [
-  "Bathtub",
-  "Cleaning products",
-  "Shampoo",
-  "Conditioner",
-  "Body soap",
-  "Hot water",
-  "Shower gel",
-  "Free washer In unit",
-  "Essentials",
-  "Hangers",
-  "Bed linens",
-  "Extra pillows and blankets",
-  "Clothing storage: dresser",
-  "TV",
-  "Exercise equipment: free weights, yoga mat",
-  "Books and reading material",
-  "Babysitter recommendations",
-  "Window AC unit",
-  "Portable fans",
-  "Radiant heating",
-  "Smoke alarm",
-  "Carbon monoxide alarm",
-  "Fast wifi",
-  "Kitchen",
-  "Refrigerator",
-  "Cooking basics",
-  "Dishes and silverware",
-  "Freezer",
-  "Gas stove",
-  "Stainless steel oven",
-  "Hot water kettle",
-  "Wine glasses",
-  "Baking sheet",
-  "Blender",
-  "Rice maker",
-  "Dining table",
-  "Laundromat nearby",
-  "Paid parking off premises",
-  "Luggage dropoff allowed",
-  "Long term stays allowed",
-  "Self check-in",
-  "Cleaning before checkout",
-  "Lockbox",
-]
 const gStayTitles = {
   "superHost": {
     "heading": "is a Superhost",
@@ -101,6 +56,8 @@ const gStayTitles = {
     "icon": "WifiIcon",
   },
 }
+
+
 const gDefaultStays = [
   {
     "_id": "stay1",
@@ -499,6 +456,78 @@ function getStayTitles() {
   return gStayTitles
 }
 
-function getStayAmenities() {
-  return gAmenities
+const titles = {  // Stay titles, heading, txt and icon
+  "fastWifi": {
+      "heading": "Fast wifi",
+      "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
+  },
+  "superHost": {
+      "heading": "is a Superhost",
+      "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+  },
+  "greatLoc": {
+      "heading": "Great location",
+      "txt": "100% of recent guests gave the location a 5-star rating.",
+  },
+  "greatCheckIn": {
+      "heading": "Great check-in experience",
+      "txt": "100% of recent guests gave the check-in process a 5-star rating.",
+  },
+  "workspace": {
+      "heading": "Dedicated workspace",
+      "txt": "A private room with wifi that`s well-suited for working.",
+  },
+  "selfCheckIn": {
+      "heading": "Self check-in",
+      "txt": "You can check in with the doorman.",
+  },
+  "petsFriendly": {
+      "heading": "Furry friends welcome",
+      "txt": "Bring your pets along for the stay.",
+  },
 }
+const amenities = [ // Stay amenities, txt for start icon later
+  "Bathtub",
+  "Cleaning products",
+  "Shampoo",
+  "Conditioner",
+  "Body soap",
+  "Hot water",
+  "Shower gel",
+  "Free washer In unit",
+  "Essentials",
+  "Hangers",
+  "Bed linens",
+  "Extra pillows and blankets",
+  "Clothing storage: dresser",
+  "TV",
+  "Exercise equipment: free weights, yoga mat",
+  "Books and reading material",
+  "Babysitter recommendations",
+  "Window AC unit",
+  "Portable fans",
+  "Radiant heating",
+  "Smoke alarm",
+  "Carbon monoxide alarm",
+  "Fast wifi",
+  "Kitchen",
+  "Refrigerator",
+  "Cooking basics",
+  "Dishes and silverware",
+  "Freezer",
+  "Gas stove",
+  "Stainless steel oven",
+  "Hot water kettle",
+  "Wine glasses",
+  "Baking sheet",
+  "Blender",
+  "Rice maker",
+  "Dining table",
+  "Laundromat nearby",
+  "Paid parking off premises",
+  "Luggage dropoff allowed",
+  "Long term stays allowed",
+  "Self check-in",
+  "Cleaning before checkout",
+  "Lockbox",
+]

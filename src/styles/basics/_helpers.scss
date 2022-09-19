@@ -1,31 +1,11 @@
-// Font Sizes
-.fs12 {
-    font-size: rem(12px);
-}
-
-.fs14 {
-    font-size: rem(14px);
-}
-
-.fs18 {
-    font-size: rem(18px);
-}
-
-.fs20 {
-    font-size: rem(20px);
-}
-
-.fs24 {
-    font-size: rem(24px);
-}
-
-.fs28 {
-    font-size: rem(28px);
-}
-
-.fs30 {
-    font-size: rem(30px);
-}
+// todo: Font Sizes
+.fs12 {font-size: rem(12px)}
+.fs14 {font-size: rem(14px)}
+.fs18 {font-size: rem(18px)}
+.fs20 {font-size: rem(20px)}
+.fs24 {font-size: rem(24px)}
+.fs28 {font-size: rem(28px)}
+.fs30 {font-size: rem(30px)}
 
 // flex helpers
 .flex {
@@ -62,7 +42,7 @@
     grid-template-rows: repeat(2, 1fr);
     grid-template-rows: 215px 215px;
     gap: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
 
     img {
         height: 100%;
@@ -74,6 +54,14 @@
         grid-row: 1/-1;
     }
 
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.hr {
+    border-bottom: 1px solid $clr5;
 }
 
 // Media helpers
@@ -130,10 +118,3 @@
     opacity: 1;
 }
 
-.underline {
-    text-decoration: underline;
-}
-
-.hr {
-    border-bottom: 1px solid $clr5;
-}

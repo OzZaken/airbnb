@@ -1,12 +1,18 @@
 .stay-details {
-    width: 80vw;
+    width: 75vw;
 
     button {
-        font-weight: small;
+        text-decoration: underline;
+        font-size: 14px;
+    }
+
+    svg {
+        font-size: inherit;
     }
 }
 
 .imgs-grid-container.imgs-preview {
+    padding-top: 24px;
     grid-template-columns: repeat(4, 1fr);
 
     >*:hover {
@@ -27,6 +33,15 @@
     }
 
     border-bottom: 1px solid $clr5;
+}
+
+.stay-titles {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    div {
+        margin-bottom: 1vh;
+    }
 }
 
 .img-air-cover {

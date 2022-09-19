@@ -160,13 +160,16 @@ export const StayDetails = () => {
             <div>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</div>
             <button className="btn underline"><b>Read more</b></button>
         </div>
-        {/* <StayAmenities/> */}
-        <div>
-            <h2>What this place offers</h2>
-            {stay.amenities.map(amenity => <div>{amenity}</div>)}
-            <button className="btn btn-big">Show all {stay.amenities.length} amenities</button>
-        </div>
 
+        {/* <StayAmenities/> */}
+        <div className="stay-amenities">
+            <h2>What this place offers</h2>
+            {stay.amenities.slice(0, 6)
+                .map(amenity => <div>{amenity}</div>)}
+            <button className="btn btn-big">
+                Show all {stay.amenities.length} amenities
+            </button>
+        </div>
 
     </section >
 }

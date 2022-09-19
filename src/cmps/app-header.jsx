@@ -5,6 +5,7 @@ import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/use
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/airbnb2.svg'
 import SearchIcon from '@mui/icons-material/Search';
+import { BiSearch } from "react-icons/bi";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -41,41 +42,19 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 <div className="guests">
                     <p>Guests</p>
                     <input type="text" placeholder="Add guests"/>
-                        <span><SearchIcon className="search-icon" /></span>
+                        <span><BiSearch className="search-icon" /></span>
                 </div>
             </div>
 
-            {/* <div className="header-filter">
-                <form>
-                    <div className='location-input'>
-                        <label htmlFor="anywhere">Anywhere</label>
-                        <input type="text" placeholder="Where are you going?" />
-                    </div>
-                    <div>
-                        <label htmlFor="check-in">Check in</label>
-                        <input type="text" placeholder="Add Date" />
-                    </div>
-                    <div>
-                        <label htmlFor="check-out">Check out</label>
-                        <input type="text" placeholder="Add Date" />
-                    </div>
-                    <div>
-                        <label htmlFor="guest">Guest</label>
-                        <input type="text" placeholder="Add Guest" />
-                    </div>
-                    <button><SearchIcon className="search-icon" /></button>
-
-                </form>
-            </div> */}
-
+            
             <div className="user-btns-container">
-                <Link className="header-host-btn" to={`/stay/edit`} >
+                <Link className="header-host" to={`/stay/edit`} >
                     <p>Become a host</p>
                 </Link>
-                <Link className="btn-user-options">
+                <div className="btn-user-options">
                     <MenuIcon />
                     <AccountCircleIcon />
-                </Link>
+                </div>
             </div>
 
 

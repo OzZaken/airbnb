@@ -27,6 +27,9 @@ const db = {
         "TV",
         "Long term stays allowed"
       ],
+      "titles":[
+
+      ],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -215,7 +218,6 @@ const db = {
         "Self check-in",
         "Cleaning before checkout",
         "Lockbox",
-
       ],
       "host": {
         "_id": "u101",

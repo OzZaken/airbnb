@@ -28,7 +28,7 @@ export const StayDetails = () => {
     // }
 
     // const reviewsCount = () =>{
-    // if(!stay.reviews||stay.reviews===0) return 'New stay!'
+    // if(!stay.reviews||stay.reviews===0) return 'New stay'
     // }
 
     const pluralTxt = (num) => {
@@ -37,8 +37,7 @@ export const StayDetails = () => {
     }
 
     if (!stay) return <div>Loading...</div>
-    return (
-        <section className="stay-details">
+    return <section className="stay-details">
             <h1>{stay.name}</h1>
 
             <div className="flex space-between rate">
@@ -81,5 +80,4 @@ export const StayDetails = () => {
             </div>
 
         </section>
-    )
 }

@@ -6,12 +6,10 @@ export const stayService = {
   remove,
   getById,
   getStayTypes,
+  getStayTitles,
 }
-function getStayTypes() {
-  return gStayTypes
-}
-const STORAGE_KEY = 'stays'
 
+const STORAGE_KEY = 'stays'
 const gStayTypes = [
   'apartment',
   'house',
@@ -20,20 +18,60 @@ const gStayTypes = [
   'bad and breakfast',
   'boutique hotel',
 ]
-
-const amenities = [
-  "Hair dryer",
+const gAmenities = [
+  "Bathtub",
+  "Cleaning products",
+  "Shampoo",
+  "Conditioner",
+  "Body soap",
+  "Hot water",
+  "Shower gel",
+  "Free washer In unit",
   "Essentials",
-  "Air conditioning",
-  "Heating",
   "Hangers",
-  "Wifi",
-  "Smoking allowed",
-  "Pets allowed",
+  "Bed linens",
+  "Extra pillows and blankets",
+  "Clothing storage: dresser",
   "TV",
-  "Long term stays allowed"
+  "Exercise equipment: free weights, yoga mat",
+  "Books and reading material",
+  "Babysitter recommendations",
+  "Window AC unit",
+  "Portable fans",
+  "Radiant heating",
+  "Smoke alarm",
+  "Carbon monoxide alarm",
+  "Fast wifi",
+  "Kitchen",
+  "Refrigerator",
+  "Cooking basics",
+  "Dishes and silverware",
+  "Freezer",
+  "Gas stove",
+  "Stainless steel oven",
+  "Hot water kettle",
+  "Wine glasses",
+  "Baking sheet",
+  "Blender",
+  "Rice maker",
+  "Dining table",
+  "Laundromat nearby",
+  "Paid parking off premises",
+  "Luggage dropoff allowed",
+  "Long term stays allowed",
+  "Self check-in",
+  "Cleaning before checkout",
+  "Lockbox",
 ]
-
+const gStayTitles = {
+  "is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+  "Great location": "100% of recent guests gave the location a 5-star rating.",
+  "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
+  "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
+  "Crystal is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+  "Free cancellation before Sep 30.": "",
+  "Self check-in":"You can check in with the doorman.",
+}
 const gDefaultStays = [
 
   {
@@ -419,4 +457,16 @@ function save(stay) {
     stay.labels = []
     return storageService.post(STORAGE_KEY, stay)
   }
+}
+
+function getStayTypes() {
+  return gStayTypes
+}
+
+function getStayTitles(){
+  return gStayTitles
+}
+
+function getStayAmenities() {
+  return gAmenities
 }

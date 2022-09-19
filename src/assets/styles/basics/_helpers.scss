@@ -92,7 +92,19 @@
 .btn {
     border: 0;
     cursor: pointer;
+    font-weight: bold;
     transition: .5s;
+}
+
+.btn-big {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid $clr4;
+    border-radius: 10px;
+}
+
+.btn-big:hover {
+    background-color: rgba(133, 133, 133, 0.096);
 }
 
 .btn:active {

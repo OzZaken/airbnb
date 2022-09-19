@@ -162,9 +162,9 @@ export const StayDetails = () => {
         </div>
         {/* <StayAmenities/> */}
         <div>
-            <h1>What this place offers</h1>
+            <h2>What this place offers</h2>
             {stay.amenities.map(amenity => <div>{amenity}</div>)}
-
+            <button className="btn btn-big">Show all {stay.amenities.length} amenities</button>
         </div>
 
 

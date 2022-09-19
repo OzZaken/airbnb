@@ -1,5 +1,9 @@
 .stay-details {
     width: 80vw;
+
+    button {
+        font-weight: small;
+    }
 }
 
 .imgs-grid-container.imgs-preview {
@@ -25,6 +29,11 @@
     border-bottom: 1px solid $clr5;
 }
 
-// .stay-titles {
+.img-air-cover {
+    height: 56px;
+    width: 123px;
+}
 
+// .air-cover-img {
+//     content: url("https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg");
 // }

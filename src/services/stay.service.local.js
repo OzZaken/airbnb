@@ -94,12 +94,14 @@ const gStayTitles = {
     "heading": "Furry friends welcome",
     "txt": "Bring your pets along for the stay.",
     "icon": "",
-  }
+  },
+  "fastWifi": {
+    "heading": "Fast wifi",
+    "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
+    "icon": "WifiIcon",
+  },
 }
-
-
 const gDefaultStays = [
-
   {
     "_id": "stay1",
     "name": "Entire rental unit hosted by Untitled",
@@ -131,11 +133,7 @@ const gDefaultStays = [
       "TV",
       "Long term stays allowed"
     ],
-    "titles": {
-      "is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-      "Great location": "100% of recent guests gave the location a 5-star rating.",
-      "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
-    },
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -192,12 +190,7 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
-    "titles": {
-      "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
-      "Crystal is a Superhost": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-      "Free cancellation before Sep 30.": "",
-    },
-
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -254,11 +247,7 @@ const gDefaultStays = [
       "Hot water",
       "iron",
     ],
-    "titles": {
-      "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
-      "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
-      "Self check-in": "You can check in with the doorman.",
-    },
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -352,11 +341,7 @@ const gDefaultStays = [
       "Lockbox",
 
     ],
-    "titles": {
-      "Great location": "100% of recent guests gave the location a 5-star rating.",
-      "Free cancellation before Sep 30.": "",
-      "Self check-in": "You can check in with the doorman.",
-    },
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",
@@ -434,11 +419,7 @@ const gDefaultStays = [
       "Elevator",
       "Long term stays allowed",
     ],
-    "titles": {
-      "Great check-in experience": "100% of recent guests gave the check-in process a 5-star rating.",
-      "Dedicated workspace": "A private room with wifi that`s well-suited for working.",
-      "Free cancellation before Sep 30.": "",
-    },
+    "titles": ['fastWifi', 'superHost', 'selfCheckIn'],
     "host": {
       "_id": "u101",
       "fullname": "Davit Pok",

@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   background-color: white;
-  // z-index: 100;
+  z-index: 1;
   width: 100%;
 
   .logo {
@@ -20,6 +20,7 @@
     background-color: white;
     width: 100%;
   }
+
   .header-filter {
     width: 650px;
     background: white;
@@ -123,11 +124,11 @@
     margin-right: 25px;
   }
 
-  .menu-icon{
+  .menu-icon {
     margin-right: 10px;
   }
 
-  .account-circle-icon{
+  .account-circle-icon {
     width: 40px;
   }
 }

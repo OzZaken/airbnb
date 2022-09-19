@@ -3,18 +3,17 @@
 
   .preview-img-container {
     box-shadow: 3px 4px 6px #00000026;
-    border-radius: 10px;
+    border-radius: 12px;
 
     .preview-img-like {
       color: $clr1;
-      // position: absolute;
-      top: 15px;
-      left: 190px;
-      right: 15px;
+      top: 10%;
+      left: 80%;
+      font-size: 1.7rem;
     }
 
   }
- 
+
   // & .stay-info {
   //   margin-top: -8px;
   //   margin-bottom: 20px;
@@ -23,11 +22,12 @@
   & .stay-name {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    // align-items: center;
+    align-items: baseline;
     margin-top: 10px;
 
-    .star{
-      font-size: 0.9em;
+    .star {
+      font-size: 0.9rem;
     }
 
   }
@@ -41,8 +41,7 @@
   //   margin-bottom: -13px;
   // }
 
-  & .stay-price{
-    margin-top: 10px;
+  & .stay-price {
+    margin-top: 8px;
   }
 }
-

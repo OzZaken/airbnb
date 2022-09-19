@@ -31,18 +31,18 @@
 }
 
 .imgs-grid-container.imgs-preview {
+    // max-height: 50vh;
     border-radius: 10px;
     grid-template-columns: repeat(4, 1fr);
+    object-fit: contain;
+    object-fit: cover;
     overflow: hidden;
-    padding-left: 40px;
-    padding-right: 40px;
 
-    *:hover {
-        background-color: rgba(34, 34, 34, 0.534);
+    :hover {
+        filter: brightness(90%);
     }
+
 }
-
-
 
 .stay-achievements {
     padding-top: 30px;

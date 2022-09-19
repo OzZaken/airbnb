@@ -15,7 +15,6 @@
 
   }
  
-
   // & .stay-info {
   //   margin-top: -8px;
   //   margin-bottom: 20px;
@@ -25,7 +24,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 550;
+    margin-top: 10px;
+
+    .star{
+      font-size: 0.9em;
+    }
 
   }
 
@@ -38,8 +41,8 @@
   //   margin-bottom: -13px;
   // }
 
-  // & .stay-price{
-  //   margin-top: 8px;
-  // }
+  & .stay-price{
+    margin-top: 10px;
+  }
 }
 

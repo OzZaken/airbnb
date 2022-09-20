@@ -4,6 +4,7 @@ import StarIcon from '@mui/icons-material/Star';
 import Carousel from 'react-material-ui-carousel'
 
 
+
 export function StayPreview({ stay, onRemoveStay }) {
   return (
     <li className="stay-preview">

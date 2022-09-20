@@ -9,3 +9,4 @@ export function StayList({ stays, onRemoveStay }) {
     </ul>
   )
 }
+

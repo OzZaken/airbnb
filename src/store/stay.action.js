@@ -1,5 +1,11 @@
 import { stayService } from '../services/stay.service.local'
 
+export function setCurrentUrl(page) {
+  return (dispatch) => {
+      dispatch({ type: 'SET_PAGE', page: page })
+  }
+}
+
 export function loadStays() {
   return async (dispatch, getState) => {
     const { filterBy } = getState().stayModule

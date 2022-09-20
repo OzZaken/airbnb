@@ -1,46 +1,73 @@
 .stay-preview {
   cursor: pointer;
+  position: relative;
+  // a {
+  //   position: relative;
+  // }
 
   .preview-img-container {
     box-shadow: 3px 4px 6px #00000026;
     border-radius: 12px;
 
-    .heart-icon {
-      color: $clr1;
-      top: 10%;
-      left: 80%;
-      // font-size: 1.7rem;
-      width: 1.6rem;
-      height: 1.6rem;
-    }
-    
+  }
 
+  .heart-icon {
+    position: absolute;
+    top: 5%;
+    left: 85%;
+    width: rem(30px);
+    height: rem(30px);
+  }
+
+  .arrow-right {
+    position: absolute;
+    width: rem(35px);
+    height: rem(35px);
+    opacity: 0.9;
+    top: 40%;
+    left: 85%;
+    transition: transform 0.5s;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  .arrow-left {
+    position: absolute;
+    width: rem(35px);
+    height: rem(35px);
+    opacity: 0.9;
+    top: 40%;
+    left: 5%;
+    transition: transform 0.5s;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
   }
 
   & .stay-name {
+    font-family: cereal3;
     display: flex;
     justify-content: space-between;
     // align-items: center;
-    align-items: baseline;
     margin-top: 10px;
 
     .star {
-      font-size: 0.9rem;
-      font-family: cereal3;
-
+      font-size: rem(15px);
+      margin-right: 5px;
     }
-
   }
 
   & .stay-distance,
   .stay-date {
     color: $clr5;
-    font-family: cereal3;
-
   }
 
   & .stay-price {
     margin-top: 8px;
-
   }
 }

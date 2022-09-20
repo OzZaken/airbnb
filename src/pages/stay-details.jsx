@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import { StayName } from '../cmps/stay-details/name'
+import { StayTitle } from '../cmps/stay-details/title'
 import { stayService } from '../services/stay.service.local'
 import { StayAmenities } from '../cmps/stay-details/amenities'
 import { StayAchievements } from '../cmps/stay-details/achievements'
@@ -27,7 +27,7 @@ export const StayDetails = () => {
     // }
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
-        <StayName stay={stay} />
+        <StayTitle stay={stay} />
         <div className='flex space-between'>
 
             <div>

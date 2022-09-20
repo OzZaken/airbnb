@@ -32,7 +32,6 @@ const icons = {
     "surfing":<SurfingIcon/>,
 
 }
-
 export default function AppIcon({ iconKey }) {
     return icons[iconKey]
 }

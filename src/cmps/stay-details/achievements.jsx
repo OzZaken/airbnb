@@ -1,19 +1,19 @@
-import AppIcon from "./icon"
-import { stayService } from "../services/stay.service.local"
+import AppIcon from "../icon"
+import { stayService } from "../../services/stay.service.local"
 // import utilService from "../services/util.service"
 
 const achievements = stayService.getStayAchievements()
 
 export function StayAchievements({ stay }) {
     return <section className="flex column stay-achievements">
-        {stay.achievements.splice(0, 3).map((achievement) =>
-           
-           <div className="flex" key={makeId()} > 
-                <div>
+        {stay.achievements.slice(0, 3).map((achievement) =>
+
+            <div className="flex" key={makeId()} >
+                <div className="achievement-icon">
                     <AppIcon iconKey={achievements[achievement].icon} />
                 </div>
-                
-                <div>
+
+                <div className="achievement-content">
                     <div>{achievements[achievement].heading}</div>
                     <span>{achievements[achievement].txt}</span>
                 </div>

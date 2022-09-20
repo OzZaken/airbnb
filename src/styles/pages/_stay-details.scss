@@ -1,8 +1,11 @@
 .stay-details {
-    width: 80vw;
 
     section {
         border-bottom: 1px solid $clr5;
+    }
+
+    h2 {
+        padding-bottom: 5px;
     }
 
     button {
@@ -12,79 +15,108 @@
     svg {
         font-size: inherit;
     }
-}
 
-.stay-title {
-    padding-top: 48px;
-    padding-top: 24px;
+    // #stay-title 
+    .stay-title {
+        padding-top: 48px;
+        padding-top: 24px;
+        font-size: 13px;
+        align-items: center;
 
-    h2 span {
-        font-family: cereal6;
-        text-transform: capitalize;
+        h2 span {
+            text-transform: capitalize;
+        }
+
+        span {
+            font-family: cerealLt;
+        }
+
+        .rate {
+            padding-bottom: 24px;
+        }
+
+        .img-host {
+            align-self: flex-end;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
     }
 
-    .img-host {
-        align-self: flex-end;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-    }
-}
+    // #imgs-preview
+    .imgs-grid-container.imgs-preview {
+        border-radius: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        object-fit: contain;
+        object-fit: cover;
+        overflow: hidden;
 
-.imgs-grid-container.imgs-preview {
-    border-radius: 10px;
-    grid-template-columns: repeat(4, 1fr);
-    object-fit: contain;
-    object-fit: cover;
-    overflow: hidden;
+        :hover {
+            filter: brightness(90%);
+        }
 
-    :hover {
-        filter: brightness(90%);
     }
 
-}
+    //#stay-achievements
+    .stay-achievements {
+        padding-top: 30px;
+        padding-bottom: 30px;
 
-.stay-achievements {
-    padding-top: 30px;
-    padding-bottom: 30px;
+        div {
+            padding-bottom: 10px;
+        }
 
-    div {
-        padding-bottom: 10px;
-    }
-}
-
-.air-cover-container {
-    padding-top: 32px;
-    padding-bottom: 32px;
-
-    .img-air-cover {
-        height: 56px;
-        width: 123px;
+        span {
+            font-family: cerealBk;
+            font-size: calc(100% - 2px)
+        }
     }
 
-    // .air-cover-img {
-    //     content: url("https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg");
-    // }
-}
+    .air-cover-container {
+        padding-top: 32px;
+        padding-bottom: 32px;
 
-.stay-amenities {
-    padding-top: 48px;
-    padding-bottom: 48px;
+        .img-air-cover {
+            height: 56px;
+            width: 123px;
+        }
 
-    hr {
+        // .air-cover-img {
+        //     content: url("https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg");
+        // }
+    }
+
+    .stay-amenities {
+        padding-top: 48px;
+        padding-bottom: 48px;
+
+        hr {
+            padding-bottom: 24px;
+        }
+
+        div {
+            padding-bottom: 16px;
+
+        }
+    }
+
+    .stay-reservation {
+        position: sticky;
+        top: 80px;
+        border-bottom: unset;
+    }
+
+    .reservation-container {
+        border: 1px solid rgb(221, 221, 221);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+        //  Later remove
+        width: 300px;
+        padding-top: 24px;
         padding-bottom: 24px;
+        height: 305px;
+        // for the section
+        border-bottom: unset;
     }
-
-    div {
-        padding-bottom: 16px;
-
-    }
-}
-
-.reservation-container {
-    width: 300px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    // Later remove
-    height: 305px;
 }

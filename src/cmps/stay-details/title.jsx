@@ -1,4 +1,4 @@
-import AppIcon from './icon'
+import AppIcon from '../icon'
 import { Link } from 'react-router-dom'
 
 export const StayTitle = ({ stay }) => {
@@ -11,9 +11,9 @@ export const StayTitle = ({ stay }) => {
     if (!stay) return <div>Loading...</div>
     return <section className="stay-title">
         <h1>{stay.name}</h1>
-
+        {/* Rate Row */}
         <div className="flex space-between rate">
-            <div>
+            <div className='align-center'>
                 <span><AppIcon iconKey='star' /></span>
                 <span>4.75</span>   {/* <StayAvg/> */}
                 <Link to="/" className="underline reviews"> 14 reviews</Link>
@@ -28,22 +28,22 @@ export const StayTitle = ({ stay }) => {
                     <AppIcon iconKey='heart' />save
                 </button>
             </div>
-            
-        </div>
 
+        </div>
+        {/* imgs-preview */}
         <div className="imgs-grid-container imgs-preview">
             {stay.imgUrls.splice(0, 5).map(imgUrl =>
                 <div key={imgUrl}>
                     <img src={imgUrl} alt="Stay image" />
                 </div>)}
         </div>
-
+        {/* stay-title → preview with params in props? */}
         <div className="flex space-between stay-title">
-            <div>
+            <div className="flex column space-between">
                 <h2>
-                    <span>{`${stay.type}`}</span>
-                    {`hosted by `}
-                    <span>{`${stay.host.fullname}`}</span>
+                    <span>{`${stay.type} `}</span>
+                    {/* // todo:↓ Better in span and remove css ↓ */}
+                    {`hosted by ${stay.host.fullname}`}
                 </h2>
 
                 <div>

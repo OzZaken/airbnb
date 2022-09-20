@@ -1,11 +1,12 @@
 header {
   width: 100%;
-  position: fixed;
+  position: sticky;
   top: 0;
   background-color: white;
   border-bottom: 1px solid $clr5;
-  // height: 80px;
-padding-block: 8px;
+  height: 80px;
+  z-index: 1;
+  padding-block: 8px;
 }
 
 .app-header {
@@ -20,7 +21,7 @@ padding-block: 8px;
     height: 32px;
   }
 
-  }
+}
 
 .user-btns-container {
   display: flex;
@@ -31,11 +32,11 @@ padding-block: 8px;
     margin-right: 25px;
   }
 
-  .menu-icon  {
+  .menu-icon {
     margin-right: 10px;
   }
 
-  .account-circle-icon  {
+  .account-circle-icon {
     width: 40px;
   }
 }

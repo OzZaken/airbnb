@@ -41,7 +41,8 @@ export const StayTitle = ({ stay }) => {
         <div className="flex space-between stay-title">
             <div className="flex column space-between">
                 <h2>
-                    {`${stay.type} hosted by ${stay.host.fullname}`}
+                    <span>{`${stay.type} `}</span>
+                    {`hosted by ${stay.host.fullname}`}
                 </h2>
 
                 <div>

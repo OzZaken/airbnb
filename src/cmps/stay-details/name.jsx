@@ -1,7 +1,7 @@
 import AppIcon from '../icon'
 import { Link } from 'react-router-dom'
 
-export const StayTitle = ({ stay }) => {
+export const StayName = ({ stay }) => {
 
     const pluralTxt = (num) => {
         if (!num) return ' '

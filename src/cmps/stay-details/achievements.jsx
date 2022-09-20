@@ -6,7 +6,7 @@ const achievements = stayService.getStayAchievements()
 
 export function StayAchievements({ stay }) {
     return <section className="flex column stay-achievements">
-        {stay.achievements.splice(0, 3).map((achievement) =>
+        {stay.achievements.slice(0, 3).map((achievement) =>
 
             <div className="flex" key={makeId()} >
                 <div className="achievement-icon">

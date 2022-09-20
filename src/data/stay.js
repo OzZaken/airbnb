@@ -32,7 +32,7 @@ const db = {
         "TV",
         "Long term stays allowed"
       ],
-      "titles": [ 'fastWifi', 'superHost','selfCheckIn'],
+      "achievements": [ 'fastWifi', 'superHost','selfCheckIn'],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -89,7 +89,7 @@ const db = {
         "Hot water",
         "iron",
       ],
-      "titles": [ 'fastWifi', 'superHost','selfCheckIn'],
+      "achievements": [ 'fastWifi', 'superHost','selfCheckIn'],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -146,7 +146,7 @@ const db = {
         "Hot water",
         "iron",
       ],
-      "titles": [ 'fastWifi', 'superHost','selfCheckIn'],
+      "achievements": [ 'fastWifi', 'superHost','selfCheckIn'],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -240,7 +240,7 @@ const db = {
         "Lockbox",
   
       ],
-      "titles": [ 'fastWifi', 'superHost','selfCheckIn'],
+      "achievements": [ 'fastWifi', 'superHost','selfCheckIn'],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",
@@ -318,7 +318,7 @@ const db = {
         "Elevator",
         "Long term stays allowed",
       ],
-      "titles": [ 'fastWifi', 'superHost','selfCheckIn'],
+      "achievements": [ 'fastWifi', 'superHost','selfCheckIn'],
       "host": {
         "_id": "u101",
         "fullname": "Davit Pok",

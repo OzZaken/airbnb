@@ -1,5 +1,9 @@
 .stay-details {
-    width: 75vw;
+    width: 80vw;
+
+    section {
+        border-bottom: 1px solid $clr5;
+    }
 
     button {
         font-size: 14px;
@@ -10,31 +14,37 @@
     }
 }
 
-.imgs-grid-container.imgs-preview {
-    padding-top: 24px;
-    grid-template-columns: repeat(4, 1fr);
-
-    >*:hover {
-        opacity: 0.8;
-    }
-}
-
-.img-host {
-    align-self: flex-end;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-}
-
 .stay-title {
+    padding-top: 48px;
+    padding-top: 24px;
+
     h2 span {
         text-transform: capitalize;
     }
 
-    border-bottom: 1px solid $clr5;
+    .img-host {
+        align-self: flex-end;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+    }
 }
 
-.stay-titles {
+.imgs-grid-container.imgs-preview {
+    // max-height: 50vh;
+    border-radius: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    object-fit: contain;
+    object-fit: cover;
+    overflow: hidden;
+
+    :hover {
+        filter: brightness(90%);
+    }
+
+}
+
+.stay-achievements {
     padding-top: 30px;
     padding-bottom: 30px;
 
@@ -43,11 +53,30 @@
     }
 }
 
-.img-air-cover {
-    height: 56px;
-    width: 123px;
+.air-cover-container {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    .img-air-cover {
+        height: 56px;
+        width: 123px;
+    }
+
+    // .air-cover-img {
+    //     content: url("https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg");
+    // }
 }
 
-// .air-cover-img {
-//     content: url("https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg");
-// }
+.stay-amenities {
+    padding-top: 48px;
+    padding-bottom: 48px;
+
+    hr {
+        padding-bottom: 24px;
+    }
+
+    div {
+        padding-bottom: 16px;
+
+    }
+}

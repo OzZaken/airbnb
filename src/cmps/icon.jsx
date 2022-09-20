@@ -1,17 +1,24 @@
-// MUI page Icons
+//  Global Page 
 import IosShareIcon from '@mui/icons-material/IosShare'
 import StarRateIcon from '@mui/icons-material/StarRate'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-// MUI stayTitles icons
+//  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
+
+ // Amenities 
+
+//  Filter 
+import { RiCactusLine } from 'react-icons/ri'
+import SurfingIcon from '@mui/icons-material/Surfing'
+
 const icons = {
     // PAGE Basic Icons
     "share": <IosShareIcon />,
-    "starRate": <StarRateIcon />,
+    "star": <StarRateIcon />,
     "heart": <FavoriteBorderIcon />,
-    // Titles
-    "fastWifi": '',
+    // Achievements
+    "fastWifi": <WifiIcon />,
     "superHost": '',
     "greatLoc": '',
     "greatCheckIn": '',
@@ -20,7 +27,12 @@ const icons = {
     "petsFriendly": '',
     // Amenities 
     "Shampoo": '',
+    // Filter:
+    "cactus": <RiCactusLine />,
+    "surfing":<SurfingIcon/>,
+
 }
-export function Icons(iconKey) {
+
+export default function AppIcon({ iconKey }) {
     return icons[iconKey]
 }

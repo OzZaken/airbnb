@@ -2,9 +2,7 @@ import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { ImgUploader } from "../cmps/img-uploader1"
 import { useFormRegister } from '../hooks/useFormRegister'
-
 import { useForm } from "../hooks/useForm"
-import { Image } from 'cloudinary-react'
 
 import { stayService } from '../services/stay.service.local'
 

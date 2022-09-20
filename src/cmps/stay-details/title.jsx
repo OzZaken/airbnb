@@ -10,7 +10,7 @@ export const StayTitle = ({ stay }) => {
 
     if (!stay) return <div>Loading...</div>
     return <section className="stay-title">
-        <h2>{stay.name}</h2>
+        <h1>{stay.name}</h1>
         {/* Rate Row */}
         <div className="flex space-between rate">
             <div className='align-center'>

@@ -5,9 +5,11 @@ import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/use
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/airbnb2.svg'
 import SearchIcon from '@mui/icons-material/Search';
-import { BiSearch } from "react-icons/bi";
+
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { SearchBar } from './search-bar.jsx'
+import { SearchBarExpand } from './search-bar-expand.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const navigate = useNavigate()
@@ -25,7 +27,9 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     />
                 </Link>
 
-                <div className="header-filter">
+                <SearchBarExpand/>
+                {/* TODO:REPLACE WITH SEARCHBAR CMP */}
+                {/* <div className="header-filter">
                     <div className="location">
                         <p>Location</p>
                         <input type="text" placeholder="Where are you going?" />
@@ -43,7 +47,7 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                         <input type="text" placeholder="Add guests" />
                         <span><BiSearch className="search-icon" /></span>
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="user-btns-container">

@@ -1,7 +1,4 @@
 .stay-details {
-    width: 80vw;
-    font-size: 16px;
-    font-family: cerealBk;
 
     section {
         border-bottom: 1px solid $clr5;
@@ -24,7 +21,6 @@
         padding-top: 48px;
         padding-top: 24px;
         font-size: 13px;
-        font-family: cerealMd;
         align-items: center;
 
         h2 span {
@@ -104,8 +100,13 @@
         }
     }
 
-    .reservation-container {
+    .stay-reservation {
         position: sticky;
+        top: 80px;
+        border-bottom: unset;
+    }
+
+    .reservation-container {
         border: 1px solid rgb(221, 221, 221);
         border-radius: 12px;
         padding: 24px;

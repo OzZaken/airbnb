@@ -106,11 +106,16 @@
     }
 
     .reservation-container {
-        box-shadow: -1px 1px 2px 1px #00000070;
+        border: 1px solid rgb(221, 221, 221);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+        //  Later remove
         width: 300px;
         padding-top: 24px;
         padding-bottom: 24px;
-        // Later remove
         height: 305px;
+        // for the section
+        border-bottom: unset;
     }
 }

@@ -5,8 +5,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 //  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
-
- // Amenities 
+import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined';
+import WhereToVoteOutlinedIcon from '@mui/icons-material/WhereToVoteOutlined';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+// Amenities 
 
 //  Filter 
 import { RiCactusLine } from 'react-icons/ri'
@@ -19,9 +21,9 @@ const icons = {
     "heart": <FavoriteBorderIcon />,
     // Achievements
     "fastWifi": <WifiIcon />,
-    "superHost": '',
-    "greatLoc": '',
-    "greatCheckIn": '',
+    "superHost": <WorkspacePremiumOutlinedIcon/>,
+    "greatLoc": <WhereToVoteOutlinedIcon/>,
+    "greatCheckIn": <AssignmentTurnedInOutlinedIcon/>,
     "workspace": '',
     "selfCheckIns": '',
     "petsFriendly": '',

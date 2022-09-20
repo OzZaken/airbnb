@@ -1,10 +1,12 @@
-//  Global Page Icons
+//  Global Page 
 import IosShareIcon from '@mui/icons-material/IosShare'
 import StarRateIcon from '@mui/icons-material/StarRate'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-//  Achievements icons
+//  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
+
+ // Amenities 
 
 //  Filter 
 import { RiCactusLine } from 'react-icons/ri'

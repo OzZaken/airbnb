@@ -1,6 +1,5 @@
-import { stayService } from "../services/stay.service.local"
 import AppIcon from "./icon"
-
+import { stayService } from "../services/stay.service.local"
 // import utilService from "../services/util.service"
 const achievements = stayService.getStayAchievements()
 
@@ -23,14 +22,13 @@ export function StayAchievements({ stay }) {
 
     </section>
 }
+
 // todo: delete func
 function makeId(length = 6) {
     var txt = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
     for (var i = 0; i < length; i++) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-
     return txt;
 }

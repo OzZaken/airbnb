@@ -42,6 +42,7 @@ export const StayTitle = ({ stay }) => {
             <div className="flex column space-between">
                 <h2>
                     <span>{`${stay.type} `}</span>
+                    {/* // todo:↓ Better in span and remove css ↓ */}
                     {`hosted by ${stay.host.fullname}`}
                 </h2>
 

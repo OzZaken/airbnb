@@ -32,7 +32,6 @@
 }
 
 .imgs-grid-container.imgs-preview {
-    // max-height: 50vh;
     border-radius: 10px;
     grid-template-columns: repeat(4, 1fr);
     object-fit: contain;
@@ -80,4 +79,8 @@
         padding-bottom: 16px;
 
     }
+}
+
+.reservation-container {
+    width: 300px;
 }

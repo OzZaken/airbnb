@@ -4,12 +4,9 @@ import { stayService } from "../services/stay.service.local"
 const achievements = stayService.getStayAchievements()
 
 export function StayAchievements({ stay }) {
-    console.log('stay.achievements:', stay.achievements)
     return <section className="flex column stay-achievements">
-        {stay.achievements.splice(0, 3).map((achievement )=>
-            <div 
-            key={makeId()}
-            className="flex">
+        {stay.achievements.splice(0, 3).map((achievement) =>
+            <div className="flex" key={makeId()} > 
                 <div>
                     <AppIcon iconKey={achievements[achievement].icon} />
                 </div>

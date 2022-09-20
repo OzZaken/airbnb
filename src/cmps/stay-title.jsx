@@ -1,7 +1,7 @@
 import AppIcon from './icon'
 import { Link } from 'react-router-dom'
 
-export function StayTitle({ stay }) {
+export const StayTitle = ({ stay })=> {
 
     const pluralTxt = (num) => {
         if (!num) return ' '
@@ -15,12 +15,11 @@ export function StayTitle({ stay }) {
 
         <div className="flex space-between rate">
             <div>
-                <span><AppIcon iconKey='rate' /></span>
+                <span><AppIcon iconKey='rate'/></span>
                 {/* <StayAvg/> */}
                 <span>4.75</span>
                 <Link to="/" className="underline reviews"> 14 reviews</Link>
-                <span>·</span>
-                <Link className="underline address">{` ${stay.loc.address}, ${stay.loc.country}`}</Link>
+                <Link className="underline address">{`· ${stay.loc.address}, ${stay.loc.country}`}</Link>
             </div>
 
             <div>

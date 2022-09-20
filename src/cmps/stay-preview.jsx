@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarIcon from '@mui/icons-material/Star';
 import Carousel from 'react-material-ui-carousel'
+import heartIcon from '../assets/img/heart-icon.svg'
 
 
 
@@ -18,8 +19,9 @@ export function StayPreview({ stay, onRemoveStay }) {
 
 
         <div className="preview-img-container square-ratio">
-          <img src={stay.imgUrls[0]} alt="image" />
-          <FavoriteBorderIcon className="preview-img-like"/>
+          <img className="preview-img" src={stay.imgUrls[0]} alt="image" />
+          <img className="heart-icon" src={heartIcon} />
+          {/* <FavoriteBorderIcon className="preview-img-like"/> */}
         </div>
 
         {/* <div className="preview-img-like"><FavoriteBorderIcon /></div> */}

@@ -58,10 +58,8 @@
 }
 
 .imgs-grid-container {
-    padding-top: 24px;
     display: grid;
-    grid-template-rows: repeat(2, 250px);
-    grid-template-rows: 215px 215px;
+    grid-template-rows: repeat(2, 215px);
     gap: 5px;
     border-radius: 15px;
 

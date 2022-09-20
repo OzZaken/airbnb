@@ -10,10 +10,10 @@ export const StayTitle = ({ stay }) => {
 
     if (!stay) return <div>Loading...</div>
     return <section className="stay-title">
-        <h1>{stay.name}</h1>
+        <h2>{stay.name}</h2>
 
         <div className="flex space-between rate">
-            <div>
+            <div className='align-center'>
                 <span><AppIcon iconKey='star' /></span>
                 <span>4.75</span>   {/* <StayAvg/> */}
                 <Link to="/" className="underline reviews"> 14 reviews</Link>
@@ -28,7 +28,7 @@ export const StayTitle = ({ stay }) => {
                     <AppIcon iconKey='heart' />save
                 </button>
             </div>
-            
+
         </div>
 
         <div className="imgs-grid-container imgs-preview">
@@ -39,11 +39,9 @@ export const StayTitle = ({ stay }) => {
         </div>
 
         <div className="flex space-between stay-title">
-            <div>
+            <div className="flex column space-between">
                 <h2>
-                    <span>{`${stay.type}`}</span>
-                    {`hosted by `}
-                    <span>{`${stay.host.fullname}`}</span>
+                    {`${stay.type} hosted by ${stay.host.fullname}`}
                 </h2>
 
                 <div>

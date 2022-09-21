@@ -13,7 +13,7 @@ export const StayReservation = ({ stay }) => {
                 {`$ ${stay.price} night`}
                 <StayRate reviews={stay.reviews} />
             </div>
-
+            {/* <LocalizationProvider/> */}
             <input type="date" name="order" id="order" />
         </div>
     </section>

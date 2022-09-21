@@ -1,10 +1,37 @@
+// later on helper.scss↓
+.imgs-grid-container {
+    display: grid;
+    gap: 5px;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    :first-child {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+// #imgs-preview
+.imgs-grid-container.imgs-preview {
+    border-radius: 10px;
+    object-fit: contain;
+    object-fit: cover;
+    overflow: hidden;
+
+    :hover {
+        filter: brightness(90%);
+    }
+
+}
+
 .stay-details {
     max-width: 80vw;
-
-    span,
-    button.capitalize {
-        text-transform: capitalize;
-    }
 
     * {
         font-family: ffregular;
@@ -16,7 +43,6 @@
 
     svg {
         font-size: small;
-        font-size: calc(150%);
     }
 
     h1 {
@@ -48,19 +74,7 @@
 
     }
 
-    // #imgs-preview
-    .imgs-grid-container.imgs-preview {
-        border-radius: 10px;
-        grid-template-columns: repeat(4, 1fr);
-        object-fit: contain;
-        object-fit: cover;
-        overflow: hidden;
-
-        :hover {
-            filter: brightness(90%);
-        }
-
-    }
+    
 
     //#stay-achievements
     .stay-achievements {

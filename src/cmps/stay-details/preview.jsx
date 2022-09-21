@@ -22,9 +22,7 @@ export function SPreview({ stay }) {
 
         <div className="imgs-grid-container imgs-preview">
             {stay.imgUrls.slice(0, 5).map(imgUrl =>
-                <div key={imgUrl}>
-                    <img src={imgUrl} alt="Stay image" />
-                </div>
+                    <img key={imgUrl} src={imgUrl} alt="Stay image" />
             )}
         </div>
     </section>

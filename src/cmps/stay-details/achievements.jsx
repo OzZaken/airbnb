@@ -1,34 +1,21 @@
 import AppIcon from "../icon"
 import { stayService } from "../../services/stay.service.local"
-// import utilService from "../services/util.service"
+const achievementsMap = stayService.getAchievements()
 
-const achievements = stayService.getStayAchievements()
-
-export function StayAchievements({ stay }) {
+export const StayAchievements = ({ achievements }) =>{
+    if (!achievements) return
     return <section className="flex column stay-achievements">
-        {stay.achievements.slice(0, 3).map((achievement) =>
-
-            <div className="flex" key={makeId()} >
+        {achievements.slice(0, 3).map((achievement) =>
+            <div className="flex" key={achievement} >
                 <div className="achievement-icon">
-                    <AppIcon iconKey={achievements[achievement].icon} />
+                    <AppIcon iconKey={achievementsMap[achievement].icon} />
                 </div>
 
                 <div className="achievement-content">
-                    <div>{achievements[achievement].heading}</div>
-                    <span>{achievements[achievement].txt}</span>
+                    <div>{achievementsMap[achievement].heading}</div>
+                    <span>{achievementsMap[achievement].txt}</span>
                 </div>
             </div>
         )}
-
     </section>
-}
-
-// todo: delete func
-function makeId(length = 6) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return txt;
 }

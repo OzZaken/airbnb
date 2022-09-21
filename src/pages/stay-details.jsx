@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import { StayTitle } from '../cmps/stay-details/title'
 import { stayService } from '../services/stay.service.local'
 import { StayAmenities } from '../cmps/stay-details/amenities'
 import { StayAchievements } from '../cmps/stay-details/achievements'
 import { StayReservation } from '../cmps/stay-details/reservation'
+import { StayHost } from '../cmps/stay-details/host'
+import { SPreview } from '../cmps/stay-details/preview'
+import { AirCover } from '../cmps/stay-details/air-cover'
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
@@ -25,27 +27,21 @@ export const StayDetails = () => {
     //     stay.reviews.rate
     //     nums.reduce((a, b) => (a + b)) / nums.length
     // }
+
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
-        <StayTitle stay={stay} />
+        <SPreview stay={stay} />
         <div className='flex space-between'>
-
             <div>
-                <StayAchievements stay={stay} />
-                <section className="air-cover-container">
-                    <div className="img-air-cover">
-                        <img src="https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg" alt="" />
-                    </div>
-                    <div>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</div>
-                    <button className="btn underline"><b>Read more</b></button>
-                </section>
-                <StayAmenities stay={stay} />
+                <StayHost />
+                <StayAchievements achievements={stay.achievements} />
+                <AirCover />
+                <StayAmenities amenities={stay.amenities} />
             </div>
 
             <div>
-                <StayReservation stay={stay}/>
+                <StayReservation stay={stay} />
             </div>
         </div>
-
     </section >
 }

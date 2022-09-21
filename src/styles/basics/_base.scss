@@ -7,11 +7,13 @@
 
 body {
     background-color: $clr1;
+    overflow-x: hidden;
 }
 
 h1,
-h2 {
-    font-family: FFBoldItalic;
+h2,
+h3 {
+    font-family: ffheading;
 }
 
 img {
@@ -31,4 +33,8 @@ button {
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+::selection {
+    background-color: $clr3;
+    color: $clr1;
 }

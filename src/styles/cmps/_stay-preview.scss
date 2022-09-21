@@ -24,8 +24,8 @@
     width: rem(35px);
     height: rem(35px);
     opacity: 0.9;
-    top: 40%;
-    left: 85%;
+    bottom: 55%;
+    right: rem(10px);
     transition: transform 0.5s;
 
     &:hover {
@@ -39,8 +39,8 @@
     width: rem(35px);
     height: rem(35px);
     opacity: 0.9;
-    top: 40%;
-    left: 5%;
+    bottom: 55%;
+    left: rem(10px);
     transition: transform 0.5s;
 
     &:hover {

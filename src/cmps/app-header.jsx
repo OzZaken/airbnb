@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import { LoginSignup } from './login-signup.jsx'
 import logo from '../assets/img/airbnb2.svg'
@@ -16,6 +16,7 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // const onClickBecomeHost = () => {
     //     navigate('/stay/edit')
     // }
+
 
     return (
         <header className="main-container">

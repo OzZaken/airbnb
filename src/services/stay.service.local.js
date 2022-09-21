@@ -5,8 +5,8 @@ export const stayService = {
   save,
   remove,
   getById,
-  getStayTypes,
-  getStayAchievements,
+  getStayTypes: getTypes,
+ getAchievements,
 }
 
 const STORAGE_KEY = 'stays'
@@ -485,10 +485,10 @@ function save(stay) {
   }
 }
 
-function getStayTypes() {
+function getTypes() {
   return gStayTypes
 }
 
-function getStayAchievements() {
+function getAchievements() {
   return gStayAchievements
 }

@@ -1,58 +1,51 @@
 .stay-details {
+    max-width: 80vw;
+    // height: min-content;
+
+    * {
+        font-family: ffregular;
+    }
 
     section {
         border-bottom: 1px solid $clr5;
     }
 
-    h2 {
-        padding-bottom: 5px;
-    }
-
-    button {
-        font-size: 14px;
-    }
-
     svg {
-        font-size: inherit;
+        font-size: small;
     }
 
-    // #stay-title 
-    .stay-title {
-        padding-top: 48px;
-        padding-top: 24px;
-        font-size: 13px;
-        align-items: center;
+    h1 {
+        font-size: 26px;
+    }
 
-        h2 span {
-            text-transform: capitalize;
-        }
-
-        span {
-            font-family: cerealLt;
-        }
+    // #stay-SPreview 
+    .stay-SPreview {
+        border-bottom: unset;
 
         .rate {
             padding-bottom: 24px;
+            padding-top: 24px;
         }
+
+        // #imgs-preview
+        .imgs-preview {
+
+            :hover {
+                filter: brightness(90%);
+            }
+        }
+    }
+
+    // #stay-host 
+    .stay-host {
+        padding-bottom: 24px;
+        padding-top: 24px;
 
         .img-host {
             align-self: flex-end;
             width: 56px;
             height: 56px;
             border-radius: 50%;
-        }
-    }
-
-    // #imgs-preview
-    .imgs-grid-container.imgs-preview {
-        border-radius: 10px;
-        grid-template-columns: repeat(4, 1fr);
-        object-fit: contain;
-        object-fit: cover;
-        overflow: hidden;
-
-        :hover {
-            filter: brightness(90%);
         }
 
     }
@@ -63,11 +56,12 @@
         padding-bottom: 30px;
 
         div {
+            font-family: ffbold;
             padding-bottom: 10px;
         }
 
         span {
-            font-family: cerealBk;
+            font-family: fflight;
             font-size: calc(100% - 2px)
         }
     }
@@ -89,6 +83,8 @@
     .stay-amenities {
         padding-top: 48px;
         padding-bottom: 48px;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
 
         hr {
             padding-bottom: 24px;
@@ -97,6 +93,12 @@
         div {
             padding-bottom: 16px;
 
+        }
+
+        .amenity {
+            display: flex;
+            align-items: center;
+            padding: 20px;
         }
     }
 
@@ -111,12 +113,39 @@
         border-radius: 12px;
         padding: 24px;
         box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
-        //  Later remove
         width: 300px;
         padding-top: 24px;
         padding-bottom: 24px;
-        height: 305px;
-        // for the section
         border-bottom: unset;
+
+
+        button.btn-linear {
+            height: 50px;
+            min-height: 50px;
+            min-width: 300px;
+            // border: none;
+            position: relative;
+            color: white;
+            font-size: 14px;
+            background: linear-gradient(90deg,
+                    rgba(108, 16, 38, 1) 0%,
+                    rgba(236, 37, 84, 1) var(--x),
+                    rgba(7, 22, 103, 1) 100%);
+        }
+
+        button.btn-linear:focus {
+            outline: none;
+        }
     }
+
+    .stay-summary {
+        padding-top: 24px;
+        padding-bottom: 24px;
+
+        div {
+            padding-top: inherit;
+            padding-bottom: inherit;
+        }
+    }
+
 }

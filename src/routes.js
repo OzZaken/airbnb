@@ -6,22 +6,22 @@ const routes = [
     {
         path: '/',
         component: <App />,
-        label: 'Home',
+        label: 'home',
     },
     {
         path: 'stay/:stayId',
         component: <StayDetails />,
-        label: 'Detail',
+        label: 'details',
     },
     {
         path: 'stay/edit',
         component: <StayEdit />,
-        label: 'New stay',
+        label: 'add',
     },
     {
         path: 'stay/edit/:stayId',
         component: <StayEdit />,
-        label: 'Edit exists stay',
+        label: 'edit',
     },
 
 ]

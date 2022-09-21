@@ -1,6 +1,6 @@
 export function StayAmenities({ amenities }) {
     if (!amenities) return
-    return <section className="stay-amenities">
+    return <div className="stay-details-row stay-amenities">
         <div>
             <h2>What this place offers</h2>
         </div>
@@ -17,5 +17,5 @@ export function StayAmenities({ amenities }) {
             Show all {amenities.length} amenities
         </button>
 
-    </section>
+    </div>
 }

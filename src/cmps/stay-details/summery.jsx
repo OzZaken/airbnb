@@ -1,8 +1,7 @@
 export const StaySummary = ({ summary }) => {
     if (!summary) return
-    console.log('summary:', summary)
     let isShowMoreBtn = summary.length > 0 ? true : false
-    return <section className="stay-summary">
+    return <div className="stay-details-row stay-summary">
         {summary}
         {isShowMoreBtn &&
             <div>
@@ -11,5 +10,5 @@ export const StaySummary = ({ summary }) => {
                 </button>
             </div>
         }
-    </section>
+    </div>
 }

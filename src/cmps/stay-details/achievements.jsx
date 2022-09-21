@@ -4,8 +4,9 @@ import { stayService } from "../../services/stay.service.local"
 export const StayAchievements = ({ achievements }) =>{
 const achievementsMap = stayService.getAchievements()
 console.log('achievementsMap:', achievementsMap)
+console.log('achievementsMap:', achievementsMap)
 if (!achievements) return
-    return <section className="flex column stay-achievements">
+    return <div className="flex column stay-details-row stay-achievements">
         {achievements.slice(0, 3).map((achievement) =>
             <div className="flex" key={achievement} >
                 <div className="achievement-icon">
@@ -18,5 +19,5 @@ if (!achievements) return
                 </div>
             </div>
         )}
-    </section>
+    </div>
 }

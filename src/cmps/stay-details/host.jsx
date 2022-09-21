@@ -6,9 +6,10 @@ export const StayHost = ({ stay }) => {
         return num > 1 ? 's ' : ' '
     }
     
-    return <section className="flex space-between stay-host">
+    return <div className="flex space-between stay-details-row stay-host">
         <div className="flex column space-between">
             <h2>
+                {/* //todo choose on way to capitalize */}
                 <span className='capitalize'>{`${stay.type}`}</span>
                 hosted by
                 <span>{` ${stay.host.fullname}`}</span>
@@ -25,5 +26,5 @@ export const StayHost = ({ stay }) => {
         <div>
             <img className="img-host" src={stay.host.imgUrl} alt="Host image" />
         </div>
-    </section>
+    </div>
 }

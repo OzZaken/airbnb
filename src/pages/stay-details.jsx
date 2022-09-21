@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { stayService } from '../services/stay.service.local'
 import { StayAmenities } from '../cmps/stay-details/amenities'
@@ -12,8 +12,16 @@ import { StaySummary } from '../cmps/stay-details/summery'
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
+    
+    const location = useLocation()
+    useEffect(() => {
+        document.body.classList.add("details")
+        return () => {
+            document.body.classList.remove("details")
+        }
+    }, [])
+    
     const params = useParams()
-
     useEffect(() => {
         loadStay()
     }, [params.id])
@@ -38,7 +46,7 @@ export const StayDetails = () => {
                 <StayHost stay={stay} />
                 <StayAchievements achievements={stay.achievements} />
                 <AirCover />
-                <StaySummary summary={stay.summary}/>
+                <StaySummary summary={stay.summary} />
                 <StayAmenities amenities={stay.amenities} />
             </div>
 

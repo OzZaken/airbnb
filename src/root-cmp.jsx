@@ -15,7 +15,7 @@ function App() {
             key={route.path}
             element={route.component}
             path={route.path}
-            className={route.label}
+            dataRoute={route.label}
             exact={true}
           />)}
         </Routes>

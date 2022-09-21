@@ -18,6 +18,7 @@ export function SPreview({ stay }) {
                 <StayShareBtn />
                 <StaySaveBtn />
             </div>
+            
         </div>
 
         <div className="imgs-grid-container imgs-preview">

@@ -9,10 +9,10 @@ export const StayReservation = ({ stay }) => {
     // }, [])
     return <section className="stay-reservation">
         <div className="reservation-container">
-            <span>
+            <div className="flex space-between">
                 {`$ ${stay.price} night`}
                 <StayRate reviews={stay.reviews} />
-            </span>
+            </div>
         </div>
     </section>
 }

@@ -2,16 +2,16 @@
     max-width: 80vw;
     height: min-content;
 
+    svg {
+        font-size: larger
+    }
+
     * {
         font-family: ffregular;
     }
 
     div.stay-details-row {
         border-bottom: 1px solid $clr5;
-    }
-
-    svg {
-        font-size: small;
     }
 
     h1 {
@@ -57,6 +57,10 @@
     .stay-achievements {
         padding-top: 30px;
         padding-bottom: 30px;
+
+        svg {
+            font-size: x-large;
+        }
 
         div {
             font-family: ffbold;

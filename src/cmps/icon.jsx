@@ -13,6 +13,7 @@ import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurned
 
 //  Filter 
 import { RiCactusLine } from 'react-icons/ri'
+import { BiUserCheck } from 'react-icons/bi'
 import SurfingIcon from '@mui/icons-material/Surfing'
 
 const icons = {
@@ -26,7 +27,7 @@ const icons = {
     "greatLoc": <WhereToVoteOutlinedIcon/>,
     "greatCheckIn": <AssignmentTurnedInOutlinedIcon/>,
     "workspace": '',
-    "selfCheckIns": '',
+    "selfCheckIn": <BiUserCheck/>,
     "petsFriendly": '',
     // Amenities 
     "Shampoo": '',

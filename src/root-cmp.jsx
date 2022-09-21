@@ -12,10 +12,9 @@ function App() {
       <main className='main-container main-app'>
         <Routes>
           {routes.map(route => <Route
-            key={route.path}
+            key={route.label}
             element={route.component}
             path={route.path}
-            dataRoute={route.label}
             exact={true}
           />)}
         </Routes>

@@ -29,21 +29,3 @@
 //     --x: 0%;
 //   }
 
-button.btn-linear {
-    height: 50px;
-    min-height: 50px;
-    min-width: 300px;
-    border: none;
-    position: relative;
-    color: white;
-    font-size: 14px;
-    background: linear-gradient(
-      90deg,
-      rgba(108, 16, 38,1) 0%,
-      rgba(236, 37, 84,1) var(--x),
-      rgba(7, 22, 103, 1) 100%
-    );
-  }
-  button.btn-linear:focus {
-    outline: none;
-  }

@@ -21,6 +21,8 @@
     // #stay-SPreview 
     .stay-SPreview {
         border-bottom: unset;
+        display: flex;
+        flex-direction: column;
 
         .rate {
             padding-bottom: 24px;
@@ -34,6 +36,7 @@
                 filter: brightness(90%);
             }
         }
+        //todo  @include flex-direction: column;
     }
 
     // #stay-host 
@@ -96,11 +99,13 @@
 
         .amenities {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px 1fr) !important);
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         }
     }
 
     .stay-reservation {
+        padding-top: 16px;
+        padding-left: 16px;
         position: sticky;
         top: 80px;
         border-bottom: unset;

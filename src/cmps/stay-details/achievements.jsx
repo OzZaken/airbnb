@@ -1,14 +1,15 @@
 import AppIcon from "../icon"
 import { stayService } from "../../services/stay.service.local"
-const achievementsMap = stayService.getAchievements()
 
 export const StayAchievements = ({ achievements }) =>{
-    if (!achievements) return
+const achievementsMap = stayService.getAchievements()
+console.log('achievementsMap:', achievementsMap)
+if (!achievements) return
     return <section className="flex column stay-achievements">
         {achievements.slice(0, 3).map((achievement) =>
             <div className="flex" key={achievement} >
                 <div className="achievement-icon">
-                    <AppIcon iconKey={achievementsMap[achievement].icon} />
+                    <AppIcon iconKey={achievementsMap[achievement]} />
                 </div>
 
                 <div className="achievement-content">

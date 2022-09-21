@@ -35,12 +35,17 @@
     }
 
     // #stay-host 
+    .stay-host {
+        padding-bottom: 24px;
+        padding-top: 24px;
 
-    .img-host {
-        align-self: flex-end;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
+        .img-host {
+            align-self: flex-end;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+
     }
 
     // #imgs-preview

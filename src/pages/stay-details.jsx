@@ -35,7 +35,7 @@ export const StayDetails = () => {
         <SPreview stay={stay} />
         <div className='flex space-between'>
             <div>
-                <StayHost  stay={stay} />
+                <StayHost stay={stay} />
                 <StayAchievements achievements={stay.achievements} />
                 <AirCover />
                 <StaySummary summary={stay.summary}/>

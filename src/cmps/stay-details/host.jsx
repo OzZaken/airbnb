@@ -6,7 +6,7 @@ export const StayHost = ({ stay }) => {
         return num > 1 ? 's ' : ' '
     }
     
-    return <section className="flex space-between stay-title">
+    return <section className="flex space-between stay-host">
         <div className="flex column space-between">
             <h2>
                 <span className='capitalize'>{`${stay.type}`}</span>

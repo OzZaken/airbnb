@@ -31,12 +31,15 @@
             padding-top: 24px;
         }
 
-        .img-host {
-            align-self: flex-end;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-        }
+    }
+
+    // #stay-host 
+
+    .img-host {
+        align-self: flex-end;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
     }
 
     // #imgs-preview
@@ -140,4 +143,15 @@
             outline: none;
         }
     }
+
+    .stay-summary {
+        padding-top: 24px;
+        padding-bottom: 24px;
+
+        div {
+            padding-top: inherit;
+            padding-bottom: inherit;
+        }
+    }
+
 }

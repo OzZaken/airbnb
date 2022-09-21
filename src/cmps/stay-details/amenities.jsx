@@ -5,12 +5,9 @@ export function StayAmenities({ amenities }) {
             <h2>What this place offers</h2>
         </div>
 
-        <div className="flex">
-            {amenities.slice(0, 6)
-                .map(amenity =>
-                    <div
-                        className="amenity"
-                        key={`${amenity}`}>
+        <div className="amenities">
+            {amenities.slice(0, 6).map(amenity =>
+                    <div key={`${amenity}`}>
                         {amenity}
                     </div>
                 )}

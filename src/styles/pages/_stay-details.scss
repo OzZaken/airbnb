@@ -1,6 +1,6 @@
 .stay-details {
     max-width: 80vw;
-    // height: min-content;
+    height: min-content;
 
     * {
         font-family: ffregular;
@@ -83,8 +83,6 @@
     .stay-amenities {
         padding-top: 48px;
         padding-bottom: 48px;
-        justify-content: flex-end;
-        flex-direction: row-reverse;
 
         hr {
             padding-bottom: 24px;
@@ -92,13 +90,11 @@
 
         div {
             padding-bottom: 16px;
-
         }
 
-        .amenity {
-            display: flex;
-            align-items: center;
-            padding: 20px;
+        .amenities {
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(250px 1fr)!important);
         }
     }
 

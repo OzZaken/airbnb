@@ -9,7 +9,7 @@ export const StayHost = ({ stay }) => {
     return <section className="flex space-between stay-title">
         <div className="flex column space-between">
             <h2>
-                <span className='capitalize'>{`${stay.type} `}</span>
+                <span className='capitalize'>{`${stay.type}`}</span>
                 hosted by
                 <span>{` ${stay.host.fullname}`}</span>
             </h2>

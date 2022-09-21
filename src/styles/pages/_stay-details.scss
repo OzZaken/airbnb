@@ -1,6 +1,11 @@
 .stay-details {
     max-width: 80vw;
 
+    span,
+    button.capitalize {
+        text-transform: capitalize;
+    }
+
     * {
         font-family: ffregular;
     }
@@ -21,10 +26,6 @@
     // #stay-SPreview 
     .stay-SPreview {
         border-bottom: unset;
-
-        span.capitalize {
-            text-transform: capitalize;
-        }
 
         .rate {
             padding-bottom: 24px;

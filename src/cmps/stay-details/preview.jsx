@@ -10,7 +10,7 @@ export function SPreview({ stay }) {
         <div className="flex space-between">
 
             <div className="flex space-between">
-                <StayRate stay={stay} />
+                <StayRate reviews={stay.reviews} />
                 <StayAddress loc={stay.loc} />
             </div>
 

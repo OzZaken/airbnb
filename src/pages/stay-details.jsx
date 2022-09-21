@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { stayService } from '../services/stay.service.local'
-import { StayAmenities } from '../cmps/stay-details/amenities'
-import { StayAchievements } from '../cmps/stay-details/achievements'
-import { StayReservation } from '../cmps/stay-details/reservation'
-import { StayHost } from '../cmps/stay-details/host'
-import { SPreview } from '../cmps/stay-details/preview'
-import { AirCover } from '../cmps/stay-details/air-cover'
-import { StaySummary } from '../cmps/stay-details/summery'
+import { StayAmenities } from '../cmps/stay-props/amenities'
+import { StayAchievements } from '../cmps/stay-props/achievements'
+import { StayOrder } from '../cmps/stay-props/order'
+import { StayHost } from '../cmps/stay-props/host'
+import { SPreview } from '../cmps/stay-props/preview'
+import { AirCover } from '../cmps/air-cover'
+import { StaySummary } from '../cmps/stay-props/summery'
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
@@ -38,7 +38,6 @@ export const StayDetails = () => {
     // }
 
     if (!stay) return <div>Loading...</div>
-    console.log('stay:', stay)
     return <section className="stay-details">
         <SPreview stay={stay} />
         <div className='flex space-between'>
@@ -51,7 +50,7 @@ export const StayDetails = () => {
             </div>
 
             <div>
-                <StayReservation stay={stay} />
+                <StayOrder stay={stay} />
             </div>
         </div>
     </section >

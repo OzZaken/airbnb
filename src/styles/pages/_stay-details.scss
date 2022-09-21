@@ -17,9 +17,8 @@
     h1 {
         font-size: 26px;
     }
-}
 
-// #stay-SPreview 
+    // #stay-SPreview 
 .stay-SPreview {
     border-bottom: unset;
     display: flex;
@@ -113,15 +112,15 @@
     }
 }
 
-//#stay-reservation
-.stay-reservation {
+//#stay-order
+.stay-order {
     padding-top: 16px;
     padding-left: 16px;
     position: sticky;
     top: 80px;
     border-bottom: unset;
 
-    .reservation-container {
+    .order-container {
         border: 1px solid rgb(221, 221, 221);
         border-radius: 12px;
         padding: 24px;
@@ -143,11 +142,12 @@
             background: linear-gradient(90deg,
                     rgba(108, 16, 38, 1) 0%,
                     rgba(236, 37, 84, 1) var(--x),
-                    rgba(7, 22, 103, 1) 100%);
+                    rgba(108, 16, 38, 1) 100%);
         }
 
         button.btn-linear:focus {
             outline: none;
         }
     }
+}
 }

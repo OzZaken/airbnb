@@ -1,14 +1,14 @@
 import { stayService } from "../../services/stay.service.local"
 import { StayRate } from "./rate"
 
-export const StayReservation = ({ stay }) => {
+export const StayOrder = ({ stay }) => {
     if (!stay) return
     // const [register] = useFormRegister(
     // )
     // useEffect(() => {
     // }, [])
-    return <section className="stay-reservation">
-        <div className="reservation-container">
+    return <section className="stay-order">
+        <div className="order-container">
             <div className="flex space-between">
                 {`$ ${stay.price} night`}
                 <StayRate reviews={stay.reviews} />

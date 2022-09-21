@@ -1,0 +1,7 @@
+.modal {
+    position: fixed;
+    overflow: hidden;
+    inset: -1700px 0px 0px;
+    inset-inline-end: 17px;
+    --scrollbar-gutter: 17px
+}

@@ -1,4 +1,4 @@
-// import React from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
 import './styles/main.scss'

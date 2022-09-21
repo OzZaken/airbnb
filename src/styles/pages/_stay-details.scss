@@ -1,11 +1,15 @@
-// later on helper.scss↓
 .imgs-grid-container {
     display: grid;
-    gap: 5px;
-    border-radius: 15px;
-    aspect-ratio: 1/1;
+    gap: 10px;
+    border-radius: 7px;
+    grid-template-rows: repeat(2 1fr);
+    grid-template-columns: 25% 25% 1fr 1fr;
+    overflow: hidden;
+    // object-fit: contain;
+    object-fit: cover;
 
     img {
+        aspect-ratio: 1/1;
         height: 100%;
         width: 100%;
         object-fit: cover;
@@ -13,25 +17,22 @@
     }
 
     :first-child {
-        grid-column: 2;
-        grid-row: 2;
+        grid-column: span 2;
+        grid-row: span 2;
     }
 }
+
 // #imgs-preview
-.imgs-grid-container.imgs-preview {
-    border-radius: 10px;
-    object-fit: contain;
-    object-fit: cover;
-    overflow: hidden;
+.imgs-preview {
 
     :hover {
         filter: brightness(90%);
     }
-
 }
 
 .stay-details {
     max-width: 80vw;
+    // height: min-content;
 
     * {
         font-family: ffregular;
@@ -74,7 +75,7 @@
 
     }
 
-    
+
 
     //#stay-achievements
     .stay-achievements {

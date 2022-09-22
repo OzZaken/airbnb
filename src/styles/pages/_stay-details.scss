@@ -1,3 +1,7 @@
+:root {
+    --btn-linear: 0%;
+}
+
 .stay-details {
     max-width: 80vw;
     height: min-content;
@@ -134,6 +138,7 @@
             border-bottom: unset;
 
 
+
             button.btn-linear {
                 height: 50px;
                 min-height: 50px;
@@ -144,7 +149,7 @@
                 font-size: 14px;
                 background: linear-gradient(90deg,
                         rgba(108, 16, 38, 1) 0%,
-                        rgba(236, 37, 84, 1) var(--x),
+                        rgba(236, 37, 84, 1) var(--btn-linear),
                         rgba(108, 16, 38, 1) 100%);
             }
 

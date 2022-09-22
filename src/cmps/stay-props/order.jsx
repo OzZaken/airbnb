@@ -1,4 +1,5 @@
 import { stayService } from "../../services/stay.service.local"
+import { BtnTrigger } from "../btn-trigger"
 import { StayRate } from "./rate"
 
 export const StayOrder = ({ stay }) => {
@@ -13,8 +14,8 @@ export const StayOrder = ({ stay }) => {
                 {`$ ${stay.price} night`}
                 <StayRate reviews={stay.reviews} />
             </div>
-            {/* <LocalizationProvider/> */}
             <input type="date" name="order" id="order" />
         </div>
+            {/* <BtnTrigger/> */}
     </section>
 }

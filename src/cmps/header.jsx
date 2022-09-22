@@ -29,27 +29,6 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 </Link>
 
                 <SearchBarExpand/>
-                {/* TODO:REPLACE WITH SEARCHBAR CMP */}
-                {/* <div className="header-filter">
-                    <div className="location">
-                        <p>Location</p>
-                        <input type="text" placeholder="Where are you going?" />
-                    </div>
-                    <div className="check-in">
-                        <p>Check in</p>
-                        <input type="text" placeholder="Add dates" />
-                    </div>
-                    <div className="check-out">
-                        <p>Check out</p>
-                        <input type="text" placeholder="Add dates" />
-                    </div>
-                    <div className="guests">
-                        <p>Guests</p>
-                        <input type="text" placeholder="Add guests" />
-                        <span><BiSearch className="search-icon" /></span>
-                    </div>
-                </div> */}
-
 
                 <div className="user-btns-container">
                     <Link className="header-host-btn" to={`/stay/edit`} >
@@ -102,7 +81,3 @@ const mapDispatchToProps = {
 }
 
 export const AppHeader = connect(mapStateToProps, mapDispatchToProps)(_AppHeader)
-
-
-
-

@@ -2,8 +2,6 @@ import { BiSearch } from "react-icons/bi";
 
 
 export function SearchBarExpand() {
-
-
     return (
         <section>
             <div className="header-search-bar-expand">

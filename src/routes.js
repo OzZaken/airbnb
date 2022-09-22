@@ -1,6 +1,6 @@
-import { App } from './pages/stay-app.jsx'
-import { StayDetails } from './pages/stay-details.jsx'
-import { StayEdit } from './pages/stay-edit.jsx'
+import { App } from './views/app.jsx'
+import { StayDetails } from './views/stay-details.jsx'
+import { StayEdit } from './views/stay-edit.jsx'
 
 const routes = [
     {

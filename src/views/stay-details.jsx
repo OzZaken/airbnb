@@ -3,21 +3,18 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 // Services
 import { stayService } from '../services/stay.service.local'
 // Props
-import { StayAmenities } from '../cmps/stay-props/amenities'
-import { StayAchievements } from '../cmps/stay-props/achievements'
-import { StayOrder } from '../cmps/stay-props/order'
-import { StayHost } from '../cmps/stay-props/host'
-import { SPreview } from '../cmps/stay-props/preview'
-import { StaySummary } from '../cmps/stay-props/summery'
+import { StayAmenities } from '../cmps/stay/props/amenities'
+import { StayAchievements } from '../cmps/stay/props/achievements'
+import { StayOrder } from '../cmps/stay/props/order'
+import { StayHost } from '../cmps/stay/props/host'
+import { SPreview } from '../cmps/stay/preview'
+import { StaySummary } from '../cmps/stay/props/summery'
 // Cmps
 import { AirCover } from '../cmps/air-cover'
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
-
     const location = useLocation()
-    // console.log('location:', location)
-
     useEffect(() => {
         document.body.classList.add("stay-details-page")
         return () => {

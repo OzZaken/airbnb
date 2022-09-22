@@ -1,4 +1,4 @@
-import AppIcon from '../icon'
+import AppIcon from '../../icon'
 export const StayRate = ({ reviews }) => {
     if (!reviews) return 
     return <div className="stay-rate">

@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux'
 
 import StarIcon from '@mui/icons-material/Star'
 import Carousel from 'react-material-ui-carousel'
-import heartIcon from '../assets/img/heart-icon.svg'
-import heartRed from '../assets/img/heart-red.svg'
-import arrowRight from '../assets/img/arrow-right.svg'
-import arrowLeft from '../assets/img/arrow-left.svg'
+import heartIcon from '../../assets/img/heart-icon.svg'
+import heartRed from '../../assets/img/heart-red.svg'
+import arrowRight from '../../assets/img/arrow-right.svg'
+import arrowLeft from '../../assets/img/arrow-left.svg'
 
 
 export const StayPreview = ({ stay }) => {

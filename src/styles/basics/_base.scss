@@ -6,7 +6,7 @@
 
 
 body {
-    background-color: $clr1;
+    background-color: $clr-bgc;
     overflow-x: hidden;
 }
 
@@ -35,6 +35,6 @@ button {
     cursor: pointer;
 }
 ::selection {
-    background-color: $clr3;
+    background-color: $clr-bgc;
     color: $clr1;
 }

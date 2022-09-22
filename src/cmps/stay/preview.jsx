@@ -1,7 +1,7 @@
-import { StayAddress } from "./address"
-import { StayRate } from "./rate"
-import { StaySaveBtn } from "./save"
-import { StayShareBtn } from "./share"
+import { StayAddress } from "./props/address"
+import { StayRate } from "./props/rate"
+import { StaySaveBtn } from "./props/save"
+import { StayShareBtn } from "./props/share"
 
 export function SPreview({ stay }) {
     if (!stay) return

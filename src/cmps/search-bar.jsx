@@ -17,8 +17,6 @@ export function SearchBar() {
                     <span><BiSearch className="search-icon" /></span>
                 </div>
             </div>
-
-
         </section>
 
     )

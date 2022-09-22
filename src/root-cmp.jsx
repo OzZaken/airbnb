@@ -2,8 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
 import './styles/main.scss'
-import { AppHeader } from './cmps/app-header'
-import { AppFooter } from './cmps/app-footer'
+import { AppHeader } from './cmps/header'
 
 function App() {
   return (
@@ -12,14 +11,13 @@ function App() {
       <main className='main-container main-app'>
         <Routes>
           {routes.map(route => <Route
-            key={route.label}
+            key={route.path}
             element={route.component}
             path={route.path}
             exact={true}
           />)}
         </Routes>
       </main>
-      <AppFooter />
     </div>
   )
 }

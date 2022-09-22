@@ -1,5 +1,5 @@
-import AppIcon from "../icon"
-import { stayService } from "../../services/stay.service.local"
+import AppIcon from "../../icon"
+import { stayService } from "../../../services/stay.service.local"
 
 export const StayAchievements = ({ achievements }) => {
     const achievementsMap = stayService.getAchievements()

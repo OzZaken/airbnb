@@ -1,4 +1,7 @@
 // SETUP
+:root {
+    --btn-linear: 0%;
+}
 @import './setup/variables';
 @import './setup/mixins';
 @import './setup/normalize.css';
@@ -23,4 +26,4 @@
 @import './cmps/modal';
 
 // PAGES
-@import './pages/stay-details';
+@import './views/stay-details';

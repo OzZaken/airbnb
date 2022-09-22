@@ -1,5 +1,5 @@
-import { stayService } from "../../services/stay.service.local"
-import { BtnTrigger } from "../btn-trigger"
+import { stayService } from "../../../services/stay.service.local"
+import { BtnTrigger } from "../../btn-trigger"
 import { StayRate } from "./rate"
 
 export const StayOrder = ({ stay }) => {

@@ -1,4 +1,4 @@
-import AppIcon from "../icon"
+import AppIcon from "../../icon"
 
 export function StaySaveBtn({ stay }) {
     return <button className="underline">

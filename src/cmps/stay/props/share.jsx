@@ -1,4 +1,4 @@
-import AppIcon from "../icon"
+import AppIcon from "../../icon"
 
 export const StayShareBtn = ({ stay }) => {
     return <button className="underline">

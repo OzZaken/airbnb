@@ -1,11 +1,8 @@
-:root {
-    --btn-linear: 0%;
-}
+
 
 .stay-details {
     max-width: 80vw;
     height: min-content;
-
     svg {
         font-size: larger
     }
@@ -15,7 +12,7 @@
     }
 
     div.stay-details-row {
-        border-bottom: 1px solid $clr5;
+        border-bottom: 1px solid $clr-bright;
     }
 
     h1 {

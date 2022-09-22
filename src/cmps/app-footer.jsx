@@ -4,4 +4,3 @@ export function AppFooter() {
         <p>Privacy · Terms · Sitemap · Company Details</p>
     </section>
 }
-

@@ -1,7 +1,6 @@
-
-
 .stay-details {
     height: min-content;
+
     svg {
         font-size: larger
     }
@@ -19,6 +18,8 @@
     }
 
     // #stay-SPreview 
+    
+
     .stay-SPreview {
         border-bottom: unset;
         display: flex;
@@ -133,25 +134,7 @@
             padding-bottom: 24px;
             border-bottom: unset;
 
-
-
-            button.btn-linear {
-                height: 50px;
-                min-height: 50px;
-                min-width: 300px;
-                // border: none;
-                position: relative;
-                color: white;
-                font-size: 14px;
-                background: linear-gradient(90deg,
-                        rgba(108, 16, 38, 1) 0%,
-                        rgba(236, 37, 84, 1) var(--btn-linear),
-                        rgba(108, 16, 38, 1) 100%);
-            }
-
-            button.btn-linear:focus {
-                outline: none;
-            }
+           
         }
     }
 }

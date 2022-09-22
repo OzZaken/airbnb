@@ -24,7 +24,6 @@ export const StayEdit = () => {
     useEffect(() => {
         const stayId = params.id
         if (!stayId) return
-
         stayService.getById(stayId)
             .then(stay => {
                 // setStay(stay)
@@ -33,6 +32,9 @@ export const StayEdit = () => {
                 console.log('err:', err);
             })
     }, [])
+
+
+
     // const stayTypes = toysService.etStayTypes()
     const stayTypes = [
         'apartment',
@@ -88,8 +90,8 @@ export const StayEdit = () => {
 
                 <label htmlFor="imgs">
                     <div className="imgs-grid-template imgs-edit">
-                    
-                    {/* <div><ImgUploader /></div> */}
+
+                        {/* <div><ImgUploader /></div> */}
 
                         <div>
                             <ImgUploader />

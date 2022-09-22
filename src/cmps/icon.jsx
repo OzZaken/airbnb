@@ -2,12 +2,14 @@
 import Logo from '../assets/img/logo.svg'
 import Airbnb from '../assets/img/airbnb.svg'
 import IosShareIcon from '@mui/icons-material/IosShare'
-import StarRateIcon from '@mui/icons-material/StarRate'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SearchIcon from '@mui/icons-material/Search'
-
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import StarIcon from '@mui/icons-material/Star'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 //  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined';
@@ -22,16 +24,18 @@ import { BiUserCheck } from 'react-icons/bi'
 import SurfingIcon from '@mui/icons-material/Surfing'
 
 const icons = {
-    // Global
-    // "":</>,
+    // Global 
     "logo": <img src={Logo} alt="Logo image" />,
-    "airbnb":<Airbnb/>,
+    "airbnb": <Airbnb />,
     "share": <IosShareIcon />,
-    "star": <StarRateIcon />,
+    "star": <StarIcon />,
     "heart": <FavoriteBorderIcon />,
+    "heartFill": <FavoriteIcon />,
     "search": <SearchIcon />,
     "menu": <MenuIcon />,
     "accountCircle": <AccountCircleIcon />,
+    "arrowForward": <ArrowForwardIosIcon />,
+    "arrowBack": <ArrowBackIosIcon />,
     // Achievements
     "fastWifi": <WifiIcon />,
     "superHost": <WorkspacePremiumOutlinedIcon />,
@@ -50,3 +54,4 @@ const icons = {
 export default function AppIcon({ iconKey }) {
     return icons[iconKey]
 }
+// https://mui.com/material-ui/material-icons

@@ -9,7 +9,6 @@ export const StayHost = ({ stay }) => {
     return <div className="flex space-between stay-details-row stay-host">
         <div className="flex column space-between">
             <h2>
-                {/* //todo choose on way to capitalize */}
                 <span className='capitalize'>{`${stay.type}`}</span>
                 hosted by
                 <span>{` ${stay.host.fullname}`}</span>

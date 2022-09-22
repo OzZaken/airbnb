@@ -4,11 +4,15 @@ import { useLocation } from 'react-router-dom'
 import { StayList } from '../cmps/stay/list'
 import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
-export const App = () => {
+export const HomePage = () => {
     const stays = useSelector((state) => state.stayModule.stays)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadStays())
+        document.body.classList.add("home-page")
+        return () => {
+            document.body.classList.remove("home-page")
+        }
     }, [])
 
     const onRemoveStay = (stayId) => {
@@ -25,7 +29,7 @@ export const App = () => {
     }
 
     if (!stays) return <h1>Loading...</h1>
-    return <section className="home-page">
+    return <section >
         <StayList stays={stays} />
     </section>
 }

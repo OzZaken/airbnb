@@ -5,7 +5,7 @@ import { stayService } from '../services/stay.service.local'
 // Props
 import { StayAmenities } from '../cmps/stay/props/amenities'
 import { StayAchievements } from '../cmps/stay/props/achievements'
-import { StayOrder } from '../cmps/stay/props/order'
+import { StayOrder } from '../cmps/stay/order'
 import { StayHost } from '../cmps/stay/props/host'
 import { SPreview } from '../cmps/stay/preview'
 import { StaySummary } from '../cmps/stay/props/summery'

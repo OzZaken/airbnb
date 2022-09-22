@@ -1,0 +1,19 @@
+.btn-linear {
+    height: 50px;
+    min-height: 50px;
+    width: 90%;
+    position: relative;
+    color: white;
+    border-radius: 25px;
+    padding: 0;
+    margin-top: 10px;
+
+    background: linear-gradient(90deg,
+            rgba(108, 22, 38, 1) 0%,
+            rgba(236, 83, 84, 1) var(--btn-linear),
+            rgba(108, 22, 38, 1) 100%);
+
+    &:focus {
+        outline: none;
+    }
+}

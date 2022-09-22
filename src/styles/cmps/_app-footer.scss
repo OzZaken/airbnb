@@ -1,12 +1,10 @@
 .app-footer {
+    position: fixed;
+    bottom: 0px;
+    background-color: red;
     border-top: 1px solid #bebebe;
     padding: 5px;
-    max-height: 1vh;
+    max-height: 2vh;
     background-color: #ebebeb;
     text-align: center;
-
-    >p {
-        padding: 5px;
-        font-size: 0.8em;
-    }
 }

@@ -1,11 +1,11 @@
-import { App } from './views/app.jsx'
+import { HomePage } from './views/home.jsx'
 import { StayDetails } from './views/stay-details.jsx'
 import { StayEdit } from './views/stay-edit.jsx'
 
 const routes = [
     {
         path: '/',
-        component: <App />,
+        component: <HomePage />,
         label: 'home',
     },
     {

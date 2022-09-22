@@ -5,21 +5,20 @@
 
   .logo {
     display: flex;
-    flex: 1;
     object-fit: contain;
-    height: 32px;
+    width: 32px;
 
+    &::after{
+      content: url('../../assets/img/airbnb.svg');
+    }
   }
-
+  
   .filter-btns-container {
-    flex: 2;
     padding-left: 50px;
     padding-right: 50px;
-    max-width: 650px;
     height: 50px;
 
     .btns-container {
-      flex: 1;
       border-radius: 10px;
       padding: 5px;
       box-shadow: 0 0 5px hsl(0 0% 78%);
@@ -36,11 +35,13 @@
       }
     }
 
-    .user-btns-container:hover {
+    .user-btns-container {
       box-shadow: 0 0 5px rgb(142, 130, 130);
+      :hover {
+        background-color: rgba(235, 235, 235, 0.354);
+      }
     }
   }
-
 }
 
 //   transform: translateY(-50%);

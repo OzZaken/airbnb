@@ -1,6 +1,5 @@
 import { StayPreview } from './stay-preview'
 
-
 export function StayList({ stays }) {
 
   if (!stays) return
@@ -10,4 +9,3 @@ export function StayList({ stays }) {
       ))}
     </ul>
 }
-

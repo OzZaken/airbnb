@@ -1,14 +1,10 @@
 .stay-preview {
   cursor: pointer;
   position: relative;
-  // a {
-  //   position: relative;
-  // }
 
   .preview-img-container {
     box-shadow: 3px 4px 6px #00000026;
     border-radius: 12px;
-
   }
 
   .heart-icon {
@@ -20,54 +16,46 @@
   }
 
   .arrow-right {
-    position: absolute;
-    width: rem(35px);
-    height: rem(35px);
-    opacity: 0.9;
-    bottom: 55%;
     right: rem(10px);
-    transition: transform 0.5s;
-
-    &:hover {
-      transform: scale(1.1);
-      opacity: 1;
-    }
   }
 
   .arrow-left {
+    left: rem(10px);
+  }
+
+  .arrow-left,
+  .arrow-right {
+    bottom: 55%;
+    opacity: 0.8;
     position: absolute;
     width: rem(35px);
     height: rem(35px);
-    opacity: 0.9;
-    bottom: 55%;
-    left: rem(10px);
-    transition: transform 0.5s;
+    transition: transform 0.4s;
+    transition: opacity 0.4s;
 
     &:hover {
       transform: scale(1.1);
       opacity: 1;
     }
+
   }
 
-  & .stay-name {
-    font-family: cereal3;
+  .stay-name {
     display: flex;
     justify-content: space-between;
-    // align-items: center;
-    margin-top: 10px;
+    padding-top: 10px;
 
     .star {
-      font-size: rem(15px);
-      margin-right: 5px;
+      padding-right: 5px;
     }
   }
 
-  & .stay-distance,
+  .stay-distance,
   .stay-date {
-    color: $clr-bgc;
+    color: $clr-bright;
   }
 
-  & .stay-price {
-    margin-top: 8px;
+  .stay-price {
+    padding-top: 8px;
   }
 }

@@ -1,6 +1,5 @@
 const db = {
   "stay": [
-
     {
       "_id": "stay1",
       "name": "Entire rental unit hosted by Untitled",

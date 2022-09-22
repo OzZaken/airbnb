@@ -4,6 +4,12 @@
     src: url(../../assets/fonts/Circular/AvenirLTStd-Medium.otf);
 }
 
+// regular
+@font-face {
+    font-family: ffregular;
+    src: url(../../assets/fonts/Circular/AvenirLTStd-Book.otf);
+}
+
 // Light
 @font-face {
     font-family: fflight;
@@ -15,20 +21,9 @@
     src: url(../../assets/fonts/cereal-font/AirbnbCereal_W_Lt.otf);
 }
 
-// regular
-@font-face {
-    font-family: ffregular;
-    src: url(../../assets/fonts/Circular/AvenirLTStd-Book.otf);
-}
-
 @font-face {
     font-family: cerealBk;
     src: url(../../assets/fonts/cereal-font/AirbnbCereal_W_Bk.otf);
-}
-
-@font-face {
-    font-family: ffregular1;
-    src: url(../../assets/fonts/Circular/AvenirLTStd-Book.otf);
 }
 
 // bold

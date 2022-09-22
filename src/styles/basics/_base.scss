@@ -4,6 +4,17 @@
     padding: 0;
 }
 
+html {
+    font-size: 18px;
+    font-family: ffregular, 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: $clr-bgc;
+    //? overflow: hidden; for header too?
+    overflow-x: hidden;
+}
+
 header {
     flex-direction: column;
     position: sticky;
@@ -12,10 +23,7 @@ header {
     border-bottom: 1px solid $clr-bright;
 }
 
-body {
-    background-color: $clr-bgc;
-    overflow-x: hidden;
-}
+
 
 h1,
 h2,
@@ -47,6 +55,6 @@ button {
     color: $clr1;
 }
 
-footer{
+footer {
     background-color: $clr-bright;
 }

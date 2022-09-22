@@ -18,12 +18,14 @@ export function SPreview({ stay }) {
                 <StayShareBtn />
                 <StaySaveBtn />
             </div>
-            
+
         </div>
 
         <div className="imgs-grid-template imgs-preview">
-            {stay.imgUrls.slice(0, 5).map(imgUrl =>
-                    <img key={imgUrl} src={imgUrl} alt="Stay image" />
+            {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
+                <img src={imgUrl}
+                    key={`${imgUrl}-${idx}`}
+                    alt={`Stay image ${idx}`} />
             )}
         </div>
     </section>

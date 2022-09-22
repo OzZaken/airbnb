@@ -1,7 +1,4 @@
 // SETUP
-:root {
-    --btn-linear: 0%;
-}
 @import './setup/variables';
 @import './setup/mixins';
 @import './setup/normalize.css';
@@ -16,6 +13,7 @@
 
 // CMPS
 @import './cmps/app-header';
+@import './cmps/btn-trigger';
 @import './cmps/app-footer';
 @import './cmps/user-msg';
 @import './cmps/stay-list';

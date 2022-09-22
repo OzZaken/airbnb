@@ -6,12 +6,12 @@ import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/use
 import AppIcon from "./icon"
 
 // CMPS
-// import {  } from ''
 import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     const location = useLocation()
+    const isFilterShown = true
 
     //? Using with navigate from the Header or just link?
     const navigate = useNavigate()
@@ -23,19 +23,19 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
 
     // For Show heading "NavLinks"
     const ref = useRef()
-    const onSelectFocus = (focusOn) => {
-        console.log('onSelectFocus')
-        // try1
-        console.log('focusOn', focusOn.target.value)
-        // try2
-        ref.current = focusOn
-        // try3
-        isSelectedFilterBy = !isSelectedFilterBy
-    }
-    const isSelectedFilterBy = false
+    const onSelectFocus = () => {
+        // isFilterShown = true
 
+            // // try1
+            // console.log('focusOn', focusOn.target.value)
+            // // try2
+            // ref.current = focusOn
+            // // try3
+            // isSelectedFilterBy = !isSelectedFilterBy
+    }
+
+    
     return <header className='main-container space-between'>
-        {isSelectedFilterBy && <StayFilter />}
 
         <div className='flex space-between main-header'>
             <Link className="logo" to={'/'}>
@@ -44,12 +44,12 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
 
             <div className='flex filter-btns-container'>
                 <div className='flex space-between btns-container'>
-                    <button onClick={onSelectFocus}>AnyWhere</button>
-                    <button onClick={onSelectFocus}>Any Week</button>
+                    <button onClick={()=>{onSelectFocus('anywhere')}}>AnyWhere</button>
+                    <button onClick={()=>{onSelectFocus('anyweek')}}>Any Week</button>
 
                     <div className='flex center space-evenly'>
                         <div>
-                            <button onClick={onSelectFocus}>
+                            <button onClick={()=>{onSelectFocus('addguests')}}>
                                 Add guests
                             </button>
                         </div>
@@ -67,6 +67,7 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                 <AppIcon iconKey="accountCircle" />
             </div>
         </div>
+        {isFilterShown && <StayFilter />}
 
         {/* {user &&
                 <span className="user-info">

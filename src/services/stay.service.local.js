@@ -5,8 +5,8 @@ export const stayService = {
   save,
   remove,
   getById,
-  getStayTypes: getTypes,
- getAchievements,
+  getTypes,
+  getAchievements,
 }
 
 const STORAGE_KEY = 'stays'
@@ -23,31 +23,31 @@ const gStayAchievements = { // Stay achievements, heading, txt and icon
   "fastWifi": {
     "heading": "Fast wifi",
     "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
-},
-"superHost": {
+  },
+  "superHost": {
     "heading": "is a Superhost",
     "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-},
-"greatLoc": {
+  },
+  "greatLoc": {
     "heading": "Great location",
     "txt": "100% of recent guests gave the location a 5-star rating.",
-},
-"greatCheckIn": {
+  },
+  "greatCheckIn": {
     "heading": "Great check-in experience",
     "txt": "100% of recent guests gave the check-in process a 5-star rating.",
-},
-"workspace": {
+  },
+  "workspace": {
     "heading": "Dedicated workspace",
     "txt": "A private room with wifi that`s well-suited for working.",
-},
-"selfCheckIn": {
+  },
+  "selfCheckIn": {
     "heading": "Self check-in",
     "txt": "You can check in with the doorman.",
-},
-"petsFriendly": {
+  },
+  "petsFriendly": {
     "heading": "Furry friends welcome",
     "txt": "Bring your pets along for the stay.",
-},
+  },
 }
 const gStayAmenities = [ // Stay amenities, txt for start icon later
   "Bathtub",

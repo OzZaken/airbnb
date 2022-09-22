@@ -1,7 +1,12 @@
-//  Global Page 
+//  Global 
+import Logo from '../assets/img/logo.svg'
+import Airbnb from '../assets/img/airbnb.svg'
 import IosShareIcon from '@mui/icons-material/IosShare'
 import StarRateIcon from '@mui/icons-material/StarRate'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import MenuIcon from '@mui/icons-material/Menu'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import SearchIcon from '@mui/icons-material/Search'
 
 //  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
@@ -17,23 +22,29 @@ import { BiUserCheck } from 'react-icons/bi'
 import SurfingIcon from '@mui/icons-material/Surfing'
 
 const icons = {
-    // PAGE Basic Icons
+    // Global
+    // "":</>,
+    "logo": <img src={Logo} alt="Logo image" />,
+    "airbnb":<Airbnb/>,
     "share": <IosShareIcon />,
     "star": <StarRateIcon />,
     "heart": <FavoriteBorderIcon />,
+    "search": <SearchIcon />,
+    "menu": <MenuIcon />,
+    "accountCircle": <AccountCircleIcon />,
     // Achievements
     "fastWifi": <WifiIcon />,
-    "superHost": <WorkspacePremiumOutlinedIcon/>,
-    "greatLoc": <WhereToVoteOutlinedIcon/>,
-    "greatCheckIn": <AssignmentTurnedInOutlinedIcon/>,
+    "superHost": <WorkspacePremiumOutlinedIcon />,
+    "greatLoc": <WhereToVoteOutlinedIcon />,
+    "greatCheckIn": <AssignmentTurnedInOutlinedIcon />,
     "workspace": '',
-    "selfCheckIn": <BiUserCheck/>,
+    "selfCheckIn": <BiUserCheck />,
     "petsFriendly": '',
     // Amenities 
     "Shampoo": '',
     // Filter:
     "cactus": <RiCactusLine />,
-    "surfing":<SurfingIcon/>,
+    "surfing": <SurfingIcon />,
 
 }
 export default function AppIcon({ iconKey }) {

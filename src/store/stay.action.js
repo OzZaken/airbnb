@@ -73,5 +73,3 @@ export function sortByStays(sortBy) {
     dispatch({ type: 'SET_STAYS', stays })
   }
 }
-
-

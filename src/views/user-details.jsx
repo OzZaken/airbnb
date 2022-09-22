@@ -12,8 +12,7 @@ export function _UserDetails({ user, loadUser }) {
   }, [])
 
 
-  return (
-    <section className="user-details">
+  return <section className="user-details">
       <h1>User Details</h1>
       {user && <div>
         <h3>
@@ -24,10 +23,7 @@ export function _UserDetails({ user, loadUser }) {
         </pre>
       </div>}
     </section>
-  )
 }
-
-
 
 const mapStateToProps = state => {
   return {

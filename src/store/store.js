@@ -2,15 +2,16 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunk from 'redux-thunk'
 
 import { stayReducer } from './stay.reducer.js'
+import { orderReducer } from './order.reducer.js'
 import { userReducer } from './user.reducer.js'
 import { systemReducer } from './system.reducer'
 
 const rootReducer = combineReducers({
     stayModule: stayReducer,
+    orderModule: orderReducer,
     systemModule: systemReducer,
     userModule: userReducer,
 })
-
 
 // export const store = createStore(rootReducer, applyMiddleware(thunk))
 // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__();

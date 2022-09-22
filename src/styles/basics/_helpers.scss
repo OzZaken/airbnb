@@ -1,3 +1,111 @@
+// Media helpers
+.square-ratio {
+    @include aspect-ratio(1, 1);
+}
+
+.video-ratio {
+    @include aspect-ratio(16, 9);
+}
+
+.portrait-ratio {
+    @include aspect-ratio(9, 16);
+}
+
+// Grid Template
+.imgs-grid-template {
+    display: grid;
+    gap: 10px;
+    border-radius: 7px;
+    grid-template-rows: repeat(2 1fr);
+    grid-template-columns: 25% 25% 1fr 1fr;
+    overflow: hidden;
+    // object-fit: contain;
+    object-fit: cover;
+
+    img {
+        aspect-ratio: 1/1;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    :first-child {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+}
+
+// flex helpers
+.flex {
+    display: flex;
+
+    >*.full {
+        flex: 1;
+    }
+
+    &.column {
+        flex-direction: column;
+    }
+
+    &.justify-center {
+        justify-content: center;
+    }
+
+    &.align-center {
+        align-items: center;
+    }
+
+    &.center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.baseline {
+        align-items: baseline;
+    }
+
+    &.space-between {
+        justify-content: space-between;
+    }
+
+    &.space-evenly {
+        justify-content: space-evenly;
+    }
+}
+
+// List
+.clean-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    // list-style: none;
+}
+
+// Buttons
+.btn {
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .5s;
+}
+
+.btn-big {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid $clr-dark;
+    border-radius: 10px;
+}
+
+.btn-big:hover {
+    background-color: rgba(133, 133, 133, 0.096);
+}
+
+.btn:active {
+    transform: scale(1.1);
+}
+
+// Text 
 .fs12 {
     font-size: rem(12px)
 }
@@ -25,60 +133,6 @@
 .fs30 {
     font-size: rem(30px)
 }
-// Grid Template
-.imgs-grid-container {
-    display: grid;
-    gap: 10px;
-    border-radius: 7px;
-    grid-template-rows: repeat(2 1fr);
-    grid-template-columns: 25% 25% 1fr 1fr;
-    overflow: hidden;
-    // object-fit: contain;
-    object-fit: cover;
-
-    img {
-        aspect-ratio: 1/1;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        cursor: pointer;
-    }
-
-    :first-child {
-        grid-column: span 2;
-        grid-row: span 2;
-    }
-}
-// flex helpers
-.flex {
-    display: flex;
-
-    >*.full {
-        flex: 1;
-    }
-
-    &.column {
-        flex-direction: column;
-    }
-
-    &.justify-center {
-        justify-content: center;
-
-    }
-
-    &.align-center {
-        align-items: center;
-    }
-
-    &.baseline {
-        align-items: baseline;
-    }
-
-    &.space-between {
-        justify-content: space-between
-    }
-}
-
 
 .capitalize {
     text-transform: capitalize;
@@ -88,46 +142,28 @@
     text-decoration: underline;
 }
 
-// Media helpers
-.square-ratio {
-    @include aspect-ratio(1, 1);
+// Shapes
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 50%;
 }
 
-.video-ratio {
-    @include aspect-ratio(16, 9);
+// Colors
+.fill1 {
+    background-color: $clr-logo;
+    color: $clr-bgc;
 }
 
-.portrait-ratio {
-    @include aspect-ratio(9, 16);
+.fill2 {
+    color: $clr-bgc;
+    background-color: $clr-logo;
 }
 
-.center {
-    text-align: center;
-}
-
-// Buttons
-.btn {
-    border: 0;
-    cursor: pointer;
-    font-weight: bold;
-    transition: .5s;
-}
-
-.btn-big {
-    margin-top: 10px;
-    padding: 10px;
-    border: 2px solid $clr-dark;
-    border-radius: 10px;
-}
-
-.btn-big:hover {
-    background-color: rgba(133, 133, 133, 0.096);
-}
-
-.btn:active {
-    transform: scale(1.1);
-}
-
+// Tools
 .debug * {
     outline: 1px solid orange;
 }
@@ -139,11 +175,4 @@
 #chk:checked+.info {
     /* display: block; */
     opacity: 1;
-}
-
-.clean-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    // list-style: none;
 }

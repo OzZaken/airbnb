@@ -1,7 +1,6 @@
 import { userService } from "../services/user.service.js";
 import { showErrorMsg } from '../services/event-bus.service.js'
 
-
 export function loadUsers() {
     return async dispatch => {
         try {
@@ -41,7 +40,6 @@ export function onLogin(credentials) {
         }
     }
 }
-
 
 export function onSignup(credentials) {
     return async (dispatch) => {
@@ -85,4 +83,3 @@ export function loadUser(userId) {
         }
     }
 }
-

@@ -1,7 +1,7 @@
 import { StayPreview } from './stay-preview'
 
 
-export function StayList({ stays, onRemoveStay }) {
+export function StayList({ stays }) {
 
   if (!stays) return
   return <ul className="stay-list">

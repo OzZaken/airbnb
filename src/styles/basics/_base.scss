@@ -4,6 +4,13 @@
     padding: 0;
 }
 
+header {
+    flex-direction: column;
+    position: sticky;
+    flex-direction: column;
+    background-color: white;
+    border-bottom: 1px solid $clr-bright;
+}
 
 body {
     background-color: $clr-bgc;
@@ -34,7 +41,12 @@ button {
     border: none;
     cursor: pointer;
 }
+
 ::selection {
     background-color: $clr-bgc;
     color: $clr1;
+}
+
+footer{
+    background-color: $clr-bright;
 }

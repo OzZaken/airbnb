@@ -87,7 +87,7 @@ export const StayEdit = () => {
 
 
                 <label htmlFor="imgs">
-                    <div className="imgs-grid-container imgs-edit">
+                    <div className="imgs-grid-template imgs-edit">
                     
                     {/* <div><ImgUploader /></div> */}
 

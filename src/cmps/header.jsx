@@ -1,47 +1,74 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRef } from 'react'
 import { connect } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
-import { LoginSignup } from './login-signup.jsx'
-import logo from '../assets/img/airbnb2.svg'
-import SearchIcon from '@mui/icons-material/Search';
+import AppIcon from "./icon"
 
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { SearchBar } from './search-bar.jsx'
-import { SearchBarExpand } from './search-bar-expand.jsx'
+// CMPS
+// import {  } from ''
+import { LoginSignup } from './login-signup.jsx'
+import { StayFilter } from './stay/filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
-    // const navigate = useNavigate()
-    // const onClickBecomeHost = () => {
-    //     navigate('/stay/edit')
-    // }
+    const location = useLocation()
 
+    //? Using with navigate from the Header or just link?
+    const navigate = useNavigate()
 
-    return (
-        <header className="main-container">
-            <div className='app-header'>
+    useEffect(() => {
+        // console.log('location:', location)
+        // console.log('navigate:', navigate)
+    }, [])
 
-                <Link className="logo" to={'/'}>
-                    <img src={logo}
-                        alt="Logo image"
-                    />
-                </Link>
+    // For Show heading "NavLinks"
+    const ref = useRef()
+    const onSelectFocus = (focusOn) => {
+        console.log('onSelectFocus')
+        // try1
+        console.log('focusOn', focusOn.target.value)
+        // try2
+        ref.current = focusOn
+        // try3
+        isSelectedFilterBy = !isSelectedFilterBy
+    }
+    const isSelectedFilterBy = false
 
-                <SearchBarExpand/>
+    return <header className='main-container space-between'>
+        {isSelectedFilterBy && <StayFilter />}
 
-                <div className="user-btns-container">
-                    <Link className="header-host-btn" to={`/stay/edit`} >
-                        <p>Become a host</p>
-                    </Link>
-                    <div className="btn-user-options">
-                        <MenuIcon className="menu-icon" />
-                        <AccountCircleIcon className="account-circle-icon" />
+        <div className='flex space-between main-header'>
+            <Link className="logo" to={'/'}>
+                <AppIcon iconKey="logo" />
+            </Link>
+
+            <div className='flex filter-btns-container'>
+                <div className='flex space-between btns-container'>
+                    <button onClick={onSelectFocus}>AnyWhere</button>
+                    <button onClick={onSelectFocus}>Any Week</button>
+
+                    <div className='flex center space-evenly'>
+                        <div>
+                            <button onClick={onSelectFocus}>
+                                Add guests
+                            </button>
+                        </div>
+                        <div className="circle fill2">
+                            <AppIcon iconKey="search" />
+                        </div>
+
                     </div>
                 </div>
+            </div>
 
+            <div className="flex user-btns-container">
+                <Link to={`/stay/edit`}>Become a host</Link>
+                <AppIcon iconKey="menu" />
+                <AppIcon iconKey="accountCircle" />
+            </div>
+        </div>
 
-                {/* {user &&
+        {/* {user &&
                 <span className="user-info">
                     <Link to={`user/${user._id}`}>
                     {user.imgUrl && <img src={user.imgUrl} />}
@@ -57,10 +84,7 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     <LoginSignup onLogin={onLogin} onSignup={onSignup} />
                     </section>
                 } */}
-
-            </div>
-        </header >
-    )
+    </header >
 }
 
 function mapStateToProps(state) {

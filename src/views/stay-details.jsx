@@ -14,7 +14,7 @@ import { AirCover } from '../cmps/air-cover'
 
 export const StayDetails = () => {
     const [stay, setStay] = useState(null)
-    const location = useLocation()
+    // const location = useLocation()
     useEffect(() => {
         document.body.classList.add("stay-details-page")
         return () => {

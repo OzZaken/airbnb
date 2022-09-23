@@ -1,43 +1,51 @@
-.stay-preview {
+.details-page-preview {
   cursor: pointer;
   position: relative;
 
   .preview-img-container {
     box-shadow: 3px 4px 6px #00000026;
     border-radius: 12px;
-  }
+    //todo: bug on image container
+    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
 
-  .heart-icon {
-    position: absolute;
-    top: rem(15px);
-    right: rem(15px);
-    width: rem(24px);
-    height: rem(24px);
-  }
+    .preview-btns-container {
+      .btn-add-favorite,
+      .btn-img-back,
+      .btn-img-forward {
+        position: absolute;
 
-  .arrow-right {
-    right: rem(10px);
-  }
+        &:hover {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
 
-  .arrow-left {
-    left: rem(10px);
-  }
+      .btn-img-back,
+      .btn-img-forward {
+        color: $clr-bgc;
+        top: 50%;
+        width: 30px;
+        opacity: 0.9;
+        transition: transform 0.4s;
+        transition: opacity 0.4s;
+      }
 
-  .arrow-left,
-  .arrow-right {
-    bottom: 55%;
-    opacity: 0.8;
-    position: absolute;
-    width: rem(35px);
-    height: rem(35px);
-    transition: transform 0.4s;
-    transition: opacity 0.4s;
+      .btn-img-back {
+        left: 10px;
+      }
 
-    &:hover {
-      transform: scale(1.1);
-      opacity: 1;
+      .btn-img-forward {
+        right: 10px;
+      }
+
+      .btn-add-favorite {
+        right: 10px;
+        top: 10px;
+      }
+
     }
-
   }
 
   .stay-name {
@@ -58,4 +66,24 @@
   .stay-price {
     padding-top: 8px;
   }
+}
+
+.details-page-preview {
+  border-bottom: unset;
+  display: flex;
+  flex-direction: column;
+
+  .rate {
+    padding-bottom: 24px;
+    padding-top: 24px;
+  }
+
+  // #imgs-preview
+  .imgs-preview {
+    :hover {
+      filter: brightness(90%);
+    }
+  }
+
+  //todo  @include flex-direction: column;
 }

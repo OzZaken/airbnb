@@ -10,13 +10,16 @@ export const StayOrder = ({ stay }) => {
     // }, [])
 
     return <section className='stay-order'>
-        <div className='order-container'>
+        <div className='flex column order-container'>
             <div className='flex space-between'>
                 {`$ ${stay.price} night`}
                 <StayRate reviews={stay.reviews} />
             </div>
             <input type='date' name='order' id='order' />
             <BtnTrigger/>
+            <span>You won't be charged yet</span>
+            <button className='capitalize underline'></button>
+            <button className='capitalize underline'></button>
         </div>
     </section>
 }

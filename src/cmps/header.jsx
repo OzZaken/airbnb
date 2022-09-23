@@ -10,8 +10,7 @@ import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
-    const location = useLocation()
-    const isFilterShown = true
+    const isFilterShown = false
 
     //? Using with navigate from the Header or just link?
     const navigate = useNavigate()
@@ -36,6 +35,10 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
 
     
     return <header className='main-container space-between'>
+          {/* {isLoggedIn
+             ? <LogoutButton onClick={this.handleLogoutClick} />
+             : <LoginButton onClick={this.handleLoginClick} />
+           } */}
 
         <div className='flex space-between main-header'>
             <Link className="logo" to={'/'}>

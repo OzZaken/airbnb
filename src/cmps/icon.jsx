@@ -8,8 +8,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SearchIcon from '@mui/icons-material/Search'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import StarIcon from '@mui/icons-material/Star'
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+
+// Unused
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 //  Achievements 
 import WifiIcon from '@mui/icons-material/Wifi'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined';
@@ -34,8 +39,8 @@ const icons = {
     "search": <SearchIcon />,
     "menu": <MenuIcon />,
     "accountCircle": <AccountCircleIcon />,
-    "arrowForward": <ArrowForwardIosIcon />,
-    "arrowBack": <ArrowBackIosIcon />,
+    "arrowForward": <ArrowCircleRightIcon />,
+    "arrowBack": <ArrowCircleLeftIcon />,
     // Achievements
     "fastWifi": <WifiIcon />,
     "superHost": <WorkspacePremiumOutlinedIcon />,

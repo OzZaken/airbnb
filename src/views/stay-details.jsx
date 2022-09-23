@@ -7,7 +7,7 @@ import { StayAmenities } from '../cmps/stay/props/amenities'
 import { StayAchievements } from '../cmps/stay/props/achievements'
 import { StayOrder } from '../cmps/stay/order'
 import { StayHost } from '../cmps/stay/props/host'
-import { SPreview } from '../cmps/stay/preview'
+import { SPreview, StayPreview } from '../cmps/stay/preview'
 import { StaySummary } from '../cmps/stay/props/summery'
 // Cmps
 import { AirCover } from '../cmps/air-cover'
@@ -40,7 +40,7 @@ export const StayDetails = () => {
 
     if (!stay) return <div>Loading...</div>
     return <section className="stay-details">
-        <SPreview stay={stay} />
+        <StayPreview stay={stay} />
         <div className='flex space-between'>
             <div>
                 <StayHost stay={stay} />

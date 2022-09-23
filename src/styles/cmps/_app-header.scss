@@ -7,7 +7,7 @@
     display: flex;
     object-fit: contain;
     width: 32px;
-
+    
     &::after{
       content: url('../../assets/img/airbnb.svg');
     }
@@ -45,7 +45,6 @@
 }
 
 //   transform: translateY(-50%);
-
 // ::placeholder {
 //   font-size: 0.75rem;
 // }

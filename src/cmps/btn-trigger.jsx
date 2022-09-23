@@ -1,4 +1,4 @@
-export const BtnTrigger = () => {
+export const BtnTrigger = (ev) => {
 // todo: bug onMouseOver 
     return <button className="btn-linear"
         onMouseOver={(ev) => {

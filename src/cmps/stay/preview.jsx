@@ -11,7 +11,6 @@ import { StayShareBtn } from "./props/share"
 export function StayPreview({ stay, inHomePage }) {
     let [idx, setIdx] = useState(0)
     const moveImgIndex = (num) => {
-        console.log('idx:', idx)
         if (idx >= stay.imgUrls.length && num === 1) {
             idx = 0
             num = 0
@@ -23,9 +22,11 @@ export function StayPreview({ stay, inHomePage }) {
         idx += num
         setIdx(idx)
     }
-    // todo ↓
-    let [isLiked, setIsLiked] = useState({})
 
+    // todo setIsLiked↓
+    let [isLiked, setIsLiked] = useState({})
+    
+    // todo: navigate ↓
     const navigate = useNavigate()
     const addFavoriteList = () => {
         // setIsLiked(!isLiked)
@@ -58,7 +59,7 @@ export function StayPreview({ stay, inHomePage }) {
             </div>
         </div>
 
-        : <div className="details-page-preview">
+        : <div className="home-page-preview">
             <Link to={`/stay/${stay._id}`}>
                 <div className="preview-img-container square-ratio"
                     style={{ background: `url(${stay.imgUrls[idx]})` }}

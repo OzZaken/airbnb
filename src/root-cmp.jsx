@@ -5,6 +5,7 @@ import './styles/main.scss'
 import { AppHeader } from './cmps/header'
 
 function App() {
+  // TODO:: ?is it more smart to move all the arrowFunc UpHere from  ChildComponents?
   return (
     <div>
       <AppHeader />

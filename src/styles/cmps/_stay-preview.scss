@@ -5,7 +5,7 @@
   .preview-img-container {
     box-shadow: 3px 4px 6px #00000026;
     border-radius: 12px;
-    //todo: bug on image container
+    //TODO:: bug on image container
     background-size: contain;
     background-size: cover;
     background-repeat: no-repeat;
@@ -85,5 +85,5 @@
     }
   }
 
-  //todo  @include flex-direction: column;
+  //TODO:  @include flex-direction: column;
 }

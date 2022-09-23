@@ -5,13 +5,13 @@ import { StayLocation } from "./props/location"
 import { StayRate } from "./props/rate"
 import { StaySaveBtn } from "./props/save"
 import { StayShareBtn } from "./props/share"
-// todo: Carousel on same modal
+// TODO:: Carousel on same modal
 // import Carousel from 'react-material-ui-carousel'
 
 export function StayPreview({ stay, inHomePage }) {
     let [idx, setIdx] = useState(0)
     const moveImgIndex = (num) => {
-        if (idx >= stay.imgUrls.length && num === 1) {
+        if (idx >= stay.imgUrls.length -1&& num === 1) {
             idx = 0
             num = 0
         }
@@ -23,44 +23,21 @@ export function StayPreview({ stay, inHomePage }) {
         setIdx(idx)
     }
 
-    // todo setIsLiked↓
+    // TODO: setIsLiked↓
     let [isLiked, setIsLiked] = useState({})
-    
-    // todo: navigate ↓
+
+    // TODO:: navigate ↓
     const navigate = useNavigate()
     const addFavoriteList = () => {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
 
-    if (!stay) return // todo: Skeleton
-    return (!inHomePage)
-        ? <div className="details-page-preview">
-            <h1>{stay.name}</h1>
-            <div className="flex space-between">
-
-                <div className="flex space-between">
-                    <StayRate reviews={stay.reviews} />
-                    <StayLocation loc={stay.loc} />
-                </div>
-
-                <div className="flex space-between">
-                    <StayShareBtn />
-                    <StaySaveBtn />
-                </div>
-            </div>
-
-            <div className="imgs-grid-template imgs-preview">
-                {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
-                    <img src={imgUrl}
-                        key={`${imgUrl}-${idx}`}
-                        alt={`Stay image ${idx}`} />
-                )}
-            </div>
-        </div>
-
-        : <div className="home-page-preview">
+    if (!stay) return // TODO:: Skeleton
+    return (inHomePage)
+        ? <div className="home-page-preview">
             <Link to={`/stay/${stay._id}`}>
+              
                 <div className="preview-img-container square-ratio"
                     style={{ background: `url(${stay.imgUrls[idx]})` }}
                 >
@@ -83,7 +60,6 @@ export function StayPreview({ stay, inHomePage }) {
 
                         <div className="circle btn-img-back"
                             onClick={(ev) => {
-                                console.log('click on back:', ev)
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 moveImgIndex(-1)
@@ -108,16 +84,17 @@ export function StayPreview({ stay, inHomePage }) {
 
                 <p className="stay-name">
                     <StayLocation loc={stay.loc} />
-                    <AppIcon className="star" iconKey="star" />4.95
+                    <AppIcon className="star" iconKey="star" />
+                    4.95
                 </p>
 
                 <p className="stay-distance">
-                    {/* todo: check how to Geolocation  */}
+                    {/* TODO:: check how to Geolocation  */}
                     1,109 kilometers
                 </p>
 
                 <p className="stay-date">
-                    {/* todo: check what need to show  */}
+                    {/* TODO:: check what need to show  */}
                     Nov 30 - Dec 5
                 </p>
 
@@ -127,4 +104,29 @@ export function StayPreview({ stay, inHomePage }) {
 
             </div>
         </div>
+
+        : <div className="details-page-preview">
+            <h1>{stay.name}</h1>
+            <div className="flex space-between">
+
+                <div className="flex space-between">
+                    <StayRate reviews={stay.reviews} />
+                    <StayLocation loc={stay.loc} />
+                </div>
+
+                <div className="flex space-between">
+                    <StayShareBtn />
+                    <StaySaveBtn />
+                </div>
+            </div>
+
+            <div className="imgs-grid-template imgs-preview">
+                {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
+                    <img src={imgUrl}
+                        key={`${imgUrl}-${idx}`}
+                        alt={`Stay image ${idx}`} />
+                )}
+            </div>
+        </div>
+
 }

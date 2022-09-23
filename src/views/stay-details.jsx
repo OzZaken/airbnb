@@ -32,7 +32,7 @@ export const StayDetails = () => {
         setStay(await stayService.getById(stayId))
     }
 
-    // todo: const StayAvg = () => {
+    // TODO:: const StayAvg = () => {
     // if(!stay.reviews||stay.reviews===0||stay.createAt...) return 'New stay'
     //     stay.reviews.rate
     //     nums.reduce((a, b) => (a + b)) / nums.length

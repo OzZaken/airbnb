@@ -1,5 +1,5 @@
 export const BtnTrigger = (ev) => {
-// todo: bug onMouseOver 
+// TODO:: bug onMouseOver 
     return <button className="btn-linear"
         onMouseOver={(ev) => {
             let rect = ev.target.getBoundingClientRect()

@@ -19,8 +19,9 @@
   .filter-btns-container {
     flex: 2;
     height: 48px;
+    
     .btns-container {
-      border-radius: 10px;
+      border-radius: 40px;
       padding: 5px;
       box-shadow: 0 0 5px hsl(0 0% 78%);
       border: 1px solid $clr-bright;

@@ -3,21 +3,22 @@
   flex-direction: row;
   align-items: center;
 
+  // Logo
   .logo {
     display: flex;
     object-fit: contain;
-    width: 32px;
-    
-    &::after{
+    min-width: 32px;
+    max-width: 32px;
+
+    &::after {
       content: url('../../assets/img/airbnb.svg');
     }
   }
-  
-  .filter-btns-container {
-    padding-left: 50px;
-    padding-right: 50px;
-    height: 50px;
 
+  // Filter
+  .filter-btns-container {
+    flex: 2;
+    height: 48px;
     .btns-container {
       border-radius: 10px;
       padding: 5px;
@@ -35,12 +36,32 @@
       }
     }
 
-    .user-btns-container {
-      box-shadow: 0 0 5px rgb(142, 130, 130);
-      :hover {
-        background-color: rgba(235, 235, 235, 0.354);
+
+  }
+
+  // User
+  .user-btns-container {
+    min-width: 58px;
+    min-height: 30px;
+    flex: 1;
+
+    .user-nav-container {
+      border-radius: 21px;
+      padding: 5px 5px 5px 12px;
+      border: 1px solid $clr-bright;
+      box-shadow: 0 0 5px hsl(0 0% 78%);
+      transform: all 0.4s;
+
+      svg {
+        width: 27px;
+      }
+
+      &:hover {
+        box-shadow: 0 0 5px rgb(235, 227, 227);
+        background-color: rgba(235, 235, 235, 0.592);
       }
     }
+
   }
 }
 
@@ -48,7 +69,6 @@
 // ::placeholder {
 //   font-size: 0.75rem;
 // }
-
 
 // input[type="text"] {
 //   background: none;
@@ -59,7 +79,6 @@
 // input[type="text"]:focus {
 //   outline: none;
 // }
-
 
 //   NavLink::before {
 //     transform: translateY(-50%);

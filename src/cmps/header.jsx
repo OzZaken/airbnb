@@ -25,34 +25,30 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     const onSelectFocus = () => {
         // isFilterShown = true
 
-            // // try1
-            // console.log('focusOn', focusOn.target.value)
-            // // try2
-            // ref.current = focusOn
-            // // try3
-            // isSelectedFilterBy = !isSelectedFilterBy
+        // // try1
+        // console.log('focusOn', focusOn.target.value)
+        // // try2
+        // ref.current = focusOn
+        // // try3
+        // isSelectedFilterBy = !isSelectedFilterBy
     }
 
-    
+
     return <header className='main-container space-between'>
-          {/* {isLoggedIn
-             ? <LogoutButton onClick={this.handleLogoutClick} />
-             : <LoginButton onClick={this.handleLoginClick} />
-           } */}
 
         <div className='flex space-between main-header'>
+            {/* Logo */}
             <Link className="logo" to={'/'}>
                 <AppIcon iconKey="logo" />
             </Link>
-
-            <div className='flex filter-btns-container'>
+            {/* filter */}
+            <div className='flex center filter-btns-container'>
                 <div className='flex space-between btns-container'>
-                    <button onClick={()=>{onSelectFocus('anywhere')}}>AnyWhere</button>
-                    <button onClick={()=>{onSelectFocus('anyweek')}}>Any Week</button>
-
+                    <button onClick={() => { onSelectFocus('anywhere') }}>AnyWhere</button>
+                    <button onClick={() => { onSelectFocus('anyweek') }}>Any Week</button>
                     <div className='flex center space-evenly'>
                         <div>
-                            <button onClick={()=>{onSelectFocus('addguests')}}>
+                            <button onClick={() => { onSelectFocus('addguests') }}>
                                 Add guests
                             </button>
                         </div>
@@ -63,14 +59,17 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     </div>
                 </div>
             </div>
-
-            <div className="flex user-btns-container">
-                <Link to={`/stay/edit`}>Become a host</Link>
-                <AppIcon iconKey="menu" />
-                <AppIcon iconKey="accountCircle" />
+            {/* User */}
+            <div className="flex space-between user-btns-container">
+                <div className='flex center left'><Link to={`/stay/edit`}>Become a host</Link></div>
+                <div className='flex user-nav-container'>
+                    <AppIcon iconKey="menu" />
+                    <AppIcon iconKey="accountCircle" />
+                </div>
             </div>
         </div>
         {isFilterShown && <StayFilter />}
+
 
         {/* {user &&
                 <span className="user-info">
@@ -88,6 +87,7 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     <LoginSignup onLogin={onLogin} onSignup={onSignup} />
                     </section>
                 } */}
+
     </header >
 }
 

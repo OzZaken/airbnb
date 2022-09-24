@@ -13,11 +13,11 @@ export const StayFilter = (props) => {
   return (
     <form className="stay-filter">
 
-      <label htmlFor="dateStart">
+      <label htmlFor="checkIn">
         <input placeholder='date'
           {...register('date', 'date')} />
       </label>
-      <label htmlFor="dateEnd">
+      <label htmlFor="checkOut">
         <input placeholder='date'
           {...register('date', 'date')} />
       </label>

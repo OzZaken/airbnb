@@ -2,40 +2,67 @@ import { useState } from "react"
 import Carousel from "react-material-ui-carousel"
 import { useNavigate } from "react-router-dom"
 import AppIcon from "../icon"
-import { StayRate } from "./props/rate"
-import { StaySaveBtn } from "./props/save"
-import { StayShareBtn } from "./props/share"
+import { StayRate } from "./stay-rate"
 
-export function StayPreview({ stay, inHomePage,stayAvgRate }) {
+export function StayPreview({ stay, inHomePage, stayAvgRate }) {
     const navigate = useNavigate()
-    const [idx, setIdx] = useState(0)
 
-    // TODO: setIsLiked↓
-    let [isLiked, setIsLiked] = useState()
     // TODO: favorite ↓
     const addFavoriteList = () => {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
-    //TODO: Move getStayAvgRate to root cmp
+    
+    // * Stay rate avg
     const getStayAvgRate = (stay) => {
         const rates = []
-        stay.reviews.forEach(review => {
-            rates.push(review.rate)
-        })
-        return rates.reduce((a, b) => (a + b)) / rates.length
+        stay.reviews.forEach(review => rates.push(review.rate))
+        return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(1)
     }
 
     if (!stay) return // TODO: Skeleton
     return (inHomePage)
         ? <div onClick={() => { navigate(`stay/${stay._id}`) }}
-            className="home-page-preview">
-            <Carousel autoPlay={false}>
+            className="btn">
+            <Carousel
+                cycleNavigation={true}
+                duration={500}
+                animation="slide"
+                autoPlay={false}
+
+                indicatorIconButtonProps={{
+                    style: {
+                        color: 'white',
+                        backgroundColor: 'transparent'
+                    }
+                }}
+                activeIndicatorIconButtonProps={{
+                    style: {
+                        color: 'whitesmoke',
+                        backgroundColor: 'transparent'
+                    }
+                }}
+                navButtonsProps={{
+                    style: {
+                        backgroundColor: 'white',
+                        color: 'black',
+                    }
+                }}
+                indicatorContainerProps={{
+                    style: {
+                        display: 'absolute',
+                        // display: 'relative',
+                        // top: 50,
+                    }
+                }}
+
+            >
                 {stay.imgUrls.slice().map((imgUrl, idx) =>
                     <div key={`${imgUrl}-${idx}`} className="square-ratio carousel-preview">
                         <img src={imgUrl} alt={`Stay image ${idx}`} />
                     </div>
                 )}
+
             </Carousel>
 
             <div
@@ -71,19 +98,27 @@ export function StayPreview({ stay, inHomePage,stayAvgRate }) {
                 </div>
 
                 <div className="flex space-between">
-                    <StayShareBtn />
-                    <StaySaveBtn />
+                    <button className="btn-link">
+                        <AppIcon iconKey='share' />
+                        share
+                    </button>
+                    <button className="btn-link">
+                        <AppIcon iconKey='heart' />
+                        save
+                    </button>
                 </div>
             </div>
 
-            <div className="imgs-grid-template imgs-preview">
-                {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
-                    <img src={imgUrl}
-                        //TODO: Fix grid with ratio
-                        // className={`${idx === 0 ? `portrait-ratio` : `square-ratio`}`}
-                        key={`${imgUrl}-${idx}`}
-                        alt={`Stay image ${idx}`} />
-                )}
+            <div className="stay-img-container">
+                <div className="imgs-grid-template imgs-preview">
+                    {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
+                        <img src={imgUrl}
+                            //TODO: Fix grid with ratio
+                            // className={`${idx === 0 ? `portrait-ratio` : `square-ratio`}`}
+                            key={`${imgUrl}-${idx}`}
+                            alt={`Stay image ${idx}`} />
+                    )}
+                </div>
             </div>
         </div>
 }

@@ -6,7 +6,7 @@ form>* {
     ::placeholder {
         font-size: 0.75rem;
     }
-    
+
     .btn-link:hover {
         background-color: $clr1;
         transform: scale(1.1);
@@ -24,5 +24,9 @@ form>* {
 
     input[type="text"]:focus {
         outline: none;
+    }
+
+    input[type="date"]:focus {
+        width: 100%;
     }
 }

@@ -145,19 +145,20 @@
     transition: .5s;
 }
 
-.btn:active {
-    transform: scale(1.1);
-}
-
 .btn-big {
     margin-top: 10px;
     padding: 10px;
     border: 2px solid $clr-dark;
     border-radius: 10px;
-}
 
-.btn-big:hover {
-    background-color: rgba(133, 133, 133, 0.096);
+    &:active {
+        transform: scale(1.1);
+
+        &:hover {
+            background-color: rgba(133, 133, 133, 0.096);
+        }
+
+    }
 }
 
 // Shapes
@@ -172,7 +173,7 @@
 
 // Colors
 .fill1 {
-    background-color: for-desktop-layout;
+    background-color: $clr1;
     color: $clr-bgc;
 }
 

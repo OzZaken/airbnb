@@ -1,30 +1,30 @@
 import { useState } from 'react'
 import { useFormRegister } from '../../hooks/useFormRegister'
-import { stayService } from '../../services/stay.service.local'
-// Cmps
 import AppIcon from '../icon'
 import { BtnTrigger } from '../helper/btn-radial-gradient'
+
 export const StayOrder = ({ stay, stayAvgRate }) => {
     const [orders, setOrders] = useState(null)
+    const [order, setOrder] = useState([
+        {
+            checkIn: new Date(),
+            checkOut: new Date(),
+            guests: 1,
+        }
+    ])
     const [register] = useFormRegister([
         {
-          startDate: new Date(),
-          endDate: new Date(),
+            checkIn: new Date(),
+            checkOut: new Date(),
+            guests: 1,
         }
-      ])
+    ])
 
-
-
-    
-    // const [register] = useFormRegister(
-    // {
-    //     checkIn: '',
-    //     checkOut: '',
-
+    // const putDateString = () => {
+    //     checkIn.innerText = state[0].startDate.toString().slice(0, 15)
+    //     checkOut.innerText = state[0].endDate.toString().slice(0, 15)
     // }
-    //     )
-    // useEffect(() => {
-    // }, [])
+
     return <section className='stay-order'>
         <div className='flex column order-container'>
 
@@ -32,7 +32,7 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                 <p>
                     <span className='prev-price'> {`${Math.ceil(stay.price / 3 + stay.price)} `}
                     </span>
-                    
+
                     <span className="cost">{stay.price}
                     </span>
                     night
@@ -46,49 +46,43 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
             </div>
 
             <div className="order-data">
-                
+
                 <div className="date-picker">
                     <div className="date-input">
-                        <label>CHECK IN</label>
-
+                        <label htmlFor="checkIn">
+                            CHECK IN
+                            <input
+                                name="checkIn"
+                                {...register('date', 'date')} />
+                        </label>
 
                     </div>
                     <div className="date-input">
-                        <label>CHECK OUT</label>
-
-                      
+                        <label htmlFor="checkOut">
+                            CHECK Out
+                            <input
+                                name="checkOut"
+                                {...register('date', 'date')} />
+                        </label>
                     </div>
                 </div>
 
                 <div className="guest-input">
-                    <label>GUESTS</label>
-
-
-
-                    <AppIcon iconKey='arrowDown' />
+                    <label htmlFor="guests">
+                        GUESTS
+                        <input type="number"
+                            {...register('number', 'number')} />
+                    </label>
+                    <AppIcon onClick={()=>{console.log('// TODO:use htmlFor');}} iconKey='arrowDown' />
                 </div>
             </div>
 
             <BtnTrigger />
             <div>You won't be charged yet</div>
+
         </div>
     </section>
 }
 
 // https://codepen.io/emoyal4/pen/NWjrmzv
  // https://www.carlrippon.com/repeat-element-n-times-in-jsx/
-// <div>
-//                 <div className='flex space-between wrap'>
-//                     <div>
-//                         {/* ${stay.price + utilService.getRandomIntInclusive(stay.price / 3, stay.price / 2)} */}
-
-//                         <span className='prev-price'> ${stay.price} night </span>
-//                         ${Math.ceil(stay.price / 3 + stay.price)}
-//                     </div>
-                    // <StayRate
-                    //     rate={stayAvgRate}
-                    //     reviewsCount={stay.reviews.length - 1}
-                    //     isReviewBtnShow={true}
-                    // />
-//                 </div>
-//             </div>

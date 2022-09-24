@@ -1,4 +1,4 @@
-import AppIcon from '../../icon'
+import AppIcon from '../icon'
 export const StayRate = ({ rate, reviewsCount, isReviewBtnShow }) => {
     return <div className="clean-list stay-rate">
         <div className="flex center">

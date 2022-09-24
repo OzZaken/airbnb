@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { StayList } from '../cmps/stay/list'
+import { StayList } from '../cmps/stay/stay-list'
 import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
 export const HomePage = (getStayAvgRate) => {

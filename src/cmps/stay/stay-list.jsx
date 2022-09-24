@@ -3,7 +3,7 @@ import { StayPreview } from './stay-preview'
 export const StayList = ({ stays, getStayAvgRate }) => {
 
   if (!stays) return
-  return <ul className="stay-list clean-list">
+  return <ul className="clean-list card-grid stay-list ">
     {stays.map(stay => (
       <StayPreview
         inHomePage={true}

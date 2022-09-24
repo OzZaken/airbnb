@@ -41,6 +41,7 @@ const icons = {
     "accountCircle": <AccountCircleIcon />,
     "arrowForward": <ArrowCircleRightIcon />,
     "arrowBack": <ArrowCircleLeftIcon />,
+    "air-cover": <img src="https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg" alt="Air cover image" />,
     "arrowDown": <svg viewBox="0 0 320 512" width="100" title="angle-down"> <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z" /></svg>,
     // Achievements
     "fastWifi": <WifiIcon />,

@@ -1,20 +1,16 @@
 .details-page-preview {
-  border-bottom: unset;
-  display: flex;
-  flex-direction: column;
+    border-bottom: unset;
+    display: flex;
+    flex-direction: column;
 
-  // #imgs-preview
-  .imgs-preview {
-    :hover {
-      filter: brightness(90%);
+    // #imgs-preview
+    .imgs-preview {
+        :hover {
+            filter: brightness(90%);
+        }
     }
-  }
-}
-
-.home-page-preview {
-  cursor: pointer;
 }
 
 .carousel-preview {
-  border-radius: 12px;
+    border-radius: 12px;
 }

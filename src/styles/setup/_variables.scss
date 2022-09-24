@@ -10,11 +10,11 @@ $layoutPadding: 24px;
 
 // Layout Breakpoints
 $break-mobile: 460px;
-$break-tablet: 742x;
+$break-tablet: 742px;
 $break-desktop: 964px;
-$break-wide: 1100px;
+$break-wide: 1243px;
 
-$for-mobile-layout: calc($break-wide + $layoutPadding * 2);
-$for-tablet-layout: calc($break-desktop + $layoutPadding * 2);
-$for-desktop-layout: calc($break-tablet + $layoutPadding * 2);
-$for-wide-layout: calc($break-desktop + $layoutPadding * 2);
+$for-mobile-layout: $break-mobile ;
+$for-tablet-layout: calc($break-tablet + $layoutPadding * 2);
+$for-desktop-layout: calc($break-desktop + $layoutPadding * 2);
+$for-wide-layout: calc($break-wide + $layoutPadding * 2);

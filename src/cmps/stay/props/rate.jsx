@@ -1,9 +1,14 @@
 import AppIcon from '../../icon'
-export const StayRate = ({ reviews }) => {
-    if (!reviews) return 
+export const StayRate = ({ rate, reviewsCount, isReviewBtnShow }) => {
     return <div className="stay-rate">
-        <AppIcon iconKey='star' />
-        <span>4.75</span>   {/* <StayAvg/> */}
-        <button className="underline reviews"> 14 reviews</button>
+        <div className="flex center">
+            {rate}
+            <AppIcon iconKey='star' />
+            {isReviewBtnShow &&
+                <button className="underline reviews">
+                    {reviewsCount} reviews
+                </button>
+            }
+        </div>
     </div>
 }

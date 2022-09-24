@@ -6,7 +6,7 @@
 }
 
 @mixin for-tablet-layout {
-    @media (min-width: calc($break-tablet )) {
+    @media (min-width: calc($break-tablet)) {
         @content;
     }
 }
@@ -18,7 +18,7 @@
 }
 
 @mixin for-wide-layout {
-    @media (min-width: calc($break-wide )) {
+    @media (min-width: calc($break-wide)) {
         @content;
     }
 }

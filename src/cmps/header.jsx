@@ -7,19 +7,18 @@ import AppIcon from "./icon"
 
 // CMPS
 import { LoginSignup } from './login-signup.jsx'
-import { StayFilter } from './stay/filter.jsx'
+import { StayFilter } from './stay/stay-filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
     // useState
-    let isFilterShown = true
+    let isFilterShown = false
     useEffect(() => {
-        console.log('focusOn:', isFilterShown)
     }, [isFilterShown])
 
     // For Show heading "NavLinks"
     const ref = useRef()
     const onSelectFocus = (focusOn) => {
-        isFilterShown = true
+        isFilterShown = false
         console.log('focusOn:', focusOn)
     }
 

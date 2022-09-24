@@ -20,13 +20,13 @@ export function StayPreview({ stay, inHomePage }) {
     }
 
     if (!stay) return // TODO: Skeleton
+    console.log(...stay.reviews)
     return (inHomePage)
         ? <li onClick={() => { navigate(`stay/${stay._id}`) }}
             className="home-page-preview">
             <Carousel autoPlay={false}>
                 {stay.imgUrls.slice().map((imgUrl, idx) =>
                     <div key={`${imgUrl}-${idx}`} className="square-ratio carousel-preview">
-                        <img src={imgUrl} alt={`Stay image ${idx}`} />
                         <img src={imgUrl} alt={`Stay image ${idx}`} />
                     </div>
                 )}
@@ -35,15 +35,18 @@ export function StayPreview({ stay, inHomePage }) {
             <div
                 className="flex space-between">
 
-                <button className="underline capitalize">
+                <button className="btn-link">
                     {stay.loc.country}
                 </button>
 
                 <StayLocation />
                 <span>
-                    <AppIcon iconKey="star" />
+                <StayRate
+                        rate={stay.reviews.rate}
+                        reviewsCount={stay.reviews.length - 1}
+                        isReviewBtnShow={false}
+                    />
                     {/*//? {stay.reviews.reduce(?)} */}
-                    4.75
                 </span>
             </div>
 
@@ -59,7 +62,11 @@ export function StayPreview({ stay, inHomePage }) {
             <div className="flex space-between">
 
                 <div className="flex space-between">
-                    <StayRate reviews={stay.reviews} />
+                    <StayRate
+                        rate={stay.reviews.rate}
+                        reviewsCount={stay.reviews.length - 1}
+                        isReviewBtnShow={true}
+                    />
                     <StayLocation loc={stay.loc} />
                 </div>
 
@@ -72,6 +79,8 @@ export function StayPreview({ stay, inHomePage }) {
             <div className="imgs-grid-template imgs-preview">
                 {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
                     <img src={imgUrl}
+                        //TODO: Fix grid with ratio
+                        // className={`${idx === 0 ? `portrait-ratio` : `square-ratio`}`}
                         key={`${imgUrl}-${idx}`}
                         alt={`Stay image ${idx}`} />
                 )}

@@ -5,7 +5,7 @@
 }
 
 html {
-    font-size: 18px;
+    font-size: 16px;
     font-family: ffregular, 'Courier New', Courier, monospace;
 }
 
@@ -45,6 +45,8 @@ button {
     border: none;
     cursor: pointer;
 }
+
+
 
 ::selection {
     background-color: $clr-bgc;

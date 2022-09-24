@@ -7,7 +7,7 @@ import { StayAmenities } from '../cmps/stay/props/amenities'
 import { StayAchievements } from '../cmps/stay/props/achievements'
 import { StayOrder } from '../cmps/stay/order'
 import { StayHost } from '../cmps/stay/props/host'
-import { SPreview, StayPreview } from '../cmps/stay/preview'
+import { StayPreview } from '../cmps/stay/stay-preview'
 import { StaySummary } from '../cmps/stay/props/summery'
 // Cmps
 import { AirCover } from '../cmps/air-cover'
@@ -21,7 +21,7 @@ export const StayDetails = () => {
             document.body.classList.remove("stay-details-page")
         }
     }, [])
-    
+
     const params = useParams()
     useEffect(() => {
         loadStay()

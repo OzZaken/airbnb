@@ -1,6 +1,6 @@
 import { stayService } from '../../services/stay.service.local'
 import { StayRate } from './props/rate'
-
+import { BtnTrigger } from '../helper/btn-radial-gradient'
 export const StayOrder = ({ stay }) => {
     if (!stay) return
     // const [register] = useFormRegister(
@@ -10,123 +10,15 @@ export const StayOrder = ({ stay }) => {
 
     return <section className='stay-order'>
         <div className='flex column order-container'>
-            <div className='flex space-between'>
-                {`$ ${stay.price} night`}
-                <StayRate reviews={stay.reviews} />
-            </div>
-            <input type='date' name='order' />
-            {/* <BtnTrigger/> */}
-            <div class="btn-container">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="content">
-                    <button class="action-btn">
-                        <span>Check availability</span>
-                    </button>
-                </div>
-            </div>
-
-            <span>You won't be charged yet</span>
-            <button className='capitalize underline'></button>
-            <button className='capitalize underline'></button>
+            <StayRate
+                rate={stay.reviews.rate}
+                reviewsCount={stay.reviews.length - 1}
+                isReviewBtnShow={true}
+            />
+          <BtnTrigger/>
+            <div>You won't be charged yet</div>
+            <button className='btn-link'></button>
+            <button className='btn-link'></button>
         </div>
     </section>
 }

@@ -25,7 +25,6 @@ export const StayFilter = (props) => {
 
 
       {/*//* Later on filter btn */}
-      
       {/* <label htmlFor="name">
         <input placeholder='Stay name'
           {...register('name', 'text')} />

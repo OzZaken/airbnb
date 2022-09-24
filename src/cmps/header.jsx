@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { connect } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import AppIcon from "./icon"
 
@@ -10,29 +10,18 @@ import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
-    const isFilterShown = false
-
-    //? Using with navigate from the Header or just link?
-    const navigate = useNavigate()
-
+    // useState
+    let isFilterShown = true
     useEffect(() => {
-        // console.log('location:', location)
-        // console.log('navigate:', navigate)
-    }, [])
+        console.log('focusOn:', isFilterShown)
+    }, [isFilterShown])
 
     // For Show heading "NavLinks"
     const ref = useRef()
-    const onSelectFocus = () => {
-        // isFilterShown = true
-
-        // // try1
-        // console.log('focusOn', focusOn.target.value)
-        // // try2
-        // ref.current = focusOn
-        // // try3
-        // isSelectedFilterBy = !isSelectedFilterBy
+    const onSelectFocus = (focusOn) => {
+        isFilterShown = true
+        console.log('focusOn:', focusOn)
     }
-
 
     return <header className='main-container space-between'>
 
@@ -44,11 +33,11 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
             {/* filter */}
             <div className='flex center filter-btns-container'>
                 <div className='flex space-between btns-container'>
-                    <button onClick={() => { onSelectFocus('anywhere') }}>AnyWhere</button>
-                    <button onClick={() => { onSelectFocus('anyweek') }}>Any Week</button>
+                    <button onClick={() => { onSelectFocus('location') }}>AnyWhere</button>
+                    <button onClick={() => { onSelectFocus('date') }}>Any Week</button>
                     <div className='flex center space-evenly'>
                         <div>
-                            <button onClick={() => { onSelectFocus('addguests') }}>
+                            <button onClick={() => { onSelectFocus('guests') }}>
                                 Add guests
                             </button>
                         </div>
@@ -70,23 +59,22 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
         </div>
         {isFilterShown && <StayFilter />}
 
-
-        {/* {user &&
-                <span className="user-info">
-                    <Link to={`user/${user._id}`}>
+        {user &&
+            <span className="user-info">
+                <Link to={`user/${user._id}`}>
                     {user.imgUrl && <img src={user.imgUrl} />}
-                        {user.fullname}
-                    </Link>
-                    <span className="score">{user.score?.toLocaleString()}</span>
-                    <button onClick={onLogout}>Logout</button>
-                    </span>
-                }
-                
-                {!user &&
-                    <section className="user-info">
-                    <LoginSignup onLogin={onLogin} onSignup={onSignup} />
-                    </section>
-                } */}
+                    {user.fullname}
+                </Link>
+                <span className="score">{user.score?.toLocaleString()}</span>
+                <button onClick={onLogout}>Logout</button>
+            </span>
+        }
+
+        {/* {!user &&
+            <section className="user-info">
+                <LoginSignup onLogin={onLogin} onSignup={onSignup} />
+            </section>
+            } */}
 
     </header >
 }

@@ -8,17 +8,22 @@
             grid-column: 1 /-1;
         }
     }
-// TODO: ↓ arrange layout
-    @include for-narrow-layout {
+    @include for-mobile-layout {
         grid-template-columns: 
             minmax($layoutPadding, 1fr)
-            minmax(auto,$break-narrow)
+            minmax(auto,$break-mobile)
             minmax($layoutPadding, 1fr)
     }
-    @include for-normal-layout {
+    @include for-tablet-layout {
         grid-template-columns: 
             minmax($layoutPadding, 1fr)
-            minmax(auto, $break-normal)
+            minmax(auto, $break-tablet)
+            minmax($layoutPadding, 1fr)
+    }
+    @include for-desktop-layout {
+        grid-template-columns: 
+            minmax($layoutPadding, 1fr)
+            minmax(auto, $break-desktop)
             minmax($layoutPadding, 1fr)
     }
     @include for-wide-layout {

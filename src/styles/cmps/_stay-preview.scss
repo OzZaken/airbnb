@@ -1,82 +1,7 @@
-.home-page-preview {
-  cursor: pointer;
-  position: relative;
-
-  .preview-img-container {
-    box-shadow: 3px 4px 6px #00000026;
-    border-radius: 12px;
-    //TODO:: bug on image container
-    background-size: contain;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    .preview-btns-container {
-      .btn-add-favorite,
-      .btn-img-back,
-      .btn-img-forward {
-        position: absolute;
-
-        &:hover {
-          transform: scale(1.1);
-          opacity: 1;
-        }
-      }
-
-      .btn-img-back,
-      .btn-img-forward {
-        color: $clr-bgc;
-        top: 50%;
-        width: 30px;
-        opacity: 0.9;
-        transition: transform 0.4s;
-        transition: opacity 0.4s;
-      }
-
-      .btn-img-back {
-        left: 10px;
-      }
-
-      .btn-img-forward {
-        right: 10px;
-      }
-
-      .btn-add-favorite {
-        right: 10px;
-        top: 10px;
-      }
-
-    }
-  }
-
-  .stay-name {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-
-    .star {
-      padding-right: 5px;
-    }
-  }
-
-  .stay-distance,
-  .stay-date {
-    color: $clr-bright;
-  }
-
-  .stay-price {
-    padding-top: 8px;
-  }
-}
-
 .details-page-preview {
   border-bottom: unset;
   display: flex;
   flex-direction: column;
-
-  .rate {
-    padding-bottom: 24px;
-    padding-top: 24px;
-  }
 
   // #imgs-preview
   .imgs-preview {
@@ -84,6 +9,12 @@
       filter: brightness(90%);
     }
   }
+}
 
-  //TODO:  @include flex-direction: column;
+.home-page-preview {
+  cursor: pointer;
+}
+
+.carousel-preview {
+  border-radius: 12px;
 }

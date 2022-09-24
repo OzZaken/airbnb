@@ -29,7 +29,10 @@ export const HomePage = () => {
     }
 
     if (!stays) return <h1>Loading...</h1>
-    return <section >
+    return <section className='home-page' >
+        <div className="flex filter-control">
+
+        </div>
         <StayList stays={stays} />
     </section>
 }

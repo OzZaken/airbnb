@@ -1,0 +1,25 @@
+form>* {
+    display: block;
+    width: 200px;
+    margin: 10px 0px;
+
+   
+    .btn-link:hover {
+        background-color: $clr1;
+        transform: scale(1.1);
+    }
+
+    input:focus {
+        box-shadow: 0 0 5px hsl(0 0% 78%);
+    }
+
+    input[type="text"] {
+        background: none;
+        border: none;
+        padding: 0.2rem 0 0 0;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+    }
+}

@@ -10,8 +10,11 @@
     min-width: 32px;
     max-width: 32px;
 
-    &::after {
-      content: url('../../assets/img/airbnb.svg');
+    @include for-desktop-layout {
+      &::after {
+        content: url('../../assets/img/airbnb.svg');
+        // content: 'airbnb'
+      }
     }
   }
 
@@ -19,7 +22,7 @@
   .filter-btns-container {
     flex: 2;
     height: 48px;
-    
+
     .btns-container {
       border-radius: 40px;
       padding: 5px;
@@ -36,8 +39,6 @@
         margin-right: 5px;
       }
     }
-
-
   }
 
   // User
@@ -67,19 +68,7 @@
 }
 
 //   transform: translateY(-50%);
-// ::placeholder {
-//   font-size: 0.75rem;
-// }
-
-// input[type="text"] {
-//   background: none;
-//   border: none;
-//   padding: 0.2rem 0 0 0;
-// }
-
-// input[type="text"]:focus {
-//   outline: none;
-// }
+// 
 
 //   NavLink::before {
 //     transform: translateY(-50%);

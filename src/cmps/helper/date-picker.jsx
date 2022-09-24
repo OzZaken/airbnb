@@ -1,20 +1,20 @@
 //* //  ///   /////      MUI     \\\\\    \\\  *\\
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers'
+// import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers'
 
-export const DatePicker = ({ AdapterDayjs }) => {
-  if (!AdapterDayjs) return
-  console.log('AdapterDayjs:', AdapterDayjs)
-  return <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DateTimePicker
-      renderInput={(props) => <TextField {...props} />}
-      label="DateTimePicker"
-      value={value}
-      onChange={(newValue) => {
-        setValue(newValue);
-      }}
-    />
-  </LocalizationProvider>
-}
+// export const DatePicker = ({ AdapterDayjs }) => {
+//   if (!AdapterDayjs) return
+//   console.log('AdapterDayjs:', AdapterDayjs)
+//   return <LocalizationProvider dateAdapter={AdapterDayjs}>
+//     <DateTimePicker
+//       renderInput={(props) => <TextField {...props} />}
+//       label="DateTimePicker"
+//       value={value}
+//       onChange={(newValue) => {
+//         setValue(newValue);
+//       }}
+//     />
+//   </LocalizationProvider>
+// }
 
 //* //  ///   /////      react      \\\\\    \\\  *\\
 // https://github.com/gpbl/react-day-picker

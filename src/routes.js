@@ -1,4 +1,4 @@
-import { HomePage } from './views/home.jsx'
+import { HomePage } from './views/home-page.jsx'
 import { StayDetails } from './views/stay-details.jsx'
 import { StayEdit } from './views/stay-edit.jsx'
 

@@ -1,109 +1,58 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import AppIcon from "../icon"
+import Carousel from "react-material-ui-carousel"
+import { useNavigate } from "react-router-dom"
 import { StayLocation } from "./props/location"
+import AppIcon from "../icon"
 import { StayRate } from "./props/rate"
 import { StaySaveBtn } from "./props/save"
 import { StayShareBtn } from "./props/share"
-// TODO:: Carousel on same modal
-// import Carousel from 'react-material-ui-carousel'
 
 export function StayPreview({ stay, inHomePage }) {
-    let [idx, setIdx] = useState(0)
-    const moveImgIndex = (num) => {
-        if (idx >= stay.imgUrls.length -1&& num === 1) {
-            idx = 0
-            num = 0
-        }
-        if (idx <= 0 && num === -1) {
-            idx = stay.imgUrls.length - 1
-            num = 0
-        }
-        idx += num
-        setIdx(idx)
-    }
+    const navigate = useNavigate()
+    const [idx, setIdx] = useState(0)
 
     // TODO: setIsLiked↓
-    let [isLiked, setIsLiked] = useState({})
-
-    // TODO:: navigate ↓
-    const navigate = useNavigate()
+    let [isLiked, setIsLiked] = useState()
+    // TODO: favorite ↓
     const addFavoriteList = () => {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
 
-    if (!stay) return // TODO:: Skeleton
+    if (!stay) return // TODO: Skeleton
     return (inHomePage)
-        ? <div className="home-page-preview">
-            <Link to={`/stay/${stay._id}`}>
-              
-                <div className="preview-img-container square-ratio"
-                    style={{ background: `url(${stay.imgUrls[idx]})` }}
-                >
-                    <div className='flex space-between preview-btns-container'
-                        onClick={(ev) => {
-                            console.log('useNavigate?', ev)
-                            ev.stopPropagation();
-                            ev.preventDefault();
-                        }}>
-
-                        <div className="btn-add-favorite">
-                            <AppIcon iconKey="heart"
-                                onClick={(ev) => {
-                                    console.log('click on heart:', ev)
-                                    ev.stopPropagation();
-                                    ev.preventDefault();
-                                    addFavoriteList()
-                                }} />
-                        </div>
-
-                        <div className="circle btn-img-back"
-                            onClick={(ev) => {
-                                ev.stopPropagation();
-                                ev.preventDefault();
-                                moveImgIndex(-1)
-                            }}
-                        >
-                            <AppIcon iconKey="arrowBack" />
-                        </div>
-
-                        <div className="circle btn-img-forward"
-                            onClick={(ev) => {
-                                ev.stopPropagation();
-                                ev.preventDefault();
-                                moveImgIndex(1)
-                            }}
-                        >
-                            <AppIcon iconKey="arrowForward" />
-                        </div>
+        ? <li onClick={() => { navigate(`stay/${stay._id}`) }}
+            className="home-page-preview">
+            <Carousel autoPlay={false}>
+                {stay.imgUrls.slice().map((imgUrl, idx) =>
+                    <div key={`${imgUrl}-${idx}`} className="square-ratio carousel-preview">
+                        <img src={imgUrl} alt={`Stay image ${idx}`} />
+                        <img src={imgUrl} alt={`Stay image ${idx}`} />
                     </div>
-                </div>
-            </Link>
-            <div className="stay-info">
+                )}
+            </Carousel>
 
-                <p className="stay-name">
-                    <StayLocation loc={stay.loc} />
-                    <AppIcon className="star" iconKey="star" />
-                    4.95
-                </p>
+            <div
+                className="flex space-between">
 
-                <p className="stay-distance">
-                    {/* TODO:: check how to Geolocation  */}
-                    1,109 kilometers
-                </p>
+                <button className="underline capitalize">
+                    {stay.loc.country}
+                </button>
 
-                <p className="stay-date">
-                    {/* TODO:: check what need to show  */}
-                    Nov 30 - Dec 5
-                </p>
-
-                <p className="stay-price">
-                    {`$${stay.price} night`}
-                </p>
-
+                <StayLocation />
+                <span>
+                    <AppIcon iconKey="star" />
+                    {/*//? {stay.reviews.reduce(?)} */}
+                    4.75
+                </span>
             </div>
-        </div>
+
+            <div>
+                <div>9,621 kilometers</div>
+                <div>Dec 20 - 25</div>
+            </div>
+            ${stay.price} night
+        </li>
 
         : <div className="details-page-preview">
             <h1>{stay.name}</h1>
@@ -128,5 +77,6 @@ export function StayPreview({ stay, inHomePage }) {
                 )}
             </div>
         </div>
-
 }
+
+// https://www.youtube.com/watch?v=SK9AlIbexOE

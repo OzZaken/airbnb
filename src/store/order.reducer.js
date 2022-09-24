@@ -1,8 +1,6 @@
 const initialState = {
-  order: [],
-  sortBy: null,
-  isLiked: null,
-  page: "/"
+  orders: [],
+  order: null,
 }
 
 export function orderReducer(state = initialState, action) {

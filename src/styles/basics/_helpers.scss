@@ -72,10 +72,12 @@
     &.space-evenly {
         justify-content: space-evenly;
     }
-    &.left{
+
+    &.left {
         justify-content: left;
     }
-    &.right{
+
+    &.right {
         justify-content: right;
 
     }
@@ -86,7 +88,6 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    // list-style: none;
 }
 
 // Buttons
@@ -112,7 +113,14 @@
     transform: scale(1.1);
 }
 
-// Text 
+.btn-link {
+    border: 0;
+    background-color: transparent;
+    text-decoration: underline;
+    transition: .5s;
+}
+
+// FontSize 
 .fs12 {
     font-size: rem(12px)
 }
@@ -141,6 +149,10 @@
     font-size: rem(30px)
 }
 
+::placeholder {
+    font-size: 0.75rem;
+}
+
 .capitalize {
     text-transform: capitalize;
 }
@@ -161,13 +173,13 @@
 
 // Colors
 .fill1 {
-    background-color: $clr-logo;
+    background-color: for-desktop-layout;
     color: $clr-bgc;
 }
 
 .fill2 {
     color: $clr-bgc;
-    background-color: $clr-logo;
+    background-color: $clr2;
 }
 
 // Tools

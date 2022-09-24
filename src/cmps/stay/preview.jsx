@@ -78,5 +78,5 @@ export function StayPreview({ stay, inHomePage }) {
             </div>
         </div>
 }
-
 // https://www.youtube.com/watch?v=SK9AlIbexOE
+// https://www.npmjs.com/package/react-material-ui-carousel

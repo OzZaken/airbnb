@@ -130,3 +130,6 @@ export const StayOrder = ({ stay }) => {
         </div>
     </section>
 }
+
+// https://codepen.io/emoyal4/pen/NWjrmzv
+// https://www.carlrippon.com/repeat-element-n-times-in-jsx/

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 // Services
 import { stayService } from '../services/stay.service.local'
 // Props
@@ -12,35 +12,34 @@ import { StaySummary } from '../cmps/stay/props/summery'
 // Cmps
 import { AirCover } from '../cmps/air-cover'
 
-export const StayDetails = () => {
+export const StayDetails = (props) => {
+    //    Load Stay
+    const params = useParams()
     const [stay, setStay] = useState(null)
-    // const location = useLocation()
     useEffect(() => {
         document.body.classList.add("stay-details-page")
+        loadStay()
         return () => {
             document.body.classList.remove("stay-details-page")
         }
     }, [])
-
-    const params = useParams()
-    useEffect(() => {
-        loadStay()
-    }, [params.id])
 
     const loadStay = async () => {
         const stayId = params.stayId
         setStay(await stayService.getById(stayId))
     }
 
-    // TODO:: const StayAvg = () => {
-    // if(!stay.reviews||stay.reviews===0||stay.createAt...) return 'New stay'
-    //     stay.reviews.rate
-    //     nums.reduce((a, b) => (a + b)) / nums.length
-    // }
+    // * Stay rate avg
+    const getStayAvgRate = (stay) => {
+        const rates = []
+        stay.reviews.forEach(review => rates.push(review.rate))
+        return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
+    }
 
     if (!stay) return <div>Loading...</div>
+    const stayAvgRate = getStayAvgRate(stay)
     return <section className="stay-details">
-        <StayPreview stay={stay} />
+        <StayPreview stayAvgRate={stayAvgRate} stay={stay} />
         <div className='flex space-between'>
             <div>
                 <StayHost stay={stay} />
@@ -51,7 +50,7 @@ export const StayDetails = () => {
             </div>
 
             <div>
-                <StayOrder stay={stay} />
+                <StayOrder stay={stay} stayAvgRate={stayAvgRate} />
             </div>
         </div>
     </section >

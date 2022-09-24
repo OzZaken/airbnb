@@ -7,15 +7,18 @@
   .logo {
     display: flex;
     object-fit: contain;
-    min-width: 32px;
-    max-width: 32px;
+    width: 40px;
 
     @include for-desktop-layout {
-      &::after {
-        content: url('../../assets/img/airbnb.svg');
-        // content: 'airbnb'
-      }
+      content: url('../../assets/img/airbnb.svg');
+      width: 150px;
     }
+
+    @include for-wide-layout {
+      content: url('../../assets/img/airbnb.svg');
+      width: 180px;
+    }
+
   }
 
   // Filter

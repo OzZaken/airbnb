@@ -103,13 +103,33 @@ const gDefaultStays = [
       {
         "id": "madeId",
         "txt": "Very helpful hosts. Cooked traditional...",
+        "rate": 3,
+        "by": {
+          "_id": "u101",
+          "fullname": "user1",
+          "imgUrl": "/img/img2.jpg"
+        }
+      },
+      {
+        "id": "madeId",
+        "txt": "Very helpful hosts. Cooked traditional...",
         "rate": 4,
         "by": {
           "_id": "u102",
           "fullname": "user2",
           "imgUrl": "/img/img2.jpg"
         }
-      }
+      },
+      {
+        "id": "madeId",
+        "txt": "Very helpful hosts. Cooked traditional...",
+        "rate": 3,
+        "by": {
+          "_id": "u103",
+          "fullname": "user3",
+          "imgUrl": "/img/img2.jpg"
+        }
+      },
     ],
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },

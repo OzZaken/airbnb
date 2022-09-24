@@ -5,6 +5,13 @@ import './styles/main.scss'
 import { AppHeader } from './cmps/header'
 
 function App() {
+  
+    const getStayAvgRate = (stay) => {
+      const rates = []
+      stay.reviews.forEach(review => rates.push(review.rate))
+      return (rates.reduce((a, b) => (a + b)) / rates.length ).toFixed(2)
+  }
+
   return (
     <div>
       <AppHeader />
@@ -15,6 +22,7 @@ function App() {
             element={route.component}
             path={route.path}
             exact={true}
+            getStayAvgRate={getStayAvgRate}
           />)}
         </Routes>
       </main>

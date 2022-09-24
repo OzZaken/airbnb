@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { StayList } from '../cmps/stay/list'
 import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
-export const HomePage = () => {
+export const HomePage = (getStayAvgRate) => {
     const stays = useSelector((state) => state.stayModule.stays)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -33,6 +33,6 @@ export const HomePage = () => {
         <div className="flex filter-control">
 
         </div>
-        <StayList stays={stays} />
+        <StayList stays={stays} getStayAvgRate={getStayAvgRate} />
     </section>
 }

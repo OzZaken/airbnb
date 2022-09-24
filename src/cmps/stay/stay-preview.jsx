@@ -1,13 +1,12 @@
 import { useState } from "react"
 import Carousel from "react-material-ui-carousel"
 import { useNavigate } from "react-router-dom"
-import { StayLocation } from "./props/location"
 import AppIcon from "../icon"
 import { StayRate } from "./props/rate"
 import { StaySaveBtn } from "./props/save"
 import { StayShareBtn } from "./props/share"
 
-export function StayPreview({ stay, inHomePage }) {
+export function StayPreview({ stay, inHomePage,stayAvgRate }) {
     const navigate = useNavigate()
     const [idx, setIdx] = useState(0)
 
@@ -18,11 +17,18 @@ export function StayPreview({ stay, inHomePage }) {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
+    //TODO: Move getStayAvgRate to root cmp
+    const getStayAvgRate = (stay) => {
+        const rates = []
+        stay.reviews.forEach(review => {
+            rates.push(review.rate)
+        })
+        return rates.reduce((a, b) => (a + b)) / rates.length
+    }
 
     if (!stay) return // TODO: Skeleton
-    console.log(...stay.reviews)
     return (inHomePage)
-        ? <li onClick={() => { navigate(`stay/${stay._id}`) }}
+        ? <div onClick={() => { navigate(`stay/${stay._id}`) }}
             className="home-page-preview">
             <Carousel autoPlay={false}>
                 {stay.imgUrls.slice().map((imgUrl, idx) =>
@@ -34,28 +40,22 @@ export function StayPreview({ stay, inHomePage }) {
 
             <div
                 className="flex space-between">
-
-                <button className="btn-link">
-                    {stay.loc.country}
-                </button>
-
-                <StayLocation />
+                <div className="capitalize">{`${stay.loc.city},${stay.loc.country}`}</div>
                 <span>
-                <StayRate
-                        rate={stay.reviews.rate}
+                    <StayRate
+                        rate={getStayAvgRate(stay)}
                         reviewsCount={stay.reviews.length - 1}
                         isReviewBtnShow={false}
                     />
-                    {/*//? {stay.reviews.reduce(?)} */}
                 </span>
             </div>
 
-            <div>
+            <div className="clr-bright">
                 <div>9,621 kilometers</div>
                 <div>Dec 20 - 25</div>
             </div>
             ${stay.price} night
-        </li>
+        </div>
 
         : <div className="details-page-preview">
             <h1>{stay.name}</h1>
@@ -63,11 +63,11 @@ export function StayPreview({ stay, inHomePage }) {
 
                 <div className="flex space-between">
                     <StayRate
-                        rate={stay.reviews.rate}
+                        rate={stayAvgRate}
                         reviewsCount={stay.reviews.length - 1}
                         isReviewBtnShow={true}
                     />
-                    <StayLocation loc={stay.loc} />
+                    &#xB7;{`${stay.loc.city},${stay.loc.country}`}
                 </div>
 
                 <div className="flex space-between">

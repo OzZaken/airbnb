@@ -8,9 +8,9 @@ export const BtnTrigger = () => {
     return <div className="btn-container">
         {btnColumns}
         <div className="content">
-                <button className="action-btn">
-                    <span>reserve</span>
-                </button>
-            </div>
+            <button className="action-btn">
+                <span>reserve</span>
+            </button>
+        </div>
     </div>
 }

@@ -3,7 +3,10 @@ form>* {
     width: 200px;
     margin: 10px 0px;
 
-   
+    ::placeholder {
+        font-size: 0.75rem;
+    }
+    
     .btn-link:hover {
         background-color: $clr1;
         transform: scale(1.1);

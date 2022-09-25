@@ -11,12 +11,12 @@
 
     @include for-desktop-layout {
       content: url('../../assets/img/airbnb.svg');
-      width: 150px;
+      width: 130px;
     }
 
     @include for-wide-layout {
       content: url('../../assets/img/airbnb.svg');
-      width: 180px;
+      width: 130px;
     }
 
   }

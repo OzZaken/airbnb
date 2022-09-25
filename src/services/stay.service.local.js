@@ -7,52 +7,10 @@ export const stayService = {
   getById,
   getTypes,
   getAchievements,
+  getFilterBys,
 }
 
 const STORAGE_KEY = 'stays'
-
-const gStayTypes = [
-  'Apartment',
-  'House',
-  'Secondary unit',
-  'Unique space',
-  'Bad and breakfast',
-  'Boutique hotel',
-]
-const gStayAchievements = { // Stay achievements, heading, txt and icon
-  "fastWifi": {
-    "heading": "Fast wifi",
-    "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
-  },
-  "superHost": {
-    "heading": "is a Superhost",
-    "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
-  },
-  "greatLoc": {
-    "heading": "Great location",
-    "txt": "100% of recent guests gave the location a 5-star rating.",
-  },
-  "greatCheckIn": {
-    "heading": "Great check-in experience",
-    "txt": "100% of recent guests gave the check-in process a 5-star rating.",
-  },
-  "workspace": {
-    "heading": "Dedicated workspace",
-    "txt": "A private room with wifi that`s well-suited for working.",
-  },
-  "selfCheckIn": {
-    "heading": "Self check-in",
-    "txt": "You can check in with the doorman.",
-  },
-  "petsFriendly": {
-    "heading": "Furry friends welcome",
-    "txt": "Bring your pets along for the stay.",
-  },
-}
-const gStayAmenities = [ // Stay amenities, txt for start icon later
-  "Lockbox",
-]
-
 const gDefaultStays = [
   {
     "_id": "stay1",
@@ -420,6 +378,68 @@ const gDefaultStays = [
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
 ]
+const gStayTypes = [
+  'Apartment',
+  'House',
+  'Secondary unit',
+  'Unique space',
+  'Bad and breakfast',
+  'Boutique hotel',
+]
+
+const gStayAchievements = { // Stay achievements, heading, txt and icon
+  "fastWifi": {
+    "heading": "Fast wifi",
+    "txt": "At 62 Mbps, you can take video calls and stream videos for your whole group.",
+  },
+  "superHost": {
+    "heading": "is a Superhost",
+    "txt": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.",
+  },
+  "greatLoc": {
+    "heading": "Great location",
+    "txt": "100% of recent guests gave the location a 5-star rating.",
+  },
+  "greatCheckIn": {
+    "heading": "Great check-in experience",
+    "txt": "100% of recent guests gave the check-in process a 5-star rating.",
+  },
+  "workspace": {
+    "heading": "Dedicated workspace",
+    "txt": "A private room with wifi that`s well-suited for working.",
+  },
+  "selfCheckIn": {
+    "heading": "Self check-in",
+    "txt": "You can check in with the doorman.",
+  },
+  "petsFriendly": {
+    "heading": "Furry friends welcome",
+    "txt": "Bring your pets along for the stay.",
+  },
+}
+const gStayAmenities = [ // Stay amenities, txt for start icon later
+  "Lockbox",
+]
+const gFilterBys = [ // FilterBy achievements & amenities
+  { omg: 'OMG!' },
+  { arctic: 'Arctic' },
+  { beach: 'Beach!' },
+  { amazingPool: 'Amazing pools' },
+  { amazingViews: 'Amazing views' },
+  { design: 'design' },
+  { island: 'Island' },
+  { nationalPark: 'National parks' },
+  { surfing: 'surfing' },
+  //ADD↓
+  // { cave: 'caves' },
+  // { yurt: 'Yurts' },
+  // { island: 'Islands' },
+  // { cabins: 'Cabins' },
+  // { campers: 'Campers' },
+  // { lakefront: 'Lakefront' },
+  // { tinyHomes: 'tiny homes' },
+  // { desert: 'Desert' },
+]
 
 function query(filterBy) {
   return storageService.query(STORAGE_KEY).then((stays) => {
@@ -469,4 +489,7 @@ function getTypes() {
 
 function getAchievements() {
   return gStayAchievements
+}
+function getFilterBys() {
+  return gFilterBys
 }

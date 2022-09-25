@@ -7,12 +7,12 @@ import { StayRate } from "./stay-rate"
 export function StayPreview({ stay, inHomePage, stayAvgRate }) {
     const navigate = useNavigate()
 
-    // TODO: favorite ↓
+    // * favorite ↓
     const addFavoriteList = () => {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
-    
+
     // * Stay rate avg
     const getStayAvgRate = (stay) => {
         const rates = []
@@ -108,13 +108,11 @@ export function StayPreview({ stay, inHomePage, stayAvgRate }) {
                     </button>
                 </div>
             </div>
-
-            <div className="stay-img-container">
-                <div className="imgs-grid-template imgs-preview">
+            {/* className="portrait-ratio"↓ */}
+            <div>
+                <div className="imgs-grid-template">
                     {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
                         <img src={imgUrl}
-                            //TODO: Fix grid with ratio
-                            // className={`${idx === 0 ? `portrait-ratio` : `square-ratio`}`}
                             key={`${imgUrl}-${idx}`}
                             alt={`Stay image ${idx}`} />
                     )}

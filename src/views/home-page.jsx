@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import { StayList } from '../cmps/stay/stay-list'
+import { stayService } from '../services/stay.service.local'
 import { loadStays, removeStay, setFilterBy, sortByStays } from '../store/stay.action'
 
 export const HomePage = (getStayAvgRate) => {
@@ -30,7 +30,7 @@ export const HomePage = (getStayAvgRate) => {
 
     if (!stays) return <h1>Loading...</h1>
     return <section className='home-page' >
-        <div className="flex filter-control">
+        <div className="flex filter-bar">
 
         </div>
         <StayList stays={stays} getStayAvgRate={getStayAvgRate} />

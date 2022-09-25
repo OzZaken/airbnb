@@ -10,10 +10,10 @@
   }
 
   @include for-desktop-layout {
-    grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
+    grid-template-columns:  repeat(5 1fr);
   }
 
   @include for-wide-layout {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(5 1fr);
   }
 }

@@ -10,28 +10,27 @@
     font-size: 26px;
   }
 
-  .stay-details-row:not(:last-child) {
+  .stay-details-row {
     padding-top: $layoutPadding;
     padding-bottom: $layoutPadding;
     border-bottom: 1px solid $clr-bright;
   }
 
-  // #stay-host 
-  .stay-host {
-    .img-host {
-      align-self: flex-end;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-    }
-
+  .host-img {
+    width: 56px;
+    height: 56px;
   }
 
-  //#stay-achievements
-  .stay-achievements {
+  //#Achievements
+  .stay-achievements,
+  .stay-reviews {
+
+    svg,
+    img {
+      margin-right: 5px;
+    }
 
     svg {
-      margin-right: 5px;
       font-size: x-large;
     }
 
@@ -46,7 +45,7 @@
     }
   }
 
-  // #air-cover
+  // #Air-cover
   .air-cover-container {
 
     .img-air-cover {
@@ -59,7 +58,7 @@
     }
   }
 
-  //#stay-summary
+  //#Summary
   .stay-summary {
 
     div {
@@ -68,10 +67,8 @@
     }
   }
 
-  // #stay-amenities
+  // #Amenities
   .stay-amenities {
-    padding-top: $layoutPadding * 2;
-
     :first-child {
       padding-bottom: calc($layoutPadding/2);
     }
@@ -81,8 +78,13 @@
     }
 
     .amenities {
-      // Todo: use card-grid  instead
       font-family: fflight;
     }
+  }
+
+  // #Reviews
+  .reviewerImg {
+    width: 40px;
+    height: 40px;
   }
 }

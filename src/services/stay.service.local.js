@@ -65,7 +65,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u101",
           "fullname": "user1",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       },
       {
@@ -75,7 +75,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u102",
           "fullname": "user2",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       },
       {
@@ -85,7 +85,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u103",
           "fullname": "user3",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       },
     ],
@@ -142,7 +142,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u102",
           "fullname": "user2",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       }
     ],
@@ -199,7 +199,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u102",
           "fullname": "user2",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       }
     ],
@@ -293,7 +293,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u102",
           "fullname": "user2",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       }
     ],
@@ -371,7 +371,7 @@ const gDefaultStays = [
         "by": {
           "_id": "u102",
           "fullname": "user2",
-          "imgUrl": "/img/img2.jpg"
+          "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YtOC-DWcKhaIbwJDRuAlgKJKugPwp5dfhKKgOJf_UDtKQdOeZq9CQEetxDF1jmntumU&usqp=CAU?aki_policy=profile_small"
         }
       }
     ],

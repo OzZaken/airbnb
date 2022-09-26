@@ -1,8 +1,7 @@
 import { useState } from "react"
 import Carousel from "react-material-ui-carousel"
 import { useNavigate } from "react-router-dom"
-import AppIcon from "../icon"
-import { StayRate } from "./stay-rate"
+import AppIcon from "../app-icon"
 
 export function StayPreview({ stay, inHomePage, stayAvgRate }) {
     const navigate = useNavigate()
@@ -21,60 +20,62 @@ export function StayPreview({ stay, inHomePage, stayAvgRate }) {
     }
 
     if (!stay) return // TODO: Skeleton
+    const StayAvgRate = getStayAvgRate(stay)
     return (inHomePage)
-        ? <div onClick={() => { navigate(`stay/${stay._id}`) }}
-            className="btn">
+        ? <div onClick={() => { navigate(`stay/${stay._id}`) }} className="btn">
             <Carousel
+                //* Carousel Setting
                 cycleNavigation={true}
                 duration={500}
                 animation="slide"
                 autoPlay={false}
-
+                //* indicatorIcon
                 indicatorIconButtonProps={{
                     style: {
-                        color: 'white',
-                        backgroundColor: 'transparent'
+                        color: 'whitesmoke',
+                        backgroundColor: 'transparent',
                     }
                 }}
                 activeIndicatorIconButtonProps={{
                     style: {
-                        color: 'whitesmoke',
-                        backgroundColor: 'transparent'
+                        color: 'white',
+                        backgroundColor: 'whitesmoke'
                     }
                 }}
+                indicatorContainerProps={{
+                    style: {
+                        position: 'absolute',
+                        zIndex: '1',
+                        marginTop: "-25px"
+                    },
+                }}
+                //* Nav btns
                 navButtonsProps={{
                     style: {
                         backgroundColor: 'white',
                         color: 'black',
                     }
                 }}
-                indicatorContainerProps={{
-                    style: {
-                        display: 'absolute',
-                        // display: 'relative',
-                        // top: 50,
-                    }
-                }}
-
             >
                 {stay.imgUrls.slice().map((imgUrl, idx) =>
                     <div key={`${imgUrl}-${idx}`} className="square-ratio carousel-preview">
                         <img src={imgUrl} alt={`Stay image ${idx}`} />
                     </div>
                 )}
-
             </Carousel>
 
-            <div
-                className="flex space-between">
-                <div className="capitalize">{`${stay.loc.city},${stay.loc.country}`}</div>
+            <div className="flex space-between">
+                <div className="capitalize">
+                    {`${stay.loc.city},${stay.loc.country}`}
+                </div>
+
                 <span>
-                    <StayRate
-                        rate={getStayAvgRate(stay)}
-                        reviewsCount={stay.reviews.length - 1}
-                        isReviewBtnShow={false}
-                    />
+                    <div className="flex center">
+                        {StayAvgRate}
+                        <AppIcon iconKey='star' />
+                    </div>
                 </span>
+                
             </div>
 
             <div className="clr-bright">
@@ -89,11 +90,13 @@ export function StayPreview({ stay, inHomePage, stayAvgRate }) {
             <div className="flex space-between">
 
                 <div className="flex space-between">
-                    <StayRate
-                        rate={stayAvgRate}
-                        reviewsCount={stay.reviews.length - 1}
-                        isReviewBtnShow={true}
-                    />
+                    <div className="flex center">
+                        {StayAvgRate}
+                        <AppIcon iconKey='star' />
+                    </div>
+                    <button className="btn-link reviews">
+                        {` ${stay.reviews.length - 1 || 0} reviews `}
+                    </button>
                     &#xB7;{`${stay.loc.city},${stay.loc.country}`}
                 </div>
 

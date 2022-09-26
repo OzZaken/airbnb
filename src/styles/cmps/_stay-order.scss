@@ -3,9 +3,10 @@
    padding-top: $layoutPadding;
    padding-left: $layoutPadding;
    position: sticky;
-   top: 80px;
+   top: $layoutPadding;
 
    .order-container {
+    width: 300px;
      border: 1px solid #00000030;
      border-radius: 13px;
      padding: 20px;

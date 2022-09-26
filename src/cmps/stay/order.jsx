@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFormRegister } from '../../hooks/useFormRegister'
-import AppIcon from '../icon'
+import AppIcon from '../app-icon'
 import { BtnTrigger } from '../helper/btn-radial-gradient'
 
 export const StayOrder = ({ stay, stayAvgRate }) => {
@@ -51,18 +51,18 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                     <div className="date-input">
                         <label htmlFor="checkIn">
                             CHECK IN
-                            <input
+                            {/* <input
                                 name="checkIn"
-                                {...register('date', 'date')} />
+                                {...register('date', 'date')} /> */}
                         </label>
 
                     </div>
                     <div className="date-input">
                         <label htmlFor="checkOut">
                             CHECK Out
-                            <input
+                            {/* <input
                                 name="checkOut"
-                                {...register('date', 'date')} />
+                                {...register('date', 'date')} /> */}
                         </label>
                     </div>
                 </div>
@@ -70,8 +70,8 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                 <div className="guest-input">
                     <label htmlFor="guests">
                         GUESTS
-                        <input type="number"
-                            {...register('number', 'number')} />
+                        {/* <input type="number"
+                            {...register('number', 'number')} /> */}
                     </label>
                     <AppIcon onClick={()=>{console.log('// TODO:use htmlFor');}} iconKey='arrowDown' />
                 </div>

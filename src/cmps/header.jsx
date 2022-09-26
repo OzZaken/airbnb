@@ -3,16 +3,16 @@ import { useRef } from 'react'
 import { connect } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
-import AppIcon from "./icon"
+import AppIcon from "./app-icon"
 
 // CMPS
 import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/stay-filter.jsx'
 
 function _AppHeader({ onLogin, onSignup, onLogout, user }) {
-    // useState
-    let isFilterShown = false
+    const [isFilterShown, setFilterShown] = useState(false)
     useEffect(() => {
+
     }, [isFilterShown])
 
     // For Show heading "NavLinks"
@@ -49,31 +49,43 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
             </div>
             {/* User */}
             <div className="flex space-between user-btns-container">
-                <div className='flex center left'><Link to={`/stay/edit`}>Become a host</Link></div>
+
+                <div className='flex center left'>
+                    <Link to={`/stay/edit`}>
+                        Become a host
+                    </Link>
+                </div>
+
                 <div className='flex user-nav-container'>
                     <AppIcon iconKey="menu" />
                     <AppIcon iconKey="accountCircle" />
+
+
+
+                    {user &&
+                        <span className="user-info">
+                            <Link to={`user/${user._id}`}>
+                                {user.imgUrl && <img src={user.imgUrl} />}
+                                {user.fullname}
+                            </Link>
+                            <span className="score">{user.score?.toLocaleString()}</span>
+                            <button onClick={onLogout}>Logout</button>
+                        </span>
+                    }
+
+                    {!user &&
+                        <section className="user-info">
+                            <LoginSignup onLogin={onLogin} onSignup={onSignup} />
+                        </section>
+                    }
+
                 </div>
+
             </div>
         </div>
+
+
         {isFilterShown && <StayFilter />}
-
-        {user &&
-            <span className="user-info">
-                <Link to={`user/${user._id}`}>
-                    {user.imgUrl && <img src={user.imgUrl} />}
-                    {user.fullname}
-                </Link>
-                <span className="score">{user.score?.toLocaleString()}</span>
-                <button onClick={onLogout}>Logout</button>
-            </span>
-        }
-
-        {/* {!user &&
-            <section className="user-info">
-                <LoginSignup onLogin={onLogin} onSignup={onSignup} />
-            </section>
-            } */}
 
     </header >
 }

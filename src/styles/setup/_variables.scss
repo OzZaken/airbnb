@@ -3,7 +3,7 @@ $clr1: #de1063;
 $clr2: #ff385c;
 $clr-bgc: #f1f1f1;
 $clr-dark: #222;
-$clr-bright: #717171;
+$clr-bright: #7171718c;
 
 // Layout
 $layoutPadding: 24px;
@@ -14,7 +14,7 @@ $break-tablet: 742px;
 $break-desktop: 964px;
 $break-wide: 1243px;
 
-$for-mobile-layout: $break-mobile ;
+$for-mobile-layout: $break-mobile + $layoutPadding * 2;
 $for-tablet-layout: calc($break-tablet + $layoutPadding * 2);
 $for-desktop-layout: calc($break-desktop + $layoutPadding * 2);
 $for-wide-layout: calc($break-wide + $layoutPadding * 2);

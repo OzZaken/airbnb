@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import AppIcon from '../app-icon'
 import { BtnTrigger } from '../helper/btn-radial-gradient'
+import DatePicker from '../helper/date-picker'
 
 export const StayOrder = ({ stay, stayAvgRate }) => {
     const [orders, setOrders] = useState(null)
@@ -12,28 +13,43 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
             guests: 1,
         }
     ])
-    const [register] = useFormRegister([
-        {
-            checkIn: new Date(),
-            checkOut: new Date(),
-            guests: 1,
-        }
-    ])
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const setCheckIn = (date) => {
+        console.log('date:', date.getFullYear(), date.getMonth(), date.getDate())
+        setOrder(prevOrder => (
+            {
+                ...prevOrder,
+                checkIn: date + ''
+            }
+        ))
+    }
+    const setCheckOut = (date) => {
+        console.log('date:', date.getFullYear(), date.getMonth(), date.getDate())
+        setOrder(prevOrder => (
+            {
+                ...prevOrder,
+                checkIn: date + ''
+            }
+        ))
+    }
 
     // const putDateString = () => {
-    //     checkIn.innerText = state[0].startDate.toString().slice(0, 15)
-    //     checkOut.innerText = state[0].endDate.toString().slice(0, 15)
+    //     checkIn.innerText = 
+    //     checkOut.innerText = 
     // }
+
 
     return <section className='stay-order'>
         <div className='flex column order-container'>
 
-            <div className="order-form-header">
+            <div className="order-form-heading">
                 <p>
                     <span className='prev-price'> {`${Math.ceil(stay.price / 3 + stay.price)} `}
                     </span>
 
-                    <span className="cost">{stay.price}
+                    <span className="cost">
+                        {stay.price}
                     </span>
                     night
                 </p>
@@ -45,26 +61,18 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                 </p>
             </div>
 
+            {/* Order Data */}
             <div className="order-data">
-
                 <div className="date-picker">
-                    <div className="date-input">
-                        <label htmlFor="checkIn">
-                            CHECK IN
-                            {/* <input
-                                name="checkIn"
-                                {...register('date', 'date')} /> */}
-                        </label>
+                    <div onClick={() => { setIsModalOpen(true) }} className="check-in">
+                        Check In
+                        {order.checkIn}
+                    </div>
 
+                    <div onClick={() => { setIsModalOpen(true) }} className="check-out">
+                        Check Out
                     </div>
-                    <div className="date-input">
-                        <label htmlFor="checkOut">
-                            CHECK Out
-                            {/* <input
-                                name="checkOut"
-                                {...register('date', 'date')} /> */}
-                        </label>
-                    </div>
+                    {isModalOpen && <DatePicker setCheckIn={setCheckIn} />}
                 </div>
 
                 <div className="guest-input">
@@ -73,12 +81,23 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                         {/* <input type="number"
                             {...register('number', 'number')} /> */}
                     </label>
-                    <AppIcon onClick={()=>{console.log('// TODO:use htmlFor');}} iconKey='arrowDown' />
+                    <AppIcon onClick={() => { console.log('// TODO:use htmlFor'); }} iconKey='arrowDown' />
                 </div>
             </div>
 
             <BtnTrigger />
+
             <div>You won't be charged yet</div>
+            {/*TODO: ↓ 
+                {`${coin}${stay.price} X ${totalDays}  ${coin}${totalPrice}`} */}
+            <div className='flex space-between'>
+                <div className="left btn-link">
+                    {`$${stay.price} X x  $y`}
+                </div>
+                <div className="right btn-link">
+                    {`$${stay.price * 5} `}
+                </div>
+            </div>
 
         </div>
     </section>

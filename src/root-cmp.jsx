@@ -1,20 +1,23 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import routes from './routes'
 import './styles/main.scss'
 import { AppHeader } from './cmps/header'
+import { userService } from "./services/user.service";
+import { LoginSignup } from './cmps/login-signup'
 
 function App() {
-  
-    const getStayAvgRate = (stay) => {
-      const rates = []
-      stay.reviews.forEach(review => rates.push(review.rate))
-      return (rates.reduce((a, b) => (a + b)) / rates.length ).toFixed(2)
+  //  User 
+  const [loggedInUser, setLoggedInUser] = useState(userService.getLoggedinUser())
+  const navigate = useNavigate()
+  function onLogOut() {
+    userService.logout()
+    setLoggedInUser(null)
+    navigate('/')
   }
-
   return (
-    <div>
-      <AppHeader />
+    <React.Fragment>
+      <AppHeader loggedInUser={loggedInUser} onLogOut={onLogOut} />
       <main className='main-container main-app'>
         <Routes>
           {routes.map(route => <Route
@@ -22,11 +25,10 @@ function App() {
             element={route.component}
             path={route.path}
             exact={true}
-            getStayAvgRate={getStayAvgRate}
           />)}
         </Routes>
       </main>
-    </div>
+    </React.Fragment>
   )
 }
 

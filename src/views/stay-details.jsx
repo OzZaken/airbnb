@@ -1,21 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+// Services
 import { stayService } from '../services/stay.service.local'
-import { StayOrder } from '../cmps/stay/order'
-import { StayPreview } from '../cmps/stay/stay-preview'
+import { utilService } from '../services/util.service'
+// Components
 import AppIcon from '../cmps/app-icon'
+import { StayOrder } from '../cmps/stay/stay-order'
+import { StayPreview } from '../cmps/stay/stay-preview'
 import { GoogleMap } from '../cmps/helper/map'
+// Loader
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 
-// Export.Modules in services?
 export const StayDetails = () => {
     // * Load Stay
     const params = useParams()
     const [stay, setStay] = useState(null)
+
     useEffect(() => {
-        document.body.classList.add("stay-details-page")
         loadStay()
+        document.body.classList.add("stay-details-page")
+        console.log('StayDetails:', stay)
         return () => {
-            console.log('StayDetails return:', stay)
+            console.log('StayDetails return:')
             document.body.classList.remove("stay-details-page")
         }
     }, [])
@@ -24,30 +31,19 @@ export const StayDetails = () => {
         const stayId = params.stayId
         setStay(await stayService.getById(stayId))
     }
-    //TODO: Move to util ↓
-    const pluralTxt = (num) => {
-        return num > 1 ? 's ' : '  '
-    }
 
-    // * Avg rate
-    const getStayAvgRate = (stay) => {
-        const rates = []
-        stay.reviews.forEach(review => rates.push(review.rate))
-        return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
-    }
-
-    // * Rooms
+    // * stay rooms
     const getStayRooms = (StayRoomsMap) => {
         const elRooms = []
         for (const room in StayRoomsMap) {
             elRooms.push(<li key={room} className='clean-list'>
-                {`· ${StayRoomsMap[room]} ${room}${pluralTxt(room)}`}
+                {`· ${StayRoomsMap[room]} ${room}${utilService.pluralTxt(room)}`}
             </li>)
         }
         return elRooms
     }
 
-    // * Reviews
+    // * stay reviews
     const getStayReviews = (reviewsToShow) => {
         const elReviews = []
         reviewsToShow.slice(6)
@@ -70,18 +66,60 @@ export const StayDetails = () => {
         return elReviews
     }
 
-    if (!stay) return
+    if (!stay) return <div className='main-layout'>
+        <Box sx={{ display: 'flex', margin: '100px auto' }}>
+            <CircularProgress />
+        </Box>
+    </div>
+
     const StayReviewsCount = stay.reviews.length
-    const stayAvgRate = getStayAvgRate(stay)
-    const isShowMoreBtn = stay.summary.length >= 0 ? true : false
+    const stayAvgRate = stayService.getStayAvgRate(stay)
     const achievementsMap = stayService.getAchievements()
+    const stayRooms = getStayRooms(stay.stayMap)
+    const isSummeryShowMoreBtn = stay.summary.split(' ').length >= 15
 
     return <section className="stay-details">
-        <StayPreview stayAvgRate={stayAvgRate} stay={stay} />
+        <div className="details-page-preview">
+            <h1>{stay.name}</h1>
 
-        {/* Details */}
-        <div className='flex space-between'>
+            <div className="flex space-between">
+
+                <div className="flex space-between">
+                    <div className="flex center">
+                        {stayAvgRate}
+                        <AppIcon iconKey='star' />
+                    </div>
+                    <button className="btn-link reviews">
+                        {` ${stay.reviews.length - 1 || 0} reviews `}
+                    </button>
+                    &#xB7;{`${stay.loc.city},${stay.loc.country}`}
+                </div>
+
+                <div className="flex space-between">
+                    <button className="btn-link">
+                        <AppIcon iconKey='share' />
+                        share
+                    </button>
+                    <button className="btn-link">
+                        <AppIcon iconKey='heart' />
+                        save
+                    </button>
+                </div>
+            </div>
+
             <div>
+                <div className="imgs-grid-template">
+                    {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
+                        <img src={imgUrl}
+                            key={`${imgUrl}-${idx}`}
+                            alt={`${stay.name} image ${idx}`} />
+                    )}
+                </div>
+            </div>
+        </div>
+        {/* Details & Order*/}
+        <div className='flex'>
+            <div className='left'>
                 {/* Host Info */}
                 <div className="flex space-between stay-details-row stay-host">
                     <div className="flex column space-between">
@@ -93,9 +131,9 @@ export const StayDetails = () => {
 
                         <ul className='flex'>
                             <li className='clean-list'>
-                                {`· ${stay.capacity} guest${pluralTxt(stay.capacity)}`}
+                                {`· ${stay.capacity} guest${utilService.pluralTxt(stay.capacity)}`}
                             </li>
-                            {getStayRooms(stay.stayMap)}
+                            {stayRooms}
                         </ul>
                     </div>
 
@@ -132,7 +170,7 @@ export const StayDetails = () => {
                 {/* Summary */}
                 <div className="stay-details-row stay-summary">
                     {stay.summary}
-                    {isShowMoreBtn &&
+                    {isSummeryShowMoreBtn &&
                         <div>
                             <button className="capitalize underline">
                                 <b>Show More</b>
@@ -143,47 +181,45 @@ export const StayDetails = () => {
 
                 {/* Amenities */}
                 <div className="stay-details-row stay-amenities">
-                    <div>
-                        <h2>What this place offers</h2>
-                    </div>
-
+                    <h2>What this place offers</h2>
                     <div className="card-grid amenities">
-                        {stay.amenities.slice().map(amenity =>
+                        {stay.amenities.slice(0, 7).map(amenity =>
                             <div key={`${amenity}`}>
                                 {amenity}
                             </div>
                         )}
                     </div>
 
-                    <button className="btn btn-big">
-                        Show all {stay.amenities.length} amenities
-                    </button>
+                    {stay.amenities.length > 7 &&
+                        <button className="btn btn-big">
+                            Show all {stay.amenities.length} amenities
+                        </button>
+                    }
 
                 </div>
 
-                {/* Reviews */}
-                <div className="stay-details-row stay-reviews">
-                    <h2 className='flex start'>
-                        {stayAvgRate}
-                        <AppIcon iconKey='star' />
-                        {/* TODO: Fix→${StayReviewsCount.length > 1 ? 's ' : 'e ' */}
-                        {StayReviewsCount} review{`${StayReviewsCount.length > 1 ? 'e ' : 's '}`}
-                    </h2>
-
-                    <ul className='clean-list reviews-list'>
-                        {getStayReviews(stay.reviews)}
-                    </ul>
-                    <button className="btn btn-big">
-                        Show all {`${stay.reviews.length} review${StayReviewsCount.length > 1 ? 'e ' : 's '}`}
-                    </button>
-                </div>
-
-                {/* ↓ End Details */}
             </div>
-            {/* ↑ End Details */}
-            <div>
+            {/* Order */}
+            <div className="right">
                 <StayOrder stay={stay} stayAvgRate={stayAvgRate} />
             </div>
+        </div>
+
+        {/* Reviews */}
+        <div className="stay-details-row stay-reviews">
+            <h2 className='flex start'>
+                {stayAvgRate}
+                <AppIcon iconKey='star' />
+                {/* TODO: Fix→${StayReviewsCount.length > 1 ? 's ' : 'e ' */}
+                {StayReviewsCount} review{`${StayReviewsCount.length > 1 ? 'e ' : 's '}`}
+            </h2>
+
+            <ul className='clean-list reviews-list'>
+                {getStayReviews(stay.reviews)}
+            </ul>
+            <button className="btn btn-big">
+                Show all {`${stay.reviews.length} review${StayReviewsCount.length > 1 ? 'e ' : 's '}`}
+            </button>
         </div>
 
         {/* Map */}

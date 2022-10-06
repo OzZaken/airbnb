@@ -6,21 +6,17 @@
    top: $layoutPadding;
 
    .order-container {
-    width: 300px;
+     width: 300px;
      border: 1px solid #00000030;
      border-radius: 13px;
      padding: 20px;
      box-shadow: 0 0 5px 5px #00000015;
 
-     .order-form-header {
+     .order-form-headeing {
        display: flex;
        align-items: center;
        justify-content: space-between;
        width: 100%;
-
-       p {
-         margin-top: 0;
-       }
      }
 
      .order-data {

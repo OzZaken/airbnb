@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { connect } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { onLogin, onLogout, onSignup, loadUsers, removeUser } from '../store/user.actions.js'
 import AppIcon from "./app-icon"
-
+import { userService } from "../services/user.service";
 // CMPS
 import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/stay-filter.jsx'
+import Divider from '@mui/material/Divider'
 
-function _AppHeader({ onLogin, onSignup, onLogout, user }) {
-    const [isFilterShown, setFilterShown] = useState(false)
+function _AppHeader({ onLogin, onSignup, onLogOut, user, loggedInUser }) {
+
     useEffect(() => {
+        console.log('loggedInUser:', loggedInUser)
+    }, [])
 
-    }, [isFilterShown])
-
-    // For Show heading "NavLinks"
+    // Filter Btns
+    const [focusOn, setFocusOn] = useState(null)
     const ref = useRef()
     const onSelectFocus = (focusOn) => {
-        isFilterShown = false
-        console.log('focusOn:', focusOn)
+        setFocusOn(focusOn)
+        // ref.current
     }
 
-    return <header className='main-container space-between'>
+    //  User Nav
+    const [isUserNavOpen, setIsUserNavOpen] = useState(false)
+    function handleUserNav() {
+        setIsUserNavOpen(!isUserNavOpen)
+    }
 
-        <div className='flex space-between main-header'>
+    return <header className='space-between'>
+        <div className='flex space-between main-container main-header'>
             {/* Logo */}
             <Link className="logo" to={'/'}>
                 <AppIcon iconKey="logo" />
             </Link>
-            {/* filter */}
+
+            {/* Filter Btns */}
             <div className='flex center filter-btns-container'>
                 <div className='flex space-between btns-container'>
                     <button onClick={() => { onSelectFocus('location') }}>AnyWhere</button>
@@ -47,46 +55,70 @@ function _AppHeader({ onLogin, onSignup, onLogout, user }) {
                     </div>
                 </div>
             </div>
+
             {/* User */}
             <div className="flex space-between user-btns-container">
-
                 <div className='flex center left'>
                     <Link to={`/stay/edit`}>
                         Become a host
                     </Link>
                 </div>
-
-                <div className='flex user-nav-container'>
+                <div onClick={handleUserNav} className='flex user-nav-container'>
                     <AppIcon iconKey="menu" />
                     <AppIcon iconKey="accountCircle" />
-
-
-
-                    {user &&
-                        <span className="user-info">
-                            <Link to={`user/${user._id}`}>
-                                {user.imgUrl && <img src={user.imgUrl} />}
-                                {user.fullname}
-                            </Link>
-                            <span className="score">{user.score?.toLocaleString()}</span>
-                            <button onClick={onLogout}>Logout</button>
-                        </span>
-                    }
-
-                    {!user &&
-                        <section className="user-info">
-                            <LoginSignup onLogin={onLogin} onSignup={onSignup} />
-                        </section>
-                    }
-
                 </div>
+                {isUserNavOpen &&
+                    <div className='user-nav-container' onClick={handleUserNav}>
+                        <nav>
+                            <ul className='clean-list'>
+                                {/* loggedInUser Condition → link to stay order || login\signup*/}
+                                {loggedInUser ? (
+                                    <li>
+                                        <Link to={'stay/order'}
+                                            className='user-nav-about-link'>
+                                            <span className='user-nav-span'>
+                                                {loggedInUser.firstname}
+                                                {loggedInUser.lastname}
+                                            </span>
+                                        </Link>
+                                        <Divider />
+                                    </li>
+                                ) : (
+                                    <>
+                                        <li><Link to={'login'}>Log in</Link>
+                                        </li>
 
+                                        <li><Link to={'signup'}>Sign up</Link>
+                                        </li>
+                                        <Divider />
+                                    </>
+                                )}
+
+                                <hr />
+                                <li>
+                                    <Link to={'stay/host'}>Host your home</Link>
+                                </li>
+                                <li>
+                                    <Link to={'stay/host'}>Host an experience</Link>
+                                </li>
+
+                                <li onClick={onLogOut}>
+                                    {loggedInUser ? (
+                                        <button className='user-nav-span'>Log out</button>
+                                    ) : (
+                                        <Link href='/about'>About</Link>
+                                    )}
+                                </li>
+
+                            </ul>
+                            <div className='user-nav-span'>Help</div>
+                        </nav>
+                    </div>
+                }
             </div>
         </div>
-
-
-        {isFilterShown && <StayFilter />}
-
+        {/* Filter  */}
+        <StayFilter />
     </header >
 }
 

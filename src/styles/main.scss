@@ -1,18 +1,18 @@
-// SETUP
-@import './setup/normalize.css';
+// Setup
+@import '../lib/normalize.css';
 @import './setup/variables';
 @import './setup/typography';
 @import './setup/functions';
 @import './setup/mixins';
 
-// BASICS
+// Basic
 @import './basics/base';
 @import './basics/layout';
 @import './basics/forms';
 @import './basics/helpers';
 
-// CMPS
-@import './cmps/app-header';
+// Components
+@import './cmps/_header';
 @import './cmps/app-footer';
 @import './cmps/user-msg';
 @import './cmps/modal';
@@ -22,6 +22,9 @@
 @import './cmps/btn-radial-gradient';
 @import './cmps/stay-order';
 
+// Views
 @import './views/stay-details';
+@import './views/home-page';
+
 
 // https://github.com/airbnb/css

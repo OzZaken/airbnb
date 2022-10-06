@@ -1,43 +1,71 @@
+import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom';
 // import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+// Services
+import { stayService } from '../../services/stay.service.local'
+// CMPS
+import AppIcon from '../app-icon'
 import { useFormRegister } from '../../hooks/useFormRegister'
-import { useRef } from 'react'
+
+
+
 export const StayFilter = (props) => {
   const [register] = useFormRegister(
     {
       name: '',
       minPrice: 0,
     },
-    props.onChangeFilter
   )
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const onSetFilterBy = (filterBy) => setSearchParams({ filterBy })
+  const getStayFilterBy = () => {
+    const filters = stayService.getFilterBys()
+    const elFilters = []
 
-  return (
-    <form className="stay-filter">
+    for (const filterBy in filters) {
+      const currFilter = filters[filterBy]
+      elFilters.push(
+        <button className="flex center column btn-filter-by"
+          key={Object.keys(currFilter)}
+          onClick={() => {
+            onSetFilterBy(
+              String(Object.values(currFilter))
+                .replace(/[^a-zA-Z ]/g, '')
+                .split(' ')
+                .join('-')
+                // Todo: ↓ replace with regex
+                .toLowerCase()
+            )
+          }}
+        >
+          <AppIcon iconKey={Object.keys(currFilter)} />
+          <p className='flex txt-filter-by'>
+            {Object.values(currFilter)}
+          </p>
+        </button >
+      )
+    }
+    return elFilters
+  }
 
-      <label htmlFor="checkIn">
-        <input placeholder='date'
-          {...register('date', 'date')} />
-      </label>
-      <label htmlFor="checkOut">
-        <input placeholder='date'
-          {...register('date', 'date')} />
-      </label>
 
+  return <div className="flex main-layout filter-bar">
 
+    <div className="flex">
+      <button><AppIcon iconKey='prevBtn' /></button>
+      <div className='filter-list-container'>
+        {getStayFilterBy()}
+      </div>
+      <button><AppIcon iconKey='nextBtn' /></button>
 
-      {/*//* Later on filter btn */}
-      {/* <label htmlFor="name">
-        <input placeholder='Stay name'
-          {...register('name', 'text')} />
-      </label> */}
+      <div className="filter-btn-container">
+        <button className="flex btn-big"
+          onClick={() => { setIsModalOpen(true) }}>
+          <AppIcon iconKey='filterBy' /> filter
+        </button>
 
-      {/* <label htmlFor="minPrice">
-        Min Price
-        <input placeholder='Price'
-          {...register('minPrice', 'number')} />
-      </label> */}
-
-    </form>
-  )
+      </div>
+    </div>
+  </div>
 }
-
-// https://www.youtube.com/watch?v=WT827YsMJCc

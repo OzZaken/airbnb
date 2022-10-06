@@ -2,7 +2,8 @@ export const utilService = {
     makeId,
     makeLorem,
     getRandomIntInclusive,
-    delay
+    delay,
+    pluralTxt,
 }
 
 function makeId(length = 6) {
@@ -36,4 +37,8 @@ function delay(ms = 1500) {
     return new Promise(resolve => {
         setTimeout(resolve, ms)
     })
+}
+
+function pluralTxt(num) {
+    return num > 1 ? 's ' : '  '
 }

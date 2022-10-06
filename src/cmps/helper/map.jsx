@@ -1,9 +1,9 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import { useState } from 'react'
-import { FaHome } from 'react-icons/fa';
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import { FaHome } from 'react-icons/fa'
 
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 export function GoogleMap({ loc }) {
     const lng = parseFloat(loc.lat)
     const lat = parseFloat(loc.lng)

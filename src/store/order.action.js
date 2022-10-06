@@ -50,26 +50,3 @@ export function updateOrder(order) {
     }
   }
 }
-
-export function setFilterBy(filterBy) {
-  return (dispatch) => {
-    dispatch({ type: 'SET_FILTER_BY', filterBy })
-  }
-}
-
-export function sortByOrders(sortBy) {
-  return (dispatch, getState) => {
-    dispatch({ type: 'SET_SORT_BY', sortBy })
-
-    let { orders } = getState().orderModule
-
-    if (sortBy.sortBy === 'name') {
-      orders = orders.sort((t1, t2) => t1.name.localeCompare(t2.name))
-    }
-    if (sortBy.sortBy === 'price') {
-      orders = orders.sort((t1, t2) => t1.price - t2.price)
-    }
-
-    dispatch({ type: 'SET_STAYS', orders })
-  }
-}

@@ -7,13 +7,23 @@ export function LoginSignup(props) {
     const [isSignup, setIsSignup] = useState(false)
     const [users, setUsers] = useState([])
 
-    useEffect(async () => {
-        const users = await userService.getUsers()
-        setUsers(users)
+    useEffect(() => {
+        getUsers()
     }, [])
 
+    const getUsers = async () => {
+        const users = await userService.getUsers()
+        setUsers(users)
+    }
+
     const clearState = () => {
-        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
+        setCredentials(
+            {
+                username: '',
+                password: '',
+                fullname: '',
+                imgUrl: ''
+            })
         setIsSignup(false)
     }
 
@@ -43,11 +53,13 @@ export function LoginSignup(props) {
     const onUploaded = (imgUrl) => {
         setCredentials({ ...credentials, imgUrl })
     }
-    
+
     return (
         <div className="login-page">
             <p>
-                <button className="btn-link" onClick={toggleSignup}>{!isSignup ? 'Signup' : 'Login'}</button>
+                <button onClick={toggleSignup} className="btn-link" >
+                    {!isSignup ? 'Signup' : 'Login'}
+                </button>
             </p>
             {!isSignup && <form className="login-form" onSubmit={onLogin}>
                 <select
@@ -58,23 +70,7 @@ export function LoginSignup(props) {
                     <option value="">Select User</option>
                     {users.map(user => <option key={user._id} value={user.username}>{user.fullname}</option>)}
                 </select>
-                {/* <input
-                        type="text"
-                        name="username"
-                        value={username}
-                        placeholder="Username"
-                        onChange={this.handleChange}
-                        required
-                        autoFocus
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        placeholder="Password"
-                        onChange={this.handleChange}
-                        required
-                    /> */}
+
                 <button>Login!</button>
             </form>}
             <div className="signup-section">
@@ -103,7 +99,7 @@ export function LoginSignup(props) {
                         onChange={handleChange}
                         required
                     />
-                    <ImgUploader onUploaded={onUploaded}/>                    
+                    <ImgUploader onUploaded={onUploaded} />
                     <button >Signup!</button>
                 </form>}
             </div>

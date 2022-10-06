@@ -1,5 +1,4 @@
 .stay-list {
-  margin-top: 80px;
 
   @include for-mobile-layout {
     grid-template-columns: repeat(auto-fill, minmax(243px, 1fr));

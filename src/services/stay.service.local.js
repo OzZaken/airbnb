@@ -7,6 +7,7 @@ export const stayService = {
   getById,
   getTypes,
   getAchievements,
+  getStayAvgRate,
   getFilterBys,
 }
 
@@ -322,7 +323,6 @@ const gDefaultStays = [
     "amenities": [
       "Hair dryer",
       "Cleaning products",
-      "Cleaning products",
       "Shampoo",
       "Hot water",
       "Shower gel",
@@ -378,7 +378,7 @@ const gDefaultStays = [
     "likedByUsers": ['mini-user'] // for user-wishlist : use $in
   },
 ]
-const gStayTypes = [
+const gStayTypes = [// Stay types, heading, txt and icon
   'Apartment',
   'House',
   'Secondary unit',
@@ -386,7 +386,6 @@ const gStayTypes = [
   'Bad and breakfast',
   'Boutique hotel',
 ]
-
 const gStayAchievements = { // Stay achievements, heading, txt and icon
   "fastWifi": {
     "heading": "Fast wifi",
@@ -441,8 +440,9 @@ const gFilterBys = [ // FilterBy achievements & amenities
   // { desert: 'Desert' },
 ]
 
-function query(filterBy) {
-  return storageService.query(STORAGE_KEY).then((stays) => {
+async function query(filterBy) {
+  try {
+    const stays = await storageService.query(STORAGE_KEY)
     if (!stays || !stays.length) {
       storageService.postMany(STORAGE_KEY, gDefaultStays)
       stays = gDefaultStays
@@ -461,15 +461,9 @@ function query(filterBy) {
       }
     }
     return stays
-  })
-}
-
-function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId)
-}
-
-function remove(stayId) {
-  return storageService.remove(STORAGE_KEY, stayId)
+  } catch (error) {
+    console.log(error, 'filterBy from storage has been failed')
+  }
 }
 
 function save(stay) {
@@ -483,13 +477,26 @@ function save(stay) {
   }
 }
 
+function remove(stayId) {
+  return storageService.remove(STORAGE_KEY, stayId)
+}
+
+function getById(stayId) {
+  return storageService.get(STORAGE_KEY, stayId)
+}
+
 function getTypes() {
   return gStayTypes
 }
-
 function getAchievements() {
   return gStayAchievements
 }
 function getFilterBys() {
   return gFilterBys
+}
+
+function getStayAvgRate(stay) {
+  const rates = []
+  stay.reviews.forEach(review => rates.push(review.rate))
+  return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
 }

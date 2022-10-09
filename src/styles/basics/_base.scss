@@ -5,27 +5,28 @@
 }
 
 html {
-    font-size: 18px;
-    font-family: ffregular, 'Courier New', Courier, monospace;
+    font-size: 16px;
+    scroll-behavior: smooth;
+    font-family: ffregular, 'Courier New', Courier, monospace, sans-serif;
 }
 
 body {
     background-color: white;
-    overflow-x: hidden;
+    // overflow-x: hidden;
+    // min-height: 100vh;
 }
-
-header {
-    flex-direction: column;
-    position: sticky;
-    flex-direction: column;
-}
-
+// header{
+//     position: sticky;
+//     top: 0;
+// }
 h1,
 h2,
 h3 {
     font-family: ffheading;
 }
-
+hr{
+    opacity: 50%;
+}
 img {
     width: 100%;
 }
@@ -52,5 +53,5 @@ button {
 }
 
 footer {
-    background-color: $clr-bright;
+    background-color: $clr-vector;
 }

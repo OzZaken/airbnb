@@ -11,9 +11,13 @@ export function stayReducer(state = initialState, action) {
   var filterBy
 
   switch (action.type) {
+
+
     case 'SET_STAYS':
-      stays = action.stays.slice()
-      return { ...state, stays }
+      return {
+        ...state,
+        stays: action.stays
+      }
 
     case 'SET_PAGE': {
       return {
@@ -37,8 +41,8 @@ export function stayReducer(state = initialState, action) {
       console.log(`stays:`, stays)
       return { ...state, stays }
 
+
     case 'SET_FILTER_BY':
-      // NOT SURE
       filterBy = action.filterBy
       return { ...state, filterBy }
 

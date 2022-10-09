@@ -1,6 +1,47 @@
 .home-page {
     .filter-bar {
-        display: unset;
+        position: sticky;
+        top: 80px;
+        box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0);
+        padding-top: 10px;
+
+
+        .filter-list-container {
+            display: flex;
+            // flex-wrap: nowrap;
+            // overflow-x: hidden;
+            // text-overflow: ellipsis;
+            
+            justify-content: space-evenly;
+            flex: 1;
+
+            .btn-filter-by {
+                display: flex;
+                color: $clr-bright;
+
+                .txt-filter-by {
+                    opacity: 0.5;
+                }
+
+                &.active {
+                    .txt-filter-by {
+                        color: #000000;
+                        font-size: calc(100% + 2px);
+                        opacity: 1;
+                    }
+                }
+
+                img,
+                svg {
+                    padding: 5px 0px;
+                    width: 24px;
+                }
+
+                &:hover {
+                    border-bottom: 2px solid $clr-vector;
+                }
+            }
+        }
     }
 
     .carousel-preview {

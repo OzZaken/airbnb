@@ -57,7 +57,7 @@ export const StayDetails = () => {
 
                     <div className='flex column'>
                         <h3>{reviewsToShow[review].by.fullname}</h3>
-                        {/* <div className='clr-bright'>{`${reviews[review]._id.createdAt}`}</div> */}
+                        {/* <div className='clr-vector'>{`${reviews[review]._id.createdAt}`}</div> */}
                         <span>{reviewsToShow[review].txt}</span>
                     </div>
                 </div>

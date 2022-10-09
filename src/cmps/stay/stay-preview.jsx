@@ -17,7 +17,9 @@ export function StayPreview({ stay }) {
     if (!stay) return // TODO: Skeleton
     const StayAvgRate = stayService.getStayAvgRate(stay)
 
-    return <div onClick={() => { navigate(`stay/${stay._id}`) }} className="btn">
+    return <section className="btn stay-preview"
+        onClick={() => { navigate(`stay/${stay._id}`) }}
+    >
         <Carousel
             // Carousel Setting
             navButtonsAlwaysVisible={false}
@@ -41,12 +43,11 @@ export function StayPreview({ stay }) {
             }}
             indicatorContainerProps={{
                 style: {
-                    position: 'relative',
+                    position: 'absolute',
                     zIndex: '1',
                     marginTop: "-50px"
                 },
             }}
-
             // Nav btns
             navButtonsProps={{
                 style: {
@@ -56,34 +57,38 @@ export function StayPreview({ stay }) {
             }}
         >
             {stay.imgUrls.slice().map((imgUrl, idx) =>
-                <div className="square-ratio carousel-preview">
+                <div className="square-ratio carousel-preview"
+                    key={`${imgUrl}-${idx}`}>
                     <img src={imgUrl}
-                        key={`${imgUrl}-${idx}`}
                         alt={`${stay.name}\nimage ${idx}`}
                     />
                 </div>
             )}
         </Carousel>
 
-        <div className="flex space-between">
-            <div className="capitalize">
-                {`${stay.loc.city},${stay.loc.country}`}
-            </div>
-
-            <span>
-                <div className="flex center fs12">
-                    <AppIcon iconKey='star' />
-                    {StayAvgRate}
+        <div>
+            <div className="flex space-between">
+                <div className="capitalize">
+                    {`${stay.loc.city},${stay.loc.country}`}
                 </div>
-            </span>
 
+                <span>
+                    <div className="flex center fs12">
+                        <AppIcon iconKey='star' />
+                        {StayAvgRate}
+                    </div>
+                </span>
+            </div>
+            <div className="fs14 clr-vector">
+            {/* TODO: geolocation for put diff */}
+                <div>9,621 kilometers</div>
+                {/* TODO: what is this↓? */}
+                <div>Dec 20 - 25</div>
+            </div>
+            ${stay.price} night
         </div>
-
-        <div className="clr-bright">
-            <div>9,621 kilometers</div>
-            <div>Dec 20 - 25</div>
-        </div>
-        ${stay.price} night
-    </div>
+    </section>
 }
+// https://www.youtube.com/watch?v=VYsVOamdB0g
+
 // https://www.npmjs.com/package/react-material-ui-carousel

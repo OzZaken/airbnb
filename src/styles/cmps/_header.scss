@@ -1,7 +1,12 @@
 .main-header {
-  flex-direction: row;
-  align-items: center;
-  border-bottom: 1px solid $clr-bright;
+  position: sticky;
+  position: -webkit-sticky;
+  /* Safari */
+  top: 0;
+  border-bottom: 1px solid $clr-vector;
+  box-shadow: 0px 2px 2px $clr-vector;
+  padding: $layoutPadding;
+  box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0);
 
   // Logo
   .logo {
@@ -30,7 +35,7 @@
       border-radius: 40px;
       padding: 5px;
       box-shadow: 0 0 5px hsl(0 0% 78%);
-      border: 1px solid $clr-bright;
+      border: 1px solid $clr-vector;
 
       button {
         padding-right: 10px;
@@ -38,7 +43,7 @@
       }
 
       :not(:last-child) {
-        border-right: $clr-bright solid 1px;
+        border-right: $clr-vector solid 1px;
         margin-right: 5px;
       }
     }
@@ -49,22 +54,35 @@
     min-width: 58px;
     min-height: 30px;
     flex: 1;
+
+    .host-link {
+      font-weight: 600;
+      font-size: 13px;
+      width: 130px;
+      border-radius: 22px;
+      // height: 42px;
+      // margin: 0 15px;
+
+      &:hover {
+        background-color: rgba(235, 235, 235, 0.354);
+
+      }
+    }
+
   }
 
-  .user-nav-container {
-    display: fixed;
-    border-radius: 21px;
-    padding: 5px 5px 5px 12px;
-    border: 1px solid $clr-bright;
+  .btn-user-nav {
+    // position: absolute;
+    // transform: translate(+50%, +50%);
+    align-items: center;
+    border: 1px solid $clr-vector;
+    border-radius: 22px;
     padding: 5px 5px 5px 12px;
     width: fit-content;
-    background-color: white;
     border-radius: 25%;
     border: 1px solid lightgrey;
-    cursor: pointer;
     border-radius: 21px;
     transition: box-shadow 0.2s ease;
-
 
     svg {
       width: 27px;
@@ -73,43 +91,54 @@
     &:hover {
       box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
     }
-  }
 
-  // Filter Bar
-  .filter-bar {
-   box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0);
-  }
+    .user-nav-container {
+      position: absolute;
+      border-radius: 20px;
+      text-transform: capitalize;
+      top: 195px;
+      box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
+      overflow: hidden;
+      width: 200px;
+      right: -10px;
+      transition: 0.3s;
+      transform: translate(-50%, -50%);
 
-}
-
-.filter-bar {
-  display: none;
-
-  .filter-list-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-    justify-content: space-evenly;
-    flex: 1;
-    overflow-y: hidden;
-
-    .btn-filter-by {
-      display: flex;
-
-      img,
-      svg {
-        padding: 5px 0px;
-        width: 24px;
+      ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
       }
 
-      .txt-filter-by {
-        color: $clr-bright;
-        font-size: calc(100% - 2px);
+      hr {
+        border-width: 0.1px;
+        opacity: 30%;
       }
 
-      &:hover {
-        border-bottom: 2px solid $clr-bright;
+      li {
+        padding-inline-start: 15px;
+        padding-block-end: 5px;
+        padding-block-start: 5px;
+
+        &:not(:first-of-type) {
+          font-weight: 300;
+        }
+
+        font-family: -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        'Open Sans',
+        'Helvetica Neue',
+        sans-serif;
+        cursor: pointer;
+
+        &:hover {
+          background: #f7f7f7;
+        }
       }
     }
   }

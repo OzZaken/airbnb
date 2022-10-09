@@ -1,54 +1,37 @@
-//* //  ///   /////    reactDateRangePicker       \\\\\    \\\  *\\
-//* https://blog.logrocket.com/top-react-date-pickers-for-2021/
-import React, { useState } from "react"
-import "react-dates/initialize"
-import "react-dates/lib/css/_datepicker.css"
-import { SingleDatePicker } from "react-dates"
+import React, { Component } from 'react';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker } from 'react-dates';
 
-export default function ReactdatesDatepicker() {
-  const [date, setDate] = useState(null)
-  const [isFocused, setIsFocused] = useState(false)
-
-  function onDateChange(date) {
-    setDate(date);
+class StayDatesPicker extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      focusedInput: null,
+    };
   }
 
-  function onFocusChange({ focused }) {
-    setIsFocused(focused)
+  handleDatesChange = (startDate, endDate) => {
+    // if (startDate?._d) this.props.setOrder({ ...this.props.order, startDate: startDate._d })
+    // if (endDate?._d) this.props.setOrder({ ...this.props.order, endDate: endDate._d })
   }
 
-  return (
-    <SingleDatePicker
-      id="date_input"
-      date={date}
-      focused={isFocused}
-      onDateChange={onDateChange}
-      onFocusChange={onFocusChange}
-    />
-  )
+
+  render() {
+    return (
+      <DateRangePicker
+        startDateId="startDate"
+        endDateId="endDate"
+        startDate={this.props.startDate}
+        endDate={this.props.endDate}
+        // onDatesChange={({ startDate, endDate }) => this.handleDatesChange(startDate, endDate)}
+
+        // onDatesChange={({ startDate, endDate }) => { this.props.setOrder({ ...this.props.order, startDate: startDate, endDate: endDate }) }}
+        focusedInput={this.state.focusedInput}
+        onFocusChange={(focusedInput) => { this.setState({ focusedInput }) }}
+      />
+    )
+  }
 }
-//* //  ///   /////      react      \\\\\    \\\  *\\
-// https://github.com/gpbl/react-day-picker
-//   import React from 'react';
 
-// import { format } from 'date-fns';
-// import { DayPicker } from 'react-day-picker'
-// import 'react-day-picker/dist/style.css';
-
-// export default function Example() {
-//   const [selected, setSelected] = React.useState<Date>()
-
-//   let footer = <p>Please pick a day.</p>
-//   if (selected) {
-//     footer = <p>You picked {format(selected, 'PP')}.</p>
-//   }
-//   return (
-//     <DayPicker
-//       mode="single"
-//       selected={selected}
-//       onSelect={setSelected}
-//       footer={footer}
-//     />
-//   );
-// }
-
+export default StayDatesPicker

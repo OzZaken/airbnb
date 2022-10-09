@@ -14,7 +14,8 @@
 
 .capitalize {text-transform: capitalize;}
 .underline {text-decoration: underline;}
-
+// Positions
+.sticky{position: sticky;}
 // flex
 .flex {
     display: flex;
@@ -120,7 +121,7 @@
 }
 
 // Colors
-.clr-bright {color: rgba(162, 159, 159, 0.8);}
+.clr-vector {color: rgba(162, 159, 159, 0.8);}
 .fill1 {
     background-color: $clr1;
     color: $clr-bgc;

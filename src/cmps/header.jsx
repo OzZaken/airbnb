@@ -10,28 +10,25 @@ import { LoginSignup } from './login-signup.jsx'
 import { StayFilter } from './stay/stay-filter.jsx'
 import Divider from '@mui/material/Divider'
 
-function _AppHeader({ onLogin, onSignup, onLogOut, user, loggedInUser }) {
+function _AppHeader({ onLogin, onSignup, onLogOut, user }) {
 
     useEffect(() => {
-        console.log('loggedInUser:', loggedInUser)
+        console.log('user:', user)
     }, [])
 
     // Filter Btns
     const [focusOn, setFocusOn] = useState(null)
-    const ref = useRef()
     const onSelectFocus = (focusOn) => {
         setFocusOn(focusOn)
         // ref.current
     }
 
-    //  User Nav
-    const [isUserNavOpen, setIsUserNavOpen] = useState(false)
-    function handleUserNav() {
-        setIsUserNavOpen(!isUserNavOpen)
-    }
+    //  User NavAria
+    const [isUserNavExpended, setAriaExpended] = useState(false)
+    const onChangeAriaExpended = () => setAriaExpended(!isUserNavExpended)
 
-    return <header className='space-between'>
-        <div className='flex space-between main-container main-header'>
+    return <header className='main-layout main-header'>
+        <div className='flex space-between'>
             {/* Logo */}
             <Link className="logo" to={'/'}>
                 <AppIcon iconKey="logo" />
@@ -56,69 +53,66 @@ function _AppHeader({ onLogin, onSignup, onLogOut, user, loggedInUser }) {
                 </div>
             </div>
 
-            {/* User */}
+            {/* User NavAria*/}
             <div className="flex space-between user-btns-container">
-                <div className='flex center left'>
-                    <Link to={`/stay/edit`}>
-                        Become a host
-                    </Link>
-                </div>
-                <div onClick={handleUserNav} className='flex user-nav-container'>
+                <Link className='flex center left host-link' to={`/stay/edit`}>
+                    Become a host
+                </Link>
+
+                <button className='flex btn-user-nav'
+                    aria-expanded={isUserNavExpended}
+                    onClick={() => { onChangeAriaExpended() }}
+                >
                     <AppIcon iconKey="menu" />
-                    <AppIcon iconKey="accountCircle" />
-                </div>
-                {isUserNavOpen &&
-                    <div className='user-nav-container' onClick={handleUserNav}>
-                        <nav>
+                    {user ?
+                        <img src={user.imgUrl} />
+                        :
+                        <AppIcon iconKey="accountCircle" />
+                    }
+                    {/* TODO: add event listeners 
+                 ↓   onClick !this component → onChangeAriaExpended  */}
+                    {isUserNavExpended &&
+                        <nav className='user-nav-container'
+                            onClick={onChangeAriaExpended}
+                        >
                             <ul className='clean-list'>
-                                {/* loggedInUser Condition → link to stay order || login\signup*/}
-                                {loggedInUser ? (
+                                {/* user Condition → link to stay order || login\signup*/}
+                                {user ? (
+
                                     <li>
                                         <Link to={'stay/order'}
                                             className='user-nav-about-link'>
                                             <span className='user-nav-span'>
-                                                {loggedInUser.firstname}
-                                                {loggedInUser.lastname}
+                                                {user.firstname}
+                                                {user.lastname}
                                             </span>
                                         </Link>
                                         <Divider />
                                     </li>
                                 ) : (
                                     <>
-                                        <li><Link to={'login'}>Log in</Link>
-                                        </li>
-
-                                        <li><Link to={'signup'}>Sign up</Link>
-                                        </li>
-                                        <Divider />
+                                        <li><Link to={'login'}>Log in</Link></li>
+                                        <li><Link to={'signup'}>Sign up</Link></li>
                                     </>
                                 )}
-
                                 <hr />
-                                <li>
-                                    <Link to={'stay/host'}>Host your home</Link>
-                                </li>
-                                <li>
-                                    <Link to={'stay/host'}>Host an experience</Link>
-                                </li>
-
-                                <li onClick={onLogOut}>
-                                    {loggedInUser ? (
+                                <li><Link to={'stay/host'}>Host your home</Link></li>
+                                <li><Link to={'stay/host'}>Host an experience</Link></li>
+                                {/* TODO: ask why onClick now on the btn? */}
+                                <li onClick={() => onLogOut()}>
+                                    {user ? (
                                         <button className='user-nav-span'>Log out</button>
                                     ) : (
                                         <Link href='/about'>About</Link>
                                     )}
                                 </li>
-
+                                <li><Link to={'help'}>Help</Link></li>
                             </ul>
-                            <div className='user-nav-span'>Help</div>
                         </nav>
-                    </div>
-                }
+                    }
+                </button>
             </div>
         </div>
-        {/* Filter  */}
-        <StayFilter />
     </header >
 }
 

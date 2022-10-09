@@ -8,17 +8,24 @@ import { LoginSignup } from './cmps/login-signup'
 
 function App() {
   //  User 
-  const [loggedInUser, setLoggedInUser] = useState(userService.getLoggedinUser())
+  const [user, setLoggedInUser] = useState(userService.getLoggedinUser())
   const navigate = useNavigate()
+
   function onLogOut() {
     userService.logout()
     setLoggedInUser(null)
     navigate('/')
   }
+
+  //   const onLogOut = async () => {
+  //     await dispatch(onLogout())
+  //     navigate('/')
+  // }
+
   return (
     <React.Fragment>
-      <AppHeader loggedInUser={loggedInUser} onLogOut={onLogOut} />
-      <main className='main-container main-app'>
+      <AppHeader user={user} onLogOut={onLogOut} />
+      <main className='main-layout main-app'>
         <Routes>
           {routes.map(route => <Route
             key={route.path}

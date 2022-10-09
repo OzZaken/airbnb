@@ -1,10 +1,6 @@
 import { stayService } from '../services/stay.service.local'
 
-export function setCurrentUrl(page) {
-  return (dispatch) => {
-      dispatch({ type: 'SET_PAGE', page: page })
-  }
-}
+
 
 export function loadStays() {
   return async (dispatch, getState) => {
@@ -71,5 +67,11 @@ export function sortByStays(sortBy) {
     }
 
     dispatch({ type: 'SET_STAYS', stays })
+  }
+}
+
+export function setCurrentUrl(page) {
+  return (dispatch) => {
+    dispatch({ type: 'SET_PAGE', page })
   }
 }

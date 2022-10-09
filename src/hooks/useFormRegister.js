@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useEffectUpdate } from './useEffectUpdate'
 
 export const useFormRegister = (initialState, callBack) => {

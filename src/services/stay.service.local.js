@@ -488,9 +488,11 @@ function getById(stayId) {
 function getTypes() {
   return gStayTypes
 }
+
 function getAchievements() {
   return gStayAchievements
 }
+
 function getFilterBys() {
   return gFilterBys
 }

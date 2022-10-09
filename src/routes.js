@@ -4,25 +4,51 @@ import { StayEdit } from './views/stay-edit.jsx'
 
 const routes = [
     {
-        path: '/',
-        component: <HomePage />,
         label: 'home',
+        path: '',
+        component: <HomePage />,
     },
     {
-        path: 'stay/:stayId',
-        component: <StayDetails />,
-        label: 'details',
+        label: 'about',
+        path: 'about',
+        component: <HomePage />,
     },
     {
+        label: 'help',
+        path: 'help',
+        component: <HomePage />,
+    },
+    {
+        label: 'add',
         path: 'stay/edit',
         component: <StayEdit />,
-        label: 'add',
     },
     {
+        label: 'edit',
         path: 'stay/edit/:stayId',
         component: <StayEdit />,
-        label: 'edit',
     },
+    {
+        label: 'details',
+        path: 'stay/:stayId',
+        component: <StayDetails />,
+    },
+    {
+        label: 'signup-login',
+        path: 'signup_login',
+        component: <StayDetails />,
+    },
+    {
+        label: 'login',
+        path: 'login',
+        component: <StayDetails />,
+    },
+    {
+        label: 'user-setting',
+        path: 'user/:userName',
+        component: <StayDetails />,
+    },
+
 
 ]
 

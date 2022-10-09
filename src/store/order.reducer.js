@@ -4,7 +4,7 @@ const initialState = {
 }
 
 export function orderReducer(state = initialState, action) {
-  var order
+  let order
 
   switch (action.type) {
     case 'SET_ORDER':

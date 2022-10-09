@@ -1,57 +1,51 @@
-import { useState } from 'react'
-import { useFormRegister } from '../../hooks/useFormRegister'
+import React from 'react';
+import { useEffect, useState } from 'react'
+
 import AppIcon from '../app-icon'
 import { BtnTrigger } from '../helper/btn-radial-gradient'
-import DatePicker from '../helper/date-picker'
+
+import { DateRangePicker, toMomentObject } from 'react-dates'
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 
 export const StayOrder = ({ stay, stayAvgRate }) => {
-    const [orders, setOrders] = useState(null)
-    const [order, setOrder] = useState([
-        {
-            checkIn: new Date(),
-            checkOut: new Date(),
-            guests: 1,
-        }
-    ])
-
+    // const [orders, setOrders] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const setCheckIn = (date) => {
-        console.log('date:', date.getFullYear(), date.getMonth(), date.getDate())
-        setOrder(prevOrder => (
-            {
-                ...prevOrder,
-                checkIn: date + ''
-            }
-        ))
-    }
-    const setCheckOut = (date) => {
-        console.log('date:', date.getFullYear(), date.getMonth(), date.getDate())
-        setOrder(prevOrder => (
-            {
-                ...prevOrder,
-                checkIn: date + ''
-            }
-        ))
-    }
 
-    // const putDateString = () => {
-    //     checkIn.innerText = 
-    //     checkOut.innerText = 
-    // }
+    const [order, setOrder] = useState({
+        startDate: toMomentObject(new Date()),
+        endDate: toMomentObject(new Date(new Date().setDate(new Date().getDate() + 5))),
+        guests: {
+            adults: 1,
+            kids: 0
+        },
+    })
+    const [focusedInput, setFocusedInput] = useState(null)
 
+    useEffect(() => {
+        console.log(order)
+    }, [order])
+
+    const handleDatesChange = (startDate, endDate) => {
+        setOrder({
+            ...order,
+            startDate: toMomentObject(startDate),
+            endDate: toMomentObject(endDate)
+        })
+    }
 
     return <section className='stay-order'>
         <div className='flex column order-container'>
 
             <div className="order-form-heading">
                 <p>
-                    <span className='prev-price'> {`${Math.ceil(stay.price / 3 + stay.price)} `}
+                    <span className='prev-price'>
+                        {`${Math.ceil(stay.price / 3 + stay.price)} `}
                     </span>
 
                     <span className="cost">
                         {stay.price}
-                    </span>
-                    night
+                    </span> night
                 </p>
 
                 <p>{stayAvgRate} <AppIcon iconKey="star" />
@@ -64,15 +58,26 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
             {/* Order Data */}
             <div className="order-data">
                 <div className="date-picker">
-                    <div onClick={() => { setIsModalOpen(true) }} className="check-in">
-                        Check In
-                        {order.checkIn}
+
+                    <div onClick={() => { setIsModalOpen(true) }}>
+                        <div className='flex space-between'>
+                            <p> Check In</p>
+                            <p>Check Out</p>
+                        </div>
+                        <div className='flex'>
+                            <DateRangePicker
+                                startDateId="startDate"
+                                endDateId="endDate"
+                                startDate={order.startDate}
+                                endDate={order.endDate}
+                                onDatesChange={({ startDate, endDate }) => handleDatesChange(startDate, endDate)}
+                                focusedInput={focusedInput}
+                                onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}
+                            />
+                        </div>
+
                     </div>
 
-                    <div onClick={() => { setIsModalOpen(true) }} className="check-out">
-                        Check Out
-                    </div>
-                    {isModalOpen && <DatePicker setCheckIn={setCheckIn} />}
                 </div>
 
                 <div className="guest-input">
@@ -81,7 +86,8 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
                         {/* <input type="number"
                             {...register('number', 'number')} /> */}
                     </label>
-                    <AppIcon onClick={() => { console.log('// TODO:use htmlFor'); }} iconKey='arrowDown' />
+                    <AppIcon iconKey='arrowDown'
+                        onClick={() => { console.log(' TODO:use htmlFor') }} />
                 </div>
             </div>
 
@@ -100,7 +106,7 @@ export const StayOrder = ({ stay, stayAvgRate }) => {
             </div>
 
         </div>
-    </section>
+    </section >
 }
 
 // https://codepen.io/emoyal4/pen/NWjrmzv

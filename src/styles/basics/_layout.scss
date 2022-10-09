@@ -1,4 +1,4 @@
-.main-container {
+.main-layout {
     display: grid;
 
     grid-template-columns: $layoutPadding 1fr $layoutPadding;
@@ -18,13 +18,13 @@
     @include for-tablet-layout {
         grid-template-columns: 
             minmax($layoutPadding, 1fr)
-            minmax(auto, $break-tablet)
+            minmax(auto)
             minmax($layoutPadding, 1fr)
     }
     @include for-desktop-layout {
         grid-template-columns: 
             minmax($layoutPadding, 1fr)
-            minmax(auto, $break-desktop)
+            minmax(auto)
             minmax($layoutPadding, 1fr)
     }
     @include for-wide-layout {
@@ -37,6 +37,6 @@
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 20px;
 }

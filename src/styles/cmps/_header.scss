@@ -1,35 +1,42 @@
 .main-header {
   position: sticky;
-  position: -webkit-sticky;
-  /* Safari */
-  top: 0;
-  border-bottom: 1px solid $clr-vector;
-  box-shadow: 0px 2px 2px $clr-vector;
+  z-index: 2;
+  top: 0px;
   padding: $layoutPadding;
-  box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0);
+  background-color: white;
+
+  box-shadow: 0px 2px 2px $clr-vector;
+  margin-bottom: 5px;
 
   // Logo
-  .logo {
-    display: flex;
-    object-fit: contain;
-    width: 40px;
+  .logo-container {
+    flex: 1;
 
-    @include for-desktop-layout {
-      content: url('../../assets/img/airbnb.svg');
-      width: 130px;
+    .logo {
+      display: flex;
+      object-fit: contain;
+      width: 40px;
+
+      @include for-mobile-layout {
+        display: none;
+      }
+
+      @include for-desktop-layout {
+        content: url('../../assets/img/airbnb.svg');
+        width: 130px;
+      }
+
+      @include for-wide-layout {
+        content: url('../../assets/img/airbnb.svg');
+        width: 130px;
+      }
+
     }
-
-    @include for-wide-layout {
-      content: url('../../assets/img/airbnb.svg');
-      width: 130px;
-    }
-
   }
 
   // Filter Focus Btns
   .filter-btns-container {
     flex: 2;
-    height: 48px;
 
     .btns-container {
       border-radius: 40px;
@@ -49,95 +56,110 @@
     }
   }
 
-  // User
-  .user-btns-container {
-    min-width: 58px;
-    min-height: 30px;
+  // User nav
+  .user-nav {
     flex: 1;
 
+    @include for-mobile-layout {
+      display: none;
+    }
+
     .host-link {
+      display: none;
       font-weight: 600;
       font-size: 13px;
       width: 130px;
       border-radius: 22px;
-      // height: 42px;
-      // margin: 0 15px;
 
       &:hover {
         background-color: rgba(235, 235, 235, 0.354);
 
       }
-    }
 
-  }
-
-  .btn-user-nav {
-    // position: absolute;
-    // transform: translate(+50%, +50%);
-    align-items: center;
-    border: 1px solid $clr-vector;
-    border-radius: 22px;
-    padding: 5px 5px 5px 12px;
-    width: fit-content;
-    border-radius: 25%;
-    border: 1px solid lightgrey;
-    border-radius: 21px;
-    transition: box-shadow 0.2s ease;
-
-    svg {
-      width: 27px;
-    }
-
-    &:hover {
-      box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
-    }
-
-    .user-nav-container {
-      position: absolute;
-      border-radius: 20px;
-      text-transform: capitalize;
-      top: 195px;
-      box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
-      overflow: hidden;
-      width: 200px;
-      right: -10px;
-      transition: 0.3s;
-      transform: translate(-50%, -50%);
-
-      ul {
+      @include for-tablet-layout {
         display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
       }
 
-      hr {
-        border-width: 0.1px;
-        opacity: 30%;
+      @include for-desktop-layout {
+        display: flex;
       }
 
-      li {
-        padding-inline-start: 15px;
-        padding-block-end: 5px;
-        padding-block-start: 5px;
+      @include for-desktop-layout {
+        display: flex;
 
-        &:not(:first-of-type) {
-          font-weight: 300;
+      }
+    }
+
+
+    .btn-user-nav {
+      // position: absolute;
+      // transform: translate(+50%, +50%);
+      align-items: center;
+      border: 1px solid $clr-vector;
+      border-radius: 22px;
+      padding: 5px 5px 5px 12px;
+      width: fit-content;
+      border-radius: 25%;
+      border: 1px solid lightgrey;
+      border-radius: 21px;
+      transition: box-shadow 0.2s ease;
+
+      svg {
+        width: 27px;
+      }
+
+      &:hover {
+        box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
+      }
+
+      .user-nav-container {
+        position: absolute;
+        background-color: white;
+        text-transform: capitalize;
+
+        top: 170px;
+        right: 10px;
+        width: 200px;
+        overflow: hidden;
+        box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
+        transition: 0.3s;
+        transform: translate(-50%, -50%);
+
+        ul {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
         }
 
-        font-family: -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        'Open Sans',
-        'Helvetica Neue',
-        sans-serif;
-        cursor: pointer;
+        hr {
+          border-width: 0.1px;
+          opacity: 30%;
+        }
 
-        &:hover {
-          background: #f7f7f7;
+        li {
+          padding-inline-start: 15px;
+          padding-block-end: 5px;
+          padding-block-start: 5px;
+
+          &:not(:first-of-type) {
+            font-weight: 300;
+          }
+
+          font-family: -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif;
+          cursor: pointer;
+
+          &:hover {
+            background: #f7f7f7;
+          }
         }
       }
     }

@@ -20,9 +20,7 @@ export const StayDetails = () => {
     useEffect(() => {
         loadStay()
         document.body.classList.add("stay-details-page")
-        console.log('StayDetails:', stay)
         return () => {
-            console.log('StayDetails return:')
             document.body.classList.remove("stay-details-page")
         }
     }, [])
@@ -79,44 +77,39 @@ export const StayDetails = () => {
     const isSummeryShowMoreBtn = stay.summary.split(' ').length >= 15
 
     return <section className="stay-details">
-        <div className="details-page-preview">
-            <h1>{stay.name}</h1>
+        <h1>{stay.name}</h1>
+        
+            <div className="flex left">
+                {stayAvgRate}
+                <AppIcon iconKey='star' />
 
-            <div className="flex space-between">
+                <button className="btn-link left reviews">
+                    {` ${stay.reviews.length - 1 || 0} reviews `}
+                </button>
 
-                <div className="flex space-between">
-                    <div className="flex center">
-                        {stayAvgRate}
-                        <AppIcon iconKey='star' />
-                    </div>
-                    <button className="btn-link reviews">
-                        {` ${stay.reviews.length - 1 || 0} reviews `}
-                    </button>
-                    &#xB7;{`${stay.loc.city},${stay.loc.country}`}
-                </div>
-
-                <div className="flex space-between">
-                    <button className="btn-link">
-                        <AppIcon iconKey='share' />
-                        share
-                    </button>
-                    <button className="btn-link">
-                        <AppIcon iconKey='heart' />
-                        save
-                    </button>
-                </div>
+                &#xB7;{`${stay.loc.city},${stay.loc.country}`}
             </div>
 
-            <div>
-                <div className="imgs-grid-template">
-                    {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
-                        <img src={imgUrl}
-                            key={`${imgUrl}-${idx}`}
-                            alt={`${stay.name} image ${idx}`} />
-                    )}
-                </div>
+
+            <div className="flex right">
+                <button className="btn-link">
+                    <AppIcon iconKey='share' />
+                    share
+                </button>
+
+                <button className="btn-link">
+                    <AppIcon iconKey='heart' />
+                    save
+                </button>
             </div>
+
+        <div className="imgs-grid-template">
+            {stay.imgUrls.slice(0, 5).map((imgUrl, idx) =>
+                <img src={imgUrl} key={`${imgUrl}-${idx}`}
+                    alt={`${stay.name} image ${idx}`} />
+            )}
         </div>
+
         {/* Details & Order*/}
         <div className='flex'>
             <div className='left'>
@@ -142,7 +135,7 @@ export const StayDetails = () => {
                     </div>
                 </div>
 
-                {/* Achievements  */}
+                {/* Stay achievements  */}
                 <div className="flex column stay-details-row stay-achievements">
                     {stay.achievements.slice(0, 3).map(achievement =>
                         <div className="flex" key={achievement} >
@@ -167,7 +160,7 @@ export const StayDetails = () => {
                     <button className="btn-link"><b>Read more</b></button>
                 </div>
 
-                {/* Summary */}
+                {/* Stay summary */}
                 <div className="stay-details-row stay-summary">
                     {stay.summary}
                     {isSummeryShowMoreBtn &&
@@ -179,7 +172,7 @@ export const StayDetails = () => {
                     }
                 </div>
 
-                {/* Amenities */}
+                {/* Stay amenities */}
                 <div className="stay-details-row stay-amenities">
                     <h2>What this place offers</h2>
                     <div className="card-grid amenities">
@@ -199,6 +192,7 @@ export const StayDetails = () => {
                 </div>
 
             </div>
+
             {/* Order */}
             <div className="right">
                 <StayOrder stay={stay} stayAvgRate={stayAvgRate} />

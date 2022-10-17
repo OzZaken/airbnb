@@ -1,8 +1,11 @@
 .stay-list {
-  // place-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  column-gap: 24px;
-  row-gap: 20px;
-  margin-bottom:10vh;
-  margin-top: 16px;
+  ul {
+    // place-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    margin-top: 16px;
+    column-gap: 24px;
+    row-gap: 20px;
+    max-width: 90vw;
+    max-height: calc(100vh - 80px)
+  }
 }

@@ -35,7 +35,8 @@ export const useFormRegister = (initialState, callBack) => {
       default:
         break
     }
-    setFields((prevFields) => ({ ...prevFields, [field]: value }))
+    setFields((prevFields) => 
+    ({ ...prevFields, [field]: value }))
   }
 
   const getFormattedDate = (value) => {

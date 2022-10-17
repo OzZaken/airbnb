@@ -10,8 +10,8 @@ export const stayService = {
   getStayAvgRate,
   getFilterBys,
 }
+const STORAGE_KEY = 'stay'
 
-const STORAGE_KEY = 'stays'
 const gDefaultStays = [
   {
     "_id": "stay1",
@@ -447,18 +447,11 @@ async function query(filterBy) {
       storageService.postMany(STORAGE_KEY, gDefaultStays)
       stays = gDefaultStays
     }
-
     if (filterBy) {
-      const { name, minPrice } = filterBy
-
-      if (name) {
-        const regex = new RegExp(name, 'i')
-        stays = stays.filter((stay) => regex.test(stay.name))
-      }
-
-      if (minPrice) {
-        stays = stays.filter((stay) => stay.price >= minPrice)
-      }
+      const { name, minPrice, maxPrice } = filterBy
+      if (name) stays = stays.filter(stay => new RegExp(name, 'i').test(stay.name))
+      if (minPrice) stays = stays.filter(stay => stay.price >= minPrice)
+      if (maxPrice) stays = stays.filter(stay => stay.price <= minPrice)
     }
     return stays
   } catch (error) {

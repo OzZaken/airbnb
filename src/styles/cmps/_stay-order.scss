@@ -1,9 +1,9 @@
- //#stay-order
  .stay-order {
    padding-top: $layoutPadding;
    padding-left: $layoutPadding;
+   
    position: sticky;
-   top: $layoutPadding;
+   top: 80px;
 
    .order-container {
      width: 300px;

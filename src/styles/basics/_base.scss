@@ -12,21 +12,23 @@ html {
 
 body {
     background-color: white;
-    // overflow-x: hidden;
-    // min-height: 100vh;
+    overflow-x: hidden;
+
+    &.modal-open {
+        background-color: rgba(44, 34, 34, 0.509);
+    }
 }
-// header{
-//     position: sticky;
-//     top: 0;
-// }
+
 h1,
 h2,
 h3 {
     font-family: ffheading;
 }
-hr{
+
+hr {
     opacity: 50%;
 }
+
 img {
     width: 100%;
 }

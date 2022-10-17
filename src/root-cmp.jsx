@@ -11,16 +11,12 @@ function App() {
   const [user, setLoggedInUser] = useState(userService.getLoggedinUser())
   const navigate = useNavigate()
 
+  //   const onLogOut = async () => { await dispatch(onLogout()) navigate('/')}
   function onLogOut() {
     userService.logout()
     setLoggedInUser(null)
     navigate('/')
   }
-
-  //   const onLogOut = async () => {
-  //     await dispatch(onLogout())
-  //     navigate('/')
-  // }
 
   return (
     <React.Fragment>
@@ -34,6 +30,7 @@ function App() {
             exact={true}
           />)}
         </Routes>
+        {/* Footer */}
       </main>
     </React.Fragment>
   )

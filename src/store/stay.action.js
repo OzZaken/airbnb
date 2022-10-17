@@ -1,7 +1,5 @@
 import { stayService } from '../services/stay.service.local'
 
-
-
 export function loadStays() {
   return async (dispatch, getState) => {
     const { filterBy } = getState().stayModule

@@ -3,6 +3,13 @@ import { StayDetails } from './views/stay-details.jsx'
 import { StayEdit } from './views/stay-edit.jsx'
 
 const routes = [
+    // Help
+    {
+        label: 'help',
+        path: 'help',
+        component: <HomePage />,
+    },
+
     {
         label: 'home',
         path: '',
@@ -13,11 +20,7 @@ const routes = [
         path: 'about',
         component: <HomePage />,
     },
-    {
-        label: 'help',
-        path: 'help',
-        component: <HomePage />,
-    },
+  
     {
         label: 'add',
         path: 'stay/edit',
@@ -33,21 +36,21 @@ const routes = [
         path: 'stay/:stayId',
         component: <StayDetails />,
     },
-    {
-        label: 'signup-login',
-        path: 'signup_login',
-        component: <StayDetails />,
-    },
-    {
-        label: 'login',
-        path: 'login',
-        component: <StayDetails />,
-    },
-    {
-        label: 'user-setting',
-        path: 'user/:userName',
-        component: <StayDetails />,
-    },
+    // {
+    //     label: 'signup-login',
+    //     path: 'signup_login',
+    //     component: <StayDetails />,
+    // },
+    // {
+    //     label: 'login',
+    //     path: 'login',
+    //     component: <StayDetails />,
+    // },
+    // {
+    //     label: 'user-setting',
+    //     path: 'user/:userName',
+    //     component: <StayDetails />,
+    // },
 
 
 ]

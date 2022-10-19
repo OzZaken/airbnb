@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 // Services
 import { stayService } from '../../services/stay.service.local'
 // hooks
-import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useFormRegister } from '../../hooks/useFormRegister'
 // CMPS
 import AppIcon from '../app-icon'
+import BasicModal from '../helper/basic-modal';
 // import AliceCarousel from 'react-alice-carousel'
 
 export const StayFilter = (props) => {
@@ -14,6 +14,10 @@ export const StayFilter = (props) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [filterBy] = useFormRegister(
     {
+      destination: 'flexible',
+      stayType: '',
+      night: 5,
+      amenities: [],
       name: '',
       minPrice: Infinity,
       maxPrice: -Infinity,
@@ -44,18 +48,6 @@ export const StayFilter = (props) => {
       queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
   }
-// Filter Modal
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const modalContainer = useRef()
-  const toggleIsModalOpen = (ev) => {
-    // TODO: ↓ Clicking on stay not move page 
-    ev.stopPropagation()
-    ev.preventDefault()
-    document.body.classList.toggle('modal-open')
-    setIsModalOpen(!isModalOpen)
-  }
-  useOnClickOutside(modalContainer, () => setIsModalOpen(false))
-
   const elStayFilterBys = () => {
     const filters = stayService.getFilterBys()
     const elFilters = []
@@ -123,21 +115,20 @@ export const StayFilter = (props) => {
       <button><AppIcon iconKey='nextBtn' /></button>
 
       <div className="filter-btn-container">
-        <button className="flex btn-big"
-          ref={modalContainer}
-          onClick={toggleIsModalOpen}>
-          <AppIcon iconKey='filterBy' /> filter
-        </button>
-
-       {isModalOpen &&
-          <div className="filter-modal-container">
-            <h3> filters</h3>
-            <hr />
-            <h2>Price range</h2>
-            <p>The average nightly price is <span>getAvgNight</span></p>
-          </div>
+        <BasicModal placeholder={
+          <span className="flex btn-big">
+            <AppIcon iconKey='filterBy' /> filter
+          </span>
         }
-
+          modal={
+            <div className="filter-modal-container">
+              <h3> filters</h3>
+              <hr />
+              <h2>Price range</h2>
+              <p>The average nightly price is <span>getAvgNight</span></p>
+            </div>
+          }
+        />
       </div>
     </div>
   </section>

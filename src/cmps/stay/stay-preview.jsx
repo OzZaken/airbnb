@@ -9,7 +9,7 @@ export function StayPreview({ stay }) {
     const navigate = useNavigate()
 
     // Todo: favorite ↓
-    const addFavoriteList = () => {
+    const addFavoriteList = (stayIid) => {
         // setIsLiked(!isLiked)
         // heartPic = heartRed
     }
@@ -72,12 +72,10 @@ export function StayPreview({ stay }) {
                     {`${stay.loc.city},${stay.loc.country}`}
                 </div>
 
-                <span>
                     <div className="flex center fs12">
                         <AppIcon iconKey='star' />
                         {StayAvgRate}
                     </div>
-                </span>
             </div>
             <div className="fs14 clr-vector">
             {/* TODO: geolocation for put diff */}

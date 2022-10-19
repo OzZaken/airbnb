@@ -6,10 +6,11 @@ export const stayService = {
   remove,
   getById,
   getTypes,
-  getAchievements,
-  getStayAvgRate,
+  // getAchievements,
   getFilterBys,
+  getStayAvgRate, 
 }
+
 const STORAGE_KEY = 'stay'
 
 const gDefaultStays = [
@@ -440,34 +441,12 @@ const gFilterBys = [ // FilterBy achievements & amenities
   // { desert: 'Desert' },
 ]
 
-async function query(filterBy) {
-  try {
-    const stays = await storageService.query(STORAGE_KEY)
-    if (!stays || !stays.length) {
-      storageService.postMany(STORAGE_KEY, gDefaultStays)
-      stays = gDefaultStays
-    }
-    if (filterBy) {
-      const { name, minPrice, maxPrice } = filterBy
-      if (name) stays = stays.filter(stay => new RegExp(name, 'i').test(stay.name))
-      if (minPrice) stays = stays.filter(stay => stay.price >= minPrice)
-      if (maxPrice) stays = stays.filter(stay => stay.price <= minPrice)
-    }
-    return stays
-  } catch (error) {
-    console.log(error, 'filterBy from storage has been failed')
-  }
-}
-
 function save(stay) {
-  if (stay._id) {
-    return storageService.put(STORAGE_KEY, stay)
-  } else {
-    stay.inStock = true
-    stay.createdAt = Date.now()
-    stay.labels = []
-    return storageService.post(STORAGE_KEY, stay)
-  }
+  if (stay._id) return storageService.put(STORAGE_KEY, stay)
+  // stay.inStock = true
+  stay.createdAt = Date.now()
+  stay.labels = []
+  return storageService.post(STORAGE_KEY, stay)
 }
 
 function remove(stayId) {
@@ -495,3 +474,39 @@ function getStayAvgRate(stay) {
   stay.reviews.forEach(review => rates.push(review.rate))
   return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
 }
+
+async function query(filterBy) {
+  try {
+    const stays = await storageService.query(STORAGE_KEY)
+    if (!stays || !stays.length) {
+      storageService.postMany(STORAGE_KEY, gDefaultStays)
+      stays = gDefaultStays
+    }
+    if (filterBy) {
+      const { name, minPrice, maxPrice } = filterBy
+      if (name) stays = stays.filter(stay => new RegExp(name, 'i').test(stay.name))
+      if (minPrice) stays = stays.filter(stay => stay.price >= minPrice)
+      if (maxPrice) stays = stays.filter(stay => stay.price <= minPrice)
+    }
+    return stays
+  } catch (error) {
+    console.log(error, 'filterBy from storage has been failed')
+  }
+}
+
+// const axios = require("axios");
+
+// const options = {
+//   method: 'GET',
+//   url: 'https://hotels4.p.rapidapi.com/v2/get-meta-data',
+//   headers: {
+//     'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
+//     'X-RapidAPI-Host': 'hotels4.p.rapidapi.com'
+//   }
+// };
+
+// axios.request(options).then(function (response) {
+// 	console.log(response.data);
+// }).catch(function (error) {
+// 	console.error(error);
+// });

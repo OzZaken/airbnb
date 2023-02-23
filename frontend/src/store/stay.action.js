@@ -1,5 +1,6 @@
 import { stayService } from "../services/stay.service"
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
+import { showSuccessMsg, showErrorMsg, showUserMsg } from '../services/event-bus.service'
+import { storageService } from "../services/async-storage.service"
 
 // Action Creators:
 export function getActionRemoveStay(stayId) {
@@ -14,7 +15,7 @@ export function getActionUpdateStay(stay) {
 
 // Basic CRUD
 export function loadStays() {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         const { filterBy } = getState().stayModule
         try {
             var LoadStays = await stayService.query(filterBy)
@@ -42,7 +43,7 @@ export function addStay(stay) {
             var saveStay = stayService.save(stay)
             console.log('Added Stay', saveStay)
             dispatch(getActionAddStay(saveStay))
-        } catch (error) {
+        } catch (err) {
             showErrorMsg('Cannot add stay')
             console.log('Cannot add stay', err)
         }
@@ -57,7 +58,7 @@ export function updateStay(stay) {
         try {
             console.log('Updated Stay:', updateStay)
             dispatch(getActionUpdateStay(updateStay))
-        } catch (error) {
+        } catch (err) {
             showErrorMsg(`Cannot update stay ${updateStay.name}`)
             console.log('Cannot save stay', err)
         }
@@ -92,8 +93,8 @@ export function setSortBy(sortBy) {
 const STORAGE_KEY = 'stay'
 
 export function onLoadStaysPWA() {
-    const storageStays = loadFromStorage(STORAGE_KEY)
-    dispatch({ type: 'SET_STAYS', stays: storageStays })
+    const storageStays = storageService.query(STORAGE_KEY)
+    // dispatch({ type: 'SET_STAYS', stays: storageStays })
 
     return async (dispatch, getState) => {
         const state = getState()
@@ -118,7 +119,7 @@ export function onRemoveStayPWA(stayId) {
         showUserMsg(`removing Stay ${stayId}`)
         try {
             var removedStayId = stayService.remove(stayId)
-        } catch (error) {
+        } catch (err) {
             showErrorMsg('Cannot delete stay')
             console.log('Cannot delete stay', err)
             dispatch({ type: 'UNDO_REMOVE_STAY' })
@@ -130,14 +131,13 @@ export function onRemoveStayPWA(stayId) {
 }
 export function onAddStayPWA(stay) {
     return async (dispatch) => {
+        var newStay = stayService.save(stay)
         dispatch(getActionAddStay(newStay))
         showUserMsg(`adding new Stay: ${newStay.name}`)
         try {
-            var newStay = stayService.save(stay)
             dispatch(getActionAddStay(newStay))
             console.log('Added Stay', newStay)
-
-        } catch (error) {
+        } catch (err) {
             showErrorMsg('Cannot add stay')
             console.log('Cannot add stay', err)
             dispatch({ type: 'UNDO_ADD_STAY' })

@@ -2,14 +2,14 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { NavLink, Outlet} from "react-router-dom"
 import { Counter } from "../cmps/counter"
-import { setView } from '../store/actions/app.actions'
+import { updateView } from '../store/app.actions'
 
 export function About() {
     const dispatch = useDispatch()
     // VIEW
     useEffect(() => {
         //  -   mount
-        dispatch(setView('about'))
+        dispatch(updateView('about'))
 
         //  -   ux ui
         document.body.classList.add("about-page")

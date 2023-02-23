@@ -47,6 +47,6 @@ export function userReducer(state = initialState, action) {
         default:
     }
     // For debug:
-    window.userState = newState
+    window.gUserState = newState
     return newState
 }

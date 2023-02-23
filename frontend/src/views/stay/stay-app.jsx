@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // actions
-import { setView } from '../../store/actions/app.actions'
-import { loadStays, removeStay,  } from '../../store/actions/stay.action'
+import { updateView } from '../../store/app.actions'
+import { loadStays, removeStay,  } from '../../store/stay.action'
 // cmps
 import { StayList } from '../../cmps/stay/stay-list'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
@@ -17,7 +17,7 @@ export const StayApp = (props) => {
     useEffect(() => {
         //  -   mount
         dispatch(loadStays())
-        dispatch(setView('home'))
+        dispatch(updateView('home'))
         //  -   -   ux ui
         document.body.classList.add('home-page')
         setTimeout(() => { document.title = '$i Home' }, 2000)

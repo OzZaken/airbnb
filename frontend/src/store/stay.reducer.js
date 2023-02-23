@@ -42,7 +42,7 @@ export function stayReducer(state = INITIAL_STATE, action) {
             break
 
         case 'REMOVE_FROM_FAVORITE':
-            favorites = state.favorites.filter(stay => stay._id !== action.stayId)
+            var favorites = state.favorites.filter(stay => stay._id !== action.stayId)
             newState = { ...state, favorites }
             break
 

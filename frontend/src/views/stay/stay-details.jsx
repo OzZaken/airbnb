@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ImgGallery } from '../../cmps/img-gallery'
 import { stayService } from '../../services/stay.service'
-import { setView } from '../../store/actions/app.actions'
+import { updateView } from '../../store/app.actions'
 
 export const _StayDetails = (props) => {
     const [stay, setStay] = useState(null)
@@ -16,7 +16,7 @@ export const _StayDetails = (props) => {
     useEffect(() => {
         loadStay()
         //  -   mount
-        dispatch(setView('details'))
+        dispatch(updateView('details'))
         //  -   -   ux ui
         document.body.classList.add('stay-details')
         setTimeout(() => { document.title = `$i ${stay.name || 'Details'}` }, 1500)

@@ -7,23 +7,8 @@ import { UserEdit } from './views/user/user-edit'
 //      - stay
 import { StayApp } from './views/stay/stay-app'
 import { StayDetails } from './views/stay/stay-details'
-//      - car
-import { CarApp } from './views/car/car-app'
 
-// Debug
-import { Demo } from './views/demo'
-const demoRoutes = [
-    {
-        path: 'car',
-        component: <CarApp />,
-        label: 'Cars'
-    },
-    {
-        path: 'demo',
-        component: <Demo />,
-        label: 'Demo'
-    },
-]
+
 const base = [
     {
         path: 'admin',
@@ -78,7 +63,6 @@ const routes = [
     ...base,
     ...stay,
     ...user,
-    ...demoRoutes,
 ]
 
 export default routes

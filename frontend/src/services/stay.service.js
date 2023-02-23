@@ -381,10 +381,10 @@ const gAmenities = [
     { NationalPark: 'National parks' },
     { AmazingPool: 'Amazing pools' },
     { AmazingViews: 'Amazing views' },
-    { Arctic},
-    { Design },
-    { Island},
-    { Surfing },
+    { Arctic:'Arctic'},
+    { Design:'Design' },
+    { Island:'Island'},
+    { Surfing:'Surfing' },
 ]
 
 async function query(filterBy) {

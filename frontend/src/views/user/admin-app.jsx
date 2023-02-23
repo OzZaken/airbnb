@@ -1,8 +1,9 @@
+// react
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // Actions
-import { loadUsers, removeUser, setFilterBy } from '../../store/actions/user.action'
+import { loadUsers, removeUser, setFilterBy } from '../../store/user.action'
 // Components
 import { UserFilter } from '../../cmps/user/user-filter'
 import { UserList } from '../../cmps/user/user-list'

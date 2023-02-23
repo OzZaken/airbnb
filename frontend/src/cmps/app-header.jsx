@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import { iconService } from "../services/svg.service"
-import { setFilterBy, loadStays } from '../store/actions/stay.action'//stayLoading
+import { setFilterBy, loadStays } from '../store/stay.action'//stayLoading
 import { StayFilter } from "./stay/stay-filter"
 import { UserMenu } from "./user-menu"
 

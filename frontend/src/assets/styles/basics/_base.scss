@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    font-family: ff-cereal-regular;
+    line-height: 1.8;
+    scroll-behavior: smooth;
+    line-height: lh(18px);
+    @include for-desktop-layout {
+        font-size: 18px;
+        line-height: lh(20px);
+    }
+    
+    @include for-wide-layout {
+        font-size: 20px;
+        line-height: lh(22px);
+    }
+}
+
+body {
+    margin: 0;
+    background-color: $clr-bgc;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    // overflow-x: hidden;
+
+    @include for-tablet-layout {
+        &.user-menu {display: none;}
+    }
+    //    @media (max-width: 1300px) {font-size: 13px;}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    // margin: 0 0 1em;
+    line-height: lh(30px, 25px);
+}
+
+h1 {
+    font-size: rem(34px);
+}
+
+h2 {
+    font-size: rem(26px);
+}
+
+h3 {
+    font-size: em(12px);
+}
+
+/* MEDIA  */
+img,
+embed,
+video,
+object {
+    max-width: 100%
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* TAP TARGET */
+nav a,
+button {
+    min-width: 48px;
+    min-height: 48px;
+}
+
+/* TXT */
+p {
+    @include type(regular);
+
+    .main-text & {
+        grid-column: 3 / 6;
+        font-size: rem(22px);
+        line-height: 1.384615;
+        padding-inline-start: rem(30px);
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            max-height: 42px;
+            background-color: $clr-prim;
+
+            @include for-wide-layout {
+                width: 10px;
+            }
+        }
+
+        @include for-wide-layout {
+            grid-column: 3 / 5;
+            font-size: rem(26px);
+        }
+    }
+}
+
+/* OTHER */
+hr {
+    opacity: 0.75;
+}
+
+main {
+    flex-grow: 1;
+    width: 100%;
+    justify-self: center;
+}
+
+::selection {
+    background-color: $clr-lighten;
+    color: $clr-mix;
+}

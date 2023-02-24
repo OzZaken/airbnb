@@ -1,0 +1,134 @@
+// Debug
+.debug * {
+    background: rgba(6, 187, 15, 0.185);
+    outline: 0.5px dashed rgba(255, 166, 0, 0.26);
+}
+
+.debug1 * {
+    background: rgba(6, 166, 187, 0.185);
+    outline: 0.2px solid rgba(255, 0, 0, 0.363);
+}
+
+// Aspect ratios
+.ratio-card {
+    @include aspect-ratio(100, 80);
+}
+
+.ratio-poster {
+    @include aspect-ratio(100, 150);
+}
+
+.ratio-portrait- {
+    @include aspect-ratio(9, 16);
+}
+
+.ratio-video {
+    @include aspect-ratio(16, 9);
+}
+
+.ratio-16-9 {
+    @include aspect-ratio(100, 56);
+}
+
+.ratio-square {
+    @include aspect-ratio(100, 100);
+}
+
+// Position 
+.grid {
+    display: grid;
+}
+
+.flex {
+    display: flex;
+
+    &-grow {
+        flex: 1;
+    }
+
+    &-center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-evenly {
+        justify-content: space-evenly;
+    }
+}
+
+// Text 
+.vertical-text {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+}
+
+.tag-text {
+    color: $clr-darken;
+    text-transform: uppercase;
+    @include type(boldCondensed);
+}
+
+// Shapes
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    min-width: 32px;
+    min-height: 32px;
+
+    >img {
+        display: unset;
+        align-self: flex-end;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+    }
+}
+
+// List
+.clean-list {
+    list-style-type: none;
+}
+
+// icon
+.icon {
+    display: flex;
+    max-width: 50px;
+}
+
+.logo-container {
+    display: flex;
+}
+
+.logo {
+    display: flex;
+    object-fit: cover;
+    width: 40px;
+    content: url('../../imgs/svg/logo.svg');
+}
+
+// &.imgs-template {
+//     display: grid;
+//     grid-template-rows: repeat(2 1fr);
+//     grid-template-columns: 25% 25% 1fr 1fr;
+//     gap: 10px;
+//     border-radius: 7px;
+//     overflow: hidden;
+
+//     object-fit: cover;
+//     object-fit: contain;
+
+//     img {
+//         aspect-ratio: 1/1;
+//         height: 100%;
+//         width: 100%;
+//         object-fit: cover;
+//         cursor: pointer;
+//     }
+
+//     :first-child {
+//         grid-column: span 2;
+//         grid-row: span 2;
+//     }
+// }

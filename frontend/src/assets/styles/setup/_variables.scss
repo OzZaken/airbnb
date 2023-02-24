@@ -1,0 +1,25 @@
+// COLOR - palette
+$clr-prim: #de1063;
+$clr-sec: #ff385c;
+$clr-bgc: #f1f1f1;
+$clr-vector: #a29f9f63;
+//        - variable colors
+$clr-darken: darken($clr-sec, 40%);
+$clr-lighten: lighten($clr-sec, 10%);
+$clr-mix: mix($clr-prim, $clr-sec, 50%);
+
+// MQ - breakpoints
+$break-tablet: 768px;
+$break-desktop: 1024px;
+$break-wide: 1440px;
+
+// PADDED   -  main-layout
+$padded-layout: 24px;
+$padded-layout-tablet: 40px;
+$padded-layout-wide: 80px;
+
+//          -  container 
+$padded-container:  rem(4px) rem(6px);
+$padded-container-tablet: rem(8px) rem(10px);
+$padded-container-desktop: rem(8px) rem(24px);
+$padded-container-wide: rem(10px) rem(24px);

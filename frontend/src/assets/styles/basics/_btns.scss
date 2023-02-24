@@ -1,0 +1,20 @@
+.btns-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn {
+    @include btn;
+    // Shapes
+    &-big {
+        @include btn($shape: big);
+    }
+    &-circle {
+        @include btn($shape: circle);
+    }
+    &-txt{
+        @include btn();
+    }
+}

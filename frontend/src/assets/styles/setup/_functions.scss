@@ -1,0 +1,15 @@
+// convert a pixel value to an equivalent rem value
+@function rem($size) {
+  $remSize: $size / 16px;
+  @return ($remSize) * 1rem;
+}
+
+// convert a pixel value to an equivalent em value
+@function em($pixels, $context: 18px) {
+  @return ($pixels/$context) * 1em;
+}
+
+// calculate the line-height value for a given pixel value relative to a provided context font size.
+@function lh($pixels, $context: 18px) {
+  @return ($pixels/$context);
+}

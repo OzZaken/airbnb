@@ -1,0 +1,33 @@
+a {
+    transition: color 0.3s ease-in-out;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    color: black;
+
+    &:focus {
+        text-shadow: 0 0 5px;
+        // outline: none;
+    }
+
+    &:hover {
+        box-shadow: inset -1px 0 0 var(--clr-darken), inset 0 -1px 0 var(--clr-prim);
+        text-decoration: none;
+    }
+
+    &.active {
+        text-shadow: 0 0 5px hsl(0 0% 78%);
+    }
+
+    &:visited {
+        // color: purple;
+    }
+
+    &.link-filter-by {
+        box-shadow: none;
+        color: #222222bb;
+    }
+}

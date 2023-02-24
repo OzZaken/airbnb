@@ -9,32 +9,7 @@ export const utilService = {
     getRandomBoolean,
     timeAgo
 }
-function timeAgo(ms = new Date()) {
-    const date = ms instanceof Date ? ms : new Date(ms)
-    const formatter = new Intl.RelativeTimeFormat('en')
-    const ranges = {
-      years: 3600 * 24 * 365,
-      months: 3600 * 24 * 30,
-      weeks: 3600 * 24 * 7,
-      days: 3600 * 24,
-      hours: 3600,
-      minutes: 60,
-      seconds: 1,
-    }
-    const secondsElapsed = (date.getTime() - Date.now()) / 1000
-    for (let key in ranges) {
-      if (ranges[key] < Math.abs(secondsElapsed)) {
-        const delta = secondsElapsed / ranges[key]
-        let time = formatter.format(Math.round(delta), key)
-        if (time.includes('in')) {
-          time = time.replace('in ', '')
-          time = time.replace('ago', '')
-          time += ' ago'
-        }
-        return time //? time : 'Just now'
-      }
-    }
-  }
+
 function makeId(length = 6) {
     var txt = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -68,6 +43,32 @@ function delay(ms = 1500) {
     })
 }
 
+function timeAgo(ms = new Date()) {
+    const date = ms instanceof Date ? ms : new Date(ms)
+    const formatter = new Intl.RelativeTimeFormat('en')
+    const ranges = {
+        years: 3600 * 24 * 365,
+        months: 3600 * 24 * 30,
+        weeks: 3600 * 24 * 7,
+        days: 3600 * 24,
+        hours: 3600,
+        minutes: 60,
+        seconds: 1,
+    }
+    const secondsElapsed = (date.getTime() - Date.now()) / 1000
+    for (let key in ranges) {
+        if (ranges[key] < Math.abs(secondsElapsed)) {
+            const delta = secondsElapsed / ranges[key]
+            let time = formatter.format(Math.round(delta), key)
+            if (time.includes('in')) {
+                time = time.replace('in ', '')
+                time = time.replace('ago', '')
+                time += ' ago'
+            }
+            return time
+        }
+    }
+}
 function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
 }
@@ -101,7 +102,7 @@ function makeChartDate(labels, data) {
     }
 }
 
-function numberWithCommas(str){
+function numberWithCommas(str) {
     return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 

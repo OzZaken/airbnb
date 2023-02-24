@@ -1,42 +1,43 @@
 // SETUP
-@import 'setup/_normalize.css';
-// @import 'setup/_variables.scss';
-// @import 'setup/_typography';
-// @import 'setup/_functions.scss';
-// @import 'setup/_mixins.scss';
+@import 'setup/_normalize';
+@import 'setup/_functions';
+@import 'setup/_variables';
+@import 'setup/_mixins';
+@import 'setup/_typography';
 
-// // BASICS
-// @import 'basics/_base.scss';
-// @import 'basics/_layout.scss';
-// @import 'basics/_helpers.scss';
-// @import 'basics/_forms.scss';
-// @import 'basics/_links.scss';
+// BASICS
+@import 'basics/_base';
+@import 'basics/_layout';
+@import 'basics/_helpers';
+// @import 'basics/_forms';
+@import 'basics/_links';
+@import 'basics/_btns';
 
-// // VIEWS
-// @import 'views/_about.scss';
-// //       - stay
-// @import 'views/stay/_stay-app.scss';
-// @import 'views/stay/_stay-edit.scss';
-// @import 'views/stay/_stay-details.scss';
-// //       - user
-// @import 'views/user/_user-app.scss';
-// @import 'views/user/_user-edit.scss';
-// @import 'views/user/_user-details.scss';
+// VIEWS
+@import 'views/_about';
+//       - stay
+@import 'views/stay/_stay-app';
+@import 'views/stay/_stay-edit';
+@import 'views/stay/_stay-details';
+//       - user
+@import 'views/user/_user-app';
+@import 'views/user/_user-edit';
+@import 'views/user/_user-details';
 
-// // CMPS
-// @import 'cmps/_app-header.scss';
-// @import 'cmps/_app-footer.scss';
-// @import 'cmps/_nice-btn.scss';
-// @import 'cmps/btn-radial-gradient.scss';
-// @import 'cmps/_counter.scss';
+// CMPS
+@import 'cmps/_app-header';
+@import 'cmps/_app-footer';
+// @import 'cmps/_nice-btn';
+// @import 'cmps/btn-radial-gradient';
+// @import 'cmps/_counter';
 // //       - Images Gallery
-// @import "~react-image-gallery/styles/scss/image-gallery.scss";
-// @import 'cmps/_img-gallery.scss';
+@import "~react-image-gallery/styles/scss/image-gallery";
+@import 'cmps/_img-gallery';
 // //       - stay
-// @import 'cmps/stay/_stay-filter.scss';
-// @import 'cmps/stay/_stay-list.scss';
-// @import 'cmps/stay/_stay-preview.scss';
+@import 'cmps/stay/_stay-filter';
+@import 'cmps/stay/_stay-list';
+@import 'cmps/stay/_stay-preview';
 // //      - user
-// @import 'cmps/user/_user-filter.scss';
-// @import 'cmps/user/_user-list.scss';
-// @import 'cmps/user/_user-preview.scss';
+@import 'cmps/user/_user-filter';
+@import 'cmps/user/_user-list';
+@import 'cmps/user/_user-preview';

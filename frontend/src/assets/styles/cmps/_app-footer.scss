@@ -1,0 +1,20 @@
+.main-footer {
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    max-height: rem(64px);
+    width: 100%;
+    background-color: #fff;
+    color: rgb(0, 0, 0);
+    z-index: 10;
+
+    .footer-nav {
+        display: flex;
+        justify-content: space-evenly;
+        flex: 1;
+
+        a {
+            flex-direction: column;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+.stay-filter {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    nav.filter-by-container {
+        display: flex;
+        flex: 1;
+        ul {
+            text-overflow: scroll;
+            display: flex;
+            flex: 1;
+
+            .link-filter-by {
+                height: 38px;
+                flex-direction: column-reverse;
+
+                .icon,
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                &:hover {
+                    border-bottom: 2px solid $clr-vector;
+                }
+
+                &:focus {
+                    border-bottom: 2px solid $clr-darken;
+                }
+            }
+        }
+    }
+}

@@ -16,7 +16,7 @@ export function UserMenu() {
    }
 
    return (
-      <div>
+      <div className='user-menu'>
          <Button
             id="demo-positioned-button"
             aria-controls={open ? 'demo-positioned-menu' : undefined}

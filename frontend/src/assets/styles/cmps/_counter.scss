@@ -1,0 +1,19 @@
+.counter,
+.timer {
+    margin-top: 5%;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.counter button:nth-of-type(2) {
+    font-size: 2em;
+    display: block;
+    border: none;
+    background-color: inherit;
+}
+
+
+.split-pane > div{
+    transition: 0.5s;
+}

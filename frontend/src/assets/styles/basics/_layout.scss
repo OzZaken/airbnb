@@ -1,0 +1,52 @@
+.main-layout {
+    display: grid;
+
+    >* {grid-column: 2;}
+
+    >*.full {grid-column: 1 / -1;}
+
+    @include for-mobile-layout {
+        @include layoutGTC();
+    }
+
+    @include for-tablet-layout {
+        @include layoutGTC();
+    }
+
+    @include for-desktop-layout {
+        @include layoutGTC();
+    }
+
+    @include for-wide-layout {
+        @include layoutGTC();
+    }
+}
+
+.main-content {
+    flex-grow: 1;
+    width: 100%;
+    justify-self: center;
+    margin-bottom: rem(80px);
+}
+
+.container {
+    padding: $padded-container;
+
+    @include for-tablet-layout {
+        padding: $padded-container-tablet;
+    }
+
+    @include for-desktop-layout {
+        padding: $padded-container-desktop;
+    }
+
+    @include for-wide-layout {
+        padding: $padded-container-wide;
+    }
+}
+
+.preview-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 500px));
+    grid-gap: 30px;
+}

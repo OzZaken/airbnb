@@ -1,0 +1,45 @@
+.user-preview {
+    display: flex;
+    flex-direction: column;
+    background-color: #e91e630a;
+    text-align: center;
+    box-shadow: 3px 4px 15px #00000026;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-size: 37%;
+    background-position: 50% calc(100% - 50px);
+    overflow-y: hidden;
+}
+
+@media only screen and (max-width: 500px) {
+    .user-preview {
+        background-size: 80px;
+    }
+}
+
+.user-preview .info {
+    padding: 10px;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.user-preview .actions {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #000000d1;
+}
+
+.actions > * {
+    font-size: 1rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: whitesmoke;
+}
+
+.actions > *:hover {
+    text-decoration: underline;
+}

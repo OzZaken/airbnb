@@ -1,0 +1,21 @@
+.user-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            margin-top: 20px;
+        }
+
+        button {
+            width: 50%;
+            margin-top: 40px;
+            align-self: center;
+        }
+    }
+}

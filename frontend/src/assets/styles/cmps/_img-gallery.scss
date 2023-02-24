@@ -1,0 +1,36 @@
+.image-gallery-content {
+    .image-gallery-image {
+        width: 100%;
+        max-height: 50vh;
+        // @include aspect-ratio(100, 80);
+        // @include aspect-ratio(100, 56);
+        object-fit: cover;
+    }
+
+    border-radius: .8em;
+
+    .image-gallery-slide-wrapper {
+  
+        .image-gallery-left-nav,
+        .image-gallery-right-nav {
+
+            // content: url('../../imgs/svg/left-arrow.svg');
+            // @include btn
+            svg {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                background-color: rgba(240, 248, 255, 0.623);
+                border: 1px solid #222;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    *button {
+        min-width: unset;
+        min-height: unset;
+    }
+}

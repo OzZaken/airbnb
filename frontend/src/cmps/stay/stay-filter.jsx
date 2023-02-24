@@ -7,24 +7,32 @@ export const StayFilter = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const [register] = useFormRegister({
-        model: '',
+        txt: '',
         type: '',
-        minBatteryStatus: '',
-        maxBatteryStatus: '',
-        date: new Date(),
+        amenities: [],
+        maxPrice: Infinity,
+        minPrice: 0,
+        maxRate: Infinity,
+        minRate: 0,
+        fromDate: new Date(),
+        toDate: new Date(Infinity),
     }, props.onChangeFilter)
-
+   
     const renderFilterByQueryParamsGPT = () => {
         const filterBy = {
-            txt: searchParams.get('stay-txt') || '',
+            txt: searchParams.get('txt') || '',
+            type: searchParams.get('type') || '',
             amenities: searchParams.getAll('amenities') || [],
             maxPrice: +searchParams.get('max-price') || Infinity,
             minPrice: +searchParams.get('min-price') || 0,
             maxRate: +searchParams.get('max-rate') || Infinity,
             minRate: +searchParams.get('min-rate') || 0,
-        };
-        onSetFilterBy(filterBy);
+            fromDate: searchParams.get('from-date') || new Date(),
+            todoDate: searchParams.get('to-date') || new Date(Infinity),
+        }
+        onSetFilterBy(filterBy)
     }
+
     const onSetFilterByGPT = (filterBy) => {
         setSearchParams({
             'stay-txt': filterBy.txt,
@@ -68,28 +76,29 @@ export const StayFilter = (props) => {
         console.log(`🚀 ~ filterBy:`, filterBy)
     }
     const amenities = stayService.getAmenities()
+const {FilterBy} = iconService
+    return <section className='stay-filter'>
 
-    return <section className='flex-center full stay-filter'>
-
-        <nav className='flex-grow filter-by-amenities'>
-            <ul className='flex-grow flex-evenly'>
+        <nav className='flex filter-by-container'>
+            
+            <ul className='filter-nav-list'>
+                
                 {amenities.map((amenity, idx) => {
                     const iconKey = Object.keys(amenity)
                     const heading = Object.values(amenity)
                     const queryStringParam = heading.join(' ').toLowerCase()
                         .replace(/[^a-z ]+/g, '').replace(/\s+/g, '-')
-
+                    
                     return <li className="clean-list flex-center" key={idx}>
-                        <NavLink to={`/q?amenity=${queryStringParam}`} className={'link-filter-by'}>
-                            <h5 className='flex'>{heading}</h5>
-                            <i className='filter-svg'>{iconService[iconKey]()}</i>
+                        <NavLink to={`/q?amenities=${queryStringParam}`} className={'link-filter-by'}>
+                            <h3 className='flex'>{heading}</h3>
+                            <i className='icon'>{iconService[iconKey]()}</i>
                         </NavLink>
                     </li>
                 })}
-
             </ul>
         </nav>
 
-        <button className='btn'>Filters {iconService.FilterBy()}</button>
+        <button className='btn'>Filters {FilterBy()}</button>
     </section>
 }

@@ -1,0 +1,206 @@
+/* Media Queries Breakpoint  */
+@mixin for-mobile-layout {
+  @media (max-width: $break-tablet) {
+    @content;
+  }
+}
+
+@mixin for-tablet-layout {
+  @media (min-width: $break-tablet) {
+    @content;
+  }
+}
+
+@mixin for-desktop-layout {
+  @media (min-width: $break-desktop) {
+    @content;
+  }
+}
+
+@mixin for-wide-layout {
+  @media (min-width: $break-wide) {
+    @content;
+  }
+}
+
+// Grid template -  Columns
+@mixin layoutGTC($min: auto, $max: 100%, $padded: $padded-layout) {
+  grid-template-columns: minmax($padded, 1fr) minmax($min, $max) minmax($padded, 1fr);
+}
+
+// Aspect-ratio 
+@mixin aspect-ratio($width: 1, $height: 1) {
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  >* {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  >img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Remove hover effects on iphone.
+@mixin hover-supported {
+  @media not all and (pointer: coarse) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// Buttons.
+@mixin btn($padding: em(0px) em(0px),
+  $shape: regular,
+  $bg: $clr-bgc,
+  $color: $clr-darken,
+  $hover: darken($bg, 5%),
+) {
+  padding: $padding;
+  font-family: inherit;
+  color: inherit;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5em;
+  text-decoration: none;
+  font-size: em(14px);
+  line-height: 1.25;
+  border: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(133, 133, 133, 0.096);
+  }
+
+  // $shape
+  @if $shape ==big {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid $color;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-variation-settings: "wght" 430;
+
+    &:active {
+      transform: scale(1.1);
+    }
+
+    &:hover {
+      background-color: rgba(133, 133, 133, 0.096);
+    }
+  }
+
+  @if $shape ==circle {
+    border-radius: 50%;
+    border: 4px solid black;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px solid $clr-vector;
+    display: flex;
+    height: 36px;
+    justify-content: center;
+    width: 36px;
+  }
+
+  @else if $shape ==link {
+    background-color: transparent;
+    text-decoration: underline;
+    transition: background-color 0.3s;
+    color: $clr-darken;
+
+    &:hover {
+      background-color: $hover;
+    }
+  }
+}
+
+// Text.
+@mixin type($type: bold, $decoration: none, $transform: none) {
+
+  // type: 
+  @if $type ==boldCondensed {
+    font-variation-settings: "wght" 430, "wdth" 80;
+    letter-spacing: em(6.72px);
+  }
+
+  @else if $type ==condensed {
+    font-variation-settings: "wdth" 80;
+    letter-spacing: em(6.72px);
+  }
+
+  @else if $type ==light {
+    font-variation-settings: "wght" 200;
+  }
+
+  // $transform
+  @if $decoration ==underline {
+    text-decoration: underline;
+  }
+
+  @else if $decoration ==overline {
+    text-decoration: overline;
+  }
+
+  @else if $decoration ==line-through {
+    text-decoration: line-through;
+  }
+
+  @else if $decoration ==solid {
+    text-decoration: solid;
+  }
+
+  // $transform
+  @if $transform ==capitalize {
+    text-transform: capitalize;
+  }
+
+  @else if $transform ==uppercase {
+    text-transform: uppercase;
+  }
+
+  @else if $transform ==lowercase {
+    text-transform: lowercase;
+  }
+}
+
+// //  $theme
+// @if $theme ==regular {
+//   background-color: $clr-bgc;
+//   color: $color;
+
+//   &:hover {
+//     background-color: $hover;
+//   }
+// }
+// @else if $theme ==dark {
+//   background-color: $clr-darken;
+//   color: $clr-bgc;
+
+//   &:hover {
+//     background-color: $clr-prim;
+//     color: $clr-bgc;
+//   }
+// }
+// @else if $theme ==light {
+//   background-color: $clr-bgc;
+//   color: $clr-darken;
+
+//   &:hover {
+//     background-color: $clr-sec;
+//     color: $clr-bgc;
+//   }
+// }

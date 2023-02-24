@@ -27,8 +27,6 @@ function _AppFooter({ view }) {
     }
 
     return <footer className='main-footer'>
-        {/* <span>current view: {view}</span> */}
-
         {false && (
             <section className="back">
                 <button onClick={onBack}>Back</button>
@@ -38,9 +36,14 @@ function _AppFooter({ view }) {
         {innerWidth <= 768 && <nav className="footer-nav">
             <NavLink to='/'>{iconService.Search()}Explore</NavLink>
             <NavLink to='/wishlist'>{iconService.Favorite()}Wishlists</NavLink>
-            <NavLink to='/trips'>{iconService.Logo()}Trips</NavLink>
+            <NavLink to='/trips'>
+                <div className="logo-container">
+                    <div className="logo"></div>
+                </div>
+                Trips
+            </NavLink>
             <NavLink to='/inbox'>{iconService.Inbox()}Inbox</NavLink>
-            <NavLink to='/user'>{iconService.Inbox()}Profile</NavLink>
+            <NavLink to='/user'>{iconService.AccountCircle()}Profile</NavLink>
         </nav>}
 
         {view === 'about' && <section className='container'>

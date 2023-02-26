@@ -381,35 +381,35 @@ const gAmenities = [
     { NationalPark: 'National parks' },
     { AmazingPool: 'Amazing pools' },
     { AmazingViews: 'Amazing views' },
-    { Arctic:'Arctic'},
-    { Design:'Design' },
-    { Island:'Island'},
-    { Surfing:'Surfing' },
+    { Arctic: 'Arctic' },
+    { Design: 'Design' },
+    { Island: 'Island' },
+    { Surfing: 'Surfing' },
 ]
 
-async function query(filterBy) {
+async function query(filterBy = { txt: '' }) {
     try {
-        let stays = await storageService.query(STORAGE_KEY)
+        var stays = await storageService.query(STORAGE_KEY)
+        // DEMO_DATA
         if (!stays || !stays.length) {
             storageService.postMany(STORAGE_KEY, gDefaultStays)
             stays = gDefaultStays
         }
-
-        if (filterBy) {
-            var { txt, minPrice, maxPrice } = filterBy
-            maxPrice = maxPrice || Infinity
-            minPrice = minPrice || 0
-            const regex = new RegExp(txt, 'i')
-
-            stays = stays.filter(stay =>
-                regex.test(stay.name, stay.summary)
-                && stay.maxPrice < maxPrice
-                && stay.minPrice > minPrice
-            )
-        }
+       
+        var { txt, minPrice, maxPrice } = filterBy
+        const regex = new RegExp(txt, 'i')
+        maxPrice = maxPrice || Infinity
+        minPrice = minPrice || 0
+        // amenities = amenities || []
+        // console.log(`🚀 ~ amenities:`, amenities)
+        stays = stays.filter(stay =>
+            regex.test(stay.name.substring(stay.summary))
+            && stay.price < maxPrice
+            && stay.price > minPrice
+        )
         return stays
-    } catch (error) {
-        console.log(error, 'filterBy from storage has been failed')
+    } catch (err) {
+        console.log('filterBy from storage has been failed', err)
     }
 }
 
@@ -424,9 +424,8 @@ function remove(stayId) {
 function save(stay) {
     if (stay._id) return storageService.put(STORAGE_KEY, stay)
     else {
-        stay.inStock = true
         stay.createdAt = Date.now()
-        stay.labels = []
+        stay.amenities = []
         return storageService.post(STORAGE_KEY, stay)
     }
 }

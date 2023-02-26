@@ -17,7 +17,7 @@ export const StayFilter = (props) => {
         fromDate: new Date(),
         toDate: new Date(Infinity),
     }, props.onChangeFilter)
-   
+
     const renderFilterByQueryParamsGPT = () => {
         const filterBy = {
             txt: searchParams.get('txt') || '',
@@ -76,19 +76,19 @@ export const StayFilter = (props) => {
         console.log(`🚀 ~ filterBy:`, filterBy)
     }
     const amenities = stayService.getAmenities()
-const {FilterBy} = iconService
-    return <section className='stay-filter'>
+    const { FilterBy } = iconService
+    return <section className='full stay-filter'>
 
-        <nav className='flex filter-by-container'>
-            
-            <ul className='filter-nav-list'>
-                
+        <nav className='full flex filter-by-container'>
+
+            <ul className='full filter-nav-list'>
+
                 {amenities.map((amenity, idx) => {
                     const iconKey = Object.keys(amenity)
                     const heading = Object.values(amenity)
                     const queryStringParam = heading.join(' ').toLowerCase()
                         .replace(/[^a-z ]+/g, '').replace(/\s+/g, '-')
-                    
+
                     return <li className="clean-list flex-center" key={idx}>
                         <NavLink to={`/q?amenities=${queryStringParam}`} className={'link-filter-by'}>
                             <h3 className='flex'>{heading}</h3>

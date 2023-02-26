@@ -10,21 +10,8 @@ import { UserMenu } from "./user-menu"
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.userModule.loggedInUser)
-    const [innerWidth, setInnerWidth] = useState(window.innerWidth)
 
-    useEffect(() => {
-        const position = view === 'home' ? 'fixed' : 'static'
-        console.log(` ~ AppHeader position:`, position)
-        window.addEventListener('resize', onSetInnerWidth)
-        return () => window.removeEventListener('resize', onSetInnerWidth)
-    }, [])
-
-    const onSetInnerWidth = () => {
-        setInnerWidth(window.innerWidth)
-    }
-    useEffectUpdate(() => {
-    }, [view])
-
+    useEffectUpdate(() => { }, [view])
 
     const onSetFilterBy = (filterBy) => {
         dispatch(setFilterBy(filterBy))
@@ -41,42 +28,53 @@ function _AppHeader({ view }) {
             console.log('open filter')
         }
     }
+    const onShareStay = (stay) => {
+        console.log('share this stay:',stay)
+    }
+    // onClick={() => { window.history.pushState(null, null, `/`) }}
 
-    const { Search, FilterBy } = iconService
-    return (
-        <header className='full main-header'>
-            <section className="full debug home-header">
-                {/* innerWidth >= 740  &&  */}
-                {<div className="logo-container">
-                    <div className="logo" onClick={() => { window.history.pushState(null, null, `/`) }}></div>
-                </div>}
+    const { Search, FilterBy, ArrowCircleLeft, Share, Favorite } = iconService
+    return <header className='full main-header'>
 
+        {view === 'home' && <section className="full home-header-nav">
+            <Link to={''} className="logo-container">
+                <div className="logo"></div>
+            </Link>
 
-                {/* innerWidth <= 740 &&  */}
-                {<section className="container btns-filter-search">
-                    <button onClick={onSetSearchBy} className="btn-circle">{Search()}</button>
+            <section className="container btns-filter-search">
+                <button onClick={onSetSearchBy} className="btn-circle">{Search()}</button>
 
-                    <div className="container btns-ref-container">
-                        <span role="button">Anywhere</span><br />
-                        <span>Any week 	&#183; Add guests</span>
-                    </div>
+                <div className="container btns-ref-container">
+                    <span role="button">Anywhere</span><br />
+                    <span>Any week 	&#183; Add guests</span>
+                </div>
 
-                    <button className="btn-circle">{FilterBy()}</button>
-                </section>}
-
-
-
-            <UserMenu />
+                <button className="btn-circle">{FilterBy()}</button>
             </section>
 
-            {view === 'home' && <StayFilter className="debug1"onChangeFilter={onSetFilterBy} />}
+            <UserMenu />
 
-            {view === 'details' && <section className="stay-details-header">
-            </section>}
+        </section>}
+        {view === 'home' && <StayFilter onChangeFilter={onSetFilterBy} />}
 
+        {view === 'stay-details' && <section className="stay-details-header">
+            <div className="flex space-between">
+                <Link to={''}>
+                    {ArrowCircleLeft()} Homes
+                </Link>
 
-        </header>
-    )
+                <div className="actions-btns">
+                    <button onClick={onShareStay} className="btn-share">
+                        {Share()}
+                    </button>
+
+                    <button className="btn-favorite">
+                        {Favorite()}
+                    </button>
+                </div>
+            </div>
+        </section>}
+    </header>
 }
 
 function mapStateToProps(state) {

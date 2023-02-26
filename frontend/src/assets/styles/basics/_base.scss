@@ -7,17 +7,12 @@ html {
     font-size: 16px;
     scroll-behavior: smooth;
     font-family: ff-cereal-regular;
-    line-height: 1.8;
     scroll-behavior: smooth;
-    line-height: lh(18px);
     @include for-desktop-layout {
         font-size: 18px;
-        line-height: lh(20px);
     }
-    
     @include for-wide-layout {
         font-size: 20px;
-        line-height: lh(22px);
     }
 }
 
@@ -46,7 +41,7 @@ h6 {
 }
 
 h1 {
-    font-size: rem(34px);
+    font-size: rem(30px);
 }
 
 h2 {
@@ -58,17 +53,26 @@ h3 {
 }
 
 /* MEDIA  */
+.logo {content: url('../../imgs/svg/logo.svg');}
+// UnScratch 
 img,
 embed,
 video,
-object {
-    max-width: 100%
-}
-
+object {max-width: 100%}
+//  Images
 img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+//  Icons
+.icon-container{
+    display: flex;
+}
+.icon {
+    display: flex;
+    object-fit: contain;
+    max-width: 50px;
 }
 
 /* TAP TARGET */
@@ -81,7 +85,6 @@ button {
 /* TXT */
 p {
     @include type(regular);
-
     .main-text & {
         grid-column: 3 / 6;
         font-size: rem(22px);

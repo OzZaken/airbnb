@@ -1,12 +1,12 @@
 export const utilService = {
-    makeLorem,
-    getRandomIntInclusive,
     delay,
     makeId,
+    makeLorem,
     getRandomDate,
     makeChartDate,
     numberWithCommas,
-    getRandomBoolean,
+    getRandomIntInclusive,
+    getRandomFloatInclusive,
     timeAgo
 }
 
@@ -35,6 +35,10 @@ function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+}
+
+function getRandomFloatInclusive(min, max, decimals) {
+    return ((Math.random() * (max - min)) + min).toFixed(decimals)
 }
 
 function delay(ms = 1500) {
@@ -69,6 +73,7 @@ function timeAgo(ms = new Date()) {
         }
     }
 }
+
 function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
 }

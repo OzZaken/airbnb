@@ -36,12 +36,7 @@ function _AppFooter({ view }) {
         {innerWidth <= 768 && <nav className="footer-nav">
             <NavLink to='/'>{iconService.Search()}Explore</NavLink>
             <NavLink to='/wishlist'>{iconService.Favorite()}Wishlists</NavLink>
-            <NavLink to='/trips'>
-                <div className="logo-container">
-                    <div className="logo"></div>
-                </div>
-                Trips
-            </NavLink>
+            <NavLink className="logo" to='/trips'>Trips</NavLink>
             <NavLink to='/inbox'>{iconService.Inbox()}Inbox</NavLink>
             <NavLink to='/user'>{iconService.AccountCircle()}Profile</NavLink>
         </nav>}

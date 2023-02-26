@@ -20,24 +20,20 @@
 @import 'views/stay/_stay-edit';
 @import 'views/stay/_stay-details';
 //       - user
-@import 'views/user/_user-app';
+@import 'views/user/_admin-app';
 @import 'views/user/_user-edit';
 @import 'views/user/_user-details';
 
 // CMPS
 @import 'cmps/_app-header';
 @import 'cmps/_app-footer';
-// @import 'cmps/_nice-btn';
-// @import 'cmps/btn-radial-gradient';
-// @import 'cmps/_counter';
-// //       - Images Gallery
 @import "~react-image-gallery/styles/scss/image-gallery";
-@import 'cmps/_img-gallery';
-// //       - stay
+//       - stay
 @import 'cmps/stay/_stay-filter';
 @import 'cmps/stay/_stay-list';
 @import 'cmps/stay/_stay-preview';
-// //      - user
+@import 'cmps/stay/_stay-order';
+//      - user
 @import 'cmps/user/_user-filter';
 @import 'cmps/user/_user-list';
 @import 'cmps/user/_user-preview';

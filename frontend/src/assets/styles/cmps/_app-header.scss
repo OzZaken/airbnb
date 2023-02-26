@@ -2,12 +2,11 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 10px;
     z-index: 10;
     // position: sticky;
     // top: 0;
 
-    .home-header {
+    .home-header-nav {
         display: flex;
 
         .btns-ref-container {
@@ -19,27 +18,25 @@
         }
 
         .logo {
-            display: flex;
-            object-fit: contain;
-            width: 40px;
-            font-weight: 600;
+            padding: 0 24px;
 
-            @include for-mobile-layout {
-                display: none;
+            @include for-tablet-layout {
+                content: url('../../../assets/imgs/svg/logo.svg');
+                width: 40px;
             }
 
             @include for-desktop-layout {
-                content: url('../../../assets/imgs/png/logo.png');
                 width: 50px;
             }
 
             @include for-desktop-layout {
-                width: 60px;
+                content: url('../../../assets/imgs/svg/airbnb.svg');
+                width: 100px;
             }
 
             @include for-wide-layout {
-                content: url('../../../assets/imgs/png/airbnb.png');
-                width: 200px;
+                content: url('../../../assets/imgs/svg/airbnb.svg');
+                width: 150px;
             }
 
         }
@@ -48,6 +45,7 @@
             @include for-mobile-layout {
                 display: none;
             }
+            padding: 0 24px;
         }
 
         .btns-filter-search {

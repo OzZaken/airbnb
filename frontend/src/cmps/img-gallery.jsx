@@ -9,18 +9,17 @@ export class ImgGallery extends React.Component {
             originalClass='img-gallery-container'
             bulletClass='gallery-bullets'
             thumbnailClass='gallery-thumbnail'
-            originalHeight={300}
-            originalWidth={280}
             stopPropagation={true}
+            onClick={this.props.onClickImage}
             // isRTL={false} // i18n
             // originalTitle=''
             //* EVENT HANDLER
-            onErrorImageURL={'Logo/url'}
+            onErrorImageURL={'logo Url'}
             onImageError={(err) => { console.log('onImageError Error:', err, this.props.imgs) }}
             onThumbnailError={(err) => { console.log('onThumbnailError Error:', err, this.props.imgs) }}
             slideDuration={600} // Default 450
-            slideInterval={5000} // Default 3000
-            // onClick={this.props.onClickImage}
+            // originalHeight={300}
+            // originalWidth={280}
         // onPlay
         // onMouseOver: Function,count each time look per image
         // onMouseLeave: Function, send data 

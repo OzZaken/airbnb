@@ -4,8 +4,8 @@ const INITIAL_STATE = {
         txt: '',
         minPrice: 0,
         MaxPrice: 0,
+        pageIdx: 1,
     },
-    isStayLoading: false,
     favorites: [],
     sortBy: null,
 }
@@ -31,10 +31,6 @@ export function stayReducer(state = INITIAL_STATE, action) {
 
         case 'SET_FILTER_BY':
             newState = { ...state, filterBy: { ...action.filterBy } }
-            break
-
-        case 'TOGGLE_STAY_LOADING':
-            newState = { ...state, isLoading: !action.isLoading }
             break
 
         case 'ADD_TO_FAVORITE':

@@ -1,5 +1,5 @@
-import { iconService } from "../../services/svg.service"
 import { useFormRegister } from '../../hooks/useFormRegister'
+import AppIcon from '../app-icon'
 
 export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
   const { price } = stay
@@ -26,7 +26,6 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
     </div>
   }
 
-  const { AngleDown } = iconService
   return <form>
     <section className="order-container">
       <div className="order-form-header">
@@ -52,7 +51,7 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
         <div className="guest-input">
           <label htmlFor="guests">GUESTS</label>
           <input value="2" {...register('guests', 'number')} />
-          <AngleDown />
+          <AppIcon iconKey="AngleDown" />
         </div>
 
       </div>

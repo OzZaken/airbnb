@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+// Services
+import { utilService } from '../../services/util.service'
 // actions
 import { updateView } from '../../store/app.actions'
-import { loadStays, removeStay, } from '../../store/stay.action'
+import { loadStays, removeStay, setSortBy, updateStay } from '../../store/stay.action'
 // cmps
 import { StayList } from '../../cmps/stay/stay-list'
-import { iconService } from '../../services/svg.service'
 // UI
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
@@ -14,15 +15,20 @@ export const StayApp = (props) => {
     const { stays, filterBy } = useSelector(state => state.stayModule)
     const dispatch = useDispatch()
 
-    // VIEW
+    // const currentUrl = window.location.href
+    // const [searchParams, setSearchParams] = useSearchParams()
+
+    // console.log(`🚀 ~ props:`, props)
+    // console.log(`🚀 ~ currentUrl:`, currentUrl)
+    // console.log(`🚀 ~ searchParams:`, searchParams)
+    // console.log(`🚀 ~ filterBy:`, filterBy, 'props', props)
+
     useEffect(() => {
-        //  -   mount
-        dispatch(loadStays())
         dispatch(updateView('home'))
-        //  -   -   ux ui
+        dispatch(loadStays())
         document.body.classList.add('home-page')
-        setTimeout(() => { document.title = `${iconService.Logo()} Home` }, 2000)
-        //  -   unmount
+        setTimeout(() => { document.title = `Home` }, 2000)
+
         return () => {
             document.body.classList.remove('home-page')
             document.title = 'Bye Home!'
@@ -33,18 +39,27 @@ export const StayApp = (props) => {
         dispatch(loadStays())
     }, [filterBy])
 
+    const getStayAvgRate = (reviews) => {
+        const rates = []
+        reviews.forEach(review => rates.push(review.rate || utilService.getRandomFloatInclusive(1, 5, 2)))
+        return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
+    }
+
+    const onChangeSortBy = (sortBy) => {
+        dispatch(setSortBy(sortBy))
+    }
+
     const onRemoveStay = (stayId) => {
         dispatch(removeStay(stayId))
     }
 
-    const getStayAvgRate = (reviews) => {
-        const rates = []
-        reviews.forEach(review => rates.push(review.rate))
-        return (rates.reduce((a, b) => (a + b)) / rates.length).toFixed(2)
+    const onUpdateStay = (stay) => {
+        dispatch(updateStay(stay))
     }
-    // getStayAvgRate={getStayAvgRate}
+
+
     if (!stays) return <h1>!stays Loading...</h1>
     return <section className='home-page' >
-        <StayList onRemoveStay={onRemoveStay} stays={stays} />
+        <StayList getStayAvgRate={getStayAvgRate} onChangeSortBy={onChangeSortBy} onUpdateStay={onUpdateStay} onRemoveStay={onRemoveStay} stays={stays} />
     </section>
 }

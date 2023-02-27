@@ -4,13 +4,13 @@ import thunk from 'redux-thunk'
 import { appReducer } from './app.reducer'
 import { userReducer } from './user.reducer'
 import { stayReducer } from './stay.reducer'
-// import { orderReducer } from './order.reducer'
+import { orderReducer } from './order.reducer'
 
 const rootReducer = combineReducers({
     appModule: appReducer,
     stayModule: stayReducer,
     userModule: userReducer,
-    // orderModule: orderReducer,
+    orderModule: orderReducer,
 })
 
 const composeEnhancers =

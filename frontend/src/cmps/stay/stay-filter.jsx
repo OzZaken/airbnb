@@ -1,7 +1,7 @@
 import { NavLink, useSearchParams } from 'react-router-dom'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import { stayService } from '../../services/stay.service'
-import { iconService } from '../../services/svg.service'
+import AppIcon from '../app-icon'
 
 export const StayFilter = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -76,7 +76,6 @@ export const StayFilter = (props) => {
         console.log(`🚀 ~ filterBy:`, filterBy)
     }
     const amenities = stayService.getAmenities()
-    const { FilterBy } = iconService
     return <section className='full stay-filter'>
 
         <nav className='full flex filter-by-container'>
@@ -92,13 +91,15 @@ export const StayFilter = (props) => {
                     return <li className="clean-list flex-center" key={idx}>
                         <NavLink to={`/q?amenities=${queryStringParam}`} className={'link-filter-by'}>
                             <h3 className='flex'>{heading}</h3>
-                            <i className='icon'>{iconService[iconKey]()}</i>
+                            <i className='icon'><AppIcon iconKey={iconKey} /></i>
                         </NavLink>
                     </li>
                 })}
             </ul>
         </nav>
 
-        <button className='btn'>Filters {FilterBy()}</button>
+        <button className='btn'>
+            Filters <AppIcon iconKey="FilterBy" />
+        </button>
     </section>
 }

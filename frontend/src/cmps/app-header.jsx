@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import { iconService } from "../services/svg.service"
-import { setFilterBy, loadStays } from '../store/stay.action'//stayLoading
+import AppIcon from "./app-icon"
 import { StayFilter } from "./stay/stay-filter"
 import { UserMenu } from "./user-menu"
+
+import { setFilterBy, loadStays } from '../store/stay.action'//stayLoading
 
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
@@ -29,27 +30,28 @@ function _AppHeader({ view }) {
         }
     }
     const onShareStay = (stay) => {
-        console.log('share this stay:',stay)
+        console.log('share this stay:', stay)
     }
     // onClick={() => { window.history.pushState(null, null, `/`) }}
 
-    const { Search, FilterBy, ArrowCircleLeft, Share, Favorite } = iconService
     return <header className='full main-header'>
 
         {view === 'home' && <section className="full home-header-nav">
-            <Link to={''} className="logo-container">
-                <div className="logo"></div>
-            </Link>
+            <Link to={''} className="logo"></Link>
 
             <section className="container btns-filter-search">
-                <button onClick={onSetSearchBy} className="btn-circle">{Search()}</button>
+                <button onClick={onSetSearchBy} className="btn-circle">
+                    <AppIcon iconKey="Search" />
+                </button>
 
                 <div className="container btns-ref-container">
                     <span role="button">Anywhere</span><br />
                     <span>Any week 	&#183; Add guests</span>
                 </div>
 
-                <button className="btn-circle">{FilterBy()}</button>
+                <button className="btn-circle">
+                    <AppIcon iconKey="FilterBy" />
+                </button>
             </section>
 
             <UserMenu />
@@ -60,16 +62,16 @@ function _AppHeader({ view }) {
         {view === 'stay-details' && <section className="stay-details-header">
             <div className="flex space-between">
                 <Link to={''}>
-                    {ArrowCircleLeft()} Homes
+                    <div className="nav-back">Homes</div>
                 </Link>
 
                 <div className="actions-btns">
                     <button onClick={onShareStay} className="btn-share">
-                        {Share()}
+                        <AppIcon iconKey='Share' />
                     </button>
 
                     <button className="btn-favorite">
-                        {Favorite()}
+                        <AppIcon iconKey='Favorite' />
                     </button>
                 </div>
             </div>

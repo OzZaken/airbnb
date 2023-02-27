@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import { iconService } from "../services/svg.service"
+import AppIcon from "./app-icon"
 
 function _AppFooter({ view }) {
     useEffectUpdate(() => {
@@ -32,13 +32,13 @@ function _AppFooter({ view }) {
                 <button onClick={onBack}>Back</button>
             </section>
         )}
-
+{/* innerWidth <= 768 === $include-for-des on scss */}
         {innerWidth <= 768 && <nav className="footer-nav">
-            <NavLink to='/'>{iconService.Search()}Explore</NavLink>
-            <NavLink to='/wishlist'>{iconService.Favorite()}Wishlists</NavLink>
-            <NavLink className="logo" to='/trips'>Trips</NavLink>
-            <NavLink to='/inbox'>{iconService.Inbox()}Inbox</NavLink>
-            <NavLink to='/user'>{iconService.AccountCircle()}Profile</NavLink>
+            <NavLink to='/'>{<AppIcon iconKey="Search"/>}Explore</NavLink>
+            <NavLink to='/wishlist'>{<AppIcon iconKey="Favorite"/>}Wishlists</NavLink>
+            <NavLink to='/trips'>{<AppIcon iconKey="Logo"/>}</NavLink>
+            <NavLink to='/inbox'>{<AppIcon iconKey="Inbox"/>}Inbox</NavLink>
+            <NavLink to='/user'>{<AppIcon iconKey="AccountCircle"/>}Profile</NavLink>
         </nav>}
 
         {view === 'about' && <section className='container'>

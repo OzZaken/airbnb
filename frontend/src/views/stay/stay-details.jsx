@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import AppIcon from '../../cmps/app-icon'
 import { ImgGallery } from '../../cmps/img-gallery'
 import { StayOrder } from '../../cmps/stay/stay-order'
 import { stayService } from '../../services/stay.service'
-import { iconService } from '../../services/svg.service'
 import { updateView } from '../../store/app.actions'
 
 export const _StayDetails = (props) => {
@@ -17,6 +17,7 @@ export const _StayDetails = (props) => {
 
     useEffect(() => {
         loadStay()
+        // dispatch(loadStay(stay._id))
         dispatch(updateView('stay-details'))
 
         window.addEventListener('resize', onSetInnerWidth)
@@ -26,7 +27,9 @@ export const _StayDetails = (props) => {
             document.body.classList.remove('stay-details')
         }
     }, [])
+
     useEffect(() => { }, [innerWidth])
+
     useEffect(() => { loadStay() }, [params.id])
 
     const loadStay = async () => {
@@ -51,25 +54,24 @@ export const _StayDetails = (props) => {
 
     // IntersectionObserver for the anchors nav 
     // useEffect(() => {
-    //     const header = document.querySelector('.main-header');
-    //     const nav = document.querySelector('.main-header-nav');
+    //     const elMainDetails = document.querySelector('.details-container')
+    //     const elAnchorNav = document.querySelector('.details-anchors-nav')
 
     //     const headerObserver = new IntersectionObserver(
     //         onHeaderObserved,
     //         { rootMargin: "-91px 0px 0px" }
     //     )
 
-    //     headerObserver.observe(header)
+    //     headerObserver.observe(elMainDetails)
 
     //     function onHeaderObserved(entries) {
     //         entries.forEach((entry) => {
-    // nav.style.position = entry.isIntersecting ? 'static' : 'fixed';
+    //             elAnchorNav.style.position = entry.isIntersecting ? 'static' : 'fixed';
     //         })
     //     }
     // }, [])
 
     if (!stay) return <div>Loading...</div>
-    const { Star } = iconService
     const { imgUrls, name, reviews } = stay
     const galleryProps = {
         items: imgUrls.map(url => ({ original: url, thumbnail: url })),
@@ -88,28 +90,38 @@ export const _StayDetails = (props) => {
 
     return <article className='stay-details'>
         <header className="details-heading">
-            <h1>{name}</h1>
-
             <div className="flex details-sub-heading">
-                <span>
-                    {Star()}
+                <h1>{name}</h1>
+                <div>
+                  <AppIcon iconKey="Star"/>
 
                     <button onClick={onShowReview} className='underline'>
                         {`${reviews.length + ' reviews' || 'new'}`}&#xB7;
                     </button>
-                </span>
-                {/* Gallery */}
+                </div>
+
             </div>
 
-            {innerWidth <= 500
-                ? <ImgGallery viewProps={galleryProps} />
-                : <div className="aspect-portrait imgs-template">
-                    {imgUrls.slice(0, 5).map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
-                </div>
-            }
-            <nav className="details-anchors-nav">
-                <ul hidden className='clean-list'>
-                    <li><Link></Link></li>
+            {/* Gallery */}
+            <ImgGallery id="photos" viewProps={galleryProps} />
+            <div hidden className="aspect-portrait imgs-template">
+                {imgUrls.slice(0, 5).map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
+            </div>
+
+            <nav className="details-anchors-container">
+                <ul className='details-anchors-list'>
+                    <li>
+                        <Link to='#photos'>Photos</Link>
+                    </li>
+                    <li>
+                        <Link to='#amenities'>Amenities</Link>
+                    </li>
+                    <li>
+                        <Link to='#reviews'>Reviews</Link>
+                    </li>
+                    <li>
+                        <Link to='#location'>Location</Link>
+                    </li>
                 </ul>
             </nav>
         </header>
@@ -117,7 +129,7 @@ export const _StayDetails = (props) => {
         <main className='main-details main-layout'>
             {/* Main-Details */}
             <section className='details-container'>
-                
+
                 <div className="left-details-container">
                     {/* <AirCover /> */}
                     <div className="air-cover">air-cover</div>

@@ -5,6 +5,7 @@
     z-index: 10;
     // position: sticky;
     // top: 0;
+    // box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
 
     .home-header-nav {
         display: flex;
@@ -19,10 +20,11 @@
 
         .logo {
             padding: 0 24px;
+            max-height: 80px;
 
             @include for-tablet-layout {
                 content: url('../../../assets/imgs/svg/logo.svg');
-                width: 40px;
+                width: 50px;
             }
 
             @include for-desktop-layout {
@@ -36,7 +38,7 @@
 
             @include for-wide-layout {
                 content: url('../../../assets/imgs/svg/airbnb.svg');
-                width: 150px;
+                width: 200px;
             }
 
         }
@@ -45,6 +47,7 @@
             @include for-mobile-layout {
                 display: none;
             }
+
             padding: 0 24px;
         }
 
@@ -59,5 +62,14 @@
         }
     }
 
-    .details-header {}
+    .stay-details-header {
+        .nav-back::before {
+            content: '←';
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-size: 1.5rem;
+            color: $clr-txt;
+        }
+    }
 }

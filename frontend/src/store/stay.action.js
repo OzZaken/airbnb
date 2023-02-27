@@ -72,6 +72,7 @@ export function setFilterBy(filterBy) {
         dispatch({ type: 'SET_FILTER_BY', filterBy })
     }
 }
+
 export function setSortBy(sortBy) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_SORT_BY', sortBy })
@@ -88,6 +89,22 @@ export function setSortBy(sortBy) {
         dispatch({ type: 'SET_STAYS', stays })
     }
 }
+export function addToFavorite(car) {
+    return (dispatch) => {
+        dispatch({type: 'ADD_TO_CART',car})
+    }
+}
+export function removeFromFavorite(carId) {
+    return (dispatch) => {
+        dispatch({type: 'REMOVE_FROM_CART',carId})
+    }
+}
+export function clearFavoriteList() {
+    return (dispatch) => {
+        dispatch({type: 'CLEAR_FAVORITE'})
+    }
+}
+
 
 // Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
 const STORAGE_KEY = 'stay'

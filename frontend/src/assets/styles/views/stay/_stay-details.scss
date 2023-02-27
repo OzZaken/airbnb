@@ -1,22 +1,23 @@
-body.stay-details {
-    @include for-mobile-layout {
-        .main-content {
-            grid-column: 1 / -1;
-        }
-    }
-}
-
 .stay-details {
     display: flex;
     flex-direction: column;
 
     .details-heading {
+        display: flex;
+        flex-direction: column-reverse;
+
+        @include for-tablet-layout {
+            flex-direction: column;
+
+        }
+
         h1 {
             font-size: 26px;
         }
 
         .details-sub-heading {
             display: flex;
+            flex-direction: column;
         }
 
         .imgs-template {
@@ -41,8 +42,31 @@ body.stay-details {
             }
         }
 
-        .details-anchors-nav {
+        .details-anchors-container {
             display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: inset 0 -6px 0 $clr-vector;
+
+            .details-anchors-list {
+                display: flex;
+                list-style-type: none;
+                
+                li {
+                    border-inline-end: 0.5px solid $clr-vector;
+                   
+                    a {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: none;
+                        text-decoration: none;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
         }
     }
 
@@ -64,5 +88,29 @@ body.stay-details {
             }
         }
 
+    }
+
+    @include for-mobile-layout {
+        .main-content {
+            grid-column: 1 / -1;
+        }
+
+        .imgs-template {
+            display: none !important;
+        }
+
+        .details-anchors-container {
+            display: none !important;
+        }
+    }
+
+    @include for-tablet-layout {
+        .img-gallery-details {
+            display: none;
+        }
+
+        .imgs-template {
+            display: unset;
+        }
     }
 }

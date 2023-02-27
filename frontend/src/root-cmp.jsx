@@ -5,6 +5,10 @@ import { AppHeader } from './cmps/app-header'
 import { About } from './views/about'
 import './assets/styles/main.scss'
 import { AppFooter } from './cmps/app-footer'
+import { useEffect } from 'react'
+import { locService } from './services/loc.service'
+
+
 const Team = () => {
     return (
         <ul>
@@ -24,8 +28,13 @@ const Vision = () => {
     )
 }
 
-
 function App() {
+    useEffect(() => {
+        locService.setUserLoc()
+        return () => {
+            document.title = 'First hello'
+        }
+    }, [])
     return (
         <div className="main-layout">
             <AppHeader />
@@ -44,7 +53,7 @@ function App() {
                     </Route>
                 </Routes>
             </main>
-           <AppFooter/>
+            <AppFooter />
         </div>
     )
 }

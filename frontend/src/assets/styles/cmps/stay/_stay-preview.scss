@@ -4,6 +4,7 @@
 
     .gallery-container {
         &:hover {
+            cursor: pointer;
             .image-gallery-left-nav,
             .image-gallery-right-nav {
                 svg {

@@ -1,7 +1,8 @@
 const initialState = {
     view: null, // dispatch on eac View CMP cdn 
-    darkMode: false, // By-User
-    userActions: [], // track user actions
+    isDarkMode: false, // By-User
+    userActivity: [], // track user actions
+    isLoading: true, 
 }
 
 export function appReducer(state = initialState, action = {}) {
@@ -12,18 +13,21 @@ export function appReducer(state = initialState, action = {}) {
             break
 
         case 'TOGGLE_DARK_MOOD':
-            newState = { ...state, darkMode: !state.darkMode }
+            newState = { ...state, isDarkMode: !state.isDarkMode }
             break
 
         case 'ADD_USER_ACTION':
 
-            newState = { ...state, userActions: [...state.userActions, action.event] }
+            newState = { ...state, userActivity: [...state.userActivity, action.event] }
             break
 
-        case 'CLEAR_USER_ACTIONS':
-            newState = { ...state, userActions: [] }
+        case 'CLEAR_USER_ACTIVITY':
+            newState = { ...state, userActivity: [] }
             break
 
+            case 'TOGGLE_SYSTEM_LOADING':
+                newState = { ...state, isLoading: !action.isLoading }
+                break
         default: 
     }
     window.gAppState = newState

@@ -1,19 +1,20 @@
 .stay-filter {
-    box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
     align-items: center;
     display: flex;
     flex: 1;
+
     nav.filter-by-container {
         display: flex;
         flex: 1;
-        ul {
-            text-overflow: scroll;
-            display: flex;
-            flex: 1;
 
-            .link-filter-by {
-                height: 38px;
+        ul {
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+
+            a.link-filter-by {
                 flex-direction: column-reverse;
+                flex: 1;
 
                 .icon,
                 svg {

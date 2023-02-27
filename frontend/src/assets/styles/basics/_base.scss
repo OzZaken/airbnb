@@ -53,24 +53,28 @@ h3 {
 }
 
 /* MEDIA  */
-.logo {content: url('../../imgs/svg/logo.svg');}
+
 // UnScratch 
 img,
 embed,
 video,
 object {max-width: 100%}
+
 //  Images
 img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+
 //  Icons
 .icon-container{
     display: flex;
 }
+
 .icon {
     display: flex;
+    flex: 1;
     object-fit: contain;
     max-width: 50px;
 }

@@ -30,17 +30,23 @@ function _AppHeader({ view }) {
 
     return <header className='full main-header'>
 
-        {view === 'home' && <section className="main-layout home-header-nav">
+        {view === 'home' && <section className="home-header-nav">
             <Link to={''} className="logo"></Link>
 
-            <section className="container main-btn-ref-container">
+            <section className="container main-search-container">
                 <button onClick={onSetSearchBy} className="btn-circle btn-search-by">
                     <AppIcon iconKey="Search" />
                 </button>
 
-                <div className="container btns-ref-container">
-                    <span role="button">Anywhere</span><br />
+                <div className="container main-btn-ref-container">
+                    <span>Anywhere<br /></span>
                     <span>Any week 	&#183; Add guests</span>
+
+                    <div hidden className="btns-ref-container">
+                        <button className="container btn-ref" >Anywhere</button>
+                        <button className="container btn-ref" >Any week</button>
+                        <button className="container btn-ref" >Add guests</button>
+                    </div>
                 </div>
 
                 <button className="btn-circle btn-filter-by">

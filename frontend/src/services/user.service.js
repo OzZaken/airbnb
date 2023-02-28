@@ -5,13 +5,13 @@ import { storageService } from './async-storage.service'
 // import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from './socket.service'
 import { showSuccessMsg } from '../services/event-bus.service'
 
-const SESSION_KEY = 'loggedinUser'
+const SESSION_KEY = 'loggedInUser'
 
 export const userService = {
     signup,
     login,
     logout,
-    getLoggedinUser,
+    getLoggedInUser,
     saveLocalUser,
     getUsers,
     getById,
@@ -20,7 +20,7 @@ export const userService = {
     changeScore
 }
 
-function getLoggedinUser() {
+function getLoggedInUser() {
     return JSON.parse(sessionStorage.getItem(SESSION_KEY))
 }
 
@@ -80,12 +80,12 @@ async function update(user) {
     // user = await httpService.put(`user/${user._id}`, user)
 
     // Handle case in which admin updates other user's details
-    if (getLoggedinUser()._id === user._id) saveLocalUser(user)
+    if (getLoggedInUser()._id === user._id) saveLocalUser(user)
     return user
 }
 
 async function changeScore(by) {
-    const user = getLoggedinUser()
+    const user = getLoggedInUser()
     if (!user) throw new Error('Not loggedin')
     user.score = user.score + by || by
     await update(user)

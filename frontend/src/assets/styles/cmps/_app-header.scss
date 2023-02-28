@@ -38,7 +38,7 @@
 
         }
 
-        .main-btn-ref-container {
+        .main-search-container {
             margin: 0 auto;
             display: flex;
             align-self: flex-end;
@@ -60,24 +60,60 @@
                 flex-direction: row-reverse
             }
 
-            .btns-ref-container {
+            .btn-filter-by {
+                @include for-desktop-layout {
+                    display: none;
+                }
+            }
+
+            .btn-search-by {
+                @include for-desktop-layout {
+                    background-color: $clr-mix;
+                    color: $clr-bgc;
+                }
+            }
+
+            .main-btn-ref-container {
                 @include btn;
+                // place-content: center;
                 flex: 1;
                 align-self: center;
                 justify-content: flex-start;
                 max-width: 500px;
-                padding: 10px;
 
-                .btn-filter-by {
-                    @include for-desktop-layout {
-                        display: none;
-                    }
+                &:hover {
+                    background: transparent;
                 }
 
-                .btn-search-by {
-                    @include for-desktop-layout {
-                        background-color: $clr-mix;
-                        color: $clr-bgc;
+                @include for-desktop-layout {
+                    justify-content: space-between;
+
+                    span {
+                        display: none;
+                    }
+
+                    .btns-ref-container {
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-evenly;
+
+                        :hover {
+                            cursor: pointer;
+                        }
+
+                        :last-child {
+                            color: $clr-light-txt;
+                        }
+
+                        button:not(:last-child) {
+                            border-right: 1px solid $clr-vector;
+                        }
+
+                        .btn-ref {
+                            display: flex;
+                            border: none;
+                            background: transparent;
+                        }
                     }
                 }
             }

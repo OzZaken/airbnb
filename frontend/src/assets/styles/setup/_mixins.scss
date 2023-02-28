@@ -4,19 +4,16 @@
     @content;
   }
 }
-
 @mixin for-tablet-layout {
   @media (min-width: $break-tablet) {
     @content;
   }
 }
-
 @mixin for-desktop-layout {
   @media (min-width: $break-desktop) {
     @content;
   }
 }
-
 @mixin for-wide-layout {
   @media (min-width: $break-wide) {
     @content;
@@ -64,12 +61,7 @@
 }
 
 // Buttons.
-@mixin btn($padding: em(1px) em(1px),
-  $shape: regular,
-  $bg: $clr-bgc,
-  $color: $clr-darken,
-  $hover: darken($bg, 5%),
-) {
+@mixin btn($padding: em(1px) em(1px),$shape: regular,$bg: $clr-bgc,$color: $clr-darken,$hover: darken($bg, 5%)) {
   padding: $padding;
   // font-family: inherit;
   // color: inherit;

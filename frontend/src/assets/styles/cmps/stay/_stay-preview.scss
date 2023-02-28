@@ -77,8 +77,9 @@
     }
 
     .link-container {
+        position: relative;
         display: block;
-        padding-top: 15px;
+        width: 100%;
 
         .text {
             font-size: rem(15px);
@@ -90,21 +91,24 @@
             text-decoration: none;
         }
 
+        .summery,
+        .distance {
+            color: $clr-light-txt;
+        }
+
         .rate {
             display: block;
             position: relative;
             float: right;
         }
 
-        .loc,
+        .heading,
         .night-price {
             font-weight: bold;
         }
 
         .price {
             margin-top: 8px;
-
-            .night {}
 
             .full-night-price {
                 font-weight: bold;

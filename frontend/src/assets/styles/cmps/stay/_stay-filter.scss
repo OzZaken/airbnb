@@ -4,13 +4,17 @@
     flex: 1;
 
     nav.filter-by-container {
+        width: 100%;
         display: flex;
-        flex: 1;
+        justify-content: space-between;
+        overflow: hidden;
 
         ul {
-            overflow-x: hidden;
-            text-overflow: ellipsis;
             display: flex;
+            height: 74px;
+            width: 100%;
+            overflow-x: scroll, hidden;
+            overscroll-behavior-inline: hidden;
 
             a.link-filter-by {
                 flex-direction: column-reverse;
@@ -22,7 +26,12 @@
                     height: 24px;
                 }
 
+                &.active {
+                    color: black;
+                }
+
                 &:hover {
+                    color: black;
                     border-bottom: 2px solid $clr-vector;
                 }
 
@@ -31,5 +40,20 @@
                 }
             }
         }
+
+        .link-filter-by {
+            box-shadow: none;
+            color: #222222bb;
+        }
+
+    }
+
+    .btn-filters {
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        height: 48px;
+        width: 88px;
+        min-width: 88px;
     }
 }

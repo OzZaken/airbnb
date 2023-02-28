@@ -12,21 +12,19 @@ export class ImgGallery extends React.Component {
             stopPropagation={true}
             onClick={this.props.onClickImage}
             // isRTL={false} // i18n
-            // originalTitle=''
-            //* EVENT HANDLER
             onErrorImageURL={'logo Url'}
             onImageError={(err) => { console.log('onImageError Error:', err, this.props.imgs) }}
             onThumbnailError={(err) => { console.log('onThumbnailError Error:', err, this.props.imgs) }}
             slideDuration={600} // Default 450
-            // originalHeight={300}
-            // originalWidth={280}
+        // originalHeight={}
+        // originalWidth={}
+        // originalTitle=''
         // onPlay
         // onMouseOver: Function,count each time look per image
         // onMouseLeave: Function, send data 
         //* Default props
         // useTranslate3D={true}// Default true
         // indexSeparator={'/'}// Default '/'
-        // showNav={true} // Default true
         // swipingTransitionDuration={0} // Default 0
         // slideOnThumbnailOver={false}
         // *    -   THUMBNAIL

@@ -7,6 +7,7 @@ import './assets/styles/main.scss'
 import { AppFooter } from './cmps/app-footer'
 import { useEffect } from 'react'
 import { locService } from './services/loc.service'
+import { UserMsg } from './cmps/user/user-msg'
 
 
 const Team = () => {
@@ -39,14 +40,8 @@ function App() {
         <div className="main-layout">
             <AppHeader />
             <main className='main-content'>
-                <Routes>
-                    {routes.map(route => {
-                        return <Route key={route.path}
-                            /* exact={true} */
-                            element={route.component}
-                            path={route.path}
-                        />
-                    })}
+                <Routes> //* exact={true} */
+                    {routes.map(route => <Route key={route.path} element={route.component} path={route.path} />)}
                     <Route path='about' element={<About />} >
                         <Route path='team' element={<Team />} />
                         <Route path='vision' element={<Vision />} />
@@ -54,6 +49,7 @@ function App() {
                 </Routes>
             </main>
             <AppFooter />
+            <UserMsg />
         </div>
     )
 }

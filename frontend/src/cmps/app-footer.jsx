@@ -36,7 +36,7 @@ function _AppFooter({ view }) {
         {innerWidth <= 768 && <nav className="footer-nav">
             <NavLink to='/'>{<AppIcon iconKey="Search"/>}Explore</NavLink>
             <NavLink to='/wishlist'>{<AppIcon iconKey="Favorite"/>}Wishlists</NavLink>
-            <NavLink to='/trips'>{<AppIcon iconKey="Logo"/>}</NavLink>
+            <NavLink to='/trips'><div className="logo"></div> Trips</NavLink>
             <NavLink to='/inbox'>{<AppIcon iconKey="Inbox"/>}Inbox</NavLink>
             <NavLink to='/user'>{<AppIcon iconKey="AccountCircle"/>}Profile</NavLink>
         </nav>}

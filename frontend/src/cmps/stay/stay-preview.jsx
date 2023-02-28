@@ -30,39 +30,49 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         navigate(`/stay/${stayId}`)
     }
 
-    const onFavorite = () => {
-        console.log('favorite: add to &isFavorite')
+    const onFavorite = (stay) => {
+        console.log('favorite: add to &isFavorite', stay)
+    }
+
+    const _renderCustomControls = () => {
+        return <button onClick={onFavorite.bind(this)} className='image-gallery-custom-action'>
+            <AppIcon iconKey='Favorite' />
+        </button>
     }
 
     const galleryPreviewProps = {
-        onClickImage,
-        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url })),
-        // renderItem: <AppIcon iconKey='Favorite'/>,
+        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url, })),
         additionalClass: 'preview-gallery',
         showPlayButton: true,
-        autoPlay: false,
+        autoPlay: true,
+        slideInterval: 15000, // Default 3000
         showIndex: false,
         showFullscreenButton: false,
         showBullets: true,
         showThumbnails: false,
-        // thumbnailPosition: 'bottom',
         useBrowserFullscreen: false,
-        slideInterval: 15000, // Default 3000
         loading: 'lazy',
         lazyLoad: true,
         startIndex: 0
     }
-    
-    const { name, type, price, _id } = stay
+
+    const { propertyType, type, price, _id, summary } = stay
+    const { city } = loc
     return <section className='stay-preview'>
 
         <div className="gallery-container">
+            <button onClick={()=>{onFavorite(stay)}} className='image-gallery-custom-action'>
+                <AppIcon iconKey='Favorite' />
+            </button>
+
             <ImgGallery viewProps={galleryPreviewProps} />
         </div>
 
         <Link to={`/stay/${_id}`} className="link-container">
-            <div className="text loc">{stay.propertyType} in {stay.loc.city}</div>
-            <div className="text summary">{stay.summary}</div>
+
+            <div className="text loc">{propertyType} in {city}</div>
+
+            <div className="text summary">{summary}</div>
 
             <div className="text distance">
                 {numberWithCommas(UserDistance)} kilometers
@@ -70,11 +80,11 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
 
             <div className="text price">
                 {isDiscount.current && <span className="full-night-price">
-                    ${numberWithCommas((stay.price * 1.3).toFixed())}&nbsp;
-                </span>
-                }
+                    ${numberWithCommas((price * 1.3).toFixed())}&nbsp;
+                </span>}
+
                 <span className="night-price">
-                    ${numberWithCommas(stay.price)}&nbsp;
+                    ${numberWithCommas(price)}&nbsp;
                 </span>
                 <span className="night">night</span>
             </div>
@@ -87,4 +97,4 @@ function mapStateToProps(state) {
     return { view }
 }
 
-export const StayPreview = connect(mapStateToProps,)(_StayPreview)
+export const StayPreview = connect(mapStateToProps)(_StayPreview)

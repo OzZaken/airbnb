@@ -3,8 +3,31 @@
     flex-direction: column;
 
     .gallery-container {
+        position: relative;
+
+        .image-gallery-custom-action {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            cursor: pointer;
+            z-index: 10;
+            border: transparent;
+            background: transparent;
+            transition: scale 1.03ms;
+
+            &:hover {
+                color: red;
+                scale: 1.01;
+            }
+        }
+
         &:hover {
             cursor: pointer;
+
             .image-gallery-left-nav,
             .image-gallery-right-nav {
                 svg {
@@ -16,6 +39,7 @@
         .image-gallery {
             .image-gallery-content {
                 .image-gallery-slide-wrapper {
+
                     .image-gallery-left-nav,
                     .image-gallery-right-nav {
                         svg {
@@ -71,7 +95,6 @@
             position: relative;
             float: right;
         }
-
 
         .loc,
         .night-price {

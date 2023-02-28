@@ -5,7 +5,7 @@ import { storageService } from './async-storage.service'
 // import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from './socket.service'
 import { showSuccessMsg } from '../services/event-bus.service'
 
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
+const SESSION_KEY = 'loggedinUser'
 
 export const userService = {
     signup,
@@ -19,10 +19,11 @@ export const userService = {
     update,
     changeScore
 }
+
 function getLoggedinUser() {
-    console.log('getLoggedinUser');
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+    return JSON.parse(sessionStorage.getItem(SESSION_KEY))
 }
+
 async function login(userCred) {
     const users = await storageService.query('user')
     // const user = await httpService.post('auth/login', userCred)
@@ -33,6 +34,7 @@ async function login(userCred) {
         return saveLocalUser(user)
     }
 }
+
 async function signup(userCred) {
     // userCred.score = 10000
     const user = await storageService.post('user', userCred)
@@ -40,18 +42,19 @@ async function signup(userCred) {
     // socketService.login(user._id)
     return saveLocalUser(user)
 }
+
 async function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+    sessionStorage.removeItem(SESSION_KEY)
     // socketService.logout()
     // return await httpService.post('auth/logout')
     return await storageService.post('auth/logout')
 }
 
-
 function getUsers() {
     return storageService.query('user')
     // return httpService.get(`user`)
 }
+
 async function getById(userId) {
     const user = await storageService.get('user', userId)
     // const user = await httpService.get(`user/${userId}`)
@@ -61,14 +64,17 @@ async function getById(userId) {
     // socketService.on(SOCKET_EVENT_USER_UPDATED, onUserUpdate)
     return user
 }
+
 function onUserUpdate(user) {
     showSuccessMsg(`This user ${user.fullname} just got updated from socket, new score: ${user.score}`)
     // store.dispatch(getActionSetWatchedUser(user))
 }
+
 function remove(userId) {
     return storageService.remove('user', userId)
     // return httpService.delete(`user/${userId}`)
 }
+
 async function update(user) {
     await storageService.put('user', user)
     // user = await httpService.put(`user/${user._id}`, user)
@@ -77,6 +83,7 @@ async function update(user) {
     if (getLoggedinUser()._id === user._id) saveLocalUser(user)
     return user
 }
+
 async function changeScore(by) {
     const user = getLoggedinUser()
     if (!user) throw new Error('Not loggedin')
@@ -84,11 +91,11 @@ async function changeScore(by) {
     await update(user)
     return user.score
 }
+
 function saveLocalUser(user) {
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(user))
     return user
 }
-
 
 // Debug
 window.userService = userService

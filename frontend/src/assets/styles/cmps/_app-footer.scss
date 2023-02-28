@@ -2,13 +2,14 @@
     position: fixed;
     display: flex;
     bottom: 0;
-    max-height: rem(64px);
     width: 100%;
-    background-color: #fff;
-    color: rgb(0, 0, 0);
     z-index: 10;
+    height: rem(64px);
 
     .footer-nav {
+        background-color: #fff;
+        color: $clr-light-txt;
+        border-top: 1.5px solid $clr-vector;
         display: flex;
         justify-content: space-evenly;
         flex: 1;
@@ -20,7 +21,22 @@
         }
 
         a {
+            color: rgba(34, 34, 34, 0.733);
             flex-direction: column;
+            justify-content: space-evenly;
+            font-size: 10px;
+
+            &.active {
+                svg {
+                    color: $clr-mix;
+                }
+            }
+
+            .logo {
+                content: url('../../../assets/imgs/svg/logo.svg');
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 }

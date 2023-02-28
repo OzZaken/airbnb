@@ -1,7 +1,9 @@
 const INITIAL_STATE = {
-    guests: 2,
-    checkIn: new Date(),                     
-    checkOut: new Date(new Date().getTime() + (3 * 24 * 60 * 60 * 1000)) // Add 3 days to check-in date,
+    order: {
+        guests: 2,
+        checkIn: new Date(),
+        checkOut: new Date(new Date().getTime() + (3 * 24 * 60 * 60 * 1000)) // Add 3 days to check-in date,
+    }
 }
 
 export function orderReducer(state = INITIAL_STATE, action) {

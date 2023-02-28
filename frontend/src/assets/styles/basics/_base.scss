@@ -60,64 +60,33 @@ embed,
 video,
 object {max-width: 100%}
 
-//  Images
 img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
 
-//  Icons
 .icon-container{
     display: flex;
+
 }
 
 .icon {
     display: flex;
-    flex: 1;
+    justify-content: center;
+    align-items: center;
     object-fit: contain;
-    max-width: 50px;
 }
 
 /* TAP TARGET */
 nav a,
-button {
+button:not(.btn-circle) {
     min-width: 48px;
     min-height: 48px;
 }
 
 /* TXT */
-p {
-    @include type(regular);
-    .main-text & {
-        grid-column: 3 / 6;
-        font-size: rem(22px);
-        line-height: 1.384615;
-        padding-inline-start: rem(30px);
-        position: relative;
 
-        &::after {
-            content: "";
-            position: absolute;
-            display: block;
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 100%;
-            max-height: 42px;
-            background-color: $clr-prim;
-
-            @include for-wide-layout {
-                width: 10px;
-            }
-        }
-
-        @include for-wide-layout {
-            grid-column: 3 / 5;
-            font-size: rem(26px);
-        }
-    }
-}
 
 /* OTHER */
 hr {

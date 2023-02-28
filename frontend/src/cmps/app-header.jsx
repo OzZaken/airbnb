@@ -6,7 +6,7 @@ import AppIcon from "./app-icon"
 import { StayFilter } from "./stay/stay-filter"
 import { UserMenu } from "./user-menu"
 
-import { setFilterBy, loadStays } from '../store/stay.action'//stayLoading
+import { setFilterBy, loadStays } from '../store/stay.action'
 
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
@@ -23,12 +23,6 @@ function _AppHeader({ view }) {
         // dispatch(onSetSearchBy(searchBy))
     }
 
-    const btnsRefContainerProps = {
-        className: 'full container btns-filter-search',
-        onClick: () => {
-            console.log('open filter')
-        }
-    }
     const onShareStay = (stay) => {
         console.log('share this stay:', stay)
     }
@@ -36,11 +30,11 @@ function _AppHeader({ view }) {
 
     return <header className='full main-header'>
 
-        {view === 'home' && <section className="full home-header-nav">
+        {view === 'home' && <section className="main-layout home-header-nav">
             <Link to={''} className="logo"></Link>
 
-            <section className="container btns-filter-search">
-                <button onClick={onSetSearchBy} className="btn-circle">
+            <section className="container main-btn-ref-container">
+                <button onClick={onSetSearchBy} className="btn-circle btn-search-by">
                     <AppIcon iconKey="Search" />
                 </button>
 
@@ -49,7 +43,7 @@ function _AppHeader({ view }) {
                     <span>Any week 	&#183; Add guests</span>
                 </div>
 
-                <button className="btn-circle">
+                <button className="btn-circle btn-filter-by">
                     <AppIcon iconKey="FilterBy" />
                 </button>
             </section>

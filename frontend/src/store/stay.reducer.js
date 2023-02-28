@@ -4,7 +4,7 @@ const INITIAL_STATE = {
         txt: '',
         minPrice: 0,
         MaxPrice: 0,
-        pageIdx: 1,
+        pageIdx: 0,
     },
     favorites: [],
     sortBy: null,

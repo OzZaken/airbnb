@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import AppIcon from '../app-icon'
 
 export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
   const { price } = stay
+  const { order } = useSelector(state => state.orderModule)
+  console.log(`🚀 ~ order:`, order)
 
   const [register] = useFormRegister({
     checkIn: new Date(Date.now()),
@@ -39,7 +42,6 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
           <div className="date-input">
             <label htmlFor="check-in">CHECK IN</label>
             <input  {...register('check-in', 'date')} />
-
           </div>
 
           <div className="date-input">

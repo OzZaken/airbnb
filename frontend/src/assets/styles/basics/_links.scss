@@ -23,11 +23,6 @@ a {
     }
 
     &:visited {
-        // color: purple;
-    }
-
-    &.link-filter-by {
-        box-shadow: none;
-        color: #222222bb;
+        color: unset;
     }
 }

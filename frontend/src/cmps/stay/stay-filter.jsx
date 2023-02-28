@@ -79,9 +79,7 @@ export const StayFilter = (props) => {
     return <section className='full stay-filter'>
 
         <nav className='full flex filter-by-container'>
-
             <ul className='full filter-nav-list'>
-
                 {amenities.map((amenity, idx) => {
                     const iconKey = Object.keys(amenity)
                     const heading = Object.values(amenity)
@@ -98,8 +96,8 @@ export const StayFilter = (props) => {
             </ul>
         </nav>
 
-        <button className='btn'>
-            Filters <AppIcon iconKey="FilterBy" />
+        <button className='btn-big btn-filters'>
+            <AppIcon iconKey="FilterBy" />Filters 
         </button>
     </section>
 }

@@ -3,11 +3,11 @@ $clr-prim: #de1063;
 $clr-sec: #ff385c;
 $clr-bgc: #f1f1f1;
 $clr-txt: #222;
+$clr-light-txt: #9f9f9f;
 $clr-vector: #a29f9f63;
-//        - variable colors
 $clr-darken: darken($clr-sec, 40%);
 $clr-lighten: lighten($clr-sec, 10%);
-$clr-mix: mix($clr-prim, $clr-sec, 50%);
+$clr-mix: mix($clr-prim, $clr-sec, 30%);
 
 // MQ - breakpoints
 $break-tablet: 768px;

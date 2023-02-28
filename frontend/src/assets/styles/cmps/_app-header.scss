@@ -3,47 +3,128 @@
     flex-direction: column;
     width: 100%;
     z-index: 10;
-    // position: sticky;
-    // top: 0;
-    // box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
 
     .home-header-nav {
+        max-width: 100%;
         display: flex;
-
-        .btns-ref-container {
-            @include btn;
-            align-self: center;
-            flex: 1;
-            justify-content: space-between;
-            justify-content: flex-start;
-        }
+        box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
+        height: 70px;
+        justify-content: space-between;
+        padding-left: $padded-layout;
 
         .logo {
-            padding: 0 24px;
-            max-height: 80px;
+            align-self: center;
+
+            @include for-mobile-layout {
+                content: '';
+                display: none;
+            }
 
             @include for-tablet-layout {
                 content: url('../../../assets/imgs/svg/logo.svg');
-                width: 50px;
-            }
-
-            @include for-desktop-layout {
-                width: 50px;
+                width: 46px;
+                height: 46px;
             }
 
             @include for-desktop-layout {
                 content: url('../../../assets/imgs/svg/airbnb.svg');
-                width: 100px;
+                width: 250px;
             }
 
             @include for-wide-layout {
                 content: url('../../../assets/imgs/svg/airbnb.svg');
-                width: 200px;
+                width: 250px;
             }
 
         }
 
+        .main-btn-ref-container {
+            margin: 0 auto;
+            display: flex;
+            align-self: flex-end;
+            flex: 1;
+            background-color: rgba(247, 1, 1, 0.63);
+            width: 80%;
+            height: 80%;
+            border: 0.5px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
+            transform: translate3d(0, 0, 0);
+            border-radius: 1000px;
+            background: $clr-bgc;
+            max-width: 500px;
+            align-items: center;
+
+            @include for-desktop-layout {
+                width: 350px;
+                align-self: center;
+                flex-direction: row-reverse
+            }
+
+            .btns-ref-container {
+                @include btn;
+                flex: 1;
+                align-self: center;
+                justify-content: flex-start;
+                max-width: 500px;
+                padding: 10px;
+
+                .btn-filter-by {
+                    @include for-desktop-layout {
+                        display: none;
+                    }
+                }
+
+                .btn-search-by {
+                    @include for-desktop-layout {
+                        background-color: $clr-mix;
+                        color: $clr-bgc;
+                    }
+                }
+            }
+        }
+
         .user-menu {
+            display: flex;
+            justify-self: center;
+            align-items: center;
+
+            .btn-user-menu {
+                height: 42px;
+                padding: 5px 5px 5px 12px;
+                width: fit-content;
+                // background-color: $clr2;
+                border-radius: 25%;
+                border: 1px solid lightgrey;
+                cursor: pointer;
+                border-radius: 21px;
+                transition: box-shadow 0.2s ease;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &:hover {
+                    box-shadow: 0px 0px 5px 1px rgba(128, 128, 128, 0.296);
+                }
+            }
+
+            .hamburger-svg {
+                height: 17px;
+                width: 17px;
+                // color: $clr6;
+                margin-inline-end: 10px;
+            }
+
+            .user-svg {
+                height: 30px;
+                width: 30px;
+            }
+
+            .loggedInUser {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+            }
+
             @include for-mobile-layout {
                 display: none;
             }
@@ -51,15 +132,6 @@
             padding: 0 24px;
         }
 
-        .btns-filter-search {
-            display: flex;
-            margin: auto;
-            width: 80%;
-            border: 0.5px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
-            transform: translate3d(0, 0, 0);
-            border-radius: 5em;
-        }
     }
 
     .stay-details-header {

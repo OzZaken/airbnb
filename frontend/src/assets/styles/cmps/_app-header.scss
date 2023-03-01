@@ -3,11 +3,12 @@
     flex-direction: column;
     width: 100%;
     z-index: 10;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
 
-    .home-header-nav {
+    .main-header-nav {
         max-width: 100%;
         display: flex;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
+        border-bottom: 1px solid $clr-vector;
         height: 70px;
         justify-content: space-between;
         padding-left: $padded-layout;
@@ -76,7 +77,7 @@
             .main-btn-ref-container {
                 @include btn;
                 // place-content: center;
-                flex: 1;
+                // flex: 1;
                 align-self: center;
                 justify-content: flex-start;
                 max-width: 500px;
@@ -172,22 +173,25 @@
 
     .stay-details-header {
         padding: 0 $padded-layout;
-        .actions {
-            height: 64px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        height: 64px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-            .btns-actions {
-                button {
-                    border: none;
-                    background: transparent;
-                }
+        .btns-container {
+            button {
+                border: none;
+                background: transparent;
             }
+        }
 
-            .nav-back {
-                color: $clr-txt;
-            }
+        .nav-back {
+            color: $clr-txt;
+        }
+
+        @include for-tablet-layout {
+            display: none;
+            background-color: antiquewhite;
         }
     }
 }

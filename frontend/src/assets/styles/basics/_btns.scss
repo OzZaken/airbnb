@@ -1,20 +1,28 @@
-.btns-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .btn {
     @include btn;
+
     // Shapes
     &-big {
         @include btn($shape: big);
     }
-    &-circle {
-        @include btn($shape: circle);
+    &-underline {
+        font-size: small;
+        text-decoration: underline;
     }
-    &-txt{
+
+    &-circle {
+        border-radius: 50%;
+        border: 4px solid black;
+        align-items: center;
+        justify-content: center;
+        border: 0.5px solid $clr-vector;
+        display: flex;
+        height: 36px;
+        justify-content: center;
+        width: 36px;
+    }
+
+    &-txt {
         @include btn();
     }
 }

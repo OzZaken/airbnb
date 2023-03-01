@@ -13,8 +13,9 @@ function _AppHeader({ view }) {
     const loggedInUser = useSelector(state => state.userModule.loggedInUser)
 
     useEffectUpdate(() => { }, [view])
-
+    // filter
     const onSetFilterBy = (filterBy) => {
+        console.log(`🚀 ~ filterBy:`, filterBy)
         dispatch(setFilterBy(filterBy))
     }
 
@@ -29,7 +30,8 @@ function _AppHeader({ view }) {
     // onClick={() => { window.history.pushState(null, null, `/`) }}
 
     return <header className='full main-header'>
-        {view === 'home' && <section className="home-header-nav">
+
+        <section className="main-header-nav">
             <Link to={''} className="logo"></Link>
 
             <section className="container main-search-container">
@@ -54,25 +56,21 @@ function _AppHeader({ view }) {
             </section>
 
             <UserMenu />
-        </section>}
+        </section>
 
         {view === 'home' && <StayFilter onChangeFilter={onSetFilterBy} />}
 
         {view === 'stay-details' && <section className="stay-details-header">
-            <div className="flex space-between actions">
-                <Link to={''}>
-                    <div className="nav-back">&lt; Homes</div>
-                </Link>
+            <Link className="link-homes" to={''}>&lt; Homes</Link>
 
-                <div className="btns-actions">
-                    <button onClick={onShareStay} className="btn-share">
-                        <AppIcon iconKey='Share' />
-                    </button>
+            <div className="btns-container">
+                <button onClick={onShareStay} className="btn-share">
+                    <AppIcon iconKey='Share' />
+                </button>
 
-                    <button className="btn-favorite">
-                        <AppIcon iconKey='Favorite' />
-                    </button>
-                </div>
+                <button className="btn-favorite">
+                    <AppIcon iconKey='Favorite' />
+                </button>
             </div>
         </section>}
     </header>

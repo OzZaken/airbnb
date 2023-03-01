@@ -1,30 +1,16 @@
 import { useSelector } from 'react-redux'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import AppIcon from '../app-icon'
+import { BtnRadialGradient } from '../btn-triger'
 
 export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
-  const { checkIn, checkOut, guests  } = useSelector(state => state.orderModule.order)
+  const { checkIn, checkOut, guests } = useSelector(state => state.orderModule.order)
   const [register] = useFormRegister({
     checkIn,
     checkOut,
     guests,
     stayId: stay._id,
   },)
-
-  const BtnRadialGradient = () => {
-    const btnColumns = []
-    for (let i = 0; i < 100; i++) {
-      btnColumns.push(<div key={i} className="cell"></div>)
-    }
-    return <div className="btn-container">
-      {btnColumns}
-      <div className="content">
-        <button className="action-btn">
-          <span>reserve</span>
-        </button>
-      </div>
-    </div>
-  }
 
   const { price } = stay
   return <form className="order-container">
@@ -45,26 +31,27 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
     </header>
 
     <main className="order-data">
+
       <div className="date-picker">
         <div className="date-input">
           <label htmlFor="check-in">CHECK IN</label>
-          <input name="check-in" {...register('check-in', 'date')} />
+          <input {...register('check-in', 'date')} />
         </div>
 
         <div className="date-input">
           <label htmlFor="check-out">CHECK OUT</label>
-          <input name="check-out"  {...register('check-out', 'date')} />
+          <input {...register('check-out', 'date')} />
         </div>
       </div>
 
       <div className="guest-input">
         <label htmlFor="guests">GUESTS</label>
-        <input name="guests" {...register('guests', 'number')} />
+        <input  {...register('guests', 'number')} />
         <AppIcon iconKey="AngleDown" />
       </div>
     </main>
 
-    <BtnRadialGradient />
+    <BtnRadialGradient txt="reserve" />
 
     <p className='txt-center'>You won't be charged yet</p>
 

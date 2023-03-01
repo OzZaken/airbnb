@@ -10,9 +10,9 @@ const INITIAL_STATE = {
         minCapacity: 0, 
         amenities: [],
         checkIn: new Date(), 
-        pageIdx: 2, // paging
+        pageIdx: 1, // paging
     },
-    favorites: [],
+    wishList: [],
     sortBy: null,
 }
 
@@ -39,17 +39,17 @@ export function stayReducer(state = INITIAL_STATE, action) {
             newState = { ...state, filterBy: { ...action.filterBy } }
             break
 
-        case 'ADD_TO_FAVORITE':
-            newState = { ...state, favorites: [...state.favorites, action.stay] }
+        case 'ADD_TO_WISHLIST':
+            newState = { ...state, wishList: [...state.wishList, action.stay] }
             break
 
-        case 'REMOVE_FROM_FAVORITE':
-            var favorites = state.favorites.filter(stay => stay._id !== action.stayId)
-            newState = { ...state, favorites }
+        case 'REMOVE_FROM_WISHLIST':
+            var WISHLISTs = state.wishList.filter(stay => stay._id !== action.stayId)
+            newState = { ...state, wishList: WISHLISTs }
             break
 
-        case 'CLEAR_FAVORITE':
-            newState = { ...state, favorites: [] }
+        case 'CLEAR_WISHLIST':
+            newState = { ...state, wishList: [] }
             break
         default:
     }

@@ -37,7 +37,7 @@ export const _StayDetails = () => {
     const navigate = useNavigate()
     const onBack = () => { navigate('/') }
 
-    // ↓ cdm  (mount ,willUnMount)
+    // ↓ mount ,willUnMount
     useEffect(() => {
         loadStay()
         dispatch(updateView('stay-details'))
@@ -45,7 +45,7 @@ export const _StayDetails = () => {
         window.addEventListener('resize', onSetInnerWidth)
         document.body.classList.add('stay-details')
 
-        // IntersectionObserver
+        // Intersection Observer
         const header = document.querySelector('.main-details-heading')
         const nav = document.querySelector('.details-anchors-nav')
 
@@ -53,7 +53,8 @@ export const _StayDetails = () => {
             entries.forEach(entry => {
                 console.log('entry', entry)
                 nav.style.position = entry.isIntersecting ? 'static' : 'fixed';
-            })
+                // nav.style.classList = entry.isIntersecting ? 'static' : 'fixed';
+            },)
         }
 
         if (header && nav) {
@@ -70,7 +71,7 @@ export const _StayDetails = () => {
         }
     }, [])
 
-
+    // todo: move to stay-app
     const onShowReviews = () => {
         console.log('Swal2 || MUI show reviews:', reviews)
     }
@@ -78,21 +79,20 @@ export const _StayDetails = () => {
     if (!stay) return <div>Loading...</div>
     const { imgUrls, name, reviews, host, loc } = stay
     const { isSuperHost } = host
-
-
     const thumbnailsProps = innerWidth >= 570 ? {
+        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
         showThumbnails: true,
         thumbnailPosition: 'left',
     } : {
         showPlayButton: false,
+        items: imgUrls.map(url => ({ original: url })),
         thumbnailPosition: 'top',
     }
     const galleryProps = {
         ...thumbnailsProps,
-        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
         additionalClass: 'full img-gallery-details',
         loading: 'eager',
-        lazyLoad: true,
+        lazyLoad: false,
         useBrowserFullscreen: true,
         showFullscreenButton: true,
         showBullets: false,
@@ -100,19 +100,20 @@ export const _StayDetails = () => {
         autoPlay: false,
     }
 
-    // const observe = new InteractionObserver(,)
+
     const { city, country } = loc
     return <article className='stay-details'>
         <header className="main-details-heading">
 
-            <div className="flex details-heading">
+            <div className="details-heading">
                 <h1>{name}</h1>
 
                 <div className='details-sub-heading'>
+                    {/* avg rate & reviews */}
                     {reviews?.length
                         ? <>
                             <span>
-                                <AppIcon iconKey="Star" />
+                                <AppIcon className="fs-small" iconKey="Star" />
                                 4.98 &nbsp;
                             </span>
 
@@ -120,20 +121,24 @@ export const _StayDetails = () => {
                                 {`${reviews.length + ' reviews'}`}  &#xB7;
                             </span>
                         </>
-                        : <span>New &#xB7;</span>
-                    }
+                        : <span>New &#xB7;</span>}
 
-                    <div className="flex">{isSuperHost && <span className='super-host'><AppIcon iconKey='SuperHost' />&#xB7;</span>}
-                        <span> {`${city},${country}`}</span></div>
+                    {/* isSuperHost */}
+                    {isSuperHost && <span className='super-host'>
+                        <AppIcon iconKey='SuperHost' />SuperHost&#xB7;
+                    </span>}
 
-                    <div className='flex space-evenly'>
+                    {/* loc */}
+                    <span> {`${city},${country}`}</span>
+
+                    <div hidden className='btns-container'>
                         <span>
                             <AppIcon iconKey="Share" />
-                            <span className='txt capitalize underline'>share</span>
+                            <button className='txt capitalize underline'>share</button>
                         </span>
                         <span>
                             <AppIcon iconKey="FavoriteFill" />
-                            <span className='txt capitalize underline'>saved</span>
+                            <button className='txt capitalize underline'>saved</button>
                         </span>
                     </div>
                 </div>
@@ -142,7 +147,7 @@ export const _StayDetails = () => {
             {/* Gallery */}
             <ImgGallery id="photos" viewProps={galleryProps} />
             <div hidden className="aspect-portrait imgs-template">
-                {imgUrls.slice(0, 5).map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
+                {imgUrls.map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
             </div>
 
             <nav className="transparent details-anchors-nav">
@@ -159,7 +164,7 @@ export const _StayDetails = () => {
             {/* Main-Details */}
             <section className='details-container'>
 
-                <div className="left-details-container">
+                <div className="main-info-container">
                     {/* <AirCover /> */}
                     <div className="stay-details-row air-cover-container">
                         <div className="img-container">

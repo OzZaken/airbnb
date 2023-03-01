@@ -4,21 +4,15 @@ import { stayService } from '../../services/stay.service'
 import AppIcon from '../app-icon'
 import { useSelector } from 'react-redux'
 
-export const StayFilter = (props) => {
-    const [searchParams, setSearchParams] = useSearchParams()
-    // Destract
-    const {
-        txt,
-        placeType,
-        maxPrice,
-        minPrice,
-        maxRate,
-        minRate,
-        minCapacity,
-        amenities,
-        checkIn,
-    } = useSelector(state => state.stayModule.filterBy)
-
+export const StayFilter = ({ onChangeFilter }) => {
+    // get 
+    const { txt, placeType, maxPrice, minPrice, maxRate, minRate, minCapacity, amenities, checkIn }
+        = useSelector(state => state.stayModule.filterBy)
+    // Init 
+    const [searchParams, setSearchParams] = useSearchParams(
+        txt, placeType, maxPrice, minPrice, maxRate, minRate, minCapacity, amenities, checkIn
+    )
+    // set 
     const [register] = useFormRegister({
         txt,
         placeType,
@@ -29,68 +23,44 @@ export const StayFilter = (props) => {
         minCapacity,
         amenities,
         checkIn,
-    }, props.onChangeFilter)
+    }, onChangeFilter)
 
-    const renderFilterByQueryParamsGPT = () => {
-        const filterBy = {
-            txt: searchParams.get('txt') || '',
-            type: searchParams.get('type') || '',
-            amenities: searchParams.getAll('amenities') || [],
-            maxPrice: +searchParams.get('max-price') || Infinity,
-            minPrice: +searchParams.get('min-price') || 0,
-            maxRate: +searchParams.get('max-rate') || Infinity,
-            minRate: +searchParams.get('min-rate') || 0,
-            checkIn: searchParams.get('from-date') || new Date(),
-            checkOut: searchParams.get('to-date') || new Date(Infinity),
-        }
-        onSetFilterBy(filterBy)
-    }
-
-    const onSetFilterByGPT = (filterBy) => {
-        setSearchParams({
-            'stay-txt': filterBy.txt,
-            'max-price': filterBy.maxPrice,
-            'min-price': filterBy.minPrice,
-            'max-rate': filterBy.maxRate,
-            'min-rate': filterBy.minRate,
-            'amenities': filterBy.amenities.join('&'),
-        });
-    }
-
-    const onSetFilterBy = (filterBy) => {
-        const queryStringParams = `
-        ?stay-txt=${filterBy.stayName}
-        ?max-price=${filterBy.maxPrice}
-        ?min-price=${filterBy.minPrice}
-        ?max-rate=${filterBy.maxRate}
-        ?min-rate=${filterBy.minRate}
-        ?amenities=${filterBy.amenities.map(amenity => `&${amenity}`)}`
-
-        const newUrl =
-            window.location.protocol +
-            '//' +
-            window.location.host +
-            window.location.pathname +
-            queryStringParams
-        window.history.pushState({ path: newUrl }, '', newUrl)
-    }
     const renderFilterByQueryParams = () => {
         const queryParams = new URLSearchParams(window.location.search)
         const filterBy = {
             txt: queryParams.get('txt') || '',
-            amenities: queryParams.get('amenities') || [], // Array.every
-            maxPrice: +queryParams.get('maxPrice') || Infinity,
-            minPrice: +queryParams.get('minPrice') || 0,
-            maxRate: +queryParams.get('minRate') || Infinity,
-            minRate: +queryParams.get('minRate') || 0,
+            amenities: searchParams.getAll('amenities') || [],
+            checkIn: searchParams.get('check-in') || new Date(),
+            maxPrice: +searchParams.get('max-price') || Infinity,
+            maxRate: +queryParams.get('max-rate') || Infinity,
+            minPrice: +searchParams.get('min-price') || 0,
+            minRate: +queryParams.get('min-rate') || 0,
+            minCapacity: +queryParams.get('min-rate') || 0,
         }
-
-        // onSetFilterBy(filterBy)
         console.log(`🚀 ~ filterBy:`, filterBy)
+        onSetFilterBy(filterBy)
     }
+
+    const onSetFilterBy = ({ txt, placeType, maxPrice, minPrice, minCapacity, maxRate, minRate, amenities }) => {
+        setSearchParams({
+            'txt': txt,
+            'place-type': placeType,
+            'max-price': maxPrice,
+            'min-price': minPrice,
+            'min-capacity': minCapacity,
+            'max-rate': maxRate,
+            'min-rate': minRate,
+            'amenities': amenities.join('&'),
+        })
+
+        const { protocol, host, pathname, queryStringParams } = window.location
+        const newUrl = protocol + '//' + host + pathname + queryStringParams
+        window.history.pushState({ path: newUrl }, '', newUrl)
+    }
+
     return <section className='full stay-filter'>
 
-        <nav className='full filter-by-container'>
+        <nav className='filter-by-container'>
             <ul className='full filter-nav-list'>
                 {stayService.getAmenities().map((amenity, idx) => {
                     const iconKey = Object.keys(amenity)
@@ -101,7 +71,9 @@ export const StayFilter = (props) => {
                     return <li className="clean-list flex-center" key={idx}>
                         <NavLink to={`/q?amenities=${queryStringParam}`} className={'link-filter-by'}>
                             <h3 className='flex'>{heading}</h3>
-                            <i className='icon'><AppIcon iconKey={iconKey} /></i>
+                            <span className='icon'>
+                                <AppIcon iconKey={iconKey} />
+                            </span>
                         </NavLink>
                     </li>
                 })}

@@ -78,7 +78,6 @@
   transition: background-color 0.2s;
   transition: scale 0.2s;
   background: transparent;
-
   &:hover {
     background-color: $hover;
     transform: scale 1.02;
@@ -93,24 +92,9 @@
     font-variation-settings: "wght" 430;
 
     &:active {
-      transform: scale(1.1);
+      transform: scale(1.03);
     }
 
-    &:hover {
-      background-color: rgba(133, 133, 133, 0.096);
-    }
+  
   }
-
-  @if $shape ==circle {
-    border-radius: 50%;
-    border: 4px solid black;
-    align-items: center;
-    justify-content: center;
-    border: 0.5px solid $clr-vector;
-    display: flex;
-    height: 36px;
-    justify-content: center;
-    width: 36px;
-  }
-
 }

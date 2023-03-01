@@ -1,11 +1,10 @@
 aside.main-order-container {
-  // display: flex;
-  // padding-right: $padded-layout;
-  // align-items: center;
-  // justify-content: center;
+  display: flex;
+  position: sticky;
+  top: 80px;
+  margin-left: $padded-layout;
+
   form.order-container {
-    position: sticky;
-    top: 80px;
     border: 1px solid #00000030;
     border-radius: 13px;
     padding: 20px;
@@ -17,7 +16,6 @@ aside.main-order-container {
       align-items: center;
       justify-content: space-between;
       width: 100%;
-
     }
 
     .order-data {
@@ -66,9 +64,8 @@ aside.main-order-container {
 
     input {
       border: none;
-      padding: 0 0;
-      width: 50%;
       outline: none;
+      width: 100%;
     }
 
     label {

@@ -7,6 +7,8 @@ a {
     align-items: center;
     width: max-content;
     color: black;
+    // box-shadow: inset -1px 0 0 var(--clr-darken), inset 0 -1px 0 var(--clr-prim);
+    transition: scale .3ms;
 
     &:focus {
         text-shadow: 0 0 5px;
@@ -14,11 +16,11 @@ a {
     }
 
     &:hover {
-        box-shadow: inset -1px 0 0 var(--clr-darken), inset 0 -1px 0 var(--clr-prim);
-        text-decoration: none;
+        text-decoration: underline;
     }
 
     &.active {
+        scale: 1.03;
         text-shadow: 0 0 5px hsl(0 0% 78%);
     }
 

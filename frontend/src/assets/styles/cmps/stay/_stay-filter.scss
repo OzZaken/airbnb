@@ -1,15 +1,20 @@
 .stay-filter {
     align-items: center;
     display: flex;
-    flex: 1;
-
+    position: sticky;
+    top: 180px;
+    right: 0;
+    left: 0;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
     nav.filter-by-container {
         width: 100%;
         display: flex;
         justify-content: space-between;
         overflow: hidden;
 
-        ul {
+        ul.filter-nav-list {
+            align-items: flex-end;
             display: flex;
             height: 74px;
             width: 100%;
@@ -20,8 +25,7 @@
                 flex-direction: column-reverse;
                 flex: 1;
 
-                .icon,
-                svg {
+                .icon {
                     width: 24px;
                     height: 24px;
                 }
@@ -31,6 +35,7 @@
                 }
 
                 &:hover {
+                    text-decoration: none;
                     color: black;
                     border-bottom: 2px solid $clr-vector;
                 }

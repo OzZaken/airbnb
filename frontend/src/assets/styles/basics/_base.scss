@@ -8,9 +8,11 @@ html {
     scroll-behavior: smooth;
     font-family: ff-cereal-regular;
     scroll-behavior: smooth;
+
     @include for-desktop-layout {
         font-size: 18px;
     }
+
     @include for-wide-layout {
         font-size: 20px;
     }
@@ -24,8 +26,11 @@ body {
     // overflow-x: hidden;
 
     @include for-tablet-layout {
-        &.user-menu {display: none;}
+        &.user-menu {
+            display: none;
+        }
     }
+
     //    @media (max-width: 1300px) {font-size: 13px;}
 }
 
@@ -34,13 +39,23 @@ h2,
 h3,
 h4,
 h5,
-h6 { font-weight: 400; }
+h6 {
+    font-weight: 400;
+}
 
-h1 { font-size: rem(26px); }
+h1 {
+    margin: 0;
+    line-height: rem(26px);
+    font-size: rem(26px);
+}
 
-h2 { font-size: rem(24px); }
+h2 {
+    font-size: rem(24px);
+}
 
-h3 { font-size: em(12px); }
+h3 {
+    font-size: em(12px);
+}
 
 main {
     flex-grow: 1;
@@ -53,7 +68,9 @@ main {
 img,
 embed,
 video,
-object {max-width: 100%}
+object {
+    max-width: 100%
+}
 
 img {
     height: 100%;
@@ -66,6 +83,19 @@ svg {
     justify-content: center;
     align-items: center;
     object-fit: contain;
+
+    &.fs-small {
+        font-size: small;
+    }
+
+    &.fs-medium {
+        font-size: medium;
+    }
+
+    &.fs-large {
+        font-size: large;
+    }
+
 }
 
 /* TAP TARGET */
@@ -76,20 +106,14 @@ button:not(.btn-circle) {
 }
 
 /* TXT */
-pre{
+pre {
     white-space: pre-wrap;
 }
 
-
-
 /* OTHER */
-hr {
-    opacity: 0.75;
-}
-
-
+hr {opacity: .75;}
 
 ::selection {
-    background-color: $clr-lighten;
-    color: $clr-mix;
+    background-color: #ff385c;
+    color: $clr-bgc;
 }

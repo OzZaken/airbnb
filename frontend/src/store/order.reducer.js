@@ -1,8 +1,10 @@
 const INITIAL_STATE = {
+    orders:[],
     order: {
+        price:null,
         guests: 2,
         checkIn: new Date(),
-        checkOut: new Date(new Date().getTime() + (3 * 24 * 60 * 60 * 1000)) // Add 3 days to check-in date,
+        checkOut: new Date(new Date().getTime() + (3 * 24 * 60 * 60 * 1000)) // Add 3 days to check-in date for first filtering.
     }
 }
 

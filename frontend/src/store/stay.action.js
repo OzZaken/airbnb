@@ -67,12 +67,13 @@ export function updateStay(stay) {
         }
     }
 }
+
+// List
 export function setFilterBy(filterBy) {
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER_BY', filterBy })
     }
 }
-
 export function setSortBy(sortBy) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_SORT_BY', sortBy })
@@ -89,19 +90,21 @@ export function setSortBy(sortBy) {
         dispatch({ type: 'SET_STAYS', stays })
     }
 }
-export function addToFavorite(car) {
+
+// WishList
+export function addToWishList(car) {
     return (dispatch) => {
-        dispatch({ type: 'ADD_TO_CART', car })
+        dispatch({ type: 'ADD_TO_WISHLIST', car })
     }
 }
-export function removeFromFavorite(carId) {
+export function removeFromWishList(stayId) {
     return (dispatch) => {
-        dispatch({ type: 'REMOVE_FROM_CART', carId })
+        dispatch({ type: 'REMOVE_FROM_WISHLIST', carId: stayId })
     }
 }
-export function clearFavoriteList() {
+export function clearWishList() {
     return (dispatch) => {
-        dispatch({ type: 'CLEAR_FAVORITE' })
+        dispatch({ type: 'CLEAR_WISHLIST' })
     }
 }
 

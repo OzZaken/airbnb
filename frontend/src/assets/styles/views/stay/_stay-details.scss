@@ -1,3 +1,13 @@
+body.stay-details {
+    @include for-mobile-layout {
+        .main-header-nav {
+            display: none;
+        }
+
+    }
+
+}
+
 .stay-details {
     display: flex;
     flex-direction: column;
@@ -6,13 +16,15 @@
         display: flex;
         flex-direction: column-reverse;
 
-        @include for-tablet-layout {
-            flex-direction: column;
+        @include for-desktop-layout {
+            .btns-container {
+                display: inline-flex;
+            }
 
         }
 
-        h1 {
-            font-size: 26px;
+        @include for-tablet-layout {
+            flex-direction: column;
         }
 
         .details-heading {
@@ -84,6 +96,14 @@
         padding: 0 $padded-layout;
         flex-direction: column;
 
+        .details-sub-heading {
+            .btn-container {
+                @include for-desktop-layout {
+                    display: inline-flex;
+                }
+            }
+        }
+
         .details-container {
             display: flex;
             justify-content: left;
@@ -94,30 +114,28 @@
                 border-bottom: 1px solid $clr-vector;
             }
 
-            // #Air-cover
-            .air-cover-container {
+            .main-info-container {
+                .info-host{}
+                // #Air-cover
+                .air-cover-container {
 
-                .img-container {
+                    .img-container {
 
-                    height: 56px;
-                    width: 123px;
+                        height: 56px;
+                        width: 123px;
 
-                    img {
-                        object-fit: contain;
+                        img {
+                            object-fit: contain;
+                        }
+                    }
+
+                    div {
+                        padding-bottom: 16px;
                     }
                 }
-
-                div {
-                    padding-bottom: 16px;
-                }
             }
 
-            .left-details-container {
-                flex: 1;
-            }
-
-            .main-order-container {
-
+            aside.main-order-container {
                 display: none;
                 justify-content: right;
 

@@ -5,8 +5,13 @@
     width: 100%;
     z-index: 10;
     height: rem(64px);
+    border-top: 1px solid $clr-vector;
 
     .footer-nav {
+        @include for-desktop-layout {
+            display: none
+        }
+
         background-color: #fff;
         color: $clr-light-txt;
         border-top: 1.5px solid $clr-vector;
@@ -14,9 +19,6 @@
         justify-content: space-evenly;
         flex: 1;
 
-        // @include for-desktop-layout {
-        //     display: none !important;
-        // }
 
         a {
             color: rgba(34, 34, 34, 0.733);
@@ -35,6 +37,22 @@
                 width: 24px;
                 height: 24px;
             }
+        }
+    }
+
+    .wide-home-footer {
+        background-color: $clr-bgc;
+        width: 100%;
+        padding: 14px 40px;
+        justify-content: space-around;
+
+        @include for-desktop-layout {
+            display: flex;
+        }
+
+        .links-container {
+            display: flex;
+            align-self: flex-start;
         }
     }
 }

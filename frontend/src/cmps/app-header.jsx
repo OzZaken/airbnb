@@ -5,8 +5,8 @@ import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import AppIcon from "./app-icon"
 import { StayFilter } from "./stay/stay-filter"
 import { UserMenu } from "./user-menu"
-
 import { setFilterBy, loadStays } from '../store/stay.action'
+// import { LoginSignup } from "./login-signup"
 
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
@@ -29,7 +29,6 @@ function _AppHeader({ view }) {
     // onClick={() => { window.history.pushState(null, null, `/`) }}
 
     return <header className='full main-header'>
-
         {view === 'home' && <section className="home-header-nav">
             <Link to={''} className="logo"></Link>
 
@@ -55,17 +54,17 @@ function _AppHeader({ view }) {
             </section>
 
             <UserMenu />
-
         </section>}
+
         {view === 'home' && <StayFilter onChangeFilter={onSetFilterBy} />}
 
         {view === 'stay-details' && <section className="stay-details-header">
-            <div className="flex space-between">
+            <div className="flex space-between actions">
                 <Link to={''}>
-                    <div className="nav-back">Homes</div>
+                    <div className="nav-back">&lt; Homes</div>
                 </Link>
 
-                <div className="actions-btns">
+                <div className="btns-actions">
                     <button onClick={onShareStay} className="btn-share">
                         <AppIcon iconKey='Share' />
                     </button>

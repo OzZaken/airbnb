@@ -34,26 +34,21 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-    font-weight: 500;
-    // margin: 0 0 1em;
-    line-height: lh(30px, 25px);
-}
+h6 { font-weight: 400; }
 
-h1 {
-    font-size: rem(30px);
-}
+h1 { font-size: rem(26px); }
 
-h2 {
-    font-size: rem(26px);
-}
+h2 { font-size: rem(24px); }
 
-h3 {
-    font-size: em(12px);
+h3 { font-size: em(12px); }
+
+main {
+    flex-grow: 1;
+    width: 100%;
+    justify-self: center;
 }
 
 /* MEDIA  */
-
 // UnScratch 
 img,
 embed,
@@ -66,12 +61,7 @@ img {
     object-fit: cover;
 }
 
-.icon-container{
-    display: flex;
-
-}
-
-.icon {
+svg {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,6 +76,10 @@ button:not(.btn-circle) {
 }
 
 /* TXT */
+pre{
+    white-space: pre-wrap;
+}
+
 
 
 /* OTHER */
@@ -93,11 +87,7 @@ hr {
     opacity: 0.75;
 }
 
-main {
-    flex-grow: 1;
-    width: 100%;
-    justify-self: center;
-}
+
 
 ::selection {
     background-color: $clr-lighten;

@@ -9,6 +9,16 @@ $clr-darken: darken($clr-sec, 40%);
 $clr-lighten: lighten($clr-sec, 10%);
 $clr-mix: mix($clr-prim, $clr-sec, 30%);
 
+:root {
+    --background-color: $clr-bgc;
+    --text-color: $clr-txt;
+}
+
+[data-theme="dark"] {
+    --background-color: $clr-txt;
+    --text-color: $clr-bgc;
+}
+
 // MQ - breakpoints
 $break-tablet: 768px;
 $break-desktop: 1024px;

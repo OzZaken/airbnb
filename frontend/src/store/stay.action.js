@@ -91,20 +91,19 @@ export function setSortBy(sortBy) {
 }
 export function addToFavorite(car) {
     return (dispatch) => {
-        dispatch({type: 'ADD_TO_CART',car})
+        dispatch({ type: 'ADD_TO_CART', car })
     }
 }
 export function removeFromFavorite(carId) {
     return (dispatch) => {
-        dispatch({type: 'REMOVE_FROM_CART',carId})
+        dispatch({ type: 'REMOVE_FROM_CART', carId })
     }
 }
 export function clearFavoriteList() {
     return (dispatch) => {
-        dispatch({type: 'CLEAR_FAVORITE'})
+        dispatch({ type: 'CLEAR_FAVORITE' })
     }
 }
-
 
 // Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
 const STORAGE_KEY = 'stay'

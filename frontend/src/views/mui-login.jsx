@@ -8,11 +8,10 @@ import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import {red} from '@mui/material/colors' 
+import { red } from '@mui/material/colors'
 
 
 export function Login() {
@@ -28,13 +27,12 @@ export function Login() {
 
     const theme = createTheme({
         palette: {
-          primary: {
-            main: red[500],
-          },
+            primary: {
+                main: red[500],
+            },
         },
-      })
+    })
 
-    console.log(theme)
 
     return (
         <ThemeProvider theme={theme}>
@@ -79,20 +77,16 @@ export function Login() {
                             control={<Checkbox name="checkbox" value={true} color="primary" />}
                             label="Remember me"
                         />
+                        
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                        >
-                            Sign In
+                        > Sign In
                         </Button>
+
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid> */}
                             <Grid item>
                                 <Link href="#" variant="body2">
                                     {"Don't have an account? Sign Up"}
@@ -101,16 +95,6 @@ export function Login() {
                         </Grid>
                     </Box>
                 </Box>
-                {/* 
-                <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 8, mb: 4 }}>
-                    {'Copyright © '}
-                    <Link color="inherit" href="https://mui.com/">
-                        Your Website
-                    </Link>{' '}
-                    {new Date().getFullYear()}
-                    {'.'}
-                </Typography> */}
-
             </Container>
         </ThemeProvider>
     )

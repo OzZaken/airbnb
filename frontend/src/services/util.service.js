@@ -7,7 +7,8 @@ export const utilService = {
     numberWithCommas,
     getRandomIntInclusive,
     getRandomFloatInclusive,
-    timeAgo
+    timeAgo,
+    getCababCase
 }
 
 function makeId(length = 6) {
@@ -113,4 +114,12 @@ function numberWithCommas(str) {
 
 function getRandomBoolean() {
     return (Math.random() < 0.5)
+}
+
+function getCababCase(amenities) {
+    amenities.map(prop => {
+        const regex = /[^A-Za-z0-9]+/g
+        const cababCase = prop.toLowerCase().replace(regex, '-')
+        return cababCase
+    })
 }

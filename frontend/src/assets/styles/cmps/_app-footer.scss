@@ -14,11 +14,9 @@
         justify-content: space-evenly;
         flex: 1;
 
-        @include for-desktop-layout {
-            .footer-nav {
-                display: none;
-            }
-        }
+        // @include for-desktop-layout {
+        //     display: none !important;
+        // }
 
         a {
             color: rgba(34, 34, 34, 0.733);

@@ -2,20 +2,33 @@ import { NavLink, useSearchParams } from 'react-router-dom'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import { stayService } from '../../services/stay.service'
 import AppIcon from '../app-icon'
+import { useSelector } from 'react-redux'
 
 export const StayFilter = (props) => {
     const [searchParams, setSearchParams] = useSearchParams()
+    // Destract
+    const {
+        txt,
+        placeType,
+        maxPrice,
+        minPrice,
+        maxRate,
+        minRate,
+        minCapacity,
+        amenities,
+        checkIn,
+    } = useSelector(state => state.stayModule.filterBy)
 
     const [register] = useFormRegister({
-        txt: '',
-        type: '',
-        amenities: [],
-        maxPrice: Infinity,
-        minPrice: 0,
-        maxRate: Infinity,
-        minRate: 0,
-        fromDate: new Date(),
-        toDate: new Date(Infinity),
+        txt,
+        placeType,
+        maxPrice,
+        minPrice,
+        maxRate,
+        minRate,
+        minCapacity,
+        amenities,
+        checkIn,
     }, props.onChangeFilter)
 
     const renderFilterByQueryParamsGPT = () => {
@@ -27,8 +40,8 @@ export const StayFilter = (props) => {
             minPrice: +searchParams.get('min-price') || 0,
             maxRate: +searchParams.get('max-rate') || Infinity,
             minRate: +searchParams.get('min-rate') || 0,
-            fromDate: searchParams.get('from-date') || new Date(),
-            todoDate: searchParams.get('to-date') || new Date(Infinity),
+            checkIn: searchParams.get('from-date') || new Date(),
+            checkOut: searchParams.get('to-date') || new Date(Infinity),
         }
         onSetFilterBy(filterBy)
     }
@@ -40,7 +53,7 @@ export const StayFilter = (props) => {
             'min-price': filterBy.minPrice,
             'max-rate': filterBy.maxRate,
             'min-rate': filterBy.minRate,
-            'amenities': filterBy.amenities.join(','),
+            'amenities': filterBy.amenities.join('&'),
         });
     }
 
@@ -75,12 +88,11 @@ export const StayFilter = (props) => {
         // onSetFilterBy(filterBy)
         console.log(`🚀 ~ filterBy:`, filterBy)
     }
-    const amenities = stayService.getAmenities()
     return <section className='full stay-filter'>
 
-        <nav className='full flex filter-by-container'>
+        <nav className='full filter-by-container'>
             <ul className='full filter-nav-list'>
-                {amenities.map((amenity, idx) => {
+                {stayService.getAmenities().map((amenity, idx) => {
                     const iconKey = Object.keys(amenity)
                     const heading = Object.values(amenity)
                     const queryStringParam = heading.join(' ').toLowerCase()
@@ -97,7 +109,7 @@ export const StayFilter = (props) => {
         </nav>
 
         <button className='btn-big btn-filters'>
-            <AppIcon iconKey="FilterBy" />Filters 
+            <AppIcon iconKey="FilterBy" />Filters
         </button>
     </section>
 }

@@ -6,16 +6,9 @@ import { userService } from '../../services/user.service'
 export const UserDetails = (props) => {
     const [user, setUser] = useState(null)
     const params = useParams()
-    const { pathname } = useLocation()
-    const navigate = useNavigate()
+    // const { pathname } = useLocation()
 
-    useEffect(() => {
-        console.log(`🚀 ~ pathname`, pathname)
-    }, [])
-
-    useEffect(() => {
-        loadUser()
-    }, [params.id])
+    useEffect(() => { loadUser() }, [params.id])
 
     const loadUser = () => {
         const userId = params.id
@@ -25,9 +18,8 @@ export const UserDetails = (props) => {
             })
     }
 
-    const onBack = () => {
-        navigate('/')
-    }
+    const navigate = useNavigate()
+    const onBack = () => { navigate('/') }
 
     if (!user) return <div>Loading...</div>
     return (

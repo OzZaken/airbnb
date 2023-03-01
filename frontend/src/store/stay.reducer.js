@@ -1,10 +1,16 @@
 const INITIAL_STATE = {
     stays: null,
     filterBy: {
-        txt: '',
-        minPrice: 0,
-        MaxPrice: 0,
-        pageIdx: 0,
+        txt: '', // name , summary
+        placeType:'', 
+        maxPrice: Infinity,
+        minPrice: 0, 
+        maxRate: Infinity, 
+        minRate: 0,
+        minCapacity: 0, 
+        amenities: [],
+        checkIn: new Date(), 
+        pageIdx: 2, // paging
     },
     favorites: [],
     sortBy: null,

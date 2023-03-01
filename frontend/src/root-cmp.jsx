@@ -6,8 +6,8 @@ import { About } from './views/about'
 import './assets/styles/main.scss'
 import { AppFooter } from './cmps/app-footer'
 import { useEffect } from 'react'
-import { locService } from './services/loc.service'
 import { UserMsg } from './cmps/user/user-msg'
+import { locService } from './services/loc.service'
 
 
 const Team = () => {
@@ -31,16 +31,15 @@ const Vision = () => {
 
 function App() {
     useEffect(() => {
+        document.title = 'Loading App...'
         locService.setUserLoc()
-        return () => {
-            document.title = 'First hello'
-        }
     }, [])
     return (
         <div className="main-layout">
             <AppHeader />
             <main className='main-content'>
-                <Routes> //* exact={true} */
+                <Routes>
+                   {/* exact={true} */}
                     {routes.map(route => <Route key={route.path} element={route.component} path={route.path} />)}
                     <Route path='about' element={<About />} >
                         <Route path='team' element={<Team />} />

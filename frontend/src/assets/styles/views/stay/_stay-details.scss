@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
 
-    .details-heading {
+    .main-details-heading {
         display: flex;
         flex-direction: column-reverse;
 
@@ -15,9 +15,17 @@
             font-size: 26px;
         }
 
-        .details-sub-heading {
+        .details-heading {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+            padding: 0 $padded-layout;
+
+            span.reviews {
+                align-self: end;
+                font-size: 0.85em;
+                text-decoration: underline;
+            }
         }
 
         .imgs-template {
@@ -42,7 +50,7 @@
             }
         }
 
-        .details-anchors-container {
+        .details-anchors-nav {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -50,12 +58,13 @@
             box-shadow: inset 0 -6px 0 $clr-vector;
 
             .details-anchors-list {
+                text-transform: capitalize;
                 display: flex;
                 list-style-type: none;
-                
+
                 li {
                     border-inline-end: 0.5px solid $clr-vector;
-                   
+
                     a {
                         display: flex;
                         justify-content: center;
@@ -70,21 +79,51 @@
         }
     }
 
-    .main-details {
+    main.main-details {
         display: flex;
+        padding: 0 $padded-layout;
         flex-direction: column;
 
         .details-container {
             display: flex;
             justify-content: left;
 
+            .stay-details-row {
+                padding-top: $padded-layout;
+                padding-bottom: $padded-layout;
+                border-bottom: 1px solid $clr-vector;
+            }
+
+            // #Air-cover
+            .air-cover-container {
+
+                .img-container {
+
+                    height: 56px;
+                    width: 123px;
+
+                    img {
+                        object-fit: contain;
+                    }
+                }
+
+                div {
+                    padding-bottom: 16px;
+                }
+            }
+
             .left-details-container {
                 flex: 1;
             }
 
             .main-order-container {
-                display: flex;
+
+                display: none;
                 justify-content: right;
+
+                @include for-desktop-layout {
+                    display: flex;
+                }
             }
         }
 
@@ -99,7 +138,7 @@
             display: none !important;
         }
 
-        .details-anchors-container {
+        .details-anchors-nav {
             display: none !important;
         }
     }

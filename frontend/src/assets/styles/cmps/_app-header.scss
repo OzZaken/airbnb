@@ -171,13 +171,23 @@
     }
 
     .stay-details-header {
-        .nav-back::before {
-            content: '←';
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            font-size: 1.5rem;
-            color: $clr-txt;
+        padding: 0 $padded-layout;
+        .actions {
+            height: 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .btns-actions {
+                button {
+                    border: none;
+                    background: transparent;
+                }
+            }
+
+            .nav-back {
+                color: $clr-txt;
+            }
         }
     }
 }

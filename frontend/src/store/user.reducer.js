@@ -3,7 +3,13 @@ import { userService } from '../services/user.service.js'
 const initialState = {
     user: userService.getLoggedInUser(),
     users: [],
-    watchedUser : null
+    watchedUser : null,
+    filterBy: {
+        txt: '',
+        minScore: Infinity,
+        maxScore: 0,
+    },
+
 }
 
 export function userReducer(state = initialState, action) {

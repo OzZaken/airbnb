@@ -7,67 +7,6 @@ import AppIcon from '../app-icon'
 import { locService } from '../../services/loc.service'
 import { userService } from '../../services/user.service'
 
-const properties = [
-    "Cable TV",
-    "Internet",
-    "Wifi",
-    "Air conditioning",
-    "Pool",
-    "Kitchen",
-    "Free parking on premises",
-    "Elevator",
-    "Free street parking",
-    "Family/kid friendly",
-    "Washer",
-    "Dryer",
-    "Smoke detector",
-    "First aid kit",
-    "Essentials",
-    "Hangers",
-    "Hair dryer",
-    "Iron",
-    "Laptop friendly workspace",
-    "Self check-in",
-    "Lockbox",
-    "Babysitter recommendations",
-    "Hot water",
-    "Bed linens",
-    "Extra pillows and blankets",
-    "Microwave",
-    "Coffee maker",
-    "Refrigerator",
-    "Dishwasher",
-    "Dishes and silverware",
-    "Cooking basics",
-    "Oven",
-    "Stove",
-    "Single level home",
-    "BBQ grill",
-    "Patio or balcony",
-    "Garden or backyard",
-    "Beach essentials",
-    "Long term stays allowed",
-    "Wide hallway clearance",
-    "Step-free access",
-    "Wide doorway",
-    "Flat path to front door",
-    "Well-lit path to entrance",
-    "Disabled parking spot",
-    "Step-free access",
-    "Step-free access",
-    "Step-free access",
-    "Waterfront",
-    "Beachfront"
-];
-
-const transformedProperties = properties.map(prop => {
-    const regex = /[^A-Za-z0-9]+/g;
-    const cababCase = prop.toLowerCase().replace(regex, '-');
-    return cababCase;
-});
-
-console.log(transformedProperties);
-
 function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
     const { numberWithCommas, getRandomFloatInclusive } = utilService
     const rate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
@@ -85,9 +24,10 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
     }
     const UserDistance = locService.getDistanceFromLatLng(userLat, userLng, stayLat, stayLng)
 
-    // Click on empty space on the Image
+    // Later ClickOnImg move the current img idx to 0 
     const navigate = useNavigate()
     const onClickImage = (ev) => {
+        console.log('ev:', ev)
         ev.stopPropagation()
         window.scrollTo(0, 0)
         navigate(`/stay/${stay._id}`)
@@ -107,8 +47,8 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
 
     // Gallery Props
     const galleryPreviewProps = {
-        onClick: onClickImage,
-        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url, })),
+        onClickImage, 
+        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url,})),
         additionalClass: 'preview-gallery',
         showPlayButton: true,
         autoPlay: true,
@@ -123,7 +63,7 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         startIndex: 0
     }
 
-    const { propertyType, type, price, _id, summary } = stay
+    const { propertyType, price, _id, summary } = stay
     const { city } = loc
     return <article className='stay-preview'>
 
@@ -136,17 +76,13 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         </div>
 
         <Link to={`/stay/${_id}`} className="link-container">
-            <div className="rate">{<AppIcon iconKey="Star" />}{rate.current}</div>
+            <div className="flex-center rate">{<AppIcon iconKey="Star" />}{rate.current}</div>
 
-            <div className="text heading">
-                {propertyType} in {city}
-            </div>
+            <div className="text heading">{propertyType} in {city}</div>
 
             <div className="text summary">{summary}</div>
 
-            <div className="text distance">
-                {numberWithCommas(UserDistance)} kilometers
-            </div>
+            <div className="text distance">{numberWithCommas(UserDistance)} kilometers</div>
 
             <div className="text price">
                 {isDiscount.current && <span className="full-night-price">

@@ -1,6 +1,7 @@
 import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
 import { showErrorMsg } from './event-bus.service'
+import Swal from 'sweetalert2'
 
 export const locService = {
     setUserLoc,
@@ -16,7 +17,7 @@ const locsMap = _loadUserLocsFromStorage() || {}
 const countries = require('../assets/data/countries.json')
 function getCoordsFromCountyCode(alpha2Code) {
     const country = countries.find(country => country.alpha2Code === alpha2Code)
-    const pos =  {
+    const pos = {
         lat: country.latlng[0],
         lng: country.latlng[1]
     }
@@ -43,6 +44,35 @@ async function searchLocation(locationName) {
 }
 
 function setUserLoc() {
+    const hasApprovedLocation = localStorage.getItem('hasApprovedLocation')
+
+    if (!hasApprovedLocation) {
+        console.log('!hasApprovedLocation', hasApprovedLocation);
+
+        Swal.fire({
+            title: 'Approve Location Service',
+            text: 'App uses Location Service to provide better user experience',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Approve Location Service!'
+        }).then(async (result) => {
+            try {
+                if (result.isConfirmed) {
+                    localStorage.setItem('hasApprovedLocation', true);
+                    Swal.fire(
+                        'Location Service Approved!',
+                        'You can now enjoy better user experience!',
+                        'success'
+                    )
+                }
+            } catch (error) {
+                console.error('Error setting user location:', error);
+            }
+        })
+    }
+
     if (!navigator.geolocation) {
         showErrorMsg('HTML5 Geolocation is not supported in your browser')
         return
@@ -60,9 +90,9 @@ function setUserLoc() {
 
         // OPT - Convert the date to a string with only the hour.
         // const dateString = date.toLocaleDateString('en-US', {
-        //     hour: 'numeric', // || 2-digit
+        //     hour: 'numeric', // || 2-digit || numeric
         //     hour12: true,
-        //     timeZoneName: 'longOffset' // short || long || longGeneric || longOffset
+        //     timeZoneName: 'long' // short || long || longGeneric || longOffset
         // })
 
         locsMap[date] = location

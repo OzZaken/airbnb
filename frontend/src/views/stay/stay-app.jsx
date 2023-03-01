@@ -23,6 +23,7 @@ export const StayApp = (props) => {
     // console.log(`🚀 ~ searchParams:`, searchParams)
     // console.log(`🚀 ~ filterBy:`, filterBy, 'props', props)
 
+    // cdn cwum
     useEffect(() => {
         dispatch(updateView('home'))
         dispatch(loadStays())
@@ -35,9 +36,8 @@ export const StayApp = (props) => {
         }
     }, [])
 
-    useEffect(() => {
-        dispatch(loadStays())
-    }, [filterBy])
+    // Update on change filterBy
+    useEffect(() => {dispatch(loadStays())}, [filterBy])
 
     const getStayAvgRate = (reviews) => {
         const rates = []
@@ -56,7 +56,6 @@ export const StayApp = (props) => {
     const onUpdateStay = (stay) => {
         dispatch(updateStay(stay))
     }
-
 
     if (!stays) return <h1>!stays Loading...</h1>
     return <section className='home-page' >

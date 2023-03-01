@@ -38,7 +38,19 @@
 
         .image-gallery {
             .image-gallery-content {
+
                 .image-gallery-slide-wrapper {
+                    .image-gallery-bullets-container {
+                        width: fit-content;
+                        margin: auto;
+
+                        .image-gallery-bullet {
+                            button {
+                                width: 5px;
+                                height: 5px;
+                            }
+                        }
+                    }
 
                     .image-gallery-left-nav,
                     .image-gallery-right-nav {
@@ -50,7 +62,6 @@
                             width: 32px;
                             opacity: 0;
                             height: 32px;
-
                         }
                     }
 
@@ -91,14 +102,15 @@
             text-decoration: none;
         }
 
-        .summery,
+        .summery {
+            color: $clr-light-txt;
+        }
+
         .distance {
             color: $clr-light-txt;
         }
 
         .rate {
-            display: block;
-            position: relative;
             float: right;
         }
 
@@ -106,6 +118,7 @@
         .night-price {
             font-weight: bold;
         }
+
 
         .price {
             margin-top: 8px;

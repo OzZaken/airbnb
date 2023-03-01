@@ -1,43 +1,49 @@
 import { useFormRegister } from '../../hooks/useFormRegister'
+import { useSelector } from 'react-redux'
 
 export const UserFilter = (props) => {
+    const { user, users, filterBy } = useSelector((state) => state.userModule)
+    console.log(`🚀 ~ filterBy:`, filterBy)
+    console.log(`🚀 ~ users:`, users)
+    console.log(`🚀 ~ user:`, user)
+
 
     const [register] = useFormRegister({
         model: '',
         type: '',
-        minBatteryStatus: '',
-        maxBatteryStatus: '',
+        minScore: '',
+        maxScore: '',
         date: new Date(),
     }, props.onChangeFilter)
 
     const classObj = { className: 'user-filter' }
     return (
         <form {...classObj} >
-          
-            <section>
+
+            <div>
                 <label htmlFor="model">Model</label>
                 <input {...register('model', 'text')} />
-            </section>
+            </div>
 
-            <section>
+            <div>
                 <label htmlFor="type">Type</label>
                 <input {...register('type', 'text')} />
-            </section>
+            </div>
 
-            <section>
-                <label htmlFor="minBatteryStatus">minBatteryStatus</label>
-                <input {...register('minBatteryStatus', 'number')} />
-            </section>
+            <div>
+                <label htmlFor="minScore">minScore</label>
+                <input {...register('minScore', 'number')} />
+            </div>
 
-            <section>
-                <label htmlFor="maxBatteryStatus">maxBatteryStatus</label>
-                <input {...register('maxBatteryStatus', 'number')} />
-            </section>
-            
-            <section>
-                <label htmlFor="date">maxBatteryStatus</label>
+            <div>
+                <label htmlFor="maxScore">maxScore</label>
+                <input {...register('maxScore', 'number')} />
+            </div>
+
+            <div>
+                <label htmlFor="date">maxScore</label>
                 <input {...register('date', 'date')} />
-            </section>
+            </div>
         </form>
     )
 }

@@ -5,8 +5,7 @@ import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import AppIcon from "./app-icon"
 
 function _AppFooter({ view }) {
-    useEffectUpdate(() => {
-    }, [view])
+    useEffectUpdate(() => { }, [view])
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     useEffect(() => {
@@ -27,31 +26,29 @@ function _AppFooter({ view }) {
     }
 
     return <footer className='main-footer'>
-        {false && (
-            <section className="back">
-                <button onClick={onBack}>Back</button>
-            </section>
-        )}
-{/* innerWidth <= 768 === $include-for-des on scss */}
-        {innerWidth <= 768 && <nav className="footer-nav">
-            <NavLink to='/'>{<AppIcon iconKey="Search"/>}Explore</NavLink>
-            <NavLink to='/wishlist'>{<AppIcon iconKey="Favorite"/>}Wishlists</NavLink>
+
+        {view === 'home' && innerWidth <= 768 && <nav className="footer-nav">
+            <NavLink to='/'>{<AppIcon iconKey="Search" />}Explore</NavLink>
+            <NavLink to='/wishlist'>{<AppIcon iconKey="Favorite" />}Wishlists</NavLink>
             <NavLink to='/trips'><div className="logo"></div> Trips</NavLink>
-            <NavLink to='/inbox'>{<AppIcon iconKey="Inbox"/>}Inbox</NavLink>
-            <NavLink to='/user'>{<AppIcon iconKey="AccountCircle"/>}Profile</NavLink>
+            <NavLink to='/inbox'>{<AppIcon iconKey="Inbox" />}Inbox</NavLink>
+            <NavLink to='/user'>{<AppIcon iconKey="AccountCircle" />}Profile</NavLink>
         </nav>}
 
         {view === 'about' && <section className='container'>
             AirBnb 2023 &copy; madeBy Oz Zaken
         </section>}
+
+        {false && <section className="nav-back">
+            <button onClick={onBack}>Back</button>
+        </section>}
+
     </footer>
 }
 
 function mapStateToProps(state) {
     const { view } = state.appModule
-    return {
-        view
-    }
+    return { view }
 }
 
 export const AppFooter = connect(mapStateToProps,)(_AppFooter)

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, {  } from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -33,10 +33,10 @@ const muiRailStyle = theme => ({
 
 function MuiRailComponent({ classes, getRailProps }) {
   return (
-    <Fragment>
+    <>
       <div className={classes.railHotspot} {...getRailProps()} />
       <div className={classes.rail} />
-    </Fragment>
+    </>
   );
 }
 
@@ -126,14 +126,14 @@ function MuiTrackComponent({ classes, source, target, getTrackProps }) {
   const width = `${target.percent - source.percent}%`;
 
   return (
-    <Fragment>
+    <>
       <div className={classes.track} style={{ left, width }} />
       <div
         className={classes.trackHotspot}
         style={{ left, width }}
         {...getTrackProps()}
       />
-    </Fragment>
+    </>
   );
 }
 

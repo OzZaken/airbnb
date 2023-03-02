@@ -60,7 +60,6 @@ export const StayApp = (props) => {
 
     if (!stays) return <h1>!stays Loading...</h1>
     return <section className='home-page' >
-        {/* <FilterByPrice/> */}
         <StayList getStayAvgRate={getStayAvgRate} onChangeSortBy={onChangeSortBy} onUpdateStay={onUpdateStay} onRemoveStay={onRemoveStay} stays={stays} />
     </section>
 }

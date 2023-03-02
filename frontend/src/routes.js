@@ -1,12 +1,12 @@
 // VIEWS
 import { About } from './views/about'
 //      - user
-import { AdminApp } from './views/user/admin-app'
-import { UserDetails } from './views/user/user-details'
-import { UserEdit } from './views/user/user-edit'
+import { AdminApp } from './views/admin-app'
+import { UserDetails } from './views/user-details'
+import { UserEdit } from './views/user-edit'
 //      - stay
-import { StayApp } from './views/stay/stay-app'
-import { StayDetails } from './views/stay/stay-details'
+import { StayApp } from './views/stay-app'
+import { StayDetails } from './views/stay-details'
 
 
 const base = [

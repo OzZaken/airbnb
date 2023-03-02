@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux'
-import { useFormRegister } from '../../hooks/useFormRegister'
-import AppIcon from '../app-icon'
-import { BtnRadialGradient } from '../btn-triger'
+import { useFormRegister } from '../hooks/useFormRegister'
+import AppIcon from './app-icon'
+import { BtnRadialGradient } from './btn-triger'
 
 export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
   const { checkIn, checkOut, guests } = useSelector(state => state.orderModule.order)
+  
   const [register] = useFormRegister({
     checkIn,
     checkOut,

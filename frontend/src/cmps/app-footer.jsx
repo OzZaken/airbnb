@@ -10,8 +10,6 @@ function _AppFooter({ view }) {
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     useEffect(() => {
-        const position = view === 'home' ? 'fixed' : 'static'
-        console.log(`🚀 ~ footer position:`, position)
         window.addEventListener('resize', onSetInnerWidth)
         return () => window.removeEventListener('resize', onSetInnerWidth)
     }, [])

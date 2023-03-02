@@ -1,8 +1,27 @@
+body:not(.home-page) {
+    @include for-wide-layout{
+        .main-content {
+            display: grid;
+    
+            >* {
+                grid-column: 2;
+            }
+    
+            >*.full {
+                grid-column: 1 / -1;
+            }
+    
+            @include layoutGTC(auto, 1500px);
+        }
+    }
+}
+
 .main-layout {
     display: grid;
 
     >* {grid-column: 2;}
-    >*.full {grid-column: 1 / -1;}
+
+    >*.full {grid-column: 1 / -1;    }
 
     @include layoutGTC();
 }
@@ -11,6 +30,7 @@
     flex-grow: 1;
     width: 100%;
     justify-self: center;
+
     // footer margin
     margin-bottom: rem(64px);
 }

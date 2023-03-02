@@ -48,29 +48,28 @@ function setUserLoc() {
 
     if (!hasApprovedLocation) {
         console.log('!hasApprovedLocation', hasApprovedLocation);
-
-        Swal.fire({
-            title: 'Approve Location Service',
-            text: 'App uses Location Service to provide better user experience',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve Location Service!'
-        }).then(async (result) => {
-            try {
-                if (result.isConfirmed) {
-                    localStorage.setItem('hasApprovedLocation', true);
-                    Swal.fire(
-                        'Location Service Approved!',
-                        'You can now enjoy better user experience!',
-                        'success'
-                    )
-                }
-            } catch (error) {
-                console.error('Error setting user location:', error);
-            }
-        })
+        // Swal.fire({
+        //     title: 'Approve Location Service',
+        //     text: 'App uses Location Service to provide better user experience',
+        //     icon: 'info',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Yes, Approve Location Service!'
+        // }).then(async (result) => {
+        //     try {
+        //         if (result.isConfirmed) {
+        //             localStorage.setItem('hasApprovedLocation', true);
+        //             Swal.fire(
+        //                 'Location Service Approved!',
+        //                 'You can now enjoy better user experience!',
+        //                 'success'
+        //             )
+        //         }
+        //     } catch (error) {
+        //         console.error('Error setting user location:', error);
+        //     }
+        // })
     }
 
     if (!navigator.geolocation) {
@@ -121,7 +120,21 @@ function setUserLoc() {
                 sessionStorage.setItem(SESSION_KEY, JSON.stringify(defaultLocation))
         }
     }
-    // Use a Promise-based approach to simplify error handling.
+
+    // Swal.fire({
+    //     title: 'Approve Location service',
+    //     text: "App uses Location Service to provide better user experience",
+    //     icon: 'question',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes, Approve one time!'
+    // }).then(async (result) => {
+    //     if (result.isConfirmed) {
+    //         // Use a Promise-based approach to simplify error handling.
+    //         Swal.fire('success')
+    //     }
+    // })
     navigator.geolocation.getCurrentPosition(onSuccessSetUserLoc, onErrorSetUserLoc)
 }
 

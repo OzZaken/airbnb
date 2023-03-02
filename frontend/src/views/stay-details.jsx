@@ -2,19 +2,24 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import AppIcon from '../../cmps/app-icon'
-import { ImgGallery } from '../../cmps/img-gallery'
-import { StayOrder } from '../../cmps/stay/stay-order'
-import { stayService } from '../../services/stay.service'
-import { updateView } from '../../store/app.actions'
+import AppIcon from '../cmps/app-icon'
+import { ImgGallery } from '../cmps/img-gallery'
+import { StayOrder } from '../cmps/stay-order'
+import { stayService } from '../services/stay.service'
+import { updateView } from '../store/app.actions'
+import { useSelector } from 'react-redux'
 
 export const _StayDetails = () => {
     const dispatch = useDispatch()
 
+    // ↓ Changed based url params Id
+    const { id } = useParams()
+    useEffect(() => { loadStay() }, [id])
+
     // ↓ Main Func
     const [stay, setStay] = useState(null)
     const loadStay = async () => {
-        const stayId = params.id
+        const stayId = id
         try {
             let newStay = await stayService.getById(stayId)
             setStay(newStay)
@@ -29,9 +34,7 @@ export const _StayDetails = () => {
     const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
     useEffect(() => { }, [innerWidth])
 
-    // ↓ Changed based url params Id
-    const params = useParams()
-    useEffect(() => { loadStay() }, [params.id])
+    const user = useSelector(state => state.userModule.user)
 
     // ↓ Home Navigation 
     const navigate = useNavigate()
@@ -78,29 +81,40 @@ export const _StayDetails = () => {
 
     if (!stay) return <div>Loading...</div>
     const { imgUrls, name, reviews, host, loc } = stay
-    const { isSuperHost } = host
+
+    // Gallery
     const thumbnailsProps = innerWidth >= 570 ? {
-        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
         showThumbnails: true,
         thumbnailPosition: 'left',
+        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
     } : {
+        showThumbnails: false,
         showPlayButton: false,
         items: imgUrls.map(url => ({ original: url })),
-        thumbnailPosition: 'top',
     }
     const galleryProps = {
-        ...thumbnailsProps,
+        showThumbnails: false,
+        showPlayButton: false,
+        items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
+            original: url,
+            originalClass: "img-gallery-img",
+            originalTitle: `${stay.name} Image ${idx + 1}`,
+            originalAlt: `${stay.name} Image ${idx + 1}`,
+            originalIndex: idx,
+            originalObjectFit: "cover",
+        })),
+        startIndex: parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0,
         additionalClass: 'full img-gallery-details',
         loading: 'eager',
         lazyLoad: false,
         useBrowserFullscreen: true,
-        showFullscreenButton: true,
         showBullets: false,
         showIndex: true,
+        ...thumbnailsProps,
         autoPlay: false,
     }
-
-
+    
+    const { isSuperHost } = host
     const { city, country } = loc
     return <article className='stay-details'>
         <header className="main-details-heading">
@@ -174,7 +188,9 @@ export const _StayDetails = () => {
                         <button className="btn-big"><b>Read more</b></button>
                     </div>
                     {/*  <summary/> */}
-
+                    <div className="stay-details-row summery">
+                        <p>{stay.summary}</p>
+                    </div>
                     {/*  <amenities/> */}
                 </div>
 

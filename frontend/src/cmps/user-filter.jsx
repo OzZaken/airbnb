@@ -1,4 +1,4 @@
-import { useFormRegister } from '../../hooks/useFormRegister'
+import { useFormRegister } from '../hooks/useFormRegister'
 import { useSelector } from 'react-redux'
 
 export const UserFilter = (props) => {

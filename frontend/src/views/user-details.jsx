@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { userService } from '../../services/user.service'
+import { userService } from '../services/user.service'
 
 export const UserDetails = (props) => {
     const [user, setUser] = useState(null)

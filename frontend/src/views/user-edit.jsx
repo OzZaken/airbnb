@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useForm } from '../../hooks/useForm'
-import { userService } from '../../services/user.service'
+import { useForm } from '../hooks/useForm'
+import { userService } from '../services/user.service'
 
 export const UserEdit = (props) => {
 

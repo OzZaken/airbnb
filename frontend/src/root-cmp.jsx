@@ -6,9 +6,9 @@ import { About } from './views/about'
 import './assets/styles/main.scss'
 import { AppFooter } from './cmps/app-footer'
 import { useEffect } from 'react'
-import { UserMsg } from './cmps/user/user-msg'
+import { UserMsg } from './cmps/user-msg'
 import { locService } from './services/loc.service'
-import {  translationService} from './services/i18n.service'
+// import { translationService } from './services/i18n.service'
 
 
 const Team = () => {
@@ -31,14 +31,13 @@ const Vision = () => {
 }
 
 function App() {
-    useEffect(() => {
-        document.title = 'Welcome!'
-        locService.setUserLoc()
-        // translationService.doTrans()
-        setTimeout(() => {document.title = 'Loading.'}, 500)
-        setTimeout(() => {document.title = 'Loading..'}, 1000)
-        setTimeout(() => {document.title = 'Loading...'}, 1500)
-    }, [])
+    document.title = 'Welcome!'
+    locService.setUserLoc()
+    // translationService.doTrans()
+    // setTimeout(() => { document.title = 'Loading.' }, 500)
+    // setTimeout(() => { document.title = 'Loading..' }, 1000)
+    // setTimeout(() => { document.title = 'Loading...' }, 1500)
+
     return (
         <div className="main-layout">
             <AppHeader />

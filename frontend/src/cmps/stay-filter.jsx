@@ -1,7 +1,7 @@
 import { NavLink, useSearchParams } from 'react-router-dom'
-import { useFormRegister } from '../../hooks/useFormRegister'
-import { stayService } from '../../services/stay.service'
-import AppIcon from '../app-icon'
+import { useFormRegister } from '../hooks/useFormRegister'
+import { stayService } from '../services/stay.service'
+import AppIcon from './app-icon'
 import { useSelector } from 'react-redux'
 
 export const StayFilter = ({ onChangeFilter }) => {

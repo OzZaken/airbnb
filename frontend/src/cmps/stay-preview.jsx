@@ -1,13 +1,13 @@
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { ImgGallery } from '../img-gallery'
-import { utilService } from '../../services/util.service'
-import AppIcon from '../app-icon'
-import { locService } from '../../services/loc.service'
-import { userService } from '../../services/user.service'
+import { ImgGallery } from './img-gallery'
+import { utilService } from '../services/util.service'
+import AppIcon from './app-icon'
+import { locService } from '../services/loc.service'
+import { userService } from '../services/user.service'
 
-function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
+function _StayPreview({ stay }) {
     const { numberWithCommas, getRandomFloatInclusive } = utilService
     const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
     const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
@@ -24,13 +24,16 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
     }
     const UserDistance = locService.getDistanceFromLatLng(userLat, userLng, stayLat, stayLng)
 
-    // ClickOnImg set the img idx to 0 
+    // todo: ClickOnImg set the img idx to 0 
+    const [currentImgIdx, setCurrentImgIdx] = useState(0)
+    const onSlide = (currentIndex) => setCurrentImgIdx(currentIndex)
     const navigate = useNavigate()
-    const onClickImage = (ev) => {
+    const onClickImg = idx => ev => {
+        console.log(`Click Image!🚀 ~ idx:`, idx)
         console.log('ev:', ev)
         ev.stopPropagation()
         window.scrollTo(0, 0)
-        navigate(`/stay/${stay._id}`)
+        navigate(`/stay/${stay._id}?imgIndex=${idx}`)
     }
 
     // Wishlist
@@ -40,15 +43,24 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         loggedInUser ? likedByUsers.includes(loggedInUser._id) : false
     )
 
-    const onToggleFavorite = (ev) => {
+    const onToggleIsInWishlist = (ev) => {
         ev.stopPropagation() // if inside of the Link 
         console.log('favorite: add to &isFavorite', stay)
     }
 
     // Gallery Props
     const galleryPreviewProps = {
-        onClickImage,
-        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url, })),
+        onSlide,
+        onClickImg,
+        items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
+            original: url,
+            originalClass: "img-gallery-img",
+            originalTitle: `${stay.name} Image ${idx + 1}`,
+            originalAlt: `${stay.name} Image ${idx + 1}`,
+            originalIndex: idx,
+            originalObjectFit: "cover",
+        })),
+        startIndex: parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0,
         additionalClass: 'preview-gallery',
         showPlayButton: true,
         autoPlay: true,
@@ -60,15 +72,14 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         useBrowserFullscreen: false,
         loading: 'lazy',
         lazyLoad: true,
-        startIndex: 0
     }
 
     const { propertyType, price, _id, summary } = stay
     const { city } = loc
-    return <article className='stay-preview'>
+    return <article className='show stay-preview'>
 
         <div className="gallery-container">
-            {loggedInUser && <button onClick={onToggleFavorite} className='image-gallery-custom-action'>
+            {loggedInUser && <button onClick={onToggleIsInWishlist} className='image-gallery-custom-action'>
                 {/* {isLike.current ? <AppIcon iconKey='Favorite' /> : <AppIcon iconKey='FavoriteFill' />} */}
             </button>}
 
@@ -76,15 +87,19 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         </div>
 
         <Link to={`/stay/${_id}`} className="link-container">
-            <div className="flex-center rate">{<AppIcon iconKey="Star" />}{RandRate.current}</div>
+            <span className="txt heading">
+                {propertyType} in {city}
+            </span>
 
-            <div className="text heading">{propertyType} in {city}</div>
+            <span className="txt summary">
+                {summary}
+            </span>
 
-            <div className="text summary">{summary}</div>
+            <span className="txt distance">
+                {numberWithCommas(UserDistance)} kilometers
+            </span>
 
-            <div className="text distance">{numberWithCommas(UserDistance)} kilometers</div>
-
-            <div className="text price">
+            <div className="txt price">
                 {isDiscount.current && <span className="full-night-price">
                     ${numberWithCommas((price * 1.3).toFixed())}&nbsp;
                 </span>}
@@ -94,6 +109,11 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
                 </span>
                 <span className="night">night</span>
             </div>
+
+            <span className="rate">
+                {<AppIcon className="fs-small" iconKey="Star" />}
+                {RandRate.current}
+            </span>
         </Link>
     </article>
 }

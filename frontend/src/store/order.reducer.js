@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     orders:[],
     order: {
+        stayId:null,
         price:null,
         guests: 2,
         checkIn: new Date(),

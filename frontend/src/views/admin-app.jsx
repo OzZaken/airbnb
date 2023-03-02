@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // Actions
-import { loadUsers, removeUser, setFilterBy } from '../../store/user.action'
+import { loadUsers, removeUser, setFilterBy } from '../store/user.action'
 // Components
-import { UserFilter } from '../../cmps/user/user-filter'
-import { UserList } from '../../cmps/user/user-list'
+import { UserFilter } from '../cmps/user-filter'
+import { UserList } from '../cmps/user-list'
 
 export const AdminApp = (props) => {
     const { users } = useSelector(state => state.userModule)

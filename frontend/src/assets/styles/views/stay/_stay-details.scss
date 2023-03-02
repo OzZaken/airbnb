@@ -9,9 +9,6 @@ body.stay-details {
 }
 
 .stay-details {
-    display: flex;
-    flex-direction: column;
-
     .main-details-heading {
         display: flex;
         flex-direction: column-reverse;
@@ -115,7 +112,8 @@ body.stay-details {
             }
 
             .main-info-container {
-                .info-host{}
+                .info-host {}
+
                 // #Air-cover
                 .air-cover-container {
 

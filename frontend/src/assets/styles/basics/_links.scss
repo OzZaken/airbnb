@@ -11,7 +11,7 @@ a {
     transition: scale .3ms;
 
     &:focus {
-        text-shadow: 0 0 5px;
+        // text-shadow: 0 0 5px;
         // outline: none;
     }
 
@@ -20,7 +20,7 @@ a {
     }
 
     &.active {
-        scale: 1.03;
+        scale: 1.02;
         text-shadow: 0 0 5px hsl(0 0% 78%);
     }
 

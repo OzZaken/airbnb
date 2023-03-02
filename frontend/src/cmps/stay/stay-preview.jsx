@@ -9,7 +9,7 @@ import { userService } from '../../services/user.service'
 
 function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
     const { numberWithCommas, getRandomFloatInclusive } = utilService
-    const rate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
+    const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
     const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
 
     // UserDistance handle case of undefined lat lng
@@ -24,7 +24,7 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
     }
     const UserDistance = locService.getDistanceFromLatLng(userLat, userLng, stayLat, stayLng)
 
-    // Later ClickOnImg move the current img idx to 0 
+    // ClickOnImg set the img idx to 0 
     const navigate = useNavigate()
     const onClickImage = (ev) => {
         console.log('ev:', ev)
@@ -33,10 +33,10 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         navigate(`/stay/${stay._id}`)
     }
 
-    // Favorite button & Wishlist
+    // Wishlist
     const { likedByUsers } = stay
     const loggedInUser = userService.getLoggedInUser()
-    const [isLike, setIsLike] = useState(
+    const [isOnWishList, setIsOnWishList] = useState(
         loggedInUser ? likedByUsers.includes(loggedInUser._id) : false
     )
 
@@ -47,8 +47,8 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
 
     // Gallery Props
     const galleryPreviewProps = {
-        onClickImage, 
-        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url,})),
+        onClickImage,
+        items: stay.imgUrls.slice(0, 5).map(url => ({ original: url, })),
         additionalClass: 'preview-gallery',
         showPlayButton: true,
         autoPlay: true,
@@ -76,7 +76,7 @@ function _StayPreview({ stay, onRemoveStay, view, avgRate }) {
         </div>
 
         <Link to={`/stay/${_id}`} className="link-container">
-            <div className="flex-center rate">{<AppIcon iconKey="Star" />}{rate.current}</div>
+            <div className="flex-center rate">{<AppIcon iconKey="Star" />}{RandRate.current}</div>
 
             <div className="text heading">{propertyType} in {city}</div>
 

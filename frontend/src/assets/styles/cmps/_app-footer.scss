@@ -11,15 +11,12 @@
         @include for-desktop-layout {
             display: none
         }
-
         background-color: #fff;
         color: $clr-light-txt;
         border-top: 1.5px solid $clr-vector;
         display: flex;
         justify-content: space-evenly;
         flex: 1;
-
-
         a {
             color: rgba(34, 34, 34, 0.733);
             flex-direction: column;
@@ -38,6 +35,8 @@
                 height: 24px;
             }
         }
+      
+
     }
 
     .wide-home-footer {

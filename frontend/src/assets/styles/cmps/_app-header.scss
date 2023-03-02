@@ -76,8 +76,7 @@
 
             .main-btn-ref-container {
                 @include btn;
-                // place-content: center;
-                // flex: 1;
+                flex: 1;
                 align-self: center;
                 justify-content: flex-start;
                 max-width: 500px;

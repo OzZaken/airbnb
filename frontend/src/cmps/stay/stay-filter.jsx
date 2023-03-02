@@ -41,11 +41,13 @@ export const StayFilter = ({ onChangeFilter }) => {
         onSetFilterBy(filterBy)
     }
 
-    const onSetFilterBy = ({ txt, placeType, maxPrice, minPrice, minCapacity, maxRate, minRate, amenities }) => {
+    const onSetFilterBy = ({
+        txt, placeType, maxPrice, minPrice, minCapacity, maxRate, minRate, amenities
+    }) => {
         setSearchParams({
             'txt': txt,
             'place-type': placeType,
-            'max-price': maxPrice,
+            'max-price': maxPrice, 
             'min-price': minPrice,
             'min-capacity': minCapacity,
             'max-rate': maxRate,
@@ -58,8 +60,11 @@ export const StayFilter = ({ onChangeFilter }) => {
         window.history.pushState({ path: newUrl }, '', newUrl)
     }
 
-    return <section className='full stay-filter'>
+    const onOpenFilter = () => {
+        console.log('filter Open:')
+    }
 
+    return <section className='full stay-filter'>
         <nav className='filter-by-container'>
             <ul className='full filter-nav-list'>
                 {stayService.getAmenities().map((amenity, idx) => {
@@ -80,7 +85,9 @@ export const StayFilter = ({ onChangeFilter }) => {
             </ul>
         </nav>
 
-        <button className='btn-big btn-filters'>
+        <button className='btn-circle next-filter'></button>
+
+        <button onClick={onOpenFilter} className='btn-big btn-filters'>
             <AppIcon iconKey="FilterBy" />Filters
         </button>
     </section>

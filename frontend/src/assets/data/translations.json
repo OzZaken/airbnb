@@ -1,0 +1,52 @@
+{
+    "title": {
+        "en": "What Todo?",
+        "es": "Mis Cosas Por Hacer",
+        "he": "משימות"
+    },
+    "subtitle": {
+        "en": "MVC - Model-View-Controller",
+        "es": "MVC - Modelo-Vista-Controlador",
+        "he": "מודל - ויו - קונטרולר"
+    },
+    "filter-all": {
+        "en": "All",
+        "es": "Todos",
+        "he": "הכל"
+    },
+    "filter-active": {
+        "en": "Active",
+        "es": "Activo",
+        "he": "פעיל"
+    },
+    "filter-done": {
+        "en": "Done",
+        "es": "Completo",
+        "he": "הושלם"
+    },
+    "stat-todo-label": {
+        "en": "Todo",
+        "es": "Hacer",
+        "he": "לעשות"
+    },
+    "stat-active-label": {
+        "en": "Active",
+        "es": "Activo",
+        "he": "פעיל"
+    },
+    "sure": {
+        "en": "Are you sure?",
+        "es": "Estas Seguru?",
+        "he": "בטוח?"
+    },
+    "add": {
+        "en": "Add",
+        "es": "Aggregar",
+        "he": "הוסף"
+    },
+    "add-todo-placeholder": {
+        "en": "What needs to be done?",
+        "es": "Que te tienes que hacer?",
+        "he": "מה יש לעשות?"
+    }
+}

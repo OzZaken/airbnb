@@ -13,13 +13,13 @@ root.render(
   // <React.StrictMode>
   // <ErrorBoundary>
 
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
 
-  //  </ErrorBoundary>
+  // </ErrorBoundary>
   // </React.StrictMode>
 )
 

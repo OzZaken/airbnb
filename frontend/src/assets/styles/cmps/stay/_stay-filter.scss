@@ -7,6 +7,7 @@
     left: 0;
     box-shadow: none;
     transition: box-shadow 0.2s ease;
+
     nav.filter-by-container {
         width: 100%;
         display: flex;
@@ -20,6 +21,11 @@
             width: 100%;
             overflow-x: scroll, hidden;
             overscroll-behavior-inline: hidden;
+            overflow-y: hidden;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             a.link-filter-by {
                 flex-direction: column-reverse;

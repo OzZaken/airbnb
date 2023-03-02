@@ -8,6 +8,7 @@ import { updateView } from '../../store/app.actions'
 import { loadStays, removeStay, setSortBy, updateStay } from '../../store/stay.action'
 // cmps
 import { StayList } from '../../cmps/stay/stay-list'
+import { FilterByPrice } from '../../cmps/stay/filter-by/filter-by-price'
 // UI
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
@@ -28,7 +29,7 @@ export const StayApp = (props) => {
         dispatch(updateView('home'))
         dispatch(loadStays())
         document.body.classList.add('home-page')
-        setTimeout(() => { document.title = `Home` }, 2000)
+        setTimeout(() => { document.title = `Home` }, 3000)
 
         return () => {
             document.body.classList.remove('home-page')
@@ -59,6 +60,7 @@ export const StayApp = (props) => {
 
     if (!stays) return <h1>!stays Loading...</h1>
     return <section className='home-page' >
+        {/* <FilterByPrice/> */}
         <StayList getStayAvgRate={getStayAvgRate} onChangeSortBy={onChangeSortBy} onUpdateStay={onUpdateStay} onRemoveStay={onRemoveStay} stays={stays} />
     </section>
 }

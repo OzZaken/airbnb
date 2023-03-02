@@ -1,6 +1,14 @@
 .stay-preview {
     display: flex;
     flex-direction: column;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 150ms;
+
+    &.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
 
     .gallery-container {
         position: relative;

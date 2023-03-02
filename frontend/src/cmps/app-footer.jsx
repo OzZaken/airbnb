@@ -37,7 +37,6 @@ function _AppFooter({ view }) {
             </nav>
 
             <section hidden className="wide-home-footer">
-
                 <div className="links-container">
                     <span>&copy; 2023 AirBnb,Inc&nbsp;</span>
                     <span>&nbsp;</span>

@@ -63,7 +63,7 @@
   }
 }
 
-// Buttons.
+// Buttons
 @mixin btn($padding: em(1px) em(1px), $shape: regular, $color: $clr-darken, $hover: darken($clr-bgc, 5%)) {
   padding: $padding;
   // font-family: inherit;
@@ -93,8 +93,6 @@
 
     &:active {
       transform: scale(1.03);
-    }
-
-  
+    }  
   }
 }

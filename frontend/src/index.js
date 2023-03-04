@@ -23,12 +23,23 @@ root.render(
   // </React.StrictMode>
 )
 
-// Debug 
-window.onerror = (e) => {
-  // TODO: logger to frontend log with the state.stringify
-  console.log(e)
-  console.dir(e)
-  // console.error(e)
+window.onerror = (err) => {
+  // TODO: logger to frontend log with the state.stringify that include the userId and actions if have
+  const errorToSend = {
+    errorAt:Date.now(),
+    err,
+    machine:{
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      hardwareConcurrency: navigator.hardwareConcurrency
+    },
+    DateTimeFormat: {
+      ...Intl.DateTimeFormat().resolvedOptions(),
+    },
+    localStorage: { ...localStorage },
+    sessionStorage: { ...sessionStorage }
+  }
+  console.log(`🚀 ~ errorToSend:`, errorToSend)
 }
 
 reportWebVitals(App)

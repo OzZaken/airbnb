@@ -11,6 +11,9 @@ export function showSuccessMsg(txt) {
 export function showErrorMsg(txt) {
     showUserMsg(txt, 'danger')
 }
+export function showMsg(txt) {
+    showUserMsg(txt, 'danger')
+}
 
 function on(eventName, listener) {
     const callListener = ({ detail }) => {listener(detail)}

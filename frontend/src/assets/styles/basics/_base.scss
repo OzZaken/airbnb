@@ -77,7 +77,16 @@ img {
     width: 100%;
     object-fit: cover;
 }
-
+// ! Not Work
+img[title]:hover:after {
+    content: attr(title);
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 5px;
+    position: absolute;
+    z-index: 9999;
+  }
 svg {
     display: flex;
     justify-content: center;

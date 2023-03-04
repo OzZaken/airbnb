@@ -94,6 +94,7 @@ body.stay-details {
         flex-direction: column;
 
         .details-sub-heading {
+            display: inline-block;
             .btn-container {
                 @include for-desktop-layout {
                     display: inline-flex;

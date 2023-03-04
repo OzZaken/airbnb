@@ -7,36 +7,29 @@ import AppIcon from './app-icon'
 import { locService } from '../services/loc.service'
 import { userService } from '../services/user.service'
 
-function _StayPreview({ stay }) {
+export const StayPreview = ({ stay }) => {
     const { numberWithCommas, getRandomFloatInclusive } = utilService
     const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
     const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
 
-    // UserDistance handle case of undefined lat lng
-    const { lat: userLat, lng: userLng } = locService.getUserLoc()
+    /*  Distance */
     const { loc } = stay
-    const { countryCode } = loc
-    let { lat: stayLat, lng: stayLng, } = loc
-    if (!stayLat || !stayLng) {
-        let pos = locService.getCoordsFromCountyCode(countryCode)
-        stayLat = pos.lat
-        stayLng = pos.lng
-    }
-    const UserDistance = locService.getDistanceFromLatLng(userLat, userLng, stayLat, stayLng)
+    const [userDistance, setUserDistance] = useState(locService.getUserDistance(loc))
 
     // todo: ClickOnImg set the img idx to 0 
+    // todo: ClickOnImg set the img idx to 0 
     const [currentImgIdx, setCurrentImgIdx] = useState(0)
-    const onSlide = (currentIndex) => setCurrentImgIdx(currentIndex)
+    const onSlide = (imgIdxShown) => setCurrentImgIdx(imgIdxShown)
     const navigate = useNavigate()
     const onClickImg = idx => ev => {
-        console.log(`Click Image!🚀 ~ idx:`, idx)
+        console.log(`Click Image! ~ idx ~ :`, idx)
         console.log('ev:', ev)
         ev.stopPropagation()
         window.scrollTo(0, 0)
         navigate(`/stay/${stay._id}?imgIndex=${idx}`)
     }
 
-    // Wishlist
+    /* Wishlist */
     const { likedByUsers } = stay
     const loggedInUser = userService.getLoggedInUser()
     const [isOnWishList, setIsOnWishList] = useState(
@@ -48,19 +41,22 @@ function _StayPreview({ stay }) {
         console.log('favorite: add to &isFavorite', stay)
     }
 
-    // Gallery Props
+    /* Gallery Props */
+    const { imgUrls } = stay
+    const items = imgUrls.slice(0, 5).map((url, idx) => ({
+        original: url,
+        originalClass: "img-gallery-img",
+        originalTitle: `${stay.name} #${idx + 1}`,
+        originalAlt: `${stay.name} #${idx + 1}`,
+        originalIndex: idx,
+        originalObjectFit: "cover",
+    }))
+    const startIndex = parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0
     const galleryPreviewProps = {
         onSlide,
         onClickImg,
-        items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
-            original: url,
-            originalClass: "img-gallery-img",
-            originalTitle: `${stay.name} Image ${idx + 1}`,
-            originalAlt: `${stay.name} Image ${idx + 1}`,
-            originalIndex: idx,
-            originalObjectFit: "cover",
-        })),
-        startIndex: parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0,
+        items,
+        startIndex,
         additionalClass: 'preview-gallery',
         showPlayButton: true,
         autoPlay: true,
@@ -95,9 +91,12 @@ function _StayPreview({ stay }) {
                 {summary}
             </span>
 
-            <span className="txt distance">
-                {numberWithCommas(UserDistance)} kilometers
-            </span>
+            {/* {UserDistance
+                ? <span className="txt distance">
+                    {numberWithCommas(UserDistance)} kilometers
+                </span>
+                : <button className="btn">Approve location service</button>
+            } */}
 
             <div className="txt price">
                 {isDiscount.current && <span className="full-night-price">
@@ -117,10 +116,3 @@ function _StayPreview({ stay }) {
         </Link>
     </article>
 }
-
-function mapStateToProps(state) {
-    const { view } = state.appModule
-    return { view }
-}
-
-export const StayPreview = connect(mapStateToProps)(_StayPreview)

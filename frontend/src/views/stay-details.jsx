@@ -113,13 +113,13 @@ export const _StayDetails = () => {
         ...thumbnailsProps,
         autoPlay: false,
     }
-    
+
     const { isSuperHost } = host
     const { city, country } = loc
     return <article className='stay-details'>
         <header className="main-details-heading">
 
-            <div className="details-heading">
+            <div className="flex-inline details-heading">
                 <h1>{name}</h1>
 
                 <div className='details-sub-heading'>
@@ -146,14 +146,14 @@ export const _StayDetails = () => {
                     <span> {`${city},${country}`}</span>
 
                     <div hidden className='btns-container'>
-                        <span>
-                            <AppIcon iconKey="Share" />
-                            <button className='txt capitalize underline'>share</button>
-                        </span>
-                        <span>
-                            <AppIcon iconKey="FavoriteFill" />
-                            <button className='txt capitalize underline'>saved</button>
-                        </span>
+                        
+                        <button className='btn-link'>
+                            <AppIcon iconKey="Share" />share
+                        </button>
+                        
+                        <button className='btn-link'>
+                            <AppIcon iconKey="FavoriteFill" />saved
+                        </button>
                     </div>
                 </div>
             </div>

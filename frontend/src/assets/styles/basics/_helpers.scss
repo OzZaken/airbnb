@@ -12,9 +12,7 @@
     opacity: 0;
     pointer-events: none;
 
-    >* {
-        pointer-events: none;
-    }
+    >* {pointer-events: none;}
 }
 
 .hidden {
@@ -155,7 +153,6 @@
 .img-container {
     object-fit: contain;
 }
-
 
 /* The switch - the box around the slider */
 .switch {

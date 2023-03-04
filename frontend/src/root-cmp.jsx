@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { UserMsg } from './cmps/user-msg'
 import { locService } from './services/loc.service'
 // import { translationService } from './services/i18n.service'
-
+console.log('process.env:', process.env)
 
 const Team = () => {
     return (
@@ -24,7 +24,7 @@ const Team = () => {
 const Vision = () => {
     return (
         <ol>
-            <li>Save the world with our users</li>
+            <li>Save the world with odur users</li>
             <li>Take over the world with our users</li>
         </ol>
     )
@@ -32,12 +32,11 @@ const Vision = () => {
 
 function App() {
     document.title = 'Welcome!'
-    locService.setUserLoc()
+    let loading = document.title = 'loading'
     // translationService.doTrans()
-    // setTimeout(() => { document.title = 'Loading.' }, 500)
-    // setTimeout(() => { document.title = 'Loading..' }, 1000)
-    // setTimeout(() => { document.title = 'Loading...' }, 1500)
-
+    setTimeout(() => { document.title = loading += '.' }, 500)
+    setTimeout(() => { document.title = loading += '.' }, 1000)
+    setTimeout(() => { document.title = loading += '.' }, 1500)
     return (
         <div className="main-layout">
             <AppHeader />

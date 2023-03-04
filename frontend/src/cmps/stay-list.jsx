@@ -3,8 +3,8 @@ import { StayPreview } from './stay-preview'
 
 export function StayList({ stays, onRemoveStay, getStayAvgRate }) {
 
-    const onLastPreviewRendered = () => {
-        console.log('onLastPreviewRendered called');
+    const setIntersection = () => {
+        console.log('onLastPreviewRendered called')
         const stays = document.querySelectorAll('.stay-preview')
 
         const observer = new IntersectionObserver(entry => {
@@ -28,12 +28,7 @@ export function StayList({ stays, onRemoveStay, getStayAvgRate }) {
         lastCardObserver.observe(document.querySelector('.stay-preview:last-child'))
     }
 
-    const onLoad = (idx) => {
-        console.log('onLoad',idx)
-        if (idx === stays.length - 1) {
-            onLastPreviewRendered()
-        }
-    }
+
     console.log('stays.length:', stays.length)
     return <section className='stay-list'>
         {stays.map((stay, idx) => {
@@ -43,7 +38,7 @@ export function StayList({ stays, onRemoveStay, getStayAvgRate }) {
                 onRemoveStay={onRemoveStay}
                 avgRate={getStayAvgRate}
                 // Call the callback function after the last StayPreview component has been rendered
-                onLoad={() => onLoad(idx)}
+                // onLoad={idx === stays.length - 1 ? onLastPreviewRendered : undefined}
             />
         })}
     </section>

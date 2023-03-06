@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import AppIcon from "./app-icon"
+import OnlyIcon from "./app-icon"
 import { BtnRadialGradient } from "./btn-triger"
 
 function _AppFooter({ view }) {
@@ -27,11 +27,11 @@ function _AppFooter({ view }) {
     return <footer className='main-footer'>
         {view === 'home' && <>
             <nav className="footer-nav">
-                <NavLink to='/'>{<AppIcon iconKey="Search" />}Explore</NavLink>
-                <NavLink to='/wishlist'>{<AppIcon iconKey="Favorite" />}Wishlists</NavLink>
+                <NavLink to='/'>{<OnlyIcon iconKey="Search" />}Explore</NavLink>
+                <NavLink to='/wishlist'>{<OnlyIcon iconKey="Favorite" />}Wishlists</NavLink>
                 <NavLink to='/trips'><div className="logo"></div> Trips</NavLink>
-                <NavLink to='/inbox'>{<AppIcon iconKey="Inbox" />}Inbox</NavLink>
-                <NavLink to='/user'>{<AppIcon iconKey="AccountCircle" />}Profile</NavLink>
+                <NavLink to='/inbox'>{<OnlyIcon iconKey="Inbox" />}Inbox</NavLink>
+                <NavLink to='/user'>{<OnlyIcon iconKey="AccountCircle" />}Profile</NavLink>
             </nav>
 
             <section hidden className="wide-home-footer">
@@ -44,7 +44,7 @@ function _AppFooter({ view }) {
                     <span>&#183;</span>
                     <Link>Privacy&nbsp;&#183;</Link>
                 </div>
-                <AppIcon iconKey="footerSvg" />
+                <OnlyIcon iconKey="footerSvg" />
             </section>
         </>
         }
@@ -69,7 +69,7 @@ function _AppFooter({ view }) {
 }
 
 function mapStateToProps(state) {
-    const { view } = state.appModule
+    const { view } = state.systemModule
     return { view }
 }
 

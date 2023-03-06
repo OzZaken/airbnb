@@ -1,24 +1,20 @@
-// VIEWS
 import { About } from './views/about'
-//      - user
 import { AdminApp } from './views/admin-app'
 import { UserDetails } from './views/user-details'
 import { UserEdit } from './views/user-edit'
-//      - stay
 import { StayApp } from './views/stay-app'
 import { StayDetails } from './views/stay-details'
 
-
 const base = [
-    {
-        path: 'admin',
-        component: <AdminApp />,
-        label: 'Admin Only'
-    },
     {
         path: '',
         component: <StayApp />,
         label: 'Home ',
+    },
+    {
+        path: 'admin',
+        component: <AdminApp />,
+        label: 'Admin Only'
     },
     {
         path: 'about',
@@ -26,7 +22,6 @@ const base = [
         label: 'About'
     },
 ]
-
 const stay = [
     {
         path: 'stay/:id',
@@ -34,7 +29,6 @@ const stay = [
         label: 'UserDetails ',
     },
 ]
-
 const user = [
 
     {
@@ -59,10 +53,6 @@ const user = [
     },
 ]
 
-const routes = [
-    ...base,
-    ...stay,
-    ...user,
-]
+const routes = [...base,...stay,...user,]
 
 export default routes

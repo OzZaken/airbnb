@@ -1,40 +1,42 @@
 import { httpService } from './http.service'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { utilService } from './util.service'
+
+const _UserMsg = withReactContent(Swal)
+const COUNTRIES = require('../assets/data/countries.json')
+
+const STORAGE_KEY = 'userLoc'
+const API_KEY = process.env.API_KEY
+console.log('API_KEY:', API_KEY)
+
+/* Saving on 2 Data Types*/
+const LOCS = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
+const LOCS_MAP = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
+
+/* user Location State By Default in Israel */
+var gUserPos = sessionStorage.getItem(STORAGE_KEY) // session
+    || LOCS[LOCS.length - 1]// LOCS
+    || _setUserLocByCountryCode('ISR') // Default in Israel 
+
+console.log(`🚀 ~ gUserPos:`, gUserPos)
+// prevent unnecessary requests (already search same input and type )
+const INVALID_SEARCH_RESULT = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
 
 export const locService = {
-    approvedLocService,
+    getLocByAddress,
+    getUserPos,
     getUserDistance,
-    setUserLocBy: {
-        CountryName: setUserLocByCountryName,
-    },
-    getLocBy: {
-        address: getLocByAddress,
-        city: getLocByCity,
-        country: getLocationByCountry,
-        countryCode: getLocByCode,
-    },
+    approvedLocService,
+    setUserLocByCountryName,
 }
 // debug
 window.gLocService = locService
-
-const countries = require('../assets/data/countries.json')
-
-const _UserMsg = withReactContent(Swal)
-
-const STORAGE_KEY = 'userLoc'
-const { API_KEY } = process.env
-
-// My data analyst not sure which way better! 👱🏽‍♀️ 🤏🏽
-const locs = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
-const locsMap = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
-
-// prevent unnecessary requests (already search same input and type )
-const invalidSearchResult = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
-
-// user Location State
-var gUserPos = sessionStorage.getItem(STORAGE_KEY) || locs[locs.length - 1] || null
-
+window.gDebug = {
+    LOCS,
+    LOCS_MAP,
+    INVALID_SEARCH_RESULT
+}
 async function approvedLocService() {
     const hasApprovedLocation = await _showConfirmMsg(
         'info',
@@ -46,7 +48,8 @@ async function approvedLocService() {
     )
     try {
         if (hasApprovedLocation.isConfirmed) {
-            _getCurrentUserPos()
+            sessionStorage.setItem('hasApprovedLocation', true)
+            _setUserPos()
             _showUserMsg(
                 'success',
                 'Location Service Approved!',
@@ -64,47 +67,21 @@ async function approvedLocService() {
     }
 }
 
-//* //  ///   /////      Search     \\\\\    \\\  *\\
-/* if NOT search today with same method & input */
-function _isValidSearch(type, input) {
-    const alreadySearch = invalidSearchResult[type][_formatDate(null, false, true)].include(input)
-    if (alreadySearch) {
-        _UserMsg.fire({
-            icon: "warning",
-            title: "Address not found",
-            html: `We couldn't find your desired address ${input}
-              <br>Last search at ${_formatDate(null, false)}
-              <br>Try searching another way.`
-        })
-        return
-    }
-    return true
-}
-
-/* put new invalid search result */
-function _handleSearchError(type, input) {
-    invalidSearchResult[type][_formatDate(null, false, true)].push(input)
-    _UserMsg.fire({
-        icon: "info",
-        title: "Address not found",
-        html: `We couldn't find your desired address ${input}
-          <br>Last search at ${_formatDate(null, false)}
-          <br>Try searching another way.`
-    })
-}
-
-/* address */
-async function getLocByAddress(addressFromUser) {
-    if (!_isValidSearch('address', addressFromUser)) return
-
-    const regex = new RegExp(addressFromUser, "i")
-    const country = countries.find(
+//* //  ///   /////      Search Location   \\\\\    \\\  *\\
+/* By name, region, subregion ,capital*/
+async function getLocByAddress(address) {
+    console.log(`🚀 ~ getLocByAddress(address):`, address)
+    if (!_isValidSearch('address', address)) return
+    // filter try find in local data 
+    const regex = new RegExp(address, "i")
+    const country = COUNTRIES.find(
         (c) =>
             c.name.match(regex) ||
             c.region.match(regex) ||
             c.subregion.match(regex) ||
             c.capital.match(regex)
     )
+    // found on local data
     if (country) {
         return {
             lat: country.latlng[0],
@@ -112,40 +89,34 @@ async function getLocByAddress(addressFromUser) {
         }
     } else {
         try {
-            const result = await _searchLocByAddress(addressFromUser);
+            // search using googleapis
+            const result = await _searchLocByAddress(address)
+            console.log(`🚀 ~ result:`, result)
             return {
                 lat: result.lat,
                 lng: result.lng,
             }
         } catch (err) {
-            _handleSearchError()
-            throw new Error(`Error searching for location: ${addressFromUser}`);
+            throw new Error(`Error searching for location: ${address}`)
         }
     }
 }
-
-async function _searchLocByAddress(locationName) {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${API_KEY}`;
+async function _searchLocByAddress(address) {
+    console.log('_searchLocByAddress(address)', address)
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`
 
     try {
-        const response = await httpService.get(url);
-        const result = response.data.results[0];
-        const {
-            formatted_address: name,
-            geometry: { location: { lat, lng } },
-        } = result;
-        return { name, lat, lng };
-    } catch (error) {
-        console.error(`Error searching for location: ${locationName}`, error);
-        throw new Error(`Error searching for location: ${locationName}`);
+        const response = await httpService.get(url)
+        return _getLoc(response.data.results[0])
+    } catch (err) {
+        _handleSearchError('address', address)
+        throw new Error(`Error searching for location: ${address}`)
     }
 }
 
-/* country code */
-async function getLocByCode(code) {
-    const country = countries.find(
-        (c) => c.alpha2Code === code || c.alpha3Code === code
-    )
+/* By country code alfa2 || alfa3 */
+async function getLocByCountryCode(code) {
+    const country = _getCountryFromAlfaCode(code)
     if (country) {
         return {
             lat: country.latlng[0],
@@ -163,98 +134,86 @@ async function getLocByCode(code) {
         }
     }
 }
-
 async function _searchLocByCode(code) {
     const codeType = code.length === 2 ? 'alfa2Code' : 'alfa3Code'
     const url = `https://maps.googleapis.com/maps/api/geocode/json?${codeType}=${code}&key=${API_KEY}`
 
     try {
         const response = await httpService.get(url)
-        const result = response.data.results[0]
-        const { formatted_address: name, geometry: { location: { lat, lng } } } = result
-        return { name, lat, lng }
+        return _getLoc(response.data.results[0])
     } catch (error) {
-        console.error(`Error searching for location: ${code}`, error)
+        _handleSearchError('code', code)
         throw new Error(`Error searching for location: ${code}`)
     }
 }
-
-/* name */
-async function getLocByCity(cityName, countryName) {
-    const country = countries.find(c => c.name.toLowerCase() === countryName.toLowerCase())
-    if (!country) {
-        throw new Error(`Country ${countryName} not found`)
+//* //  ///   /////      Search Validation    \\\\\    \\\  *\\
+/* if NOT search today with same method & input */
+function _isValidSearch(type, input) {
+    const { formatDate } = utilService
+    const alreadySearch =
+        INVALID_SEARCH_RESULT[type][formatDate(new Date(), 'byDay')].include(input)
+    if (alreadySearch) {
+        _UserMsg.fire({
+            icon: "info",
+            title: "Address not found",
+            html: `We couldn't find your desired address ${input}
+              <br>Last search at ${formatDate()}
+              <br>Try searching another way.`
+        })
+        return
     }
-    const city = country.capital.toLowerCase() === cityName.toLowerCase()
-        ? { name: country.capital, latlng: country.latlng }
-        : country.cities.find(c => c.name.toLowerCase() === cityName.toLowerCase())
-    if (city) {
-        const { name, latlng } = city
-        return { name, lat: latlng[0], lng: latlng[1] }
-    } else {
-        // Search for the city using Google Maps Geocoding API
-        const locationName = `${cityName}, ${countryName}`
-        try {
-            return await _searchLocByName(locationName)
-        } catch (error) {
-            console.error(`Error searching for location: ${locationName}`, error)
-            throw new Error(`Error searching for location: ${locationName}`)
-        }
-    }
+    return true
 }
-
-async function _searchLocByName(name) {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`;
-
-    try {
-        const response = await httpService.get(url);
-        const result = response.data.results[0];
-        const {
-            formatted_address: name,
-            geometry: { location: { lat, lng } },
-        } = result;
-        return { name, lat, lng };
-    } catch (error) {
-        console.error(`Error searching for location: ${name}`, error);
-        throw new Error(`Error searching for location: ${name}`);
-    }
+/* put new invalid search result */
+function _handleSearchError(searchType, input) {
+    const { formatDate } = utilService
+    INVALID_SEARCH_RESULT[searchType][formatDate(new Date(), 'byDay')].push(input)
+    _UserMsg.fire({
+        icon: "info",
+        title: "Address not found",
+        html: `We couldn't find your desired address ${input}
+          <br>Last search at ${formatDate(null, false)}
+          <br>Try searching another way.`
+    })
 }
-
 
 //* //  ///   /////      User Location    \\\\\    \\\  *\\
-function getUserDistance(stayLocation) {
-    console.log(`🚀 ~ stayLocation:`, stayLocation)
+function getUserPos() {
+    return gUserPos
+}
+
+function getUserDistance(stayLoc) {
     var stayPos
-    /* Handle Undefined pos from User */
-    if (!gUserPos) _setUserPosByAlfaCode('IL')
-    const { lat, lng } = gUserPos
-    /* Handle Undefined lat lng from Stay */
-    let { lat: stayLat, lng: stayLng, } = stayLocation
-    if (!stayLat || !stayLng) {
-        const { countryCode } = stayLocation
-        const { lat, lng } = _getPosByCode(countryCode)
-        stayPos = { lat, lng }
+    /* Handle Undefined lat lng */
+    var { lat, lng } = stayLoc
+    if (!lat || !lng) {
+        var { address, city, country, countryCode } = stayLoc
+        if (countryCode) {
+            stayPos = { ...getLocByCountryCode(countryCode) }
+        } else if (address || city || country) {
+            stayPos = { ...getLocByAddress(`${address || ' '}${city || ' '}${country || ''}`) }
+        } else console.error('undefined Location', stayLoc)
+
     }
-    return _calcDistance(stayPos, { lat, lng })
+    return _calcDistance(stayPos, gUserPos)
 }
 
-function _setUserPosByAlfaCode(alfaCode) {
-    const country = _getPos(_getCountryFromAlfaCode(alfaCode))
-    _updateUserLoc(_getPos(country))
+/*  for starting with Demo Distance */
+function _setUserLocByCountryCode(code) {
+    const country = _getCountryFromAlfaCode(code)
+    const pos = _getPosFromCountry(country)
+    _updateUserLoc(pos)
 }
 
+/* optional for user who !navigator.geolocation */
 function setUserLocByCountryName(preferCountry = 'Israel') {
-    const country = countries.find(country => country.name === preferCountry)
-    _updateUserLoc(_getPos(country))
+    const country = COUNTRIES.find(country => country.name === preferCountry)
+    _updateUserLoc(_getPosFromCountry(country))
 }
 
-function _getCountryFromAlfaCode(code) {
-    return countries.find((c) => c.alpha2Code === code || c.alpha3Code === code)
-}
-
-function _getCurrentUserPos() {
+function _setUserPos() {
     if (!navigator.geolocation) {
-        _showErrorMsg('HTML5 Geolocation is not supported in your browser')
+        _showErrorMsg('')
         return null
     }
 
@@ -291,73 +250,71 @@ function _getCurrentUserPos() {
     navigator.geolocation.getCurrentPosition(onSuccessSetUserLoc, onErrorSetUserLoc)
 }
 
-function _updateUserLoc(pos, date = _formatDate()) {
+function _updateUserLoc(pos) {
     gUserPos = pos
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(gUserPos))
 
+    const { formatDate } = utilService
+    const date = formatDate(new Date(), 'byHour')
     const loc = { date: pos }
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(loc))
 
     // Data Types
-    locs.push(loc)
-    locsMap[date] = pos
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(locs))
-    localStorage.setItem(STORAGE_KEY + 'Map', JSON.stringify(locsMap))
-
-    // httpService.post(STORAGE_KEY, loc)
+    LOCS.push(pos)
+    localStorage.setItem(STORAGE_KEY + 's', JSON.stringify(LOCS))
+    
+    LOCS_MAP[date] = pos
+    localStorage.setItem(STORAGE_KEY + 'Map', JSON.stringify(LOCS_MAP))
+    
+    // const data = [
+    //     { url: STORAGE_KEY + 's', data: pos },
+    //     { url: STORAGE_KEY + 'Map', data: loc }
+    // ]
+    // httpService.post(STORAGE_KEY,data)
 }
 
-function _formatDate(date = new Date(), byHour = true, byDay = false) {
-    if (byHour || byDay) {
-        date.setMinutes(0)
-        date.setSeconds(0)
-
-    }
-    if (byHour || byDay) {
-        date.setDays(0)
-    }
-
-    return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-        timeZoneName: 'long'
-    })
-}
-
-//* //  ///   /////      privet    \\\\\    \\\  *\\
-/* Distance */
+//* //  ///   /////      Privet    \\\\\    \\\  *\\
 function _calcDistance(posA, posB) {
-    const radius = _getEarthRadius() // Earth's radius in km or miles
+    const { getEarthRadius } = utilService
+    const radius = getEarthRadius() // Earth's radius in km or miles
+
     const dLat = (posB.lat - posA.lat) * Math.PI / 180
     const dLon = (posB.lng - posA.lng) * Math.PI / 180
+
     const lat1 = posA.lat * Math.PI / 180
     const lat2 = posB.lat * Math.PI / 180
 
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
+    // a = sin²(Δlat/2) + cos(lat1) * cos(lat2) * sin²(Δlon/2)
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) *
+        Math.cos(lat1) * Math.cos(lat2)
+
+    // c = 2 * atan2(√a, √(1-a))
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     const distance = radius * c
 
     return distance
 }
-
-// i18n
-function _getEarthRadius() {
-    const lang = navigator.language
-    const kmLocales = ['en-US', 'en-GB', 'fr-FR', 'es-ES', 'it-IT', 'pt-PT', 'pt-BR']
-    const milesLocales = ['en-CA', 'en-AU']
-
-    if (kmLocales.includes(lang)) {
-        return 6371 // Earth's radius in km
-    } else if (milesLocales.includes(lang)) {
-        return 3959 // Earth's radius in miles
-    } else {
-        console.warn('Unknown locale:', lang)
-        return 6371 // default to km
+/* find country by alpha2Code && alpha3Code */
+function _getCountryFromAlfaCode(code) {
+    return COUNTRIES.find(c => c.alpha2Code === code || c.alpha3Code === code)
+}
+/* extract Pos from country */
+function _getPosFromCountry(country) {
+    console.log(`🚀 ~ country:`, country)
+    return {
+        lat: country.latlng[0],
+        lng: country.latlng[1]
     }
+}
+/* extract Loc from google Api searchResult */
+function _getLoc(searchResult) {
+    const {
+        formatted_address: name,
+        geometry: { location: { lat, lng } },
+    } = searchResult
+
+    return { name, lat, lng }
 }
 
 //* //  ///   /////      Swal _UserMsg    \\\\\    \\\  *\\
@@ -368,7 +325,6 @@ function _showErrorMsg(title, text) {
         text: <p>{text}</p>,
     })
 }
-
 // success || warning
 function _showUserMsg(type, title, text) {
     _UserMsg.fire({
@@ -377,7 +333,6 @@ function _showUserMsg(type, title, text) {
         text: <p>{text}</p>,
     })
 }
-
 // question || info
 function _showConfirmMsg(type, title, text, confirmButtonText, showCancelButton, cancelButtonText) {
     _UserMsg.fire({
@@ -391,26 +346,3 @@ function _showConfirmMsg(type, title, text, confirmButtonText, showCancelButton,
         cancelButtonColor: '#d33',
     })
 }
-
-
-
-
-
-
-
-function getLocationByCountry(countryName) {
-    const country = countries.find(c => c.name.toLowerCase() === countryName.toLowerCase())
-    if (!country) {
-        throw new Error(`Country ${countryName} not found`)
-    }
-    const { name, latlng } = country
-    return { name, lat: latlng[0], lng: latlng[1] }
-}
-
-function _getPos(country) {
-    return {
-        lat: country.latlng[0],
-        lng: country.latlng[1]
-    }
-}
-

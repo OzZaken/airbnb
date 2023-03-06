@@ -1,13 +1,13 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-import { appReducer } from './app.reducer'
+import { systemReducer } from './system.reducer'
 import { userReducer } from './user.reducer'
 import { stayReducer } from './stay.reducer'
 import { orderReducer } from './order.reducer'
 
 const rootReducer = combineReducers({
-    appModule: appReducer,
+    systemModule: systemReducer,
     stayModule: stayReducer,
     userModule: userReducer,
     orderModule: orderReducer,

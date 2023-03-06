@@ -2,9 +2,10 @@ const initialState = {
     view: null, // dispatch on eac View CMP cdn 
     isDarkMode: false, // By-User
     userActivity: [], // track user actions
+    title: document.title
 }
 
-export function appReducer(state = initialState, action = {}) {
+export function systemReducer(state = initialState, action = {}) {
     var newState = state
     switch (action.type) {
         case 'UPDATE_VIEW':
@@ -22,8 +23,11 @@ export function appReducer(state = initialState, action = {}) {
         case 'CLEAR_USER_ACTIVITY':
             newState = { ...state, userActivity: [] }
             break
-           
-        default: 
+        case 'SET_TITLE':
+            newState = { ...state, title: action.title }
+            break
+
+        default:
     }
     window.gAppState = newState
     return newState

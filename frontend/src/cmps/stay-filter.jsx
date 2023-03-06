@@ -1,7 +1,7 @@
 import { NavLink, useSearchParams } from 'react-router-dom'
 import { useFormRegister } from '../hooks/useFormRegister'
 import { stayService } from '../services/stay.service'
-import AppIcon from './app-icon'
+import OnlyIcon, {CustomSvg}  from './app-icon'
 import { useSelector } from 'react-redux'
 
 export const StayFilter = ({ onChangeFilter }) => {
@@ -77,7 +77,7 @@ export const StayFilter = ({ onChangeFilter }) => {
                         <NavLink to={`/q?amenities=${queryStringParam}`} className={'link-filter-by'}>
                             <h3 className='flex'>{heading}</h3>
                             <span className='icon'>
-                                <AppIcon iconKey={iconKey} />
+                                <OnlyIcon iconKey={iconKey} />
                             </span>
                         </NavLink>
                     </li>
@@ -85,10 +85,12 @@ export const StayFilter = ({ onChangeFilter }) => {
             </ul>
         </nav>
 
-        <button className='btn-circle next-filter'></button>
+        <button className='btn-circle btn-next-filter'>
+        &#62;
+        </button>
 
         <button onClick={onOpenFilter} className='btn-big btn-filters'>
-            <AppIcon iconKey="FilterBy" />Filters
+            <OnlyIcon iconKey="FilterBy" />Filters
         </button>
     </section>
 }

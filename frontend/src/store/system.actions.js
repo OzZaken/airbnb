@@ -4,6 +4,14 @@ export function updateView(view) {
     }
 }
 
+export function setTitle(title) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_TITLE',  title })
+    }
+}
+
+
+
 export function addUserAction(actionData) {
     return (dispatch) => {
         dispatch({ type: 'ADD_USER_ACTION', data: actionData })

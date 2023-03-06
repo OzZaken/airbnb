@@ -29,15 +29,23 @@ import NationalPark from '../assets/imgs/filter-by/national-park.png'
 import Omg from '../assets/imgs/filter-by/omg.png'
 
 
-export default function AppIcon({ iconKey }) {
+export default function OnlyIcon({ iconKey }) {
   return icons[iconKey]
 }
 
-export function AppIcon1({ iconKey, classSize }) {
+export function AppIcon({ iconKey, classSize }) {
   const icon = icons[iconKey]
   return <span className={'icon-container ' + classSize}>
     {icon}
   </span>
+}
+
+export function CustomSvg(props) {
+  return (
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
+      <path d={props.path}/>
+    </svg>
+  )
 }
 
 

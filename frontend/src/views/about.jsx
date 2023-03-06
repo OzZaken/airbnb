@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { NavLink, Outlet} from "react-router-dom"
 import { Counter } from "../cmps/counter"
-import { updateView } from '../store/app.actions'
+import { updateView } from '../store/system.actions'
 
 export function About() {
     const dispatch = useDispatch()

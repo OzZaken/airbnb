@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import AppIcon from '../cmps/app-icon'
+import OnlyIcon from '../cmps/app-icon'
 import { ImgGallery } from '../cmps/img-gallery'
 import { StayOrder } from '../cmps/stay-order'
 import { stayService } from '../services/stay.service'
-import { updateView } from '../store/app.actions'
+import { updateView } from '../store/system.actions'
 import { useSelector } from 'react-redux'
 
 export const _StayDetails = () => {
@@ -127,7 +127,7 @@ export const _StayDetails = () => {
                     {reviews?.length
                         ? <>
                             <span>
-                                <AppIcon className="fs-small" iconKey="Star" />
+                                <OnlyIcon className="fs-small" iconKey="Star" />
                                 4.98 &nbsp;
                             </span>
 
@@ -139,7 +139,7 @@ export const _StayDetails = () => {
 
                     {/* isSuperHost */}
                     {isSuperHost && <span className='super-host'>
-                        <AppIcon iconKey='SuperHost' />SuperHost&#xB7;
+                        <OnlyIcon iconKey='SuperHost' />SuperHost&#xB7;
                     </span>}
 
                     {/* loc */}
@@ -148,11 +148,11 @@ export const _StayDetails = () => {
                     <div hidden className='btns-container'>
                         
                         <button className='btn-link'>
-                            <AppIcon iconKey="Share" />share
+                            <OnlyIcon iconKey="Share" />share
                         </button>
                         
                         <button className='btn-link'>
-                            <AppIcon iconKey="FavoriteFill" />saved
+                            <OnlyIcon iconKey="FavoriteFill" />saved
                         </button>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ export const _StayDetails = () => {
                     {/* <AirCover /> */}
                     <div className="stay-details-row air-cover-container">
                         <div className="img-container">
-                            <AppIcon iconKey="airCover" />
+                            <OnlyIcon iconKey="airCover" />
                         </div>
                         <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
                         <button className="btn-big"><b>Read more</b></button>
@@ -210,7 +210,7 @@ export const _StayDetails = () => {
 }
 
 function mapStateToProps(state) {
-    const { view } = state.appModule
+    const { view } = state.systemModule
     return { view }
 }
 

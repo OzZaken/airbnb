@@ -3,30 +3,30 @@ import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { ImgGallery } from './img-gallery'
 import { utilService } from '../services/util.service'
-import AppIcon from './app-icon'
+import OnlyIcon from './app-icon'
 import { locService } from '../services/loc.service'
 import { userService } from '../services/user.service'
 
 export const StayPreview = ({ stay }) => {
-    const { numberWithCommas, getRandomFloatInclusive } = utilService
+    const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
     const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
     const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
 
     /*  Distance */
     const { loc } = stay
-    const [userDistance, setUserDistance] = useState(locService.getUserDistance(loc))
+    const [userDistance, setUserDistance] = useState(null)
+    // setUserDistance(locService.getUserDistance())
 
-    // todo: ClickOnImg set the img idx to 0 
-    // todo: ClickOnImg set the img idx to 0 
     const [currentImgIdx, setCurrentImgIdx] = useState(0)
     const onSlide = (imgIdxShown) => setCurrentImgIdx(imgIdxShown)
+
     const navigate = useNavigate()
     const onClickImg = idx => ev => {
-        console.log(`Click Image! ~ idx ~ :`, idx)
-        console.log('ev:', ev)
         ev.stopPropagation()
-        window.scrollTo(0, 0)
-        navigate(`/stay/${stay._id}?imgIndex=${idx}`)
+        console.log(`Click Image! ~ idx ~ :`, idx, ev)
+        // window.scrollTo(0, 0)
+        // navigate(`/stay/${stay._id}?imgIndex=${idx}`)
+        navigate(`/stay/${stay._id}}`)
     }
 
     /* Wishlist */
@@ -35,8 +35,8 @@ export const StayPreview = ({ stay }) => {
     const [isOnWishList, setIsOnWishList] = useState(
         loggedInUser ? likedByUsers.includes(loggedInUser._id) : false
     )
-
-    const onToggleIsInWishlist = (ev) => {
+    // console.log('isOnWishList:', isOnWishList)
+    const onToggleIsInWishlist = ev => {
         ev.stopPropagation() // if inside of the Link 
         console.log('favorite: add to &isFavorite', stay)
     }
@@ -56,11 +56,11 @@ export const StayPreview = ({ stay }) => {
         onSlide,
         onClickImg,
         items,
+        infinite: false,
         startIndex,
         additionalClass: 'preview-gallery',
-        showPlayButton: true,
-        autoPlay: true,
-        slideInterval: 15000, // Default 3000
+        showPlayButton: false,
+        autoPlay: false,
         showIndex: false,
         showFullscreenButton: false,
         showBullets: true,
@@ -91,12 +91,15 @@ export const StayPreview = ({ stay }) => {
                 {summary}
             </span>
 
-            {/* {UserDistance
-                ? <span className="txt distance">
-                    {numberWithCommas(UserDistance)} kilometers
+            {userDistance ? <span className="txt distance">
+                {numberWithCommas(userDistance)} kilometers
+            </span>
+
+                : <span className="txt views-count">
+                    {numberWithCommas(getRandomIntInclusive(1000, 70000))} watches this month
                 </span>
-                : <button className="btn">Approve location service</button>
-            } */}
+            }
+
 
             <div className="txt price">
                 {isDiscount.current && <span className="full-night-price">
@@ -110,7 +113,7 @@ export const StayPreview = ({ stay }) => {
             </div>
 
             <span className="rate">
-                {<AppIcon className="fs-small" iconKey="Star" />}
+                {<OnlyIcon className="fs-small" iconKey="Star" />}
                 {RandRate.current}
             </span>
         </Link>

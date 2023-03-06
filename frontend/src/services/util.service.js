@@ -8,7 +8,31 @@ export const utilService = {
     getRandomIntInclusive,
     getRandomFloatInclusive,
     timeAgo,
-    getCababCase
+    getCababCase,
+    formatDate
+}
+function formatDate(date = new Date(), formatBy) {
+    switch (formatBy) {
+        case 'byHour':
+            date.setMinutes(0)
+            date.setSeconds(0)
+            break
+
+        case 'byDay':
+            date.setDays(0)
+            break
+
+        default:
+            return date.toUTCString()
+    }
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZoneName: 'long'
+    })
 }
 
 function makeId(length = 6) {

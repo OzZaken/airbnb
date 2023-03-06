@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import AppIcon from "./app-icon"
+import OnlyIcon from "./app-icon"
 import { StayFilter } from "./stay-filter"
 import AccountMenu from "./user-menu"
 import { setFilterBy, loadStays } from '../store/stay.action'
@@ -36,7 +36,7 @@ function _AppHeader({ view }) {
 
             <section className="container main-search-container">
                 <button onClick={onSetSearchBy} className="btn-circle btn-search-by">
-                    <AppIcon iconKey="Search" />
+                    <OnlyIcon iconKey="Search" />
                 </button>
 
                 <div className="container main-btn-ref-container">
@@ -51,7 +51,7 @@ function _AppHeader({ view }) {
                 </div>
 
                 <button className="btn-circle btn-filter-by">
-                    <AppIcon iconKey="FilterBy" />
+                    <OnlyIcon iconKey="FilterBy" />
                 </button>
             </section>
 
@@ -65,11 +65,11 @@ function _AppHeader({ view }) {
 
             <div className="btns-container">
                 <button onClick={onShareStay} className="btn-share">
-                    <AppIcon iconKey='Share' />
+                    <OnlyIcon iconKey='Share' />
                 </button>
 
                 <button className="btn-favorite">
-                    <AppIcon iconKey='Favorite' />
+                    <OnlyIcon iconKey='Favorite' />
                 </button>
             </div>
         </section>}
@@ -77,7 +77,7 @@ function _AppHeader({ view }) {
 }
 
 function mapStateToProps(state) {
-    const { view } = state.appModule
+    const { view } = state.systemModule
     return { view }
 }
 

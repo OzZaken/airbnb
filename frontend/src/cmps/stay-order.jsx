@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useFormRegister } from '../hooks/useFormRegister'
-import AppIcon from './app-icon'
+import OnlyIcon from './app-icon'
 import { BtnRadialGradient } from './btn-triger'
 
 export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
@@ -48,7 +48,7 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
       <div className="guest-input">
         <label htmlFor="guests">GUESTS</label>
         <input  {...register('guests', 'number')} />
-        <AppIcon iconKey="AngleDown" />
+        <OnlyIcon iconKey="AngleDown" />
       </div>
     </main>
 
@@ -57,7 +57,7 @@ export const StayOrder = ({ stay, avgRate, reviewsCount }) => {
     <p className='txt-center'>You won't be charged yet</p>
 
     <footer className="order-footer tag-txt">
-      <AppIcon iconKey="flag" className="fs-small" />
+      <OnlyIcon iconKey="flag" className="fs-small" />
       Report this listing
     </footer>
   </form>

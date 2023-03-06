@@ -3,10 +3,10 @@ import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import OnlyIcon from "./app-icon"
-import { StayFilter } from "./stay-filter"
-import AccountMenu from "./user-menu"
+import { StayFilter } from "./stay/stay-filter"
+import AccountMenu from "./user/user-menu"
 import { setFilterBy, loadStays } from '../store/stay.action'
-// import { LoginSignup } from "./login-signup"
+// import { LoginSignup } from "./system/login-signup"
 
 function _AppHeader({ view }) {
     const dispatch = useDispatch()

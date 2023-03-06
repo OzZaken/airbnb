@@ -1,11 +1,11 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom'
 import React, { useEffect, useRef, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { ImgGallery } from './img-gallery'
-import { utilService } from '../services/util.service'
-import OnlyIcon from './app-icon'
-import { locService } from '../services/loc.service'
-import { userService } from '../services/user.service'
+import { utilService } from '../../services/util.service'
+import { locService } from '../../services/loc.service'
+import { userService } from '../../services/user.service'
+import { ImgGallery } from '../system/img-gallery'
+import OnlyIcon from '../app-icon'
 
 export const StayPreview = ({ stay }) => {
     const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
@@ -35,7 +35,8 @@ export const StayPreview = ({ stay }) => {
     const [isOnWishList, setIsOnWishList] = useState(
         loggedInUser ? likedByUsers.includes(loggedInUser._id) : false
     )
-    // console.log('isOnWishList:', isOnWishList)
+    console.log(`🚀 ~ isOnWishList:`, isOnWishList)
+    
     const onToggleIsInWishlist = ev => {
         ev.stopPropagation() // if inside of the Link 
         console.log('favorite: add to &isFavorite', stay)

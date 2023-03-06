@@ -1,9 +1,11 @@
 import { NavLink, useSearchParams } from 'react-router-dom'
-import { useFormRegister } from '../hooks/useFormRegister'
-import { stayService } from '../services/stay.service'
-import OnlyIcon, {CustomSvg}  from './app-icon'
 import { useSelector } from 'react-redux'
-
+import { stayService } from '../../services/stay.service'
+import { useFormRegister } from '../../hooks/useFormRegister'
+import OnlyIcon, {CustomSvg}  from '../app-icon'
+// const sortBy = {
+//     [prop]: (isDesc) ? -1 : 1
+// }
 export const StayFilter = ({ onChangeFilter }) => {
     // get 
     const { txt, placeType, maxPrice, minPrice, maxRate, minRate, minCapacity, amenities, checkIn }

@@ -48,7 +48,6 @@ export function CustomSvg(props) {
   )
 }
 
-
 const icons = {
   AccountCircle: <AccountCircleIcon />,
   Airbnb: <Airbnb />,
@@ -88,6 +87,7 @@ const icons = {
   Surfing: <SurfingIcon />,
   Wifi: <WifiIcon />,
 }
-
+// debug
+window.gIcons = icons
 // https://mui.com/material-ui/material-icons
 // https://react-icons.github.io/react-icons/search?q=filter

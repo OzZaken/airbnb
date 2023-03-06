@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { HashRouter as Router } from 'react-router-dom'
 import App from './root-cmp'
 import { store } from './store/store'
-import { ErrorBoundary } from './cmps/error-boundary'
+import { ErrorBoundary } from './cmps/system/error-boundary'
 import reportWebVitals from './reportWebVitals'
 import { utilService } from './services/util.service'
 

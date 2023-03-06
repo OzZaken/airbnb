@@ -1,8 +1,14 @@
-var gTrans = {}
-var gLangCode =  navigator.language.substring(0, 2) || 'en' // opt - .split('-')[0]
+const DEFAULT_TRANSLATION = require('../assets/data/translations.json')
+var gTrans = null
 const STORAGE_KEY = 'userLang'
 
-// loadTranslations()
+var gLangCode = localStorage.getItem(STORAGE_KEY)
+    || navigator.language.substring(0, 2)// opt - .split('-')[0]
+
+if (!gLangCode) {
+    gLangCode = 'en'
+    gLangCode =  loadTranslations()
+}
 
 export const translationService = {
     doTrans,
@@ -16,6 +22,13 @@ export const translationService = {
     kmToMiles,
     getEarthRadius,
 }
+
+function setLang(lang) {
+    gLangCode = lang
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(lang))
+}
+
+
 
 function getEarthRadius() {
     const lang = navigator.language
@@ -36,7 +49,7 @@ async function loadTranslations() {
     try {
         const response = await fetch('translations.json')
         const data = await response.json()
-        gTrans = data 
+        gTrans = data
         doTrans()
     } catch (err) {
         console.log(err)
@@ -55,22 +68,7 @@ function doTrans() {
 }
 
 function getTranslationValue(translationKey) {
-    let translationValue = gTrans[translationKey]?.[gLangCode]
-
-    if (!translationValue) {
-        // Try other languages until a translation is found
-        const fallbackLanguages = ['en', 'es', 'he']
-        for (const lang of fallbackLanguages) {
-            translationValue = gTrans[translationKey]?.[lang]
-            if (translationValue) break
-        }
-    }
-    return translationValue || gTrans[translationKey]?.['en'] || 'UNKNOWN'
-}
-
-function setLang(lang) {
-    gLangCode = lang
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(lang))
+    return gTrans[translationKey]?.[gLangCode]
 }
 
 function getCurrencyPrice(price) {
@@ -108,9 +106,9 @@ function formatCurrency(num) {
 
 function formatDate(time) {
     const options = {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: 'numeric', minute: 'numeric',
-        hour12: true,
+        year: 'numeric', month: 'short',
+        day: 'numeric', hour: 'numeric',
+        minute: 'numeric', hour12: true,
     }
     return new Intl.DateTimeFormat(gLangCode, options).format(time)
 }

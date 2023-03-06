@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
@@ -12,19 +12,19 @@ import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
 
 export default function AccountMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+
+  const handleClick = ev => setAnchorEl(ev.currentTarget)
+  const handleClose = () => setAnchorEl(null)
+
   return (
     <React.Fragment>
-      
+
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+       
         <Tooltip title="Account settings">
+         
           <IconButton
             onClick={handleClick}
             size="small"
@@ -33,11 +33,14 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+             <Avatar sx={{ width: 32, height: 32 }}> 
+             
+             </Avatar>
           </IconButton>
+
         </Tooltip>
       </Box>
-      
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -102,5 +105,3 @@ export default function AccountMenu() {
     </React.Fragment>
   )
 }
-
-// https://mui.com/material-ui/react-menu/#AccountMenu.js

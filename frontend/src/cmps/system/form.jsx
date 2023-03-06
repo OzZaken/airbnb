@@ -8,7 +8,7 @@ export const MyForm = () => {
 
     const SignupSchema = Yup.object().shape({
         firstName: Yup.string()
-            .min(2, 'Too Shorttttttttttttt!')
+            .min(2, 'Too Short!')
             .max(7, 'Too Long!')
             .required('Required'),
         lastName: Yup.string()

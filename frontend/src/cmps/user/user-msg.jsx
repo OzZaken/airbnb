@@ -1,5 +1,5 @@
 import React from 'react'
-import { eventBusService } from '../services/event-bus.service'
+import { eventBusService } from '../../services/event-bus.service'
 
 export class UserMsg extends React.Component {
 

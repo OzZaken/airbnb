@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { uploadService } from '../services/upload.service'
+import { uploadService } from '../../services/upload.service'
 
 export class ImgUploader extends Component {
   state = {

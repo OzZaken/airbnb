@@ -4,11 +4,13 @@
     box-shadow: none;
     transition: box-shadow 0.2s ease;
     position: sticky;
-    height: 80px;
 
     nav.filter-by-container {
         display: flex;
         justify-content: space-evenly;
+        // overflow-x: scroll, hidden;
+        // overscroll-behavior-inline: hidden;
+        // overflow-y: hidden;
         overflow: auto;
         scroll-snap-type: x mandatory;
 
@@ -19,12 +21,8 @@
         ul.filter-nav-list {
             flex-shrink: 0;
             scroll-snap-align: start;
-            // align-items: flex-end;
             display: flex;
 
-            // overflow-x: scroll, hidden;
-            // overscroll-behavior-inline: hidden;
-            // overflow-y: hidden;
             a.link-filter-by {
                 flex: 1;
                 flex-direction: column-reverse;
@@ -54,12 +52,11 @@
             box-shadow: none;
             color: #222222bb;
         }
-
     }
 
     .btn-next-filters {
-        border: 0;
         margin-right: $padded-layout;
+        border: 0;
         border-style: solid;
         border-width: 1px;
         background-clip: padding-box;
@@ -71,10 +68,9 @@
         color: #222222a9;
         border: 1px solid #ffffff00;
         width: 30px;
+        min-width: 30px;
         opacity: 0;
         height: 30px;
-
-        min-width: 30px;
     }
 
     .btn-filters {

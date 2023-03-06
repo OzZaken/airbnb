@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import OnlyIcon from "./app-icon"
-import { BtnRadialGradient } from "./btn-triger"
+import {BtnRadialGradient} from '../cmps/system/btn-radial-gradient'
 
 function _AppFooter({ view }) {
     useEffectUpdate(() => { }, [view])

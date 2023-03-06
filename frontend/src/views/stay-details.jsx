@@ -1,13 +1,11 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useEffect,useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import OnlyIcon from '../cmps/app-icon'
-import { ImgGallery } from '../cmps/img-gallery'
-import { StayOrder } from '../cmps/stay-order'
+import { connect, useDispatch,useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
 import { updateView } from '../store/system.actions'
-import { useSelector } from 'react-redux'
+import OnlyIcon from '../cmps/app-icon'
+import { ImgGallery } from '../cmps/system/img-gallery'
+import { StayOrder } from '../cmps/stay/stay-order'
 
 export const _StayDetails = () => {
     const dispatch = useDispatch()

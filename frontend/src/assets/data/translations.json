@@ -1,51 +1,90 @@
 {
-    "title": {
-        "en": "What Todo?",
-        "es": "Mis Cosas Por Hacer",
-        "he": "משימות"
+    "anyWhere": {
+        "en": "anywhere?",
+        "he": "כל מקום"
     },
-    "subtitle": {
-        "en": "MVC - Model-View-Controller",
-        "es": "MVC - Modelo-Vista-Controlador",
+    "anyWeek": {
+        "en": "any week?",
+        "he": "כל שבוע"
     },
-    "filter-all": {
-        "en": "All",
-        "es": "Todos",
-        "he": "הכל"
+    "addGuests": {
+        "en": "add guests",
+        "he": "הוסף אורח"
     },
-    "filter-active": {
-        "en": "Active",
-        "es": "Activo",
-        "he": "פעיל"
+    "addGuests": {
+        "en": "add guests",
+        "he": "הוסף אורח"
     },
-    "filter-done": {
-        "en": "Done",
-        "es": "Completo",
-        "he": "הושלם"
+    "profile": {
+        "en": "Profile",
+        "he": "פרופיל"
     },
-    "stat-todo-label": {
-        "en": "Todo",
-        "es": "Hacer",
-        "he": "לעשות"
+    "myAccount": {
+        "en": "MyAccount",
+        "he": "החשבון שלי"
     },
-    "stat-active-label": {
-        "en": "Active",
-        "es": "Activo",
-        "he": "פעיל"
+    "addAnotherAccount": {
+        "en": "AddAnotherAccount",
+        "he": "להוסיף חשבון נוסף"
     },
-    "sure": {
-        "en": "Are you sure?",
-        "es": "Estas Seguru?",
-        "he": "בטוח?"
+    "settings": {
+        "en": "Settings",
+        "he": " הגדרות"
     },
-    "add": {
-        "en": "Add",
-        "es": "Aggregar",
-        "he": "הוסף"
+    "logout": {
+        "en": "Logout",
+        "he": "התנתק"
     },
-    "add-todo-placeholder": {
-        "en": "What needs to be done?",
-        "es": "Que te tienes que hacer?",
-        "he": "מה יש לעשות?"
+    "OMG!": {
+        "en": "OMG",
+        "he": "ואו!"
+    },
+    "beach": {
+        "en": "Beach",
+        "he": "חוף ים"
+    },
+    "nationalParks": {
+        "en": "NationalParks",
+        "he": "פארקים לאומיים"
+    },
+    "amazingPools": {
+        "en": "AmazingPools",
+        "he": "בריכות מדהימות"
+    },
+    "amazingViews": {
+        "en": "AmazingViews",
+        "he": "נופים משגעים"
+    },
+    "arctic": {
+        "en": "Arctic",
+        "he": "קוטבי"
+    },
+    "design": {
+        "en": "Design",
+        "he": "עיצוב"
+    },
+    "island": {
+        "en": "Island",
+        "he": "איים"
+    },
+    "surfing": {
+        "en": "Surfing",
+        "he": "גלישה"
+    },
+    "explore": {
+        "en": "Explore",
+        "he": "לחקור"
+    },
+    "wishList": {
+        "en": "WishList",
+        "he": "רשימת המשאלות"
+    },
+    "tips": {
+        "en": "Tips",
+        "he": "טיפים"
+    },
+    "inbox": {
+        "en": "Inbox",
+        "he": "הודעות"
     }
 }

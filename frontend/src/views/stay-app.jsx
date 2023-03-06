@@ -1,16 +1,14 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+// import { UNMOUNTED } from 'react-transition-group/Transition'
 import { utilService } from '../services/util.service'
 import { setTitle, updateView } from '../store/system.actions'
 import { loadStays, removeStay, setSortBy, updateStay } from '../store/stay.action'
-import { StayList } from '../cmps/stay-list'
-// import { UNMOUNTED } from 'react-transition-group/Transition'
+import { StayList } from '../cmps/stay/stay-list'
 
 export const StayApp = (props) => {
-    const dispatch = useDispatch()
     const { stays, filterBy } = useSelector(state => state.stayModule)
-
     // const currentUrl = window.location.href
     // const [searchParams, setSearchParams] = useSearchParams()
 
@@ -18,7 +16,8 @@ export const StayApp = (props) => {
     // console.log(`🚀 ~ currentUrl:`, currentUrl)
     // console.log(`🚀 ~ searchParams:`, searchParams)
     // console.log(`🚀 ~ filterBy:`, filterBy, 'props', props)
-
+    
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadStays())
         dispatch(updateView('home'))

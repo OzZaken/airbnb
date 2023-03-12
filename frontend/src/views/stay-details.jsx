@@ -1,6 +1,6 @@
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { connect, useDispatch,useSelector } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
 import { updateView } from '../store/system.actions'
 import OnlyIcon from '../cmps/app-icon'
@@ -27,7 +27,7 @@ export const _StayDetails = () => {
         }
     }
 
-    // ↓ Notify cmps for responsive
+    // ↓  responsive cmps
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
     useEffect(() => { }, [innerWidth])
@@ -81,16 +81,19 @@ export const _StayDetails = () => {
     const { imgUrls, name, reviews, host, loc } = stay
 
     // Gallery
-    const thumbnailsProps = innerWidth >= 570 ? {
-        showThumbnails: true,
-        thumbnailPosition: 'left',
-        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
-    } : {
-        showThumbnails: false,
-        showPlayButton: false,
-        items: imgUrls.map(url => ({ original: url })),
-    }
+    const thumbnailsProps = innerWidth >= 570
+        ? {
+            showThumbnails: true,
+            thumbnailPosition:'left',
+            items: imgUrls.map(url => ({ original: url, thumbnail: url })),
+        } : {
+            showThumbnails: false,
+            thumbnailPosition:'bottom',
+            items: imgUrls.map(url => ({ original: url })),
+        }
+
     const galleryProps = {
+        thumbnailPosition: 'left',
         showThumbnails: false,
         showPlayButton: false,
         items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
@@ -105,7 +108,7 @@ export const _StayDetails = () => {
         additionalClass: 'full img-gallery-details',
         loading: 'eager',
         lazyLoad: false,
-        useBrowserFullscreen: true,
+        useBrowserFullscreen: false,
         showBullets: false,
         showIndex: true,
         ...thumbnailsProps,
@@ -144,11 +147,11 @@ export const _StayDetails = () => {
                     <span> {`${city},${country}`}</span>
 
                     <div hidden className='btns-container'>
-                        
+
                         <button className='btn-link'>
                             <OnlyIcon iconKey="Share" />share
                         </button>
-                        
+
                         <button className='btn-link'>
                             <OnlyIcon iconKey="FavoriteFill" />saved
                         </button>

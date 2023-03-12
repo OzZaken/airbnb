@@ -33,7 +33,7 @@ export default function OnlyIcon({ iconKey }) {
   return icons[iconKey]
 }
 
-export function AppIcon({ iconKey, classSize }) {
+export function ContainIcon({ iconKey, classSize }) {
   const icon = icons[iconKey]
   return <span className={'icon-container ' + classSize}>
     {icon}

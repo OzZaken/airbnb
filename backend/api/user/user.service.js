@@ -19,8 +19,10 @@ async function getUsersByOrders(orders) {
         const users = await collection.find().toArray()
         // !! makes the command to be boolean;
         const usersByOrders = users.filter(
-            user =>
-                !!orders.find(order => order.userId === ObjectId(user._id).toString())
+            (user) =>
+                !!orders.find(
+                    (order) => order.userId === ObjectId(user._id).toString()
+                )
         )
         return usersByOrders
     } catch (error) {

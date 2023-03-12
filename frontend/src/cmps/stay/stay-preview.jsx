@@ -11,6 +11,7 @@ export const StayPreview = ({ stay }) => {
     const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
     const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
     const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
+    // useEffect console.count
 
     /*  Distance */
     const { loc } = stay

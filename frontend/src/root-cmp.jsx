@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
-import { useEffect } from 'react'
 import routes from './routes'
 import { locService } from './services/loc.service'
 // import { translationService } from './services/i18n.service'

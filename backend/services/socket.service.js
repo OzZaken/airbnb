@@ -2,6 +2,18 @@ const logger = require('./logger.service')
 
 var gIo = null
 
+module.exports = {
+    // set up the sockets service and define the API
+    setupSocketAPI,
+    // emit to everyone / everyone in a specific room (label)
+    emitTo,
+    // emit to a specific user (if currently active in system)
+    emitToUser,
+    // Send to all sockets BUT not the current socket - if found
+    // (otherwise broadcast to a room / to all)
+    broadcast,
+}
+
 function setupSocketAPI(http) {
     gIo = require('socket.io')(http, {
         cors: {
@@ -32,7 +44,7 @@ function setupSocketAPI(http) {
         socket.on('user-watch', userId => {
             logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
             socket.join('watching:' + userId)
-            
+
         })
         socket.on('set-user-socket', userId => {
             logger.info(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
@@ -58,7 +70,7 @@ async function emitToUser({ type, data, userId }) {
     if (socket) {
         logger.info(`Emiting event: ${type} to user: ${userId} socket [id: ${socket.id}]`)
         socket.emit(type, data)
-    }else {
+    } else {
         logger.info(`No active socket for user: ${userId}`)
         // _printSockets()
     }
@@ -68,7 +80,7 @@ async function emitToUser({ type, data, userId }) {
 // Optionally, broadcast to a room / to all
 async function broadcast({ type, data, room = null, userId }) {
     userId = userId.toString()
-    
+
     logger.info(`Broadcasting event: ${type}`)
     const excludedSocket = await _getUserSocket(userId)
     if (room && excludedSocket) {
@@ -88,34 +100,20 @@ async function broadcast({ type, data, room = null, userId }) {
 
 async function _getUserSocket(userId) {
     const sockets = await _getAllSockets()
-    const socket = sockets.find(s => s.userId === userId)
-    return socket
+    return sockets.find(socket => socket.userId === userId)
 }
 
 async function _getAllSockets() {
     // return all Socket instances
-    const sockets = await gIo.fetchSockets()
-    return sockets
+    return await gIo.fetchSockets()
 }
 
 async function _printSockets() {
     const sockets = await _getAllSockets()
-    console.log(`Sockets: (count: ${sockets.length}):`)
+    // console.log(`Sockets: (count: ${sockets.length}):`)
     sockets.forEach(_printSocket)
 }
 
 function _printSocket(socket) {
     console.log(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
-}
-
-module.exports = {
-    // set up the sockets service and define the API
-    setupSocketAPI,
-    // emit to everyone / everyone in a specific room (label)
-    emitTo, 
-    // emit to a specific user (if currently active in system)
-    emitToUser, 
-    // Send to all sockets BUT not the current socket - if found
-    // (otherwise broadcast to a room / to all)
-    broadcast,
 }

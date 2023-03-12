@@ -1,13 +1,9 @@
 const MongoClient = require('mongodb').MongoClient
-
 const config = require('../config')
 
-module.exports = {
-    getCollection
-}
+module.exports = {getCollection}
 
-// Database Name
-const dbName = 'stay_db'
+const COLLECTION_DB = 'stay_db'
 
 var dbConn = null
 
@@ -26,7 +22,7 @@ async function connect() {
     if (dbConn) return dbConn
     try {
         const client = await MongoClient.connect(config.dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
-        const db = client.db(dbName)
+        const db = client.db(COLLECTION_DB)
         dbConn = db
         return db
     } catch (err) {
@@ -34,7 +30,3 @@ async function connect() {
         throw err
     }
 }
-
-
-
-

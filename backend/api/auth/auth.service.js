@@ -1,9 +1,8 @@
 const Cryptr = require('cryptr')
+const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
+const logger = require('../../services/logger.service')
 const bcrypt = require('bcrypt')
 const userService = require('../user/user.service')
-const logger = require('../../services/logger.service')
-
-const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
 
 module.exports = {
     signup,
@@ -12,12 +11,8 @@ module.exports = {
     validateToken
 }
 
-// (async ()=>{
-//     await signup('bubu', '123', 'Bubu Bi')
-//     await signup('mumu', '123', 'Mumu Maha')
-// })()
-
 async function login(username, password) {
+
     logger.debug(`auth.service - login with username: ${username}`)
 
     const user = await userService.getByUsername(username)
@@ -30,7 +25,7 @@ async function login(username, password) {
     return user
 }
 
-async function signup({username, password, firstname, lastname , imgUrl}) {
+async function signup({ username, password, firstname, lastname, imgUrl }) {
     const saltRounds = 10
 
     logger.debug(`auth.service - signup with username: ${username}, firsname: ${firstname}`)
@@ -44,16 +39,24 @@ async function signup({username, password, firstname, lastname , imgUrl}) {
 }
 
 function getLoginToken(user) {
-    return cryptr.encrypt(JSON.stringify(user))    
+    return cryptr.encrypt(JSON.stringify(user))
 }
 
 function validateToken(loginToken) {
     try {
-        const json = cryptr.decrypt(loginToken)
-        const loggedinUser = JSON.parse(json)
-        return loggedinUser
-    } catch(err) {
+        const loggedinUser = cryptr.decrypt(loginToken)
+        return JSON.parse(loggedinUser)
+    } catch (err) {
         console.log('Invalid login token')
     }
     return null
 }
+
+/* Debug
+* signup
+(async ()=>{
+    await signup('bubu', '123', 'Bubu Bi')
+    await signup('mumu', '123', 'Mumu Maha')
+})()
+* login
+ */

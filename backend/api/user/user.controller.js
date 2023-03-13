@@ -1,7 +1,14 @@
 const userService = require('./user.service')
-const socketService = require('../../services/socket.service')
 const logger = require('../../services/logger.service')
 const orderService = require('../order/order.service')
+
+module.exports = {
+    getUser,
+    getUsers,
+    deleteUser,
+    updateUser,
+    getUsersByOrders
+}
 
 async function getUser(req, res) {
     try {
@@ -56,11 +63,4 @@ async function getUsersByOrders(req, res) {
     } catch (error) {
         console.log('failed to get users by orders', error)
     }
-}
-module.exports = {
-    getUser,
-    getUsers,
-    deleteUser,
-    updateUser,
-    getUsersByOrders
 }

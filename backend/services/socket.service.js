@@ -72,7 +72,7 @@ async function emitToUser({ type, data, userId }) {
         socket.emit(type, data)
     } else {
         logger.info(`No active socket for user: ${userId}`)
-        // _printSockets()
+         _printSockets()
     }
 }
 
@@ -80,8 +80,8 @@ async function emitToUser({ type, data, userId }) {
 // Optionally, broadcast to a room / to all
 async function broadcast({ type, data, room = null, userId }) {
     userId = userId.toString()
-
     logger.info(`Broadcasting event: ${type}`)
+
     const excludedSocket = await _getUserSocket(userId)
     if (room && excludedSocket) {
         logger.info(`Broadcast to room ${room} excluding user: ${userId}`)
@@ -103,14 +103,13 @@ async function _getUserSocket(userId) {
     return sockets.find(socket => socket.userId === userId)
 }
 
+/* return all Socket instances */
 async function _getAllSockets() {
-    // return all Socket instances
     return await gIo.fetchSockets()
 }
 
 async function _printSockets() {
     const sockets = await _getAllSockets()
-    // console.log(`Sockets: (count: ${sockets.length}):`)
     sockets.forEach(_printSocket)
 }
 

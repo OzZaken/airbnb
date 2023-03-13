@@ -2,6 +2,14 @@ const dbService = require('../../services/db.service')
 const logger = require('../../services/logger.service')
 const ObjectId = require('mongodb').ObjectId
 
+module.exports = {
+    query,
+    getById,
+    add,
+    update,
+    remove
+}
+
 async function query(filterBy = {}) {
     const criteria = _buildCriteria(filterBy)
     try {
@@ -64,16 +72,18 @@ function _buildCriteria(filterBy) {
     const criteria = {
         price: {}
     }
-    const { priceRange, bedrooms, propertyTypes, placeTypes, amenities } =
-        filterBy
+    
+    const { priceRange, bedrooms, propertyTypes, placeTypes, amenities } = filterBy
     const [minPrice, maxPrice] = priceRange
 
     const chosePropertyTypes = Object.keys(propertyTypes).filter(
         (p) => propertyTypes[p]
     )
+
     const checkedPlaceTypes = Object.keys(placeTypes).filter(
         (p) => placeTypes[p]
     )
+
     const checkedAmenities = Object.keys(amenities).filter((a) => amenities[a])
 
     if (chosePropertyTypes.length) {
@@ -90,29 +100,13 @@ function _buildCriteria(filterBy) {
         criteria.amenities = { $all: amenitiesRegex }
     }
 
-    if (checkedPlaceTypes.length) {
-        criteria.placeType = { $in: checkedPlaceTypes }
-    }
+    if (checkedPlaceTypes.length) criteria.placeType = { $in: checkedPlaceTypes }
 
-    if (minPrice) {
-        criteria.price = { ...criteria.price, $gte: minPrice }
-    }
-
-    if (maxPrice) {
-        criteria.price = { ...criteria.price, $lte: maxPrice }
-    }
-
-    if (bedrooms) {
-        criteria.bedrooms = { $eq: bedrooms }
-    }
-
+    if (minPrice) criteria.price = { ...criteria.price, $gte: minPrice }
+    
+    if (maxPrice) criteria.price = { ...criteria.price, $lte: maxPrice }
+    
+    if (bedrooms) criteria.bedrooms = { $eq: bedrooms }
+    
     return criteria
-}
-
-module.exports = {
-    query,
-    getById,
-    add,
-    update,
-    remove
 }

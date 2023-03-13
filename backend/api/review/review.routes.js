@@ -1,14 +1,9 @@
 const express = require('express')
-const {
-    requireAuth,
-    requireAdmin
-} = require('../../middlewares/requireAuth.middleware')
+const {requireAuth} = require('../../middlewares/requireAuth.middleware')
 const { log } = require('../../middlewares/logger.middleware')
 const { addReview, getReviews, deleteReview } = require('./review.controller')
-const router = express.Router()
 
-// middleware that is specific to this router
-// router.use(requireAuth)
+const router = express.Router()
 
 router.get('/', log, getReviews)
 router.post('/', log, addReview)

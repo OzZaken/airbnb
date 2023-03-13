@@ -1,3 +1,12 @@
+module.exports = {
+  makeId,
+  getRandomInt,
+  debounce,
+  generateRandomName,
+  timeAgo,
+  generateRandomImg,
+}
+
 function makeId(length = 5) {
   var txt = ''
   var possible =
@@ -72,8 +81,9 @@ function generateRandomImg() {
 
 function timeAgo(ms = new Date()) {
   const date = ms instanceof Date ? ms : new Date(ms)
-  const formatter = new Intl.RelativeTimeFormat('en')
-  const ranges = {
+  const secondsElapsed = (date.getTime() - Date.now()) / 1000
+
+  const timeUnits = {
     years: 3600 * 24 * 365,
     months: 3600 * 24 * 30,
     weeks: 3600 * 24 * 7,
@@ -82,26 +92,20 @@ function timeAgo(ms = new Date()) {
     minutes: 60,
     seconds: 1,
   }
-  const secondsElapsed = (date.getTime() - Date.now()) / 1000
-  for (let key in ranges) {
-    if (ranges[key] < Math.abs(secondsElapsed)) {
-      const delta = secondsElapsed / ranges[key]
-      let time = formatter.format(Math.round(delta), key)
+
+  const formatter = new Intl.RelativeTimeFormat('en')
+
+  for (let timeUnit in timeUnits) {
+    if (timeUnits[timeUnit] < Math.abs(secondsElapsed)) {
+      const delta = secondsElapsed / timeUnits[timeUnit]
+
+      let time = formatter.format(Math.round(delta), timeUnit)
       if (time.includes('in')) {
         time = time.replace('in ', '')
         time = time.replace('ago', '')
         time += ' ago'
       }
-      return time //? time : 'Just now'
+      return time 
     }
   }
-}
-
-module.exports = {
-  makeId,
-  getRandomInt,
-  debounce,
-  generateRandomName,
-  timeAgo,
-  generateRandomImg,
 }

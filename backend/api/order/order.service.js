@@ -2,6 +2,14 @@ const dbService = require('../../services/db.service')
 const logger = require('../../services/logger.service')
 const ObjectId = require('mongodb').ObjectId
 
+module.exports = {
+    getOrders,
+    getById,
+    add,
+    update,
+    remove
+}
+
 async function getOrders() {
     try {
         const collection = await dbService.getCollection('order')
@@ -16,9 +24,7 @@ async function getOrders() {
 async function getById(orderId) {
     try {
         const collection = await dbService.getCollection('order')
-        const order = await collection.findOne({ _id: orderId })
-
-        return order
+        return await collection.findOne({ _id: orderId })
     } catch (err) {
         logger.error(`while finding order ${orderId}`, err)
         throw err
@@ -38,7 +44,7 @@ async function remove(orderId) {
 
 async function add(order) {
     order.createdAt = Date.now()
-    order.orderStatus = 'pending'
+    order.status = 'pending'
     try {
         const collection = await dbService.getCollection('order')
         const addedOrder = await collection.insertOne(order)
@@ -60,12 +66,4 @@ async function update(order) {
         logger.error(`cannot update order ${order._id}`, err)
         throw err
     }
-}
-
-module.exports = {
-    getOrders,
-    getById,
-    add,
-    update,
-    remove
 }

@@ -2,8 +2,13 @@ const logger = require('../../services/logger.service')
 const userService = require('../user/user.service')
 const stayService = require('../stay/stay.service')
 const authService = require('../auth/auth.service')
-// const socketService = require('../../services/socket.service')
 const reviewService = require('./review.service')
+
+module.exports = {
+    getReviews,
+    deleteReview,
+    addReview
+}
 
 async function getReviews(req, res) {
     try {
@@ -64,10 +69,4 @@ async function addReview(req, res) {
         logger.error('Failed to add review', err)
         res.status(500).send({ err: 'Failed to add review' })
     }
-}
-
-module.exports = {
-    getReviews,
-    deleteReview,
-    addReview
 }

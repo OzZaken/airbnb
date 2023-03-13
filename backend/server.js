@@ -1,21 +1,27 @@
+/* express, http*/
 const express = require('express')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const path = require('path')
-
 const app = express()
 const http = require('http').createServer(app)
 
+/* cookie-parser*/
+const cookieParser = require('cookie-parser')
 app.use(cookieParser())
+
+/* declare using json*/
 app.use(express.json())
 
+/* path, cors*/
+const path = require('path')
+const cors = require('cors')
+
+/* Express serve static files on production environment*/
 if (process.env.NODE_ENV === 'production') {
-    // Express serve static files on production environment
     app.use(express.static(path.resolve(__dirname, 'public')))
-} else {
-    // Configuring CORS
-    const corsOptions = {
-        // Make sure origin contains the url your frontend is running on
+} 
+/* Configuring CORS on development */
+else {
+/* Make sure origin contains the url frontend is running on*/
+const corsOptions = {
         origin: [
             'http://127.0.0.1:5173',
             'http://127.0.0.1:8080',
@@ -28,30 +34,30 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions))
 }
 
+/* Async Local Storage */
+const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
+app.all('*', setupAsyncLocalStorage)
+
+/* Routes */
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const stayRoutes = require('./api/stay/stay.routes')
 const orderRoutes = require('./api/order/order.routes')
 const reviewRoutes = require('./api/review/review.routes')
-const { setupSocketAPI } = require('./services/socket.service')
-
-// routes
-const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
-app.all('*', setupAsyncLocalStorage)
 
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
 app.use('/api/stay', stayRoutes)
 app.use('/api/order', orderRoutes)
+
+app.get('/**', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')))
+
+/* Socket */
+const { setupSocketAPI } = require('./services/socket.service')
 setupSocketAPI(http)
 
-app.get('/**', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
-})
-
+/* Logs */
 const logger = require('./services/logger.service')
 const port = process.env.PORT || 3030
-http.listen(port, () => {
-    logger.info('Server is running on port: ' + port)
-})
+http.listen(port, () => logger.info('Server is running on port: ' + port))

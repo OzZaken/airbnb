@@ -1,7 +1,15 @@
 const logger = require('../../services/logger.service')
 const orderService = require('./order.service')
 
-// GET LIST
+module.exports = {
+    getOrders,
+    getOrderById,
+    addOrder,
+    updateOrder,
+    removeOrder
+}
+
+// LIST
 async function getOrders(req, res) {
     try {
         const orders = await orderService.getOrders()
@@ -12,7 +20,7 @@ async function getOrders(req, res) {
     }
 }
 
-// GET BY ID
+// GET 
 async function getOrderById(req, res) {
     try {
         const orderId = req.params.id
@@ -24,7 +32,7 @@ async function getOrderById(req, res) {
     }
 }
 
-// POST (add stay)
+// POST 
 async function addOrder(req, res) {
     try {
         const order = req.body
@@ -36,7 +44,7 @@ async function addOrder(req, res) {
     }
 }
 
-// PUT (Update stay)
+// PUT 
 async function updateOrder(req, res) {
     try {
         const order = req.body
@@ -48,7 +56,7 @@ async function updateOrder(req, res) {
     }
 }
 
-// DELETE (Remove Stay)
+// DELETE 
 async function removeOrder(req, res) {
     try {
         const orderId = req.params.id
@@ -58,12 +66,4 @@ async function removeOrder(req, res) {
         logger.error('Failed to remove stay', err)
         res.status(500).send({ err: 'Failed to remove stay' })
     }
-}
-
-module.exports = {
-    getOrders,
-    getOrderById,
-    addOrder,
-    updateOrder,
-    removeOrder
 }

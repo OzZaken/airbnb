@@ -29,6 +29,6 @@ export function systemReducer(state = initialState, action = {}) {
 
         default:
     }
-    window.gAppState = newState
+    window.gSystemState = newState
     return newState
 }

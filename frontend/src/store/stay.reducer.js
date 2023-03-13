@@ -1,19 +1,27 @@
 const INITIAL_STATE = {
-    stays: null,
+    stays: [],
+    sortBy: {
+        page: 2, /* num ~ front paging  */
+        isDesc: true// boolean ~ const sortBy = { [prop]: (isDesc) ? -1 : 1 }
+    },
     filterBy: {
-        txt: '', // name , summary
-        placeType:'', 
-        maxPrice: Infinity,
-        minPrice: 0, 
-        maxRate: Infinity, 
-        minRate: 0,
-        minCapacity: 0, 
+        /* txt */
+        txt: '',  /* name & summary */
+        /* checkBox */
         amenities: [],
-        checkIn: new Date(), 
-        pageIdx: 1, // paging
+        /* select */
+        destination: 'flexible',/* flexible, new york, middle east, italy, south america ,france */
+        placeType: '',
+        /* Range: [x,y] */
+        priceRange: [0, Infinity],
+        rateRange: [0, Infinity],
+        capacityRange: [0, Infinity],
+        bookingRange: [
+            new Date(),
+            new Date(new Date().setDate(new Date().getDate() + 3))
+        ],
     },
     wishList: [],
-    sortBy: null,
 }
 
 export function stayReducer(state = INITIAL_STATE, action) {

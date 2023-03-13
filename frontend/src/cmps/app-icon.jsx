@@ -33,9 +33,9 @@ export default function OnlyIcon({ iconKey }) {
   return icons[iconKey]
 }
 
-export function ContainIcon({ iconKey, classSize }) {
+export function ContainIcon({ iconKey, size }) {
   const icon = icons[iconKey]
-  return <span className={'icon-container ' + classSize}>
+  return <span className={'icon-container ' + size}>
     {icon}
   </span>
 }
@@ -43,7 +43,7 @@ export function ContainIcon({ iconKey, classSize }) {
 export function CustomSvg(props) {
   return (
     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
-      <path d={props.path}/>
+      <path d={props.path} />
     </svg>
   )
 }
@@ -87,7 +87,6 @@ const icons = {
   Surfing: <SurfingIcon />,
   Wifi: <WifiIcon />,
 }
+
 // debug
-window.gIcons = icons
-// https://mui.com/material-ui/material-icons
-// https://react-icons.github.io/react-icons/search?q=filter
+// window.gDebug.icons = icons

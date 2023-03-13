@@ -11,6 +11,7 @@ export const utilService = {
     getCababCase,
     formatDate
 }
+
 function formatDate(date = new Date(), formatBy) {
     switch (formatBy) {
         case 'byHour':
@@ -25,6 +26,7 @@ function formatDate(date = new Date(), formatBy) {
         default:
             return date.toUTCString()
     }
+
     return date.toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',

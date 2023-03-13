@@ -34,7 +34,7 @@ export function StayList({ stays, onRemoveStay, getStayAvgRate }) {
                 stay={stay}
                 onRemoveStay={onRemoveStay}
                 avgRate={getStayAvgRate}
-                // Call the callback function after the last StayPreview component has been rendered
+                // Call the setIntersection func after the last StayPreview component has been rendered
                 onLoad={idx === stays.length - 1 ? setIntersection : null}
             />
         })}

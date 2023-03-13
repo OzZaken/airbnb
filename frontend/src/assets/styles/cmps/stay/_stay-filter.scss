@@ -49,6 +49,7 @@
         }
 
         .link-filter-by {
+            @include btn;
             box-shadow: none;
             color: #222222bb;
         }

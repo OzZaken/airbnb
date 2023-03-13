@@ -1,36 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
 import { HashRouter as Router } from 'react-router-dom'
-import App from './root-cmp'
+import { Provider } from 'react-redux'
+import { utilService } from './services/util.service'
 import { store } from './store/store'
+import App from './root-cmp'
 import { ErrorBoundary } from './cmps/system/error-boundary'
 import reportWebVitals from './reportWebVitals'
-import { utilService } from './services/util.service'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   // <React.StrictMode>
-  <ErrorBoundary>
-
-    <Provider store={store}>
-      <Router>
+  <Provider store={store}>
+    <Router>
+      <ErrorBoundary>
         <App />
-      </Router>
-    </Provider>
-
-  </ErrorBoundary>
+      </ErrorBoundary>
+    </Router>
+  </Provider>
   // </React.StrictMode>
 )
-
+// debug
 window.onerror = (err) => {
-  const { formatDate } = utilService
-  const { location, document } = window
+  const { location, document, navigator } = window
   const { userAgent, platform, hardwareConcurrency, cookieEnabled, deviceMemory, connection, } = navigator
-
+  
   const errorToSend = {
-    at: [formatDate(new Date()), Date.now()],
+    at: new Date(),
     env: process.env,
     errorMsg: err,
     location,
@@ -47,8 +44,6 @@ window.onerror = (err) => {
     localStorage: { ...localStorage },
     sessionStorage: { ...sessionStorage }
   }
-  
   console.log(`🚀 ~ errorToSend:`, errorToSend)
 }
-
 reportWebVitals(App)

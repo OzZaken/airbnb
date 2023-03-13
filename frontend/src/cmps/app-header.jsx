@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
 import OnlyIcon from "./app-icon"
-import { StayFilter } from "./stay/stay-filter"
+
 import AccountMenu from "./user/user-menu"
 import { setFilterBy, loadStays } from '../store/stay.action'
 // import { LoginSignup } from "./system/login-signup"
@@ -31,7 +31,7 @@ function _AppHeader({ view }) {
 
     return <header className='full main-header'>
 
-        <section className="full main-header-nav">
+         <section className="full main-header-nav">
             <Link to={''} className="logo"></Link>
 
             <section className="container main-search-container">
@@ -57,8 +57,6 @@ function _AppHeader({ view }) {
 
             <AccountMenu />
         </section>
-
-        {view === 'home' && <StayFilter onChangeFilter={onSetFilterBy} />}
 
         {view === 'stay-details' && <section className="stay-details-header">
             <Link className="link-homes" to={''}>&lt; Homes</Link>

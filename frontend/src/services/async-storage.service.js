@@ -6,6 +6,7 @@ export const storageService = {
     remove,
     postMany,
 }
+
 // LIST
 function query(entityType, delay = 200, isReject = false) {
     var entities = JSON.parse(localStorage.getItem(entityType))
@@ -15,6 +16,7 @@ function query(entityType, delay = 200, isReject = false) {
         }, delay)
     })
 }
+
 // CREATE
 function post(entityType, newEntity) {
     newEntity._id = _makeId()
@@ -30,11 +32,13 @@ function postMany(entityType, entities) {
     _save(entityType, entities)
     return Promise.resolve(entities)
 }
+
 // READ
 function get(entityType, entityId) {
     return query(entityType)
         .then(entities => entities.find(entity => entity._id === entityId))
 }
+
 // UPDATE
 function put(entityType, updatedEntity) {
     return query(entityType)
@@ -45,6 +49,7 @@ function put(entityType, updatedEntity) {
             return updatedEntity
         })
 }
+
 // DELETE
 function remove(entityType, entityId) {
     return query(entityType)

@@ -6,6 +6,8 @@ node_modules
 .pnp.js
 
 # testing
+debug
+debug.js
 /coverage
 
 # production

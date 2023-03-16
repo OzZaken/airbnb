@@ -1,42 +1,76 @@
+import { useState, useRef, useEffect } from 'react'
+import { useEffectUpdate } from '../../hooks/useEffectUpdate'
 import { StayPreview } from './stay-preview'
 
-export function StayList({ stays, onRemoveStay, getStayAvgRate }) {
+export function StayList({ stays, onRemoveStay, setAvgRate, onToggleIsInWishlist, onClickPreviewImg,getRange }) {
+    const [isIntersecting, setIsIntersecting] = useState(false)
+    useEffectUpdate(() => {
+        console.log('prices:', getRange('price'))
+        console.log('capacities:', getRange('capacity'))
+    }, [])
+    const ref = useRef()
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+
+            setIsIntersecting(entry.isIntersecting)
+
+        }, { threshold: 1 })
+
+        if (ref.current) {
+            console.log(`🚀 ~ ref.current:`, ref.current)
+            observer.observe(ref.current)
+        }
+
+        return () => observer.disconnect()
+
+    }, [])
 
     const setIntersection = () => {
-        console.log('onLastPreviewRendered called')
-        const stays = document.querySelectorAll('.stay-preview')
+        const elStays = document.querySelectorAll('.stay-preview')
 
-        const observer = new IntersectionObserver(entry => {
-            entry.target.classList.toggle('show', entry.isIntersecting)
-            if (entry.isIntersecting) observer.unobserve(entry.target)
-        },
-            { rootMargin: '0px 0px -100% 0px' }  // threshold: 0.5 || root:'stay-list',
-        )
+        const observer = new IntersectionObserver(
+            entry => { /* cb toggle .show if stay is Intersecting */
 
-        stays.forEach(stay => { observer.observe(stay) })
+                entry.target.classList.toggle('show', entry.isIntersecting)
+                /* opt ~ if already visiable STOP observe*/
+                // if (entry.isIntersecting) observer.unobserve(entry.target)
+            },
+            {
+                threshold: 1,
+                rootMargin: '100px', /* getting new stays when user get 100px from bottom of the page */
+            })
 
-        const lastCardObserver = new IntersectionObserver(entries => {
+        elStays.forEach(stay => {
+            observer.observe(stay)
+        })
+
+        /* Toggle .show if stay is Intersecting */
+        const elLastStayObserver = new IntersectionObserver(entries => {
             const lastCard = entries[0]
             if (!lastCard.isIntersecting) return
-            console.log('never');
-            // loadNewStays() dispatch(type:increment-pageIdx) // get more from the Api 
-            lastCardObserver.unobserve(lastCard.target)
-            lastCardObserver.observe(document.querySelector('.stay-preview:last-child'))
+            // loadMoreStays()// dispatch({ type: 'INC_PAGE_IDX' }) // get 20 stays that already exits and load from the Api more 20 
+
+            /* */
+            elLastStayObserver.unobserve(lastCard.target)
+            // lastCardObserver.observe(document.querySelector('.stay-preview:last-child'))
         }, {})
 
-        lastCardObserver.observe(document.querySelector('.stay-preview:last-child'))
+        elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
     }
 
-    return <section className='stay-list'>
-        {stays.map((stay, idx) => {
+    return <section ref={ref.current} className='stay-list'>
+        {stays.map(stay => {
             return <StayPreview
                 key={stay._id}
+                isIntersecting={isIntersecting}
                 stay={stay}
                 onRemoveStay={onRemoveStay}
-                avgRate={getStayAvgRate}
-                // Call the setIntersection func after the last StayPreview component has been rendered
-                onLoad={idx === stays.length - 1 ? setIntersection : null}
+                onClickPreviewImg={onClickPreviewImg}
+                onToggleIsInWishlist={onToggleIsInWishlist}
+                setAvgRate={setAvgRate}
             />
         })}
     </section>
 }
+

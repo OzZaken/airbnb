@@ -3,9 +3,23 @@ body.stay-details {
         .main-header-nav {
             display: none;
         }
-
     }
 
+    @include for-wide-layout {
+        .main-content {
+            display: grid;
+
+            >* {
+                grid-column: 2;
+            }
+
+            >*.full {
+                grid-column: 1 / -1;
+            }
+
+            @include layoutGTC(auto, 1500px);
+        }
+    }
 }
 
 .stay-details {
@@ -95,6 +109,7 @@ body.stay-details {
 
         .details-sub-heading {
             display: inline-block;
+
             .btn-container {
                 @include for-desktop-layout {
                     display: inline-flex;

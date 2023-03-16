@@ -1,45 +1,37 @@
 import { storageService } from './async-storage.service.js'
+
 var gDefaultStays = require('../assets/data/stay.json')
 
 const STORAGE_KEY = 'stay'
+
 const STAYS_PER_PAGE = 20
 
-const AMENITIES = [
-    { Omg: 'OMG!' },
-    { Beach: 'Beach!' },
-    { NationalPark: 'National parks' },
-    { AmazingPool: 'Amazing pools' },
-    { AmazingViews: 'Amazing views' },
-    { Arctic: 'Arctic' },
-    { Design: 'Design' },
-    { Island: 'Island' },
-    { Surfing: 'Surfing' },
-    { Omg: 'OMG!' },
-    { Beach: 'Beach!' },
-    { NationalPark: 'National parks' },
-    { AmazingPool: 'Amazing pools' },
-    { AmazingViews: 'Amazing views' },
-    { Arctic: 'Arctic' },
-    { Design: 'Design' },
-    { Island: 'Island' },
-    { Surfing: 'Surfing' },
-    { Omg: 'OMG!' },
-    { Beach: 'Beach!' },
-    { NationalPark: 'National parks' },
-    { AmazingPool: 'Amazing pools' },
-    { AmazingViews: 'Amazing views' },
-    { Arctic: 'Arctic' },
-    { Design: 'Design' },
-    { Island: 'Island' },
-    { Surfing: 'Surfing' },
+const AMENITIES = [ 
+    //{imgSrcMap:heading}
+    { omg: 'OMG!' },
+    { beach: 'Beach!' },
+    { nationalPark: 'National parks' },
+    { amazingPool: 'Amazing pools' },
+    { amazingViews: 'Amazing views' },
+    { arctic: 'Arctic' },
+    { design: 'Design' },
+    { island: 'Island' },
+    { surfing: 'Surfing' },
 ]
+
+const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
+
+const PLACE_TYPES = ['entire home/apt', 'private room', 'shared room']
 
 export const stayService = {
     query,
     save,
     remove,
     getById,
+    
     getAmenities,
+    getPlaceTypes,
+    getPropertyTypes,
 }
 
 async function query(filterBy = { txt: '' }) {
@@ -73,10 +65,6 @@ async function query(filterBy = { txt: '' }) {
     }
 }
 
-function getById(stayId) {
-    return storageService.get(STORAGE_KEY, stayId)
-}
-
 function remove(stayId) {
     return storageService.remove(STORAGE_KEY, stayId)
 }
@@ -90,6 +78,18 @@ function save(stay) {
     }
 }
 
+function getById(stayId) {
+    return storageService.get(STORAGE_KEY, stayId)
+}
+
 function getAmenities() {
     return AMENITIES
+}
+
+function getPropertyTypes() {
+    return PROPERTY_TYPES
+}
+
+function getPlaceTypes() {
+    return PLACE_TYPES
 }

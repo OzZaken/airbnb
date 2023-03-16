@@ -14,7 +14,10 @@ const USER_LOCS = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
 const USER_LOCS_MAP = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
 
 /* opt Default in Israel: _setUserLocByCountryCode('ISR')*/
-var gUserPos = sessionStorage.getItem(STORAGE_KEY) || USER_LOCS[USER_LOCS.length - 1] || null 
+var gUserPos
+    = sessionStorage.getItem(STORAGE_KEY)
+    || USER_LOCS[USER_LOCS.length - 1]
+    || _setUserLocByCountryCode('ISR')
 
 /* prevent unnecessary requests (if already search same input and type ) */
 const INVALID_SEARCH_RESULT = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
@@ -174,24 +177,28 @@ function _handleSearchError(searchType, input) {
     })
 }
 
-//* //  ///   /////      User Location    \\\\\    \\\  *\\
+//*  User Location    *\\
 function getUserPos() {
     return gUserPos
 }
 
-function getUserDistance(stayLoc) {
+function getUserDistance(loc) {
+    console.log(`🚀 ~ loc:`, loc)
     var stayPos
     /* Handle Undefined lat lng */
-    var { lat, lng } = stayLoc
+    var { lat, lng } = loc
     if (!lat || !lng) {
-        var { address, city, country, countryCode } = stayLoc
-        if (countryCode) {
-            stayPos = { ...getLocByCountryCode(countryCode) }
-        } else if (address || city || country) {
-            stayPos = { ...getLocByAddress(`${address || ' '}${city || ' '}${country || ''}`) }
-        } else console.error('undefined Location', stayLoc)
+        var { address, city, country, countryCode } = loc
+        if (countryCode) stayPos = { ...getLocByCountryCode(countryCode) }
 
+        else if (address || city || country) stayPos = {
+            ...getLocByAddress(
+                `${address || ''}${city || ''}${country || ''}`
+            )
+        }
+        else console.log(`%c undefined Loc ${JSON.stringify(loc)}`, 'color: red;')
     }
+    else return _calcDistance({ lat, lng }, gUserPos)
     return _calcDistance(stayPos, gUserPos)
 }
 
@@ -278,6 +285,7 @@ function _getPosFromCountry(country) {
         lng: country.latlng[1]
     }
 }
+
 /* extract Loc from google Api searchResult */
 function _getLoc(searchResult) {
     const {
@@ -289,8 +297,7 @@ function _getLoc(searchResult) {
 }
 
 function _calcDistance(posA, posB) {
-    const { getEarthRadius } = utilService
-    const radius = getEarthRadius() // Earth's radius in km or miles
+    const radius = _getEarthRadius() // Earth's radius in km or miles
 
     const dLat = (posB.lat - posA.lat) * Math.PI / 180
     const dLon = (posB.lng - posA.lng) * Math.PI / 180
@@ -309,6 +316,21 @@ function _calcDistance(posA, posB) {
     const distance = radius * c
 
     return distance
+}
+
+function _getEarthRadius() {
+    const lang = navigator.language
+    const kmLocales = ['en-US', 'en-GB', 'fr-FR', 'es-ES', 'it-IT', 'pt-PT', 'pt-BR']
+    const milesLocales = ['en-CA', 'en-AU']
+
+    if (kmLocales.includes(lang)) {
+        return 6371 // Earth's radius in km
+    } else if (milesLocales.includes(lang)) {
+        return 3959 // Earth's radius in miles
+    } else {
+        console.warn('Unknown locale:', lang)
+        return 6371 // default to km
+    }
 }
 
 /* private UserMsg with sweetalert2 withReactContent */
@@ -340,3 +362,4 @@ function _showConfirmMsg(type, title, text, confirmButtonText, showCancelButton,
         cancelButtonColor: '#d33',
     })
 }
+

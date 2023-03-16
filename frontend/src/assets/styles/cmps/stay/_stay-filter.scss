@@ -1,77 +1,73 @@
 .stay-filter {
-    align-items: center;
     display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    // position: sticky;
+    top: 80px;
     box-shadow: none;
     transition: box-shadow 0.2s ease;
-    position: sticky;
+        overflow:  hidden;
 
-    nav.filter-by-container {
-        display: flex;
-        justify-content: space-evenly;
+    .filter-by-container {
+        position: relative;
+        
         // overflow-x: scroll, hidden;
         // overscroll-behavior-inline: hidden;
-        // overflow-y: hidden;
+        
         overflow: auto;
+        // scroll-snap-align: start;
         scroll-snap-type: x mandatory;
-
         &::-webkit-scrollbar {
             display: none;
         }
 
         ul.filter-nav-list {
-            flex-shrink: 0;
-            scroll-snap-align: start;
             display: flex;
 
-            a.link-filter-by {
-                flex: 1;
-                flex-direction: column-reverse;
+            li {
+                .btn-filter-by-amenity {
+                    @include btn;
+                    display: flex;
+                    font-size: 12px;
+                    justify-content: space-between;
+                    flex-direction: column-reverse;
+                    border-radius: unset;
 
-                .icon {
-                    width: 24px;
-                    height: 24px;
-                }
+                    &:hover {
+                        background: transparent;
+                        color: black;
+                        border-bottom: 2px solid $clr-vector;
+                    }
 
-                &.active {
-                    color: black;
-                }
+                    &.active {
+                        color: black;
+                    }
 
-                &:focus {
-                    border-bottom: 2px solid $clr-darken;
-                }
+                    &:focus {
+                        border-bottom: 2px solid $clr-darken;
+                    }
 
-                &:hover {
-                    text-decoration: none;
-                    color: black;
-                    border-bottom: 2px solid $clr-vector;
+                    img,
+                    svg {
+                        aspect-ratio: 3/2;
+                        width: 100%;
+                        object-fit: contain;
+                        mix-blend-mode: color-burn;
+                    }
                 }
             }
         }
 
-        .link-filter-by {
-            @include btn;
-            box-shadow: none;
-            color: #222222bb;
-        }
-    }
+        .btn-prev-filter,
+        .btn-next-filter {
+            position: absolute;
+            background-color: whitesmoke;
+            top: 24%;
 
-    .btn-next-filters {
-        margin-right: $padded-layout;
-        border: 0;
-        border-style: solid;
-        border-width: 1px;
-        background-clip: padding-box;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-color: rgba(0, 0, 0, 0.08);
-        box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent, #222;
-        transition: transform 0.25s ease;
-        border-radius: 50%;
-        color: #222222a9;
-        border: 1px solid #ffffff00;
-        width: 30px;
-        min-width: 30px;
-        opacity: 0;
-        height: 30px;
+            &:not(.btn-prev-filter) {
+                left: 96%;
+            }
+        }
     }
 
     .btn-filters {

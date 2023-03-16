@@ -1,65 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+/* services */
 import { utilService } from '../../services/util.service'
 import { locService } from '../../services/loc.service'
 import { userService } from '../../services/user.service'
+/* cmps */
 import { ImgGallery } from '../system/img-gallery'
 import OnlyIcon from '../app-icon'
+/* actions *//* UI UX *//* hooks */
 
-export const StayPreview = ({ stay }) => {
-    const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
-    const RandRate = useRef(getRandomFloatInclusive(4, 5, 2)) // Later by Users Rates 1-5 ⭐.
-    const isDiscount = useRef(Math.random() < 0.5) // Later by Host 
-    // useEffect console.count
-
-    /*  Distance */
+export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClickPreviewImg: onClickImg }) => {
+    /* 👣 Distance ~ Calc Distance between stay and user */
     const { loc } = stay
     const [userDistance, setUserDistance] = useState(null)
-    // setUserDistance(locService.getUserDistance())
+    // setUserDistance(locService.getUserDistance(loc))
 
-    const [currentImgIdx, setCurrentImgIdx] = useState(0)
-    const onSlide = (imgIdxShown) => setCurrentImgIdx(imgIdxShown)
-
-    const navigate = useNavigate()
-    const onClickImg = idx => ev => {
-        ev.stopPropagation()
-        console.log(`Click Image! ~ idx ~ :`, idx, ev)
-        // window.scrollTo(0, 0)
-        // navigate(`/stay/${stay._id}?imgIndex=${idx}`)
-        navigate(`/stay/${stay._id}}`)
-    }
-
-    /* Wishlist */
+    /* 📝 Wishlist ~ check if contains stay._id */
     const { likedByUsers } = stay
     const loggedInUser = userService.getLoggedInUser()
     const [isOnWishList, setIsOnWishList] = useState(
         loggedInUser ? likedByUsers.includes(loggedInUser._id) : false
     )
-    console.log(`🚀 ~ isOnWishList:`, isOnWishList)
-    
-    const onToggleIsInWishlist = ev => {
-        ev.stopPropagation() // if inside of the Link 
-        console.log('favorite: add to &isFavorite', stay)
-    }
 
-    /* Gallery Props */
-    const { imgUrls } = stay
-    const items = imgUrls.slice(0, 5).map((url, idx) => ({
+    /* Gallery */
+    const { imgUrls, _id } = stay
+    const galleryImgsProps = imgUrls.slice(0, 5).map((url, idx) => ({
         original: url,
         originalClass: "img-gallery-img",
-        originalTitle: `${stay.name} #${idx + 1}`,
+        // originalTitle: `${stay.name} #${idx + 1}`, // Optional
         originalAlt: `${stay.name} #${idx + 1}`,
         originalIndex: idx,
+        onClick: () => { onClickImg(idx, _id) },
         originalObjectFit: "cover",
-    }))
-    const startIndex = parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0
-    const galleryPreviewProps = {
-        onSlide,
-        onClickImg,
-        items,
+    })).flat() /* remove the extra layer of array */
+
+    const previewGalleryProps = {
+        items: galleryImgsProps,
         infinite: false,
-        startIndex,
+        startIndex: 0,
         additionalClass: 'preview-gallery',
         showPlayButton: false,
         autoPlay: false,
@@ -72,37 +50,47 @@ export const StayPreview = ({ stay }) => {
         lazyLoad: true,
     }
 
-    const { propertyType, price, _id, summary } = stay
+    /* stay */
+    const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
+    const isDiscount = useRef(Math.random() < 0.5)
+    const RandRate = useRef(getRandomFloatInclusive(4, 5, 2))
+    const watchesCount = useRef(getRandomIntInclusive(10000, 70000))
+
+    const { propertyType, price, summary } = stay
     const { city } = loc
-    return <article className='show stay-preview'>
 
+    return <article className={`stay-preview ${isIntersecting ? 'show' : ''}`}/* ${isShow ? ' show' : ''} */>
+        {/* Gallery */}
         <div className="gallery-container">
-            {loggedInUser && <button onClick={onToggleIsInWishlist} className='image-gallery-custom-action'>
-                {/* {isLike.current ? <AppIcon iconKey='Favorite' /> : <AppIcon iconKey='FavoriteFill' />} */}
-            </button>}
+            {/* WishList */}
+            {loggedInUser &&
+                <button className='image-gallery-custom-action' onClick={(ev) => { ev.stopPropagation(); onToggleIsInWishlist(stay) }} >
 
-            <ImgGallery viewProps={galleryPreviewProps} />
+                    {isOnWishList ? <OnlyIcon iconKey='Favorite' /> : <OnlyIcon iconKey='FavoriteFill' />}
+                </button>}
+
+            <ImgGallery viewProps={previewGalleryProps} />
         </div>
-
+        {/* Link container */}
         <Link to={`/stay/${_id}`} className="link-container">
+            {/*  heading */}
             <span className="txt heading">
                 {propertyType} in {city}
             </span>
-
+            {/*  summary */}
             <span className="txt summary">
                 {summary}
             </span>
-
-            {userDistance ? <span className="txt distance">
-                {numberWithCommas(userDistance)} kilometers
-            </span>
-
+            {/*  Distance👣 || watches 👀 */}
+            {userDistance
+                ? <span className="txt distance">
+                    {numberWithCommas(userDistance)} kilometers
+                </span>
                 : <span className="txt views-count">
-                    {numberWithCommas(getRandomIntInclusive(1000, 70000))} watches this month
+                    {numberWithCommas(watchesCount.current)} watches this month
                 </span>
             }
-
-
+            {/*  price $ */}
             <div className="txt price">
                 {isDiscount.current && <span className="full-night-price">
                     ${numberWithCommas((price * 1.3).toFixed())}&nbsp;
@@ -113,7 +101,7 @@ export const StayPreview = ({ stay }) => {
                 </span>
                 <span className="night">night</span>
             </div>
-
+            {/* rate ⭐*/}
             <span className="rate">
                 {<OnlyIcon className="fs-small" iconKey="Star" />}
                 {RandRate.current}
@@ -121,3 +109,13 @@ export const StayPreview = ({ stay }) => {
         </Link>
     </article>
 }
+
+/* TODO: 
+! 🐞 fix bug: onClickImg 
+! 🐞 fix bug: setUserDistance(locService.getUserDistance(loc))
+Todo: useIntersect.
+Todo: by Users Rates 1-5 ⭐.
+Todo: isDiscount by Host 
+Todo: const firstShowingImgIdx = 0 // const mostLikeImgIdx = getMostLikeImgIdx || 0
+Todo: UI UX.
+*/

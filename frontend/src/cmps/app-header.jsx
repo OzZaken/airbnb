@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, NavLink, useLocation } from "react-router-dom"
+/* hooks */
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import OnlyIcon from "./app-icon"
-
-import AccountMenu from "./user/user-menu"
+/* actions */
 import { setFilterBy, loadStays } from '../store/stay.action'
+/* cmps */
+import OnlyIcon from "./app-icon"
+import AccountMenu from "./user/user-menu"
 // import { LoginSignup } from "./system/login-signup"
+/* services *//* UI UX */
 
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
-    const loggedInUser = useSelector(state => state.userModule.loggedInUser)
 
-    useEffectUpdate(() => { }, [view])
+    // useEffectUpdate(() => { }, [view])
+    useEffect(() => { }, [view])
+    
     // filter
     const onSetFilterBy = (filterBy) => {
         console.log(`🚀 ~ filterBy:`, filterBy)
@@ -30,8 +34,7 @@ function _AppHeader({ view }) {
     // onClick={() => { window.history.pushState(null, null, `/`) }}
 
     return <header className='full main-header'>
-
-         <section className="full main-header-nav">
+         <section className="main-header-nav">
             <Link to={''} className="logo"></Link>
 
             <section className="container main-search-container">

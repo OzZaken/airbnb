@@ -25,7 +25,7 @@ function _AppFooter({ view }) {
     }
 
     return <footer className='main-footer'>
-        {view === 'home' && <>
+        {view === 'home-page' && <>
             <nav className="footer-nav">
                 <NavLink to='/'>{<OnlyIcon iconKey="Search" />}Explore</NavLink>
                 <NavLink to='/wishlist'>{<OnlyIcon iconKey="Favorite" />}Wishlists</NavLink>

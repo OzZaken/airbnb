@@ -1,10 +1,6 @@
 .btn {
     @include btn;
 
-    // Shapes
-    &-big {
-        @include btn($shape: big);
-    }
     &-underline {
         font-size: small;
         text-decoration: underline;
@@ -22,7 +18,7 @@
         width: 36px;
     }
 
-    &-txt {
-        @include btn();
-    }
+    &-big {@include btn($type: big);}
+    
+    &-ref { @include btn($type: ref);}// ! Not Working
 }

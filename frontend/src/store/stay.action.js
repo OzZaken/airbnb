@@ -13,7 +13,7 @@ export function getActionUpdateStay(stay) {
     return { type: 'UPDATE_STAY', stay }
 }
 
-// Basic CRUD
+// Basic CRUD+L
 export function loadStays() {
     return async (dispatch, getState) => {
         const { filterBy } = getState().stayModule
@@ -25,18 +25,7 @@ export function loadStays() {
         }
     }
 }
-export function removeStay(stayId) {
-    return async (dispatch) => {
-        try {
-            var removeStay = await stayService.remove(stayId)
-            console.log('Deleted Successfully')
-            dispatch(getActionRemoveStay(stayId))
-        } catch (err) {
-            showErrorMsg('Cannot remove stay')
-            console.log('Cannot remove stay', err)
-        }
-    }
-}
+
 export function addStay(stay) {
     return async (dispatch) => {
         try {
@@ -52,6 +41,7 @@ export function addStay(stay) {
         }
     }
 }
+
 export function updateStay(stay) {
     return async (dispatch) => {
         var updateStay = stayService.save(stay)
@@ -68,12 +58,12 @@ export function updateStay(stay) {
     }
 }
 
-// List
 export function setFilterBy(filterBy) {
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER_BY', filterBy })
     }
 }
+
 export function setSortBy(sortBy) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_SORT_BY', sortBy })
@@ -91,17 +81,32 @@ export function setSortBy(sortBy) {
     }
 }
 
-// WishList
-export function addToWishList(car) {
-    return (dispatch) => {
-        dispatch({ type: 'ADD_TO_WISHLIST', car })
+export function removeStay(stayId) {
+    return async (dispatch) => {
+        try {
+            var removeStay = await stayService.remove(stayId)
+            showUserMsg(`${removeStay._id} Deleted Successfully`)
+            dispatch(getActionRemoveStay(stayId))
+        } catch (err) {
+            showErrorMsg('Cannot remove stay')
+            console.log('Cannot remove stay', err)
+        }
     }
 }
+
+/* WishList */
+export function addToWishList(stay) {
+    return (dispatch) => {
+        dispatch({ type: 'ADD_TO_WISHLIST', stay })
+    }
+}
+
 export function removeFromWishList(stayId) {
     return (dispatch) => {
-        dispatch({ type: 'REMOVE_FROM_WISHLIST', carId: stayId })
+        dispatch({ type: 'REMOVE_FROM_WISHLIST', stayId })
     }
 }
+
 export function clearWishList() {
     return (dispatch) => {
         dispatch({ type: 'CLEAR_WISHLIST' })

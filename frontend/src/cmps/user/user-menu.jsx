@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+/* actions */
+import { onLogout } from '../../store/user.action'
+/* cmps */
+import Avatar from '@mui/material/Avatar' // display the user's profile image inside the icon button.
+/* MUI materials */
 import Box from '@mui/material/Box' //  component from the Material-UI library, which is used to group and organize other components. In this case, it is used to group the tooltip and icon button.
 import Tooltip from '@mui/material/Tooltip' // displays a tooltip (title) when the user hovers over the wrapped element.
-import Divider from '@mui/material/Divider'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Avatar from '@mui/material/Avatar' // display the user's profile image inside the icon button.
-import ListItemIcon from '@mui/material/ListItemIcon'
+import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton' // displays an icon inside a button. 
-
+import ListItemIcon from '@mui/material/ListItemIcon'
+/* MUI icons */
 import PersonAdd from '@mui/icons-material/PersonAdd'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
-
-
-import { onLogout } from '../../store/user.action'
+/* UI UX *//* hooks *//* services */
 
 export default function UserMenu() {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -24,6 +26,7 @@ export default function UserMenu() {
   const navigate = useNavigate()
   const handleClick = ev => setAnchorEl(ev.currentTarget)
   const handleClose = () => setAnchorEl(null)
+  const loggedInUser = useSelector(state => state.userModule.loggedInUser)
 
   const onLogOut = async () => {
     await dispatch(onLogout())

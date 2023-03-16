@@ -11,7 +11,6 @@ import reportWebVitals from './reportWebVitals'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-  // <React.StrictMode>
   <Provider store={store}>
     <Router>
       <ErrorBoundary>
@@ -19,9 +18,8 @@ root.render(
       </ErrorBoundary>
     </Router>
   </Provider>
-  // </React.StrictMode>
 )
-// debug
+
 window.onerror = (err) => {
   const { location, document, navigator } = window
   const { userAgent, platform, hardwareConcurrency, cookieEnabled, deviceMemory, connection, } = navigator
@@ -31,7 +29,7 @@ window.onerror = (err) => {
     env: process.env,
     errorMsg: err,
     location,
-    document,
+    // document,
     navigator: {
       userAgent,
       platform,
@@ -46,4 +44,5 @@ window.onerror = (err) => {
   }
   console.log(`🚀 ~ errorToSend:`, errorToSend)
 }
+
 reportWebVitals(App)

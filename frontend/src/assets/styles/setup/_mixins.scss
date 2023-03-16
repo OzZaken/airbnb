@@ -23,12 +23,12 @@
   }
 }
 
-// Grid template -  Columns
+/* Grid Layout */
 @mixin layoutGTC($min: auto, $max: 100%, $padded: $padded-layout) {
   grid-template-columns: minmax($padded, 1fr) minmax($min, $max) minmax($padded, 1fr);
 }
 
-// Aspect-ratio 
+/* Aspect-ratio  */
 @mixin aspect-ratio($width: 1, $height: 1) {
   position: relative;
   overflow: hidden;
@@ -54,7 +54,7 @@
   }
 }
 
-// Remove hover effects on iphone.
+/* Remove hover effects on iphone.  */
 @mixin hover-supported {
   @media not all and (pointer: coarse) {
     &:hover {
@@ -63,8 +63,8 @@
   }
 }
 
-// Buttons
-@mixin btn($padding: em(1px) em(1px), $shape: regular, $color: $clr-darken, $hover: darken($clr-bgc, 5%)) {
+/* Buttons.  */
+@mixin btn($padding: em(1px) em(1px), $type: none, $color: $clr-darken, $hover: darken($clr-bgc, 5%)) {
   padding: $padding;
   // font-family: inherit;
   // color: inherit;
@@ -78,13 +78,13 @@
   transition: background-color 0.2s;
   transition: scale 0.2s;
   background: transparent;
+
   &:hover {
     background-color: $hover;
     transform: scale 1.02;
   }
 
-  // $shape
-  @if $shape ==big {
+  @if $type ==big {
     padding: em(7px) em(0px);
     border: 1px solid $clr-vector;
     border-radius: 10px;
@@ -93,6 +93,32 @@
 
     &:active {
       transform: scale(1.03);
-    }  
+    }
+  }
+
+  @if $type ==ref {
+    height: 36px;
+    width: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    // margin-right: $padded-layout;
+    transition: transform 0.25s ease;
+    width: 30px;
+    min-width: 30px;
+    opacity: 0;
+
+    border: 0.5px solid $clr-vector;
+    border-radius: 50%;
+
+    color: #222222a9;
+
+    background-clip: padding-box;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent, #222;
+    background-color: red !important;
   }
 }

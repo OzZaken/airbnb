@@ -12,7 +12,9 @@
     opacity: 0;
     pointer-events: none;
 
-    >* {pointer-events: none;}
+    >* {
+        pointer-events: none;
+    }
 }
 
 .hidden {
@@ -47,39 +49,26 @@
 // Position 
 .flex {
     display: flex;
-
-    &-inline {
-        display: inline-flex;
-    }
-
-    &-grow {
-        flex: 1;
-    }
-
-    &-align-center {
-        align-items: center;
-    }
-
-    &-evenly {
-        justify-content: space-evenly;
-    }
-
+    
     &-center {
+        display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    &.left {
-        justify-content: left;
-    }
+    &-inline {display: inline-flex;}
 
-    &.right {
-        justify-content: right;
-    }
+    &-grow {flex: 1;}
 
-    &.space-between {
-        justify-content: space-between;
-    }
+    &-align-center {align-items: center;}
+
+    &-evenly {justify-content: space-evenly;}
+
+    &.left {justify-content: left;}
+
+    &.right {justify-content: right;}
+
+    &.space-between {justify-content: space-between;}
 }
 
 .grid {

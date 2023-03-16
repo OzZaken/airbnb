@@ -12,62 +12,6 @@ export const utilService = {
     formatDate
 }
 
-function formatDate(date = new Date(), formatBy) {
-    switch (formatBy) {
-        case 'byHour':
-            date.setMinutes(0)
-            date.setSeconds(0)
-            break
-
-        case 'byDay':
-            date.setDays(0)
-            break
-
-        default:
-            return date.toUTCString()
-    }
-
-    return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-        timeZoneName: 'long'
-    })
-}
-
-function makeId(length = 6) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return txt;
-}
-
-function makeLorem(size = 100) {
-    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'];
-    var txt = '';
-    while (size > 0) {
-        size--;
-        txt += words[Math.floor(Math.random() * words.length)] + ' ';
-    }
-    return txt;
-}
-
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-}
-
-function getRandomFloatInclusive(min, max, decimals) {
-    return ((Math.random() * (max - min)) + min).toFixed(decimals)
-}
-
 function delay(ms = 1500) {
     return new Promise(resolve => {
         setTimeout(resolve, ms)
@@ -101,8 +45,25 @@ function timeAgo(ms = new Date()) {
     }
 }
 
-function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
+function makeId(length = 6) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return txt;
+}
+
+function makeLorem(size = 100) {
+    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'];
+    var txt = '';
+    while (size > 0) {
+        size--;
+        txt += words[Math.floor(Math.random() * words.length)] + ' ';
+    }
+    return txt;
 }
 
 function makeChartDate(labels, data) {
@@ -134,12 +95,48 @@ function makeChartDate(labels, data) {
     }
 }
 
-function numberWithCommas(str) {
-    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+function formatDate(date = new Date(), formatBy) {
+    switch (formatBy) {
+        case 'byHour':
+            date.setMinutes(0)
+            date.setSeconds(0)
+            break
+
+        case 'byDay':
+            date.setDays(0)
+            break
+
+        default:
+            return date.toUTCString()
+    }
+
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZoneName: 'long'
+    })
 }
 
-function getRandomBoolean() {
-    return (Math.random() < 0.5)
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+}
+
+function getRandomFloatInclusive(min, max, decimals) {
+    return ((Math.random() * (max - min)) + min).toFixed(decimals)
+}
+
+function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
+}
+
+/* regex */
+function numberWithCommas(str) {
+    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 function getCababCase(amenities) {

@@ -20,29 +20,11 @@ export const translationService = {
     formatCurrency,
     formatDate,
     kmToMiles,
-    getEarthRadius,
 }
 
 function setLang(lang) {
     gLangCode = lang
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lang))
-}
-
-
-
-function getEarthRadius() {
-    const lang = navigator.language
-    const kmLocales = ['en-US', 'en-GB', 'fr-FR', 'es-ES', 'it-IT', 'pt-PT', 'pt-BR']
-    const milesLocales = ['en-CA', 'en-AU']
-
-    if (kmLocales.includes(lang)) {
-        return 6371 // Earth's radius in km
-    } else if (milesLocales.includes(lang)) {
-        return 3959 // Earth's radius in miles
-    } else {
-        console.warn('Unknown locale:', lang)
-        return 6371 // default to km
-    }
 }
 
 async function loadTranslations() {

@@ -53,5 +53,6 @@ export function userReducer(state = initialState, action) {
     }
     // For debug:
     window.gUserState = newState
+    // console.log(`%c ~ UserState Changed By ${action.type}\n: ${JSON.stringify(action,null,0)}`, 'color: grey;')
     return newState
 }

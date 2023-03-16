@@ -7,7 +7,7 @@ const http = require('http').createServer(app)
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
-/* declare using json*/
+/* config use json*/
 app.use(express.json())
 
 /* path, cors*/
@@ -53,7 +53,7 @@ app.use('/api/order', orderRoutes)
 
 app.get('/**', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')))
 
-/* Socket */
+/* Web Socket */
 const { setupSocketAPI } = require('./services/socket.service')
 setupSocketAPI(http)
 

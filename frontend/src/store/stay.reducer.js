@@ -1,23 +1,25 @@
 const INITIAL_STATE = {
     stays: [],
-    sortBy: {
-        page: 2, /* num ~ front paging  */
-        isDesc: true// boolean ~ const sortBy = { [prop]: (isDesc) ? -1 : 1 }
-    },
     filterBy: {
-        /* txt */
+        /* boolean */
+        isDesc: true, // sortBy = { [prop]: (isDesc) ? -1 : 1 }
+        /* num */
+        sortBy: 'price',
+        page: 3, /* front paging  */
+        /* string */
         txt: '',  /* name & summary */
         /* checkBox */
         amenities: [],
+        placeType: [],
         /* select */
         destination: 'flexible',/* flexible, new york, middle east, italy, south america ,france */
-        placeType: '',
         /* Range: [x,y] */
         priceRange: [0, Infinity],
         rateRange: [0, Infinity],
         capacityRange: [0, Infinity],
         bookingRange: [
             new Date(),
+            /* availability of checkOut in minimum of 3 days */
             new Date(new Date().setDate(new Date().getDate() + 3))
         ],
     },
@@ -62,5 +64,6 @@ export function stayReducer(state = INITIAL_STATE, action) {
         default:
     }
     window.gStayState = newState
+    // console.log(`%c ~ stayState Changed By ${action.type}\n: ${JSON.stringify(action,null,0)}`, 'color: gold;')
     return newState
 }

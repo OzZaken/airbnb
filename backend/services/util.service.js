@@ -4,7 +4,6 @@ module.exports = {
   debounce,
   generateRandomName,
   timeAgo,
-  generateRandomImg,
 }
 
 function makeId(length = 5) {
@@ -72,11 +71,6 @@ function generateRandomName() {
     names[Math.floor(Math.random() * names.length)] +
     famName[Math.floor(Math.random() * names.length)]
   )
-}
-
-function generateRandomImg() {
-  //try to get diff img every time
-  return 'pro' + Math.floor(Math.random() * 17 + 1) + '.png'
 }
 
 function timeAgo(ms = new Date()) {

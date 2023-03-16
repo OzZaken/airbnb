@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux'
+/* services */
 import { stayService } from '../services/stay.service'
-import { updateView } from '../store/system.actions'
-import OnlyIcon from '../cmps/app-icon'
+/* hooks */
+import { useViewEffect } from '../hooks/useViewEffect'
+/* cmps */
 import { ImgGallery } from '../cmps/system/img-gallery'
 import { StayOrder } from '../cmps/stay/stay-order'
+import OnlyIcon from '../cmps/app-icon'
+/* UI UX */
+import { Box, CircularProgress } from '@mui/material'
+/* actions */
 
 export const _StayDetails = () => {
-    const dispatch = useDispatch()
-
-    // ↓ Changed based url params Id
-    const { id } = useParams()
-    useEffect(() => { loadStay() }, [id])
+    // const dispatch = useDispatch()
+    const [searchParams] = useSearchParams()
 
     // ↓ Main Func
     const [stay, setStay] = useState(null)
@@ -23,99 +26,89 @@ export const _StayDetails = () => {
             setStay(newStay)
             document.title = ` ${newStay.name}`
         } catch (err) {
-            console.log('err:', err)
+            console.log(`error:${err}`)
         }
     }
 
-    // ↓  responsive cmps
+    /* ↓  responsive cmps */
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
     useEffect(() => { }, [innerWidth])
 
-    const user = useSelector(state => state.userModule.user)
+    /* ↓ Changed based url params Id */
+    const { id } = useParams()
+    useEffect(() => { loadStay() }, [id])
 
-    // ↓ Home Navigation 
+    /* ↓ user*/
+    const user = useSelector(state => state.userModule.user)
+    console.log(`🚀 ~ user:`, user)
+
+    /* ↓ Home Navigation */
     const navigate = useNavigate()
     const onBack = () => { navigate('/') }
 
-    // ↓ mount ,willUnMount
+    /* ↓ cdm ,cwum */
+    useViewEffect('stay-details')
     useEffect(() => {
         loadStay()
-        dispatch(updateView('stay-details'))
-
         window.addEventListener('resize', onSetInnerWidth)
-        document.body.classList.add('stay-details')
 
-        // Intersection Observer
-        const header = document.querySelector('.main-details-heading')
-        const nav = document.querySelector('.details-anchors-nav')
-
-        const _onHeaderObserved = (entries) => {
-            entries.forEach(entry => {
-                console.log('entry', entry)
-                nav.style.position = entry.isIntersecting ? 'static' : 'fixed';
-                // nav.style.classList = entry.isIntersecting ? 'static' : 'fixed';
-            },)
-        }
-
-        if (header && nav) {
-            const headerObserver = new IntersectionObserver(
-                _onHeaderObserved, {
-                rootMargin: "-91px 0px 0px",
-            })
-            headerObserver.observe(header)
-        }
-        // cwun
         return () => {
             window.removeEventListener('resize', onSetInnerWidth)
-            document.body.classList.remove('stay-details')
         }
     }, [])
 
-    // todo: move to stay-app
+    // Todo */
     const onShowReviews = () => {
         console.log('Swal2 || MUI show reviews:', reviews)
     }
 
-    if (!stay) return <div>Loading...</div>
+    /* Loader */
+    if (!stay) return (
+        <Box sx={{ display: 'flex', margin: '100px auto' }}>
+            <CircularProgress />
+        </Box>
+    )
     const { imgUrls, name, reviews, host, loc } = stay
 
-    // Gallery
-    const thumbnailsProps = innerWidth >= 570
+    /* Gallery */
+    const galleryImgsProp = stay.imgUrls.slice(0, 5).map((url, idx) => ({
+        // onClick:{()=>{console.log('click')},
+        original: url,
+        originalClass: "img-gallery-img",
+        originalTitle: `${stay.name} Image ${idx + 1}`,
+        originalAlt: `${stay.name} Image ${idx + 1}`,
+        originalIndex: idx,
+        originalObjectFit: "cover",
+    }))
+    const galleryClickedImgProp = parseInt(searchParams.get('clicked-img') || 0)
+    const galleryThumbnailsProps = innerWidth >= 570
         ? {
             showThumbnails: true,
-            thumbnailPosition:'left',
+            thumbnailPosition: 'left',
             items: imgUrls.map(url => ({ original: url, thumbnail: url })),
-        } : {
+        }
+        : {
             showThumbnails: false,
-            thumbnailPosition:'bottom',
+            thumbnailPosition: 'bottom',
             items: imgUrls.map(url => ({ original: url })),
         }
-
-    const galleryProps = {
-        thumbnailPosition: 'left',
-        showThumbnails: false,
+    const mainGalleryProps = {
         showPlayButton: false,
-        items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
-            original: url,
-            originalClass: "img-gallery-img",
-            originalTitle: `${stay.name} Image ${idx + 1}`,
-            originalAlt: `${stay.name} Image ${idx + 1}`,
-            originalIndex: idx,
-            originalObjectFit: "cover",
-        })),
-        startIndex: parseInt(new URLSearchParams(window.location.search).get('imgIndex')) || 0,
+        items: galleryImgsProp,
+        startIndex: galleryClickedImgProp,
         additionalClass: 'full img-gallery-details',
         loading: 'eager',
         lazyLoad: false,
         useBrowserFullscreen: false,
         showBullets: false,
         showIndex: true,
-        ...thumbnailsProps,
+        ...galleryThumbnailsProps,
         autoPlay: false,
     }
 
     const { isSuperHost } = host
+
     const { city, country } = loc
     return <article className='stay-details'>
         <header className="main-details-heading">
@@ -160,7 +153,7 @@ export const _StayDetails = () => {
             </div>
 
             {/* Gallery */}
-            <ImgGallery id="photos" viewProps={galleryProps} />
+            <ImgGallery id="photos" viewProps={mainGalleryProps} />
             <div hidden className="aspect-portrait imgs-template">
                 {imgUrls.map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
             </div>

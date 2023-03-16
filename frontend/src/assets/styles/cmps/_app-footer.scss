@@ -5,7 +5,7 @@
     width: 100%;
     z-index: 10;
     height: rem(64px);
-    border-top: 1px solid $clr-vector;
+    // border-top: 1px solid $clr-vector;
 
     .footer-nav {
         @include for-desktop-layout {
@@ -22,11 +22,11 @@
             flex-direction: column;
             justify-content: space-evenly;
             font-size: 10px;
-
+            
+            &:hover {text-decoration: none;}
+           
             &.active {
-                svg {
-                    color: $clr-mix;
-                }
+                svg {color: $clr-mix;}
             }
 
             .logo {

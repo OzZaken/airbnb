@@ -12,9 +12,15 @@ module.exports = {
     remove
 }
 
-function query(filterBy = {}, pageIdx) {
+async function query({
+    txt,
+    destination,
+    amenities,
+    bookingRange, placeType, propertyType, priceRange, rateRange, capacityRange
+}, pageIdx) {
+
     var stays = gStays
-    let { txt, destination, amenities, placeType, propertyType,
+    const { txt, destination, amenities, placeType, propertyType,
         priceRange, rateRange, capacityRange, bookingRange } = filterBy
 
     // Filter
@@ -23,18 +29,19 @@ function query(filterBy = {}, pageIdx) {
         stays = stays.filter(stay => regex.test(stay.name) || regex.test(stay.summary))
     }
 
+    // FilterBy Dates 
     if (bookingRange) {
         stays = stays.filter(stay => {
             const bookings = stay.bookings.filter(booking => {
-                const checkInDate = new Date(booking.startDate)
-                return checkInDate >= bookingRange[0] && checkInDate <= bookingRange[1]
+                const [checkIn, checkOut] = booking
+                return checkIn >= bookingRange[0] && checkOut <= bookingRange[1]
             })
             return bookings.length > 0
         })
     }
 
     //  at least one amenity in the array satisfies. 
-    if (amenities && amenities.length > 0) stays = stays.filter(stay => amenities.some(amenity => stay.amenities.includes(amenity)))
+    if (amenities && amenities.length > 0) stays = stays.filter(stay => stay.amenities.some(amenity => amenities.includes(amenity)))
 
     if (placeType && placeType.length > 0) stays = stays.filter(stay => placeType.includes(stay.placeType))
 
@@ -45,8 +52,8 @@ function query(filterBy = {}, pageIdx) {
     if (rateRange) stays = stays.filter(stay => stay.avgRate >= rateRange[0] && stay.avgRate <= rateRange[1])
 
     if (capacityRange) stays = stays.filter(stay => stay.capacity >= capacityRange[0] && stay.capacity <= capacityRange[1])
-    
-    if (destination) stays = stays.filter(stay => stay.destination === destination);
+
+    if (destination) stays = stays.filter(stay => stay.destination === destination)
 
     // pageIdx
     if (pageIdx !== undefined) {
@@ -54,7 +61,7 @@ function query(filterBy = {}, pageIdx) {
         stays = stays.slice(startIdx, startIdx + STAYS_PER_PAGE)
     }
 
-    return Promise.resolve(stays)
+    return stays
 }
 
 function getById(stayId) {
@@ -91,24 +98,19 @@ function save(stay, user) {
             gStays.unshift(stay)
         }
 
-        return _saveStaysToFile().then(() => stay);
+        return _saveStaysToFile().then(() => stay)
     } catch (error) {
-        return Promise.reject(error.message);
+        return Promise.reject(error.message)
     }
 }
 
-function _saveStaysToFile() {
-    return new Promise((resolve, reject) => {
-        const data = JSON.stringify(gStays, null, 2)
-        try {
-            fs.writeFile('data/stay.json', data, (err) => {
-                if (err) throw new Error('Cannot save to file')
-                resolve()
-            })
-        } catch (error) {
-            reject(error.message)
-        }
-    })
+async function _saveStaysToFile() {
+    const data = JSON.stringify(gStays, null, 2)
+    try {
+        await fs.promises.writeFile('data/stay.json', data)
+    } catch (error) {
+        throw new Error('Cannot save to file')
+    }
 }
 
 function _makeId() {

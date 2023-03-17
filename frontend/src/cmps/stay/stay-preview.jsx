@@ -10,29 +10,30 @@ import OnlyIcon from '../app-icon'
 /* actions *//* UI UX *//* hooks */
 
 export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onClickImg }) => {
+    /* stay IntersectionObserver */
     const [isIntersecting, setIsIntersecting] = useState(false)
     const ref = useRef()
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
-
             setIsIntersecting(entry.isIntersecting)
-            /* opt ~ if already visible STOP observe*/
+
+            /* for Better performance if already visible STOP observe*/
             if (entry.isIntersecting) observer.unobserve(entry.target)
 
-        }, { threshold: 1, rootMargin: '0px 0px 100px 0px', })
+        }, { threshold: 0.2, rootMargin: '0px 0px 100px 0px', })
 
         if (ref.current) observer.observe(ref.current)
 
         return () => observer.disconnect()
-
     }, [])
 
+    // todo: last stay IntersectionObserver :
     const lastPreviewIntersection = () => {
         /* Toggle .show if stay is Intersecting */
         const elLastStayObserver = new IntersectionObserver(entries => {
             const lastCard = entries[0]
             if (!lastCard.isIntersecting) return
-            onLoadMoreStays()// dispatch({ type: 'INC_PAGE_IDX' }) // get 20 stays that already exits and load from the Api more 20 
+            // onLoadMoreStays()
 
             elLastStayObserver.unobserve(lastCard.target)
             elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))

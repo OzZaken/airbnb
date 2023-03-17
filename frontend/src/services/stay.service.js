@@ -2,24 +2,23 @@ import { storageService } from './async-storage.service.js'
 
 var gDefaultStays = require('../assets/data/stay.json')
 
+var gPageIdx = 0
+
 const STORAGE_KEY = 'stay'
 
 const PAGE_SIZE = 20
 
-var gPageIdx = 0
+// function onNextPage() {
+//     pageIdxRef.current++
+//     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gBooks.length)
+//     return isLastPage
+// }
 
-function nextPage() {
-    gPageIdx++
-    const isLastPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gBooks.length)
-    return isLastPage
-
-}
-
-function prevPage() {
-    gPageIdx--
-    const isFirstPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gDefaultStays.length)
-    return isFirstPage
-}
+// function onPrevPage() {
+//     pageIdxRef.current--
+//     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gDefaultStays.length)
+//     return isFirstPage
+// }
 
 const AMENITIES = [
     //{imgSrcMap:heading}

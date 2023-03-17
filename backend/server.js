@@ -18,8 +18,7 @@ const cors = require('cors')
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')))
 } 
-/* Configuring CORS on development */
-else {
+else { /* Configuring CORS on development */
 /* Make sure origin contains the url frontend is running on*/
 const corsOptions = {
         origin: [

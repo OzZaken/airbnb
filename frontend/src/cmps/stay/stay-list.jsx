@@ -2,36 +2,26 @@ import { useState, useRef, useEffect } from 'react'
 import { useEffectUpdate } from '../../hooks/useEffectUpdate'
 import { StayPreview } from './stay-preview'
 
-export function StayList({ stays, onRemoveStay, setAvgRate, onToggleIsInWishlist, onClickPreviewImg, getRange }) {
+export function StayList({ stays, onRemoveStay, setAvgRate, onToggleIsInWishlist, onClickPreviewImg, getRange, loggedInUser }) {
     useEffect(() => {
         console.log('prices:', getRange('price'))
         console.log('capacities:', getRange('capacity'))
     }, [])
-    var gPageIdx = 0
-/* front paging page: 1,  */
-    function nextPage() {
-        gPageIdx++
-        const isLastPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gBooks.length)
-        return isLastPage
-    
-    }
-    
-    function prevPage() {
-        gPageIdx--
-        const isFirstPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gDefaultStays.length)
-        return isFirstPage
-    }
-    return <section  className='stay-list'>
+    const [pageIdx, setPageIdx] = useState(0)
+    // const pageIdxRef = useRef(0)
+
+    /* front paging page: 1,  */
+
+    return <section className='stay-list'>
         {stays.map(stay => {
-            return <StayPreview
+            return <StayPreview stay={stay}
                 key={stay._id}
-                stay={stay}
+                loggedInUser={loggedInUser}
+                setAvgRate={setAvgRate}
                 onRemoveStay={onRemoveStay}
                 onClickPreviewImg={onClickPreviewImg}
                 onToggleIsInWishlist={onToggleIsInWishlist}
-                setAvgRate={setAvgRate}
             />
         })}
     </section>
 }
-

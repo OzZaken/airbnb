@@ -16,19 +16,22 @@ import { StayFilter } from "../cmps/stay/stay-filter"
 import { Box, CircularProgress } from '@mui/material'
 import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { useDebug } from '../hooks/useDebug'
+import OnlyIcon from '../cmps/app-icon'
+import { stayService } from '../services/stay.service'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
 export const StayApp = (props) => {
-    useViewEffect('home-page')
+    // useDebug('StayApp', props)/* debug */
     const dispatch = useDispatch()
-
-    useDebug('StayApp', props)/* debug */
-
-    const { stays, filterBy } = useSelector(state => state.stayModule)
     const [searchParams, setSearchParams] = useSearchParams()
+    const { stays, filterBy } = useSelector(state => state.stayModule)
+    const { loggedInUser } = useSelector(state => state.userModule)
 
+    useViewEffect('home-page')
     useEffect(() => {
         dispatch(loadStays())
+        // dispatch(loadAmenities())
+
         /* queryParams*/
         if (searchParams.has('filters')) {
             const queryFilter = JSON.parse(searchParams.get('filters'))
@@ -41,9 +44,13 @@ export const StayApp = (props) => {
 
     useEffect(() => {
         console.count('filterByChanged')
-        console.log('filterBy',filterBy)
+        console.log('filterBy', filterBy)
         dispatch(loadStays())
     }, [filterBy])
+
+    useEffect(() => {
+     const ranges = ['price','rate','date',]  
+    }, [stays])
 
     /* NOTE: save only on front */
     const setAvgRate = (stay) => {
@@ -58,12 +65,12 @@ export const StayApp = (props) => {
 
     /*  Filter  */
     const onChangeFilter = filterBy => {
-        const { txt, placeType, amenities, priceRange, rateRange, capacityRange, bookingRange } = filterBy
+        const { txt, placeType, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
 
         const [minPrice, maxPrice] = priceRange
         const [minRate, maxRate] = rateRange
         const [minCapacity, maxCapacity] = capacityRange
-        const [checkIn, checkOut] = bookingRange
+        const [checkIn, checkOut] = dateRange
 
         const queryParams = [
             txt && `&text=${txt}`,
@@ -81,12 +88,20 @@ export const StayApp = (props) => {
         setSearchParams({ filters })
     }
 
-    /*  FilterBy amenity  */
+    /* amenity  */
+    const amenities = stayService.getAmenities()
+
     const onSetFilterByAmenity = (amenityStringParam) => {
         console.log(`🚀 ~ onSetFilterByAmenity:`, amenityStringParam)
         const prevAmenities = searchParams.getAll('amenities')
         console.log(`🚀 ~ prevFilter:`, prevAmenities)
         // setSearchParams({ 'filter-by': { 'amenities': JSON.stringify(amenity) } })
+    }
+
+    /*  SortBy  */
+    const onChangeSort = sortBy => {
+        dispatch(setSortBy(sortBy))
+        dispatch(loadStays())
     }
 
     /*  FilterBy Range [min, max] */
@@ -99,12 +114,6 @@ export const StayApp = (props) => {
         ], [Infinity, -Infinity])
     }
 
-    /*  SortBy  */
-    const onChangeSort = sortBy => {
-        dispatch(setSortBy(sortBy))
-        dispatch(loadStays())
-    }
-
     /*  Click Preview Image */
     const navigate = useNavigate()
     const onClickPreviewImg = (idx, id) => {
@@ -115,18 +124,17 @@ export const StayApp = (props) => {
 
     /* Wishlist */
     const onAddToWishList = stayId => dispatch(addToWishList(stayId))
-    
+
     const onRemoveFromWishList = stayId => dispatch(removeFromWishList(stayId))
 
-    /* Stay */
+    /* Stay CRUD */
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
-    
-    // const onLoadMoreStays = stay => dispatch(())
 
-// dispatch({ type: 'INC_PAGE_IDX' }) // get 20 stays that already exits and load from the Api more 20 
-    /* Loader */
+    const onLoadMoreStays = () => dispatch({ type: 'INC_PAGE_IDX' })
+
+    /* CircularProgress Loader */
     if (!stays) return (
         <Box sx={{ display: 'flex', margin: '100px auto' }}>
             <CircularProgress />
@@ -134,12 +142,12 @@ export const StayApp = (props) => {
     )
 
     return <section className='stay-app'>
-        <StayFilter filterBy={filterBy}
+        <StayFilter filterBy={filterBy} allAmenities={amenities}
             onChangeFilter={onChangeFilter}
             onSetFilterByAmenity={onSetFilterByAmenity}
         />
 
-        <StayList stays={stays}
+        <StayList stays={stays} loggedInUser={loggedInUser}
             getRange={getRange}
             setAvgRate={setAvgRate}
             onAddToWishList={onAddToWishList}

@@ -1,22 +1,24 @@
 .stay-filter {
     display: flex;
+    width: 100%;background-color: aliceblue;
     flex-wrap: nowrap;
     align-items: center;
     // position: sticky;
     top: 80px;
     box-shadow: none;
     transition: box-shadow 0.2s ease;
-        overflow:  hidden;
+    overflow: hidden;
 
     .filter-by-container {
         position: relative;
-        
+
         // overflow-x: scroll, hidden;
         // overscroll-behavior-inline: hidden;
-        
+
         overflow: auto;
         // scroll-snap-align: start;
         scroll-snap-type: x mandatory;
+
         &::-webkit-scrollbar {
             display: none;
         }

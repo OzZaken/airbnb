@@ -5,21 +5,7 @@ var gDefaultStays = require('../assets/data/stay.json')
 var gPageIdx = 0
 
 const STORAGE_KEY = 'stay'
-
 const PAGE_SIZE = 20
-
-// function onNextPage() {
-//     pageIdxRef.current++
-//     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gBooks.length)
-//     return isLastPage
-// }
-
-// function onPrevPage() {
-//     pageIdxRef.current--
-//     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gDefaultStays.length)
-//     return isFirstPage
-// }
-
 const AMENITIES = [
     //{imgSrcMap:heading}
     { omg: 'OMG!' },
@@ -105,3 +91,15 @@ function getPropertyTypes() {
 function getPlaceTypes() {
     return PLACE_TYPES
 }
+
+// function onNextPage() {
+//     pageIdxRef.current++
+//     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gBooks.length)
+//     return isLastPage
+// }
+
+// function onPrevPage() {
+//     pageIdxRef.current--
+//     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gDefaultStays.length)
+//     return isFirstPage
+// }

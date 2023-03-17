@@ -51,6 +51,7 @@ class Logger {
     _logToConsole(level, message) {
         console.log(`[${level.toUpperCase()}] ${message}`)
     }
+    
     // Log a message to the Server.
     async _logToErrorServer(level, message) {
         if (!this.errorServerUrl) {
@@ -71,6 +72,7 @@ class Logger {
             this._logToFile('error', error.message)
         }
     }
+    
     // Log a message to a file.
     async _logToFile(level, message) {
         const logFilePath = path.join(this.logDirectory, this.logFilename)

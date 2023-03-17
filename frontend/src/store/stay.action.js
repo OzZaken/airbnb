@@ -13,7 +13,7 @@ export function getActionUpdateStay(stay) {
     return { type: 'UPDATE_STAY', stay }
 }
 
-// Basic CRUD+L
+// CRUD
 export function loadStays() {
     return async (dispatch, getState) => {
         const { filterBy } = getState().stayModule
@@ -25,7 +25,6 @@ export function loadStays() {
         }
     }
 }
-
 export function addStay(stay) {
     return async (dispatch) => {
         try {
@@ -41,7 +40,6 @@ export function addStay(stay) {
         }
     }
 }
-
 export function updateStay(stay) {
     return async (dispatch) => {
         var updateStay = stayService.save(stay)
@@ -57,30 +55,6 @@ export function updateStay(stay) {
         }
     }
 }
-
-export function setFilterBy(filterBy) {
-    return (dispatch) => {
-        dispatch({ type: 'SET_FILTER_BY', filterBy })
-    }
-}
-
-export function setSortBy(sortBy) {
-    return (dispatch, getState) => {
-        dispatch({ type: 'SET_SORT_BY', sortBy })
-
-        let { stays } = getState().stayModule
-
-        if (sortBy.sortBy === 'name') {
-            stays = stays.sort((t1, t2) => t1.name.localeCompare(t2.name))
-        }
-        if (sortBy.sortBy === 'price') {
-            stays = stays.sort((t1, t2) => t1.price - t2.price)
-        }
-
-        dispatch({ type: 'SET_STAYS', stays })
-    }
-}
-
 export function removeStay(stayId) {
     return async (dispatch) => {
         try {
@@ -94,28 +68,8 @@ export function removeStay(stayId) {
     }
 }
 
-/* WishList */
-export function addToWishList(stay) {
-    return (dispatch) => {
-        dispatch({ type: 'ADD_TO_WISHLIST', stay })
-    }
-}
-
-export function removeFromWishList(stayId) {
-    return (dispatch) => {
-        dispatch({ type: 'REMOVE_FROM_WISHLIST', stayId })
-    }
-}
-
-export function clearWishList() {
-    return (dispatch) => {
-        dispatch({ type: 'CLEAR_WISHLIST' })
-    }
-}
-
 // Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
 const STORAGE_KEY = 'stay'
-
 export function onLoadStaysPWA() {
     const storageStays = storageService.query(STORAGE_KEY)
     // dispatch({ type: 'SET_STAYS', stays: storageStays })
@@ -185,5 +139,71 @@ export function onUpdateStayPWA(stay) {
         finally {
             showSuccessMsg('Stay updated')
         }
+    }
+}
+
+/* WishList */
+export function addToWishList(stay) {
+    return (dispatch) => {
+        dispatch({ type: 'ADD_TO_WISHLIST', stay })
+    }
+}
+export function removeFromWishList(stayId) {
+    return (dispatch) => {
+        dispatch({ type: 'REMOVE_FROM_WISHLIST', stayId })
+    }
+}
+export function clearWishList() {
+    return (dispatch) => {
+        dispatch({ type: 'CLEAR_WISHLIST' })
+    }
+}
+
+/* PAGE_IDX */
+export function setPageIdx(pageIdx) {
+    return (dispatch, getState) => {
+        dispatch({ type: 'SET_PAGE_IDX', pageIdx })
+    }
+}
+
+export function incPageIdx() {
+    return (dispatch, getState) => {
+        let { pageIdx } = getState().stayModule
+        dispatch({ type: 'INC_PAGE_IDX', pageIdx })
+    }
+}
+
+/* SORT */
+export function setSortBy(sortBy) {
+    return (dispatch, getState) => {
+        dispatch({ type: 'SET_SORT_BY', sortBy })
+        let { stays } = getState().stayModule
+
+        switch ({ sortBy }) {
+            case 'price':
+                stays = stays.sort((t1, t2) => t1.price - t2.price)
+                break
+
+            case 'name':
+                stays = stays.sort((t1, t2) => t1.name.localeCompare(t2.name))
+                break
+
+            case 'rate':
+                stays = stays.sort((t1, t2) => t1.rate - t2.rate)
+                break
+
+            case 'capacity':
+                stays = stays.sort((t1, t2) => t1.capacity - t2.capacity)
+                break
+            default:
+                dispatch({ type: 'SET_STAYS', stays })
+        }
+    }
+}
+
+/* FILTER */
+export function setFilterBy(filterBy) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_FILTER_BY', filterBy })
     }
 }

@@ -1,20 +1,24 @@
 const INITIAL_STATE = {
     stays: [],
     wishList: [],
-    sortBy: { price: 1 },
     pageIdx: 0,
+    sortBy: { price: 1 },/* Single key obj: {[field] & isDesc ? -1 :1} */
+    /* Multi key obj */
     filterBy: {
-        txt: '',  /* name & summary */
-        destination: 'flexible',/* flexible | new york | middle east | italy | south | america | france */
-        amenities: [],
-        placeType: [], /* 'entire home/apt', 'private room', 'shared room' */
-        propertyType: [], /*'entire home/apt', 'private room', 'shared room' */
+        txt: '',  /* text: name & summary */
+        destination: 'flexible', /* select: flexible | new york | middle east | italy | south | america | france */
+        amenities: [],/* checkbox */
+        placeType: [], /* select || checkbox: 'entire home/apt', 'private room', 'shared room' */
+        propertyType: [], /* checkbox: 'entire home/apt', 'private room', 'shared room' */
+        /* num range:  [min, max]*/
         priceRange: [0, Infinity],
         rateRange: [0, Infinity],
         capacityRange: [0, Infinity],
-        bookingRange: [
+        /* Date range: [checkIn, checkOut] */
+        dateRange: [
             new Date(),
-            new Date(new Date().setDate(new Date().getDate() + 3)) /* checkOut in minimum of 3 days */
+            /* checkOut in minimum of 3 days */
+            new Date(new Date().setDate(new Date().getDate() + 3))
         ],
     },
 }
@@ -22,7 +26,7 @@ const INITIAL_STATE = {
 export function stayReducer(state = INITIAL_STATE, action) {
     var newState = state
     switch (action.type) {
-        /* CRUD+L */
+        /* STAY CRUD+L */
         case 'ADD_STAY':
             newState = { ...state, stays: [...state.stays, action.stay] }
             break
@@ -39,10 +43,6 @@ export function stayReducer(state = INITIAL_STATE, action) {
             newState = { ...state, stays: state.stays.filter(stay => stay._id !== action.stayId) }
             break
 
-        case 'SET_FILTER_BY':
-            newState = { ...state, filterBy: { ...action.filterBy } }
-            break
-
         /* WISHLIST */
         case 'ADD_TO_WISHLIST':
             newState = { ...state, wishList: [...state.wishList, action.stay] }
@@ -55,6 +55,29 @@ export function stayReducer(state = INITIAL_STATE, action) {
 
         case 'CLEAR_WISHLIST':
             newState = { ...state, wishList: [] }
+            break
+
+        /* PAGE_IDX */
+        case 'SET_PAGE_IDX':
+            newState = { ...state, pageIdx: action.pageIdx }
+            break
+
+        case 'INC_PAGE_IDX':
+            newState = { ...state, pageIdx: action.pageIdx + 1 }
+            break
+
+        case 'DEC_PAGE_IDX':
+            newState = { ...state, pageIdx: action.pageIdx - 1 }
+            break
+
+        /* SORT */
+        case 'SET_SORT_BY':
+            newState = { ...state, sortBy: action.sortBy }
+            break
+
+        /* FILTER */
+        case 'SET_FILTER_BY':
+            newState = { ...state, filterBy: { ...action.filterBy } }
             break
         default:
     }

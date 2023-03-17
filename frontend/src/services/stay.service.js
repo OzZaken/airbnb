@@ -4,9 +4,24 @@ var gDefaultStays = require('../assets/data/stay.json')
 
 const STORAGE_KEY = 'stay'
 
-const STAYS_PER_PAGE = 20
+const PAGE_SIZE = 20
 
-const AMENITIES = [ 
+var gPageIdx = 0
+
+function nextPage() {
+    gPageIdx++
+    const isLastPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gBooks.length)
+    return isLastPage
+
+}
+
+function prevPage() {
+    gPageIdx--
+    const isFirstPage = (PAGE_SIZE + gPageIdx * PAGE_SIZE >= gDefaultStays.length)
+    return isFirstPage
+}
+
+const AMENITIES = [
     //{imgSrcMap:heading}
     { omg: 'OMG!' },
     { beach: 'Beach!' },
@@ -18,17 +33,15 @@ const AMENITIES = [
     { island: 'Island' },
     { surfing: 'Surfing' },
 ]
-
-const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
-
 const PLACE_TYPES = ['entire home/apt', 'private room', 'shared room']
+const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
 
 export const stayService = {
     query,
     save,
     remove,
     getById,
-    
+
     getAmenities,
     getPlaceTypes,
     getPropertyTypes,
@@ -52,7 +65,7 @@ async function query(filterBy = { txt: '' }) {
         amenities = amenities || []
         pageIdx = pageIdx || 1
         // const startIdx = pageIdx * STAYS_PER_PAGE // sending  backend the relents
-        stays = stays.slice(0, pageIdx * STAYS_PER_PAGE)
+        stays = stays.slice(0, pageIdx * PAGE_SIZE)
         stays = stays.filter(stay =>
             regex.test(stay.name.substring(stay.summary))
             && stay.price < maxPrice

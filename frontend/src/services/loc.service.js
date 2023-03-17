@@ -1,23 +1,28 @@
-import { httpService } from './http.service'
-import { utilService } from './util.service'
 import _ from 'lodash'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { httpService } from './http.service'
+import { utilService } from './util.service'
+import { countryService } from './country.service'
+import { translationService } from './i18n.service'
+const COUNTRIES = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
 
+/* private UserMsg with sweetalert2 withReactContent */
 const UserMsg = withReactContent(Swal)
-const COUNTRIES = require('../assets/data/countries.json')
+
 const LOC_KEY = process.env.LOC_KEY
 const STORAGE_KEY = 'userLoc'
 
-/* data [] && {}*/
+/* data [] && {} */
 const USER_LOCS = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
 const USER_LOCS_MAP = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
 
-/* opt Default in Israel: _setUserLocByCountryCode('ISR')*/
+/* UserPos */
 var gUserPos
     = sessionStorage.getItem(STORAGE_KEY)
     || USER_LOCS[USER_LOCS.length - 1]
-    || _setUserLocByCountryCode('ISR')
+    || _setUserLocByCountryCode('ISR')/* opt ~ by Default in Israel: _setUserLocByCountryCode('ISR')*/
+    || null
 
 /* prevent unnecessary requests (if already search same input and type ) */
 const INVALID_SEARCH_RESULT = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
@@ -30,9 +35,10 @@ export const locService = {
     setUserLocByCountryName,
 }
 /* debug */
-window.gLoc = {
-    LOCS: USER_LOCS,
-    LOCS_MAP: USER_LOCS_MAP,
+window.gDebugLocService = {
+    gUserPos,
+    USER_LOCS,
+    USER_LOCS_MAP,
     INVALID_SEARCH_RESULT
 }
 
@@ -277,27 +283,21 @@ function _getCountryFromAlfaCode(code) {
     return COUNTRIES.find(c => c.alpha2Code === code || c.alpha3Code === code)
 }
 
+/* uses destructuring to extract the necessary properties from google Api searchResult */
+function _getLoc({ formatted_address: name, geometry: { location: { lat, lng } } }) {
+    return { name, lat, lng }
+}
+
 /* extract Pos from country */
 function _getPosFromCountry(country) {
-    console.log(`🚀 ~ country:`, country)
     return {
         lat: country.latlng[0],
         lng: country.latlng[1]
     }
 }
 
-/* extract Loc from google Api searchResult */
-function _getLoc(searchResult) {
-    const {
-        formatted_address: name,
-        geometry: { location: { lat, lng } },
-    } = searchResult
-
-    return { name, lat, lng }
-}
-
 function _calcDistance(posA, posB) {
-    const radius = _getEarthRadius() // Earth's radius in km or miles
+    const radius = translationService.getEarthRadius() //  in km or miles
 
     const dLat = (posB.lat - posA.lat) * Math.PI / 180
     const dLon = (posB.lng - posA.lng) * Math.PI / 180
@@ -318,22 +318,6 @@ function _calcDistance(posA, posB) {
     return distance
 }
 
-function _getEarthRadius() {
-    const lang = navigator.language
-    const kmLocales = ['en-US', 'en-GB', 'fr-FR', 'es-ES', 'it-IT', 'pt-PT', 'pt-BR']
-    const milesLocales = ['en-CA', 'en-AU']
-
-    if (kmLocales.includes(lang)) {
-        return 6371 // Earth's radius in km
-    } else if (milesLocales.includes(lang)) {
-        return 3959 // Earth's radius in miles
-    } else {
-        console.warn('Unknown locale:', lang)
-        return 6371 // default to km
-    }
-}
-
-/* private UserMsg with sweetalert2 withReactContent */
 function _showErrorMsg(title, text) {
     UserMsg.fire({
         icon: 'error',
@@ -362,4 +346,3 @@ function _showConfirmMsg(type, title, text, confirmButtonText, showCancelButton,
         cancelButtonColor: '#d33',
     })
 }
-

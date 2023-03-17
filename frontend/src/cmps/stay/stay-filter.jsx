@@ -1,12 +1,12 @@
 import { NavLink, useSearchParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../../services/stay.service'
 import { useFormRegister } from '../../hooks/useFormRegister'
 import OnlyIcon, { CustomSvg } from '../app-icon'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const StayFilter = ({ filterBy, onChangeFilter, onSetFilterByAmenity, getRange }) => {
-   
+
 
     const {
         txt, placeType,
@@ -60,4 +60,34 @@ export const StayFilter = ({ filterBy, onChangeFilter, onSetFilterByAmenity, get
             <OnlyIcon iconKey="FilterBy" />Filters
         </button>
     </section>
+}
+
+const StaySort = ({ onChangeSort }) => {
+    const propRef = useRef(null)
+    const descRef = useRef(null)
+
+    const onSetSortBy = () => {
+        const prop = propRef.current.value
+        const isDesc = descRef.current.checked
+
+        const sortBy = { [prop]: isDesc ? -1 : 1 }
+        onChangeSort(sortBy)
+    }
+
+    return (
+        <div className='stay-sort'>
+
+            <select className="sort-by" ref={propRef}>
+                <option value="price">price</option>
+                <option value="rate">rate</option>
+                <option value="views">views</option>
+            </select>
+
+            <label>Descending
+                <input type="checkbox" className="sort-desc" ref={descRef} />
+            </label>
+
+            <button onClick={onSetSortBy}>Sort</button>
+        </div>
+    );
 }

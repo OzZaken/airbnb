@@ -1,13 +1,15 @@
-const DEFAULT_TRANSLATION = require('../assets/data/translations.json')
-var gTrans = null
+const TRANSLATION = require('../assets/data/translations.json')
+
 const STORAGE_KEY = 'userLang'
 
-var gLangCode = localStorage.getItem(STORAGE_KEY)
-    || navigator.language.substring(0, 2)// opt - .split('-')[0]
+var gTrans = null
+
+var gLangCode
+    = _loadLngFromLocalStorage() || navigator.language.substring(0, 2) // eq .split('-')[0]
 
 if (!gLangCode) {
     gLangCode = 'en'
-    gLangCode =  loadTranslations()
+    gLangCode = loadTranslations()
 }
 
 export const translationService = {
@@ -20,11 +22,26 @@ export const translationService = {
     formatCurrency,
     formatDate,
     kmToMiles,
+    getEarthRadius,
 }
 
 function setLang(lang) {
     gLangCode = lang
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lang))
+}
+
+function getEarthRadius() {
+    const lang = navigator.language
+    const kmLocales = ['en-US', 'en-GB', 'fr-FR', 'es-ES', 'it-IT', 'pt-PT', 'pt-BR']
+    const milesLocales = ['en-CA', 'en-AU']
+
+    if (kmLocales.includes(lang)) return 6371 // Earth's radius in km
+    else if (milesLocales.includes(lang)) return 3959 // Earth's radius in miles
+    else {
+        console.warn('Unknown locale:', lang)
+        // TODO:logger.warn('Unknown locale:', lang)
+        return 6371 // default to km
+    }
 }
 
 async function loadTranslations() {
@@ -57,7 +74,6 @@ function getCurrencyPrice(price) {
     const currencyLookup = {
         en: { code: 'USD', rate: 1 },
         he: { code: 'ILS', rate: 3.37 },
-        eg: { code: 'EGP', rate: 19.03 },
     }
 
     const currency = currencyLookup[gLangCode] || currencyLookup.en
@@ -96,7 +112,7 @@ function formatDate(time) {
 }
 
 function kmToMiles(km) {
-    return km / 1.609
+    return +(km / 1.609).toFixed(3)
 }
 
 function _loadLngFromLocalStorage() {

@@ -1,7 +1,10 @@
+import { showUserMsg } from "./event-bus.service"
+
 const tripCountries = []
+
 var tripDistance = 0
 
-module.exports = {
+export const tripService = {
     addToTrip,
     getTripCountries
 }
@@ -14,26 +17,27 @@ function getTripCountries() {
 function addToTrip(toCountry) {
     tripCountries.push(toCountry)
     if (tripCountries.length === 1) {
-        console.log(`Vamos from ${toCountry.name}`)
+        showUserMsg(`Vamos from ${toCountry.name}`)
         return false
     }
     const fromCountry = tripCountries[tripCountries.length - 2]
     if (fromCountry.latlng && toCountry.latlng) {
         const distance = _distance(...fromCountry.latlng, ...toCountry.latlng)
-        console.log(`Trvelling ${distance}Km to ${toCountry.name}`)
+        showUserMsg(`Trvelling ${distance}Km to ${toCountry.name}`)
         tripDistance += distance
         tripDistance = +tripDistance.toFixed(2)
-        console.log(`Curr trip (Distance: ${tripDistance}):`, tripCountries.map(c => c.name))
+        showUserMsg(`Curr trip (Distance: ${tripDistance}):`, tripCountries.map(c => c.name))
     }
     if (tripCountries[0].code === toCountry.code) {
-        console.log('Back to start point...')
+        showUserMsg('Back to start point...')
         return true
     } else if (tripCountries.filter(c => c.code === toCountry.code).length > 1) {
-        console.log('Liked it ah?')
+        showUserMsg('Liked it ah?')
     }
     return false
 
 }
+
 function _distance(lat1, lng1, lat2, lng2, unit = 'K') {
     if ((lat1 == lat2) && (lng1 == lng2)) return 0
     const radlat1 = Math.PI * lat1 / 180

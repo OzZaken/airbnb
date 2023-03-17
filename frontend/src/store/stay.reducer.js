@@ -1,34 +1,28 @@
 const INITIAL_STATE = {
     stays: [],
+    wishList: [],
+    sortBy: { price: 1 },
+    pageIdx: 0,
     filterBy: {
-        /* boolean */
-        isDesc: true, // sortBy = { [prop]: (isDesc) ? -1 : 1 }
-        /* num */
-        sortBy: 'price',
-        page: 3, /* front paging  */
-        /* string */
         txt: '',  /* name & summary */
-        /* checkBox */
+        destination: 'flexible',/* flexible | new york | middle east | italy | south | america | france */
         amenities: [],
-        placeType: [],
-        /* select */
-        destination: 'flexible',/* flexible, new york, middle east, italy, south america ,france */
-        /* Range: [x,y] */
+        placeType: [], /* 'entire home/apt', 'private room', 'shared room' */
+        propertyType: [], /*'entire home/apt', 'private room', 'shared room' */
         priceRange: [0, Infinity],
         rateRange: [0, Infinity],
         capacityRange: [0, Infinity],
         bookingRange: [
             new Date(),
-            /* availability of checkOut in minimum of 3 days */
-            new Date(new Date().setDate(new Date().getDate() + 3))
+            new Date(new Date().setDate(new Date().getDate() + 3)) /* checkOut in minimum of 3 days */
         ],
     },
-    wishList: [],
 }
 
 export function stayReducer(state = INITIAL_STATE, action) {
     var newState = state
     switch (action.type) {
+        /* CRUD+L */
         case 'ADD_STAY':
             newState = { ...state, stays: [...state.stays, action.stay] }
             break
@@ -49,6 +43,7 @@ export function stayReducer(state = INITIAL_STATE, action) {
             newState = { ...state, filterBy: { ...action.filterBy } }
             break
 
+        /* WISHLIST */
         case 'ADD_TO_WISHLIST':
             newState = { ...state, wishList: [...state.wishList, action.stay] }
             break

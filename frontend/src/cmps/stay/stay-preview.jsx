@@ -9,7 +9,38 @@ import { ImgGallery } from '../system/img-gallery'
 import OnlyIcon from '../app-icon'
 /* actions *//* UI UX *//* hooks */
 
-export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClickPreviewImg: onClickImg }) => {
+export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onClickImg }) => {
+    const [isIntersecting, setIsIntersecting] = useState(false)
+    const ref = useRef()
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+
+            setIsIntersecting(entry.isIntersecting)
+            /* opt ~ if already visible STOP observe*/
+            if (entry.isIntersecting) observer.unobserve(entry.target)
+
+        }, { threshold: 1, rootMargin: '0px 0px 100px 0px', })
+
+        if (ref.current) observer.observe(ref.current)
+
+        return () => observer.disconnect()
+
+    }, [])
+
+    const lastPreviewIntersection = () => {
+        /* Toggle .show if stay is Intersecting */
+        const elLastStayObserver = new IntersectionObserver(entries => {
+            const lastCard = entries[0]
+            if (!lastCard.isIntersecting) return
+            onLoadMoreStays()// dispatch({ type: 'INC_PAGE_IDX' }) // get 20 stays that already exits and load from the Api more 20 
+
+            elLastStayObserver.unobserve(lastCard.target)
+            elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
+        }, {})
+
+        elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
+    }
+
     /* 👣 Distance ~ Calc Distance between stay and user */
     const { loc } = stay
     const [userDistance, setUserDistance] = useState(null)
@@ -59,28 +90,29 @@ export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClick
     const { propertyType, price, summary } = stay
     const { city } = loc
 
-    return <article className={`stay-preview ${isIntersecting ? 'show' : ''}`}/* ${isShow ? ' show' : ''} */>
-        {/* Gallery */}
+    return <article ref={ref} className={`stay-preview ${isIntersecting ? 'show' : ''}`}/* ${isShow ? ' show' : ''} */>
         <div className="gallery-container">
-            {/* WishList */}
-            {loggedInUser &&
-                <button className='image-gallery-custom-action' onClick={(ev) => { ev.stopPropagation(); onToggleIsInWishlist(stay) }} >
 
-                    {isOnWishList ? <OnlyIcon iconKey='Favorite' /> : <OnlyIcon iconKey='FavoriteFill' />}
-                </button>}
+            {/* WishList */}
+            {loggedInUser && <button className='image-gallery-custom-action' onClick={(ev) => { ev.stopPropagation(); onToggleIsInWishlist(stay) }} >
+                {isOnWishList ? <OnlyIcon iconKey='Favorite' /> : <OnlyIcon iconKey='FavoriteFill' />}
+            </button>}
 
             <ImgGallery viewProps={previewGalleryProps} />
         </div>
-        {/* Link container */}
+
         <Link to={`/stay/${_id}`} className="link-container">
+
             {/*  heading */}
             <span className="txt heading">
                 {propertyType} in {city}
             </span>
+
             {/*  summary */}
             <span className="txt summary">
                 {summary}
             </span>
+
             {/*  Distance👣 || watches 👀 */}
             {userDistance
                 ? <span className="txt distance">
@@ -90,6 +122,7 @@ export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClick
                     {numberWithCommas(watchesCount.current)} watches this month
                 </span>
             }
+
             {/*  price $ */}
             <div className="txt price">
                 {isDiscount.current && <span className="full-night-price">
@@ -101,6 +134,7 @@ export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClick
                 </span>
                 <span className="night">night</span>
             </div>
+
             {/* rate ⭐*/}
             <span className="rate">
                 {<OnlyIcon className="fs-small" iconKey="Star" />}
@@ -111,7 +145,6 @@ export const StayPreview = ({ stay, onToggleIsInWishlist,isIntersecting, onClick
 }
 
 /* TODO: 
-! 🐞 fix bug: onClickImg 
 ! 🐞 fix bug: setUserDistance(locService.getUserDistance(loc))
 Todo: useIntersect.
 Todo: by Users Rates 1-5 ⭐.

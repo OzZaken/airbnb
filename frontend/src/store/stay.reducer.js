@@ -2,22 +2,20 @@ const INITIAL_STATE = {
     stays: [],
     wishList: [],
     pageIdx: 0,
-    sortBy: { price: 1 },/* Single key obj: {[field] & isDesc ? -1 :1} */
-    /* Multi key obj */
+    /* {[field] & isDesc ? -1 :1} */
+    sortBy: { price: 1 },
     filterBy: {
-        txt: '',  /* text: name & summary */
-        destination: 'flexible', /* select: flexible | new york | middle east | italy | south | america | france */
-        amenities: [],/* checkbox */
-        placeType: [], /* select || checkbox: 'entire home/apt', 'private room', 'shared room' */
-        propertyType: [], /* checkbox: 'entire home/apt', 'private room', 'shared room' */
-        /* num range:  [min, max]*/
+        /* name & summary  (placeType??) */
+        txt: '',
+        destination: ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france'],
+        amenities: [],
+        placeType: ['Entire home/apt', 'Private room', 'Shared room'],
+        propertyType: ['Apartment', 'Guesthouse', 'Hotel', 'House',],
         priceRange: [0, Infinity],
-        rateRange: [0, Infinity],
+        rateRange: [0, 5],
         capacityRange: [0, Infinity],
-        /* Date range: [checkIn, checkOut] */
         dateRange: [
             new Date(),
-            /* checkOut in minimum of 3 days */
             new Date(new Date().setDate(new Date().getDate() + 3))
         ],
     },

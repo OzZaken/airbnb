@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-/* services */
 import { utilService } from '../../services/util.service'
-import { locService } from '../../services/loc.service'
-import { userService } from '../../services/user.service'
-/* cmps */
 import { ImgGallery } from '../system/img-gallery'
 import OnlyIcon from '../app-icon'
-/* actions *//* UI UX *//* hooks */
 
-export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onClickImg, loggedInUser }) => {
+export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onClickImg, loggedInUser, onSetAvgRate }) => {
+
+
     /* 👣 User distance ~ Calc Distance between stay and user */
     const { loc } = stay
     const [userDistance, setUserDistance] = useState(null)
@@ -58,7 +55,7 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
             /* if already visible unobserve*/
             if (entry.isIntersecting) observer.unobserve(entry.target)
 
-        }, { threshold: 1, rootMargin: '0px 0px 250px 0px' })
+        }, { threshold: 1, rootMargin: '0px 0px 500px 0px' })
 
         if (ref.current) observer.observe(ref.current)
 
@@ -66,6 +63,19 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
     }, [])
 
     // todo: last stay Intersection Observer :
+    const pageIdxRef = useRef(0)
+    // const pageIdxRef = useRef(0)
+    // function onNextPage() {
+    //     pageIdxRef.current++
+    //     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
+    //     return isLastPage
+    // }
+
+    // function onPrevPage() {
+    //     pageIdxRef.current--
+    //     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
+    //     return isFirstPage
+    // }
     const lastPreviewIntersection = () => {
         /* Toggle .show if stay is Intersecting */
         const elLastStayObserver = new IntersectionObserver(entries => {
@@ -137,12 +147,3 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
         </Link>
     </article>
 }
-
-/* TODO: 
-! 🐞 fix bug: setUserDistance(locService.getUserDistance(loc))
-Todo: useIntersect.
-Todo: by Users Rates 1-5 ⭐.
-Todo: isDiscount by Host 
-Todo: const firstShowingImgIdx = 0 // const mostLikeImgIdx = getMostLikeImgIdx || 0
-Todo: UI UX.
-*/

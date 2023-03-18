@@ -2,12 +2,14 @@ import { storageService } from './async-storage.service.js'
 
 var gDefaultStays = require('../assets/data/stay.json')
 
-var gPageIdx = 0
+const STAYS_PER_PAGE = 20
 
 const STORAGE_KEY = 'stay'
-const PAGE_SIZE = 20
+
+const PLACE_TYPES = ['entire home/apt', 'private room', 'shared room']
+const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
 const AMENITIES = [
-    //{imgSrcMap:heading}
+    /* {imgSrcMap:heading} */
     { omg: 'OMG!' },
     { beach: 'Beach!' },
     { nationalPark: 'National parks' },
@@ -18,8 +20,6 @@ const AMENITIES = [
     { island: 'Island' },
     { surfing: 'Surfing' },
 ]
-const PLACE_TYPES = ['entire home/apt', 'private room', 'shared room']
-const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
 
 export const stayService = {
     query,
@@ -32,7 +32,7 @@ export const stayService = {
     getPropertyTypes,
 }
 
-async function query(filterBy = { txt: '' }) {
+async function query(filterBy, pageIdx) {
     try {
         var stays = await storageService.query(STORAGE_KEY)
         // DEMO_DATA
@@ -40,23 +40,55 @@ async function query(filterBy = { txt: '' }) {
             storageService.postMany(STORAGE_KEY, gDefaultStays)
             stays = gDefaultStays
         }
+        // SORT
+        pageIdx = pageIdx || 1
+        stays = stays.slice(0, pageIdx * STAYS_PER_PAGE)
+        // const startIdx = pageIdx * STAYS_PER_PAGE // sending  backend the relents
 
         // FILTER
-        var { txt, amenities, minPrice, maxPrice, pageIdx } = filterBy
-        const regex = new RegExp(txt, 'i')
-
-        maxPrice = maxPrice || Infinity
-        minPrice = minPrice || 0
+        var { txt, placeType,propertyType,destination, amenities, priceRange, capacityRange, dateRange, rateRange } = filterBy
+        
+        // BY [] ~ placeType , Amenities , propertyType ,destination
+        placeType = placeType || []
         amenities = amenities || []
-        pageIdx = pageIdx || 1
-        // const startIdx = pageIdx * STAYS_PER_PAGE // sending  backend the relents
-        stays = stays.slice(0, pageIdx * PAGE_SIZE)
+        propertyType = propertyType || []
+        // destination = destination || []
+
+        // BY ~ price
+        let [minPrice, maxPrice] = priceRange
+        minPrice = minPrice || 0
+        maxPrice = maxPrice || Infinity 
+
+        // BY ~ Capacity
+        let [minCapacity, maxCapacity] = capacityRange
+        minCapacity = minCapacity || 0
+        maxCapacity = maxCapacity || Infinity 
+        
+        // BY ~ Rate
+        let [minRate, maxRate] = rateRange
+        minRate = minRate ||  0
+        maxRate = maxRate  || 5
+
+        // BY ~ Date
+        let [checkIn, checkOut] = dateRange
+        checkIn = checkIn ? new Date(checkIn) : null
+        checkOut = checkOut ? new Date(checkOut) : null
+
+        const regex = new RegExp(txt, 'i')
         stays = stays.filter(stay =>
             regex.test(stay.name.substring(stay.summary))
-            && stay.price < maxPrice
-            && stay.price > minPrice
+            && regex.test(stay.placeType)
+            && placeType.includes(stay.placeType)
+            && propertyType.includes(stay.propertyType)
             && amenities.every(amenity => stay.amenities.includes(amenity))
+            && stay.price > minPrice && stay.price < maxPrice
+            && stay.capacity > minCapacity && stay.capacity < maxCapacity // OPT ~ if capacity is optinal : USE (!minCapacity || stay.capacity >= minCapacity) && (!maxCapacity || stay.capacity <= maxCapacity)
+            // && destination.includes(stay.destination)
+            // && (typeof stay.rate === 'number' && stay.rate >= minRate && stay.rate <= maxRate)
+            // && (!checkIn || new Date(checkIn) >= new Date(stay.startDate))
+            // && (!checkOut || new Date(checkOut) <= new Date(stay.endDate))
         )
+       
         return stays
     } catch (err) {
         console.log('filterBy from storage has been failed', err)
@@ -91,15 +123,3 @@ function getPropertyTypes() {
 function getPlaceTypes() {
     return PLACE_TYPES
 }
-
-// function onNextPage() {
-//     pageIdxRef.current++
-//     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gBooks.length)
-//     return isLastPage
-// }
-
-// function onPrevPage() {
-//     pageIdxRef.current--
-//     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= gDefaultStays.length)
-//     return isFirstPage
-// }

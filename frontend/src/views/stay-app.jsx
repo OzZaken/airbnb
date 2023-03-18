@@ -13,7 +13,7 @@ import { setTitle, updateView } from '../store/system.actions'
 import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
 /* UI UX */
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, Skeleton } from '@mui/material'
 import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { useDebug } from '../hooks/useDebug'
 import OnlyIcon from '../cmps/app-icon'
@@ -21,7 +21,6 @@ import { stayService } from '../services/stay.service'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
 export const StayApp = (props) => {
-    // useDebug('StayApp', props)/* debug */
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams()
     const { stays, filterBy } = useSelector(state => state.stayModule)
@@ -36,24 +35,35 @@ export const StayApp = (props) => {
         if (searchParams.has('filters')) {
             const queryFilter = JSON.parse(searchParams.get('filters'))
             if (queryFilter !== filterBy) {
-                console.log(' queryFilter !== filterBy')
-                dispatch(setFilterBy(queryFilter))
+                console.log('queryFilter !== filterBy')
+                console.log(queryFilter)
+                console.log(filterBy)
+                // dispatch(setFilterBy(queryFilter))
             }
         }
+
     }, [])
 
-    useEffect(() => {
-        console.count('filterByChanged')
-        console.log('filterBy', filterBy)
-        dispatch(loadStays())
-    }, [filterBy])
+    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
 
-    useEffect(() => {
-     const ranges = ['price','rate','date',]  
+    useEffectUpdate(() => {
+        const fields = ['price', 'capacity']
+        const rangeBy = {}
+        for (let i = 0; i < fields.length; i++) {
+            rangeBy[`${fields[i]}Range`] = _getRange(fields[i])
+        }
+        dispatch(setFilterBy({ ...filterBy, ...rangeBy }))
     }, [stays])
 
+    const _getRange = (field) => {
+        return stays.reduce((accRange, stay) => [
+            Math.min(accRange[0], stay[field]),
+            Math.max(accRange[1], stay[field])
+        ], [Infinity, -Infinity])
+    }
+
     /* NOTE: save only on front */
-    const setAvgRate = (stay) => {
+    const onSetAvgRate = (stay) => {
         const reviews = stay?.reviews || []
         const reviewsCount = reviews.length
 
@@ -82,9 +92,9 @@ export const StayApp = (props) => {
             checkIn && `&check-in=${checkIn}`, checkOut && `&check-out=${checkOut}`,
         ]
         const activeParams = queryParams.join('')
-        console.log(`onChangeFilter ~ activeParams:`, activeParams)
+        console.log(`🚀 ~ activeParams:`, activeParams)
 
-        const filters = JSON.stringify(...activeParams)
+        const filters = JSON.stringify(activeParams)
         setSearchParams({ filters })
     }
 
@@ -92,26 +102,15 @@ export const StayApp = (props) => {
     const amenities = stayService.getAmenities()
 
     const onSetFilterByAmenity = (amenityStringParam) => {
-        console.log(`🚀 ~ onSetFilterByAmenity:`, amenityStringParam)
         const prevAmenities = searchParams.getAll('amenities')
-        console.log(`🚀 ~ prevFilter:`, prevAmenities)
+        console.log(`🚀 ~ onSetFilterByAmenity:`, prevAmenities)
         // setSearchParams({ 'filter-by': { 'amenities': JSON.stringify(amenity) } })
     }
 
-    /*  SortBy  */
+    /*  Sort  */
     const onChangeSort = sortBy => {
         dispatch(setSortBy(sortBy))
         dispatch(loadStays())
-    }
-
-    /*  FilterBy Range [min, max] */
-    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
-
-    const getRange = (field) => {
-        return stays.reduce((accRange, stay) => [
-            Math.min(accRange[0], stay[field]),
-            Math.max(accRange[1], stay[field])
-        ], [Infinity, -Infinity])
     }
 
     /*  Click Preview Image */
@@ -127,29 +126,28 @@ export const StayApp = (props) => {
 
     const onRemoveFromWishList = stayId => dispatch(removeFromWishList(stayId))
 
-    /* Stay CRUD */
+    /* Stay  */
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
 
     const onLoadMoreStays = () => dispatch({ type: 'INC_PAGE_IDX' })
 
-    /* CircularProgress Loader */
-    if (!stays) return (
-        <Box sx={{ display: 'flex', margin: '100px auto' }}>
-            <CircularProgress />
+    return !stays ? (
+        <Box sx={{ display: 'flex', margin: '30px auto' }}>
+            <Skeleton variant="rectangular" width={300} height={300} />
         </Box>
-    )
-
-    return <section className='stay-app'>
-        <StayFilter filterBy={filterBy} allAmenities={amenities}
+    ) : <section className='stay-app'>
+        <StayFilter
+            filterBy={filterBy}
+            allAmenities={amenities}
             onChangeFilter={onChangeFilter}
             onSetFilterByAmenity={onSetFilterByAmenity}
         />
-
-        <StayList stays={stays} loggedInUser={loggedInUser}
-            getRange={getRange}
-            setAvgRate={setAvgRate}
+        <StayList
+            stays={stays}
+            loggedInUser={loggedInUser}
+            onSetAvgRate={onSetAvgRate}
             onAddToWishList={onAddToWishList}
             onRemoveFromWishList={onRemoveFromWishList}
             onClickPreviewImg={onClickPreviewImg}

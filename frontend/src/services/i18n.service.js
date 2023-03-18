@@ -1,16 +1,14 @@
-const TRANSLATION = require('../assets/data/translations.json')
+const TRANS = require('../assets/data/default-translations.json')
 
 const STORAGE_KEY = 'userLang'
 
-var gTrans = null
+var gTransMap = null
 
-var gLangCode
-    = _loadLngFromLocalStorage() || navigator.language.substring(0, 2) // eq .split('-')[0]
+var gLangCode = _loadLangFromLocalStorage()
+    || navigator.language.substring(0, 2)  // eq .split('-')[0]
+    || 'en'
 
-if (!gLangCode) {
-    gLangCode = 'en'
-    gLangCode = loadTranslations()
-}
+// loadTranslations()
 
 export const translationService = {
     doTrans,
@@ -48,7 +46,7 @@ async function loadTranslations() {
     try {
         const response = await fetch('translations.json')
         const data = await response.json()
-        gTrans = data
+        gTransMap = data
         doTrans()
     } catch (err) {
         console.log(err)
@@ -67,7 +65,7 @@ function doTrans() {
 }
 
 function getTranslationValue(translationKey) {
-    return gTrans[translationKey]?.[gLangCode]
+    return gTransMap[translationKey]?.[gLangCode]
 }
 
 function getCurrencyPrice(price) {
@@ -115,7 +113,7 @@ function kmToMiles(km) {
     return +(km / 1.609).toFixed(3)
 }
 
-function _loadLngFromLocalStorage() {
+function _loadLangFromLocalStorage() {
     const value = localStorage.getItem(STORAGE_KEY)
     return value ? JSON.parse(value) : null
 }

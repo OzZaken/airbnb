@@ -6,7 +6,7 @@ import { useEffectUpdate } from "../hooks/useEffectUpdate"
 /* actions */
 import { setFilterBy, loadStays } from '../store/stay.action'
 /* cmps */
-import OnlyIcon from "./app-icon"
+import IconApp from "./app-icon"
 import AccountMenu from "./user/user-menu"
 // import { LoginSignup } from "./system/login-signup"
 /* services *//* UI UX */
@@ -39,7 +39,7 @@ function _AppHeader({ view }) {
 
             <section className="container main-search-container">
                 <button onClick={onSetSearchBy} className="btn-circle btn-search-by">
-                    <OnlyIcon iconKey="Search" />
+                    <IconApp iconKey="Search" />
                 </button>
 
                 <div className="container main-btn-ref-container">
@@ -54,7 +54,7 @@ function _AppHeader({ view }) {
                 </div>
 
                 <button className="btn-circle btn-filter-by">
-                    <OnlyIcon iconKey="FilterBy" />
+                    <IconApp iconKey="FilterBy" />
                 </button>
             </section>
 
@@ -66,11 +66,11 @@ function _AppHeader({ view }) {
 
             <div className="btns-container">
                 <button onClick={onShareStay} className="btn-share">
-                    <OnlyIcon iconKey='Share' />
+                    <IconApp iconKey='Share' />
                 </button>
 
                 <button className="btn-favorite">
-                    <OnlyIcon iconKey='Favorite' />
+                    <IconApp iconKey='Favorite' />
                 </button>
             </div>
         </section>}

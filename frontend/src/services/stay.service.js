@@ -6,8 +6,8 @@ const STAYS_PER_PAGE = 20
 
 const STORAGE_KEY = 'stay'
 
-const PLACE_TYPES = ['entire home/apt', 'private room', 'shared room']
-const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
+const PLACE_TYPES = ['Entire home/apt', 'Private room', 'Shared room']
+const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
 const AMENITIES = [
     /* {imgSrcMap:heading} */
     { omg: 'OMG!' },
@@ -35,11 +35,13 @@ export const stayService = {
 async function query(filterBy, pageIdx) {
     try {
         var stays = await storageService.query(STORAGE_KEY)
+        
         // DEMO_DATA
         if (!stays || !stays.length) {
             storageService.postMany(STORAGE_KEY, gDefaultStays)
             stays = gDefaultStays
         }
+
         // SORT
         pageIdx = pageIdx || 1
         stays = stays.slice(0, pageIdx * STAYS_PER_PAGE)
@@ -54,7 +56,7 @@ async function query(filterBy, pageIdx) {
         propertyType = propertyType || []
         // destination = destination || []
 
-        // BY ~ price
+        // BY  ~ price
         let [minPrice, maxPrice] = priceRange
         minPrice = minPrice || 0
         maxPrice = maxPrice || Infinity 

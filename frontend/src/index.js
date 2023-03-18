@@ -61,29 +61,28 @@ window.onerror = (message, source, line, column, error)=> {
   })
 }
 
-window.onerror = (err) => {
-  const { location, document, navigator } = window
-  const { userAgent, platform, hardwareConcurrency, cookieEnabled, deviceMemory, connection, } = navigator
+// window.onerror = (err) => {
+//   const { location, navigator } = window
+//   const { userAgent, platform, hardwareConcurrency, cookieEnabled, deviceMemory, connection, } = navigator
   
-  const errorToSend = {
-    at: new Date(),
-    env: process.env,
-    errorMsg: err,
-    location,
-    // document,
-    navigator: {
-      userAgent,
-      platform,
-      hardwareConcurrency,
-      cookieEnabled,
-      deviceMemory,
-      connection,
-    },
-    DateTimeFormat: { ...Intl.DateTimeFormat().resolvedOptions() },
-    localStorage: { ...localStorage },
-    sessionStorage: { ...sessionStorage }
-  }
-  console.log(`🚀 ~ errorToSend:`, errorToSend)
-}
+//   const errorToSend = {
+//     at: new Date(),
+//     env: process.env,
+//     errorMsg: err,
+//     location,
+//     navigator: {
+//       userAgent,
+//       platform,
+//       hardwareConcurrency,
+//       cookieEnabled,
+//       deviceMemory,
+//       connection,
+//     },
+//     DateTimeFormat: { ...Intl.DateTimeFormat().resolvedOptions() },
+//     localStorage: { ...localStorage },
+//     sessionStorage: { ...sessionStorage }
+//   }
+//   console.log(`🚀 ~ errorToSend:`, errorToSend)
+// }
 
 reportWebVitals(App)

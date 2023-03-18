@@ -1,15 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
-import { locService } from './services/loc.service'
-import { translationService } from './services/i18n.service'
-import { setTitle } from './store/system.actions'
 import routes from './routes'
 import { About } from './views/about'
 import { AppHeader } from './cmps/app-header'
 import { UserMsg } from './cmps/user/user-msg'
 import { AppFooter } from './cmps/app-footer'
 import './assets/styles/main.scss'
-
 function App() {
     document.title = 'Welcome to Airbnb!'
 
@@ -19,7 +14,6 @@ function App() {
             <main className='main-content'>
                 <Routes>
                     {routes.map(route => <Route key={route.path} element={route.component} path={route.path} /* exact={true} */ />)}
-
                     <Route path='about' element={<About />} >
                         <Route path='team' element={<Team />} />
                         <Route path='vision' element={<Vision />} />

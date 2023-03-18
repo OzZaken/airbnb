@@ -1,73 +1,46 @@
 .stay-filter {
-    display: flex;
-    width: 100%;background-color: aliceblue;
-    flex-wrap: nowrap;
-    align-items: center;
-    // position: sticky;
-    top: 80px;
-    box-shadow: none;
-    transition: box-shadow 0.2s ease;
-    overflow: hidden;
-
-    .filter-by-container {
+    .amenities-list {
+        list-style-type: none;
         position: relative;
+        display: flex;
+        width: 100%;
+        margin: auto;
 
-        // overflow-x: scroll, hidden;
-        // overscroll-behavior-inline: hidden;
+        direction: ltr;
 
-        overflow: auto;
-        // scroll-snap-align: start;
-        scroll-snap-type: x mandatory;
+        li {
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        ul.filter-nav-list {
-            display: flex;
-
-            li {
-                .btn-filter-by-amenity {
-                    @include btn;
-                    display: flex;
-                    font-size: 12px;
-                    justify-content: space-between;
-                    flex-direction: column-reverse;
-                    border-radius: unset;
-
-                    &:hover {
-                        background: transparent;
-                        color: black;
-                        border-bottom: 2px solid $clr-vector;
-                    }
-
-                    &.active {
-                        color: black;
-                    }
-
-                    &:focus {
-                        border-bottom: 2px solid $clr-darken;
-                    }
-
-                    img,
-                    svg {
-                        aspect-ratio: 3/2;
-                        width: 100%;
-                        object-fit: contain;
-                        mix-blend-mode: color-burn;
-                    }
-                }
+            img,
+            svg {
+                // aspect-ratio: 3/2;
+                width: 100%;
+                max-width: 32px;
+                object-fit: contain;
+                //  remove white background
+                mix-blend-mode: color-burn;
             }
-        }
 
-        .btn-prev-filter,
-        .btn-next-filter {
-            position: absolute;
-            background-color: whitesmoke;
-            top: 24%;
+            button {
+                @include btn;
+                display: flex;
+                font-size: 12px;
+                justify-content: space-between;
+                flex-direction: column-reverse;
+                border-radius: unset;
 
-            &:not(.btn-prev-filter) {
-                left: 96%;
+                &:hover {
+                    background: transparent;
+                    color: black;
+                    border-bottom: 2px solid $clr-vector;
+                }
+
+                &.active {
+                    color: black;
+                }
+
+                &:focus {
+                    border-bottom: 2px solid $clr-darken;
+                }
             }
         }
     }
@@ -80,5 +53,46 @@
         height: 48px;
         width: 88px;
         min-width: 88px;
+    }
+}
+
+.filter-by-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    // position: sticky;
+    top: 80px;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+    overflow: hidden;
+    position: relative;
+    // overflow-x: scroll, hidden;
+    // overscroll-behavior-inline: hidden;
+    overflow: auto;
+    // scroll-snap-align: start;
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    ul.filter-nav-list {
+        display: flex;
+
+        li {
+            .btn-filter-by-amenity {}
+        }
+    }
+
+    .btn-prev-filter,
+    .btn-next-filter {
+        position: absolute;
+        background-color: whitesmoke;
+        top: 24%;
+
+        &:not(.btn-prev-filter) {
+            left: 96%;
+        }
     }
 }

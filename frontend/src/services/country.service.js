@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-const countries = require('../assets/data/countries.json')
+const countries = require('../assets/data/default-countries.json')
 
 const countriesMap = _.keyBy(countries, country => country.alpha3Code)
 

@@ -5,9 +5,10 @@ import { httpService } from './http.service'
 import { utilService } from './util.service'
 import { countryService } from './country.service'
 import { translationService } from './i18n.service'
+
 const COUNTRIES = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
 
-/* private UserMsg with sweetalert2 withReactContent */
+/* UserMsg with sweetalert2 withReactContent */
 const UserMsg = withReactContent(Swal)
 
 const LOC_KEY = process.env.LOC_KEY
@@ -23,6 +24,7 @@ var gUserPos
     || USER_LOCS[USER_LOCS.length - 1]
     || _setUserLocByCountryCode('ISR')/* opt ~ by Default in Israel: _setUserLocByCountryCode('ISR')*/
     || null
+
 
 /* prevent unnecessary requests (if already search same input and type ) */
 const INVALID_SEARCH_RESULT = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
@@ -297,7 +299,7 @@ function _getPosFromCountry(country) {
 }
 
 function _calcDistance(posA, posB) {
-    const radius = translationService.getEarthRadius() //  in km or miles
+    const radius = translationService.getEarthRadius()
 
     const dLat = (posB.lat - posA.lat) * Math.PI / 180
     const dLon = (posB.lng - posA.lng) * Math.PI / 180

@@ -8,7 +8,7 @@ import { useViewEffect } from '../hooks/useViewEffect'
 /* cmps */
 import { ImgGallery } from '../cmps/system/img-gallery'
 import { StayOrder } from '../cmps/stay/stay-order'
-import OnlyIcon from '../cmps/app-icon'
+import IconApp from '../cmps/app-icon'
 /* UI UX */
 import { Box, CircularProgress } from '@mui/material'
 /* actions */
@@ -121,7 +121,7 @@ export const _StayDetails = () => {
                     {reviews?.length
                         ? <>
                             <span>
-                                <OnlyIcon className="fs-small" iconKey="Star" />
+                                <IconApp className="fs-small" iconKey="Star" />
                                 4.98 &nbsp;
                             </span>
 
@@ -133,7 +133,7 @@ export const _StayDetails = () => {
 
                     {/* isSuperHost */}
                     {isSuperHost && <span className='super-host'>
-                        <OnlyIcon iconKey='SuperHost' />SuperHost&#xB7;
+                        <IconApp iconKey='SuperHost' />SuperHost&#xB7;
                     </span>}
 
                     {/* loc */}
@@ -142,11 +142,11 @@ export const _StayDetails = () => {
                     <div hidden className='btns-container'>
 
                         <button className='btn-link'>
-                            <OnlyIcon iconKey="Share" />share
+                            <IconApp iconKey="Share" />share
                         </button>
 
                         <button className='btn-link'>
-                            <OnlyIcon iconKey="FavoriteFill" />saved
+                            <IconApp iconKey="FavoriteFill" />saved
                         </button>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ export const _StayDetails = () => {
                     {/* <AirCover /> */}
                     <div className="stay-details-row air-cover-container">
                         <div className="img-container">
-                            <OnlyIcon iconKey="airCover" />
+                            <IconApp iconKey="airCover" />
                         </div>
                         <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
                         <button className="btn-big"><b>Read more</b></button>

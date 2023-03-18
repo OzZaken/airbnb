@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { NavLink, Outlet } from "react-router-dom"
 import { updateView } from '../store/system.actions'
-import { Counter } from "../cmps/system/counter"
 
 export function About() {
     const dispatch = useDispatch()
@@ -31,9 +30,6 @@ export function About() {
             </nav>
 
             <Outlet />
-            
-            <Counter />
-
         </section>
     )
 }

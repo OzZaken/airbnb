@@ -1,0 +1,13 @@
+.stay-destination {
+    display: flex;
+    flex-wrap: wrap;
+
+    ul {
+        list-style: none;
+        display: flex;
+
+        li {
+            flex: 1 1 100px;
+        }
+    }
+}

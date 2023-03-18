@@ -16,17 +16,17 @@ import { StayFilter } from "../cmps/stay/stay-filter"
 import { Box, CircularProgress, Skeleton } from '@mui/material'
 import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { useDebug } from '../hooks/useDebug'
-import OnlyIcon from '../cmps/app-icon'
+import IconApp from '../cmps/app-icon'
 import { stayService } from '../services/stay.service'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
+import ScrollTo from '../cmps/scroll-to'
 
-export const StayApp = (props) => {
+export const StayApp = () => {
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams()
     const { stays, filterBy } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
 
-    useViewEffect('home-page')
     useEffect(() => {
         dispatch(loadStays())
         // dispatch(loadAmenities())
@@ -35,16 +35,16 @@ export const StayApp = (props) => {
         if (searchParams.has('filters')) {
             const queryFilter = JSON.parse(searchParams.get('filters'))
             if (queryFilter !== filterBy) {
-                console.log('queryFilter !== filterBy')
-                console.log(queryFilter)
-                console.log(filterBy)
+                console.log('UT queryFilter !== filterBy')
+                console.log('queryFilter', JSON.parse(queryFilter))
+                console.log('filterBy', filterBy)
                 // dispatch(setFilterBy(queryFilter))
             }
         }
 
     }, [])
 
-    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
+    useViewEffect('home-page')
 
     useEffectUpdate(() => {
         const fields = ['price', 'capacity']
@@ -91,28 +91,29 @@ export const StayApp = (props) => {
             minCapacity && `&min-capacity=${minCapacity}`, maxCapacity && `&max-capacity=${maxCapacity}`,
             checkIn && `&check-in=${checkIn}`, checkOut && `&check-out=${checkOut}`,
         ]
-        const activeParams = queryParams.join('')
-        console.log(`🚀 ~ activeParams:`, activeParams)
 
+        const activeParams = queryParams.join('&')
+        
         const filters = JSON.stringify(activeParams)
-        setSearchParams({ filters })
+
+        // setSearchParams({filters})
     }
 
-    /* amenity  */
+    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
+
+    /* amenities  */
     const amenities = stayService.getAmenities()
 
-    const onSetFilterByAmenity = (amenityStringParam) => {
+    const onSetFilterByAmenity = (stringParam) => {
+        console.log(`🚀 ~ onSetFilterByAmenity:`, stringParam)
         const prevAmenities = searchParams.getAll('amenities')
         console.log(`🚀 ~ onSetFilterByAmenity:`, prevAmenities)
         // setSearchParams({ 'filter-by': { 'amenities': JSON.stringify(amenity) } })
     }
 
-    /*  Sort  */
-    const onChangeSort = sortBy => {
-        dispatch(setSortBy(sortBy))
-        dispatch(loadStays())
-    }
-
+    const onChangeSort = sortBy => dispatch(setSortBy(sortBy))
+    const onChangeDestination = destination => dispatch(setSortBy(destination))
+    
     /*  Click Preview Image */
     const navigate = useNavigate()
     const onClickPreviewImg = (idx, id) => {
@@ -121,12 +122,12 @@ export const StayApp = (props) => {
         navigate(`/stay/${id}}`)
     }
 
-    /* Wishlist */
+    /* WISHLIST */
     const onAddToWishList = stayId => dispatch(addToWishList(stayId))
 
     const onRemoveFromWishList = stayId => dispatch(removeFromWishList(stayId))
 
-    /* Stay  */
+    /* STAY  */
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
@@ -138,22 +139,22 @@ export const StayApp = (props) => {
             <Skeleton variant="rectangular" width={300} height={300} />
         </Box>
     ) : <section className='stay-app'>
-        <StayFilter
-            filterBy={filterBy}
-            allAmenities={amenities}
+
+        <StayFilter filterBy={filterBy} allAmenities={amenities}
+            onChangeSort={onChangeSort}
+            onChangeDestination={onChangeDestination}
             onChangeFilter={onChangeFilter}
             onSetFilterByAmenity={onSetFilterByAmenity}
         />
-        <StayList
-            stays={stays}
-            loggedInUser={loggedInUser}
+
+        <StayList stays={stays} loggedInUser={loggedInUser}
             onSetAvgRate={onSetAvgRate}
             onAddToWishList={onAddToWishList}
+            onRemoveStay={onRemoveStay}
             onRemoveFromWishList={onRemoveFromWishList}
             onClickPreviewImg={onClickPreviewImg}
-            onChangeSortBy={onChangeSort}
-            onRemoveStay={onRemoveStay}
             onUpdateStay={onUpdateStay}
         />
+    <ScrollTo/> 
     </section>
 }

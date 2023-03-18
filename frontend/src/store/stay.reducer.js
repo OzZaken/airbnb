@@ -2,10 +2,8 @@ const INITIAL_STATE = {
     stays: [],
     wishList: [],
     pageIdx: 0,
-    /* {[field] & isDesc ? -1 :1} */
     sortBy: { price: 1 },
     filterBy: {
-        /* name & summary  (placeType??) */
         txt: '',
         destination: ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france'],
         amenities: [],

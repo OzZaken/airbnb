@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useEffectUpdate } from "../hooks/useEffectUpdate"
-import OnlyIcon from "./app-icon"
-import {BtnRadialGradient} from '../cmps/system/btn-radial-gradient'
+import IconApp from "./app-icon"
+import {BtnApp} from '../cmps/app-btn'
 
 function _AppFooter({ view }) {
     useEffectUpdate(() => { }, [view])
@@ -27,11 +27,11 @@ function _AppFooter({ view }) {
     return <footer className='main-footer'>
         {view === 'home-page' && <>
             <nav className="footer-nav">
-                <NavLink to='/'>{<OnlyIcon iconKey="Search" />}Explore</NavLink>
-                <NavLink to='/wishlist'>{<OnlyIcon iconKey="Favorite" />}Wishlists</NavLink>
+                <NavLink to='/'>{<IconApp iconKey="Search" />}Explore</NavLink>
+                <NavLink to='/wishlist'>{<IconApp iconKey="Favorite" />}Wishlists</NavLink>
                 <NavLink to='/trips'><div className="logo"></div> Trips</NavLink>
-                <NavLink to='/inbox'>{<OnlyIcon iconKey="Inbox" />}Inbox</NavLink>
-                <NavLink to='/user'>{<OnlyIcon iconKey="AccountCircle" />}Profile</NavLink>
+                <NavLink to='/inbox'>{<IconApp iconKey="Inbox" />}Inbox</NavLink>
+                <NavLink to='/user'>{<IconApp iconKey="AccountCircle" />}Profile</NavLink>
             </nav>
 
             <section hidden className="wide-home-footer">
@@ -44,7 +44,7 @@ function _AppFooter({ view }) {
                     <span>&#183;</span>
                     <Link>Privacy&nbsp;&#183;</Link>
                 </div>
-                <OnlyIcon iconKey="footerSvg" />
+                <IconApp iconKey="footerSvg" />
             </section>
         </>
         }
@@ -59,7 +59,7 @@ function _AppFooter({ view }) {
                 <div className="underline">jul 2-7</div>
             </div>
 
-            <BtnRadialGradient txt="reserve" />
+            <BtnApp txt="reserve" />
         </section>}
 
         {false && <section className="nav-back">

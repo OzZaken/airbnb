@@ -2,22 +2,57 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { utilService } from '../../services/util.service'
 import { ImgGallery } from '../system/img-gallery'
-import OnlyIcon from '../app-icon'
+import IconApp from '../app-icon'
 
-export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onClickImg, loggedInUser, onSetAvgRate }) => {
+export const StayPreview = ({ stay, onToggleIsInWishlist, onClickImg, loggedInUser, onSetAvgRate }) => {
+    /* PREVIEW Intersection Observer */
+    const [isIntersecting, setIsIntersecting] = useState(false)
+    const ref = useRef()
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            setIsIntersecting(entry.isIntersecting)
 
-    /* 👣 User distance ~ Calc Distance between stay and user */
-    const { loc } = stay
-    const [userDistance, setUserDistance] = useState(null)
-    // setUserDistance(locService.getUserDistance(loc))
+            /* if already visible unobserve*/
+            if (entry.isIntersecting) observer.unobserve(entry.target)
 
-    /* 📝 Wishlist ~ check if contains stay._id */
-    const { likedByUsers } = stay
-    const isOnWishList = useRef(loggedInUser ? likedByUsers.includes(loggedInUser._id) : false)
+        }, { threshold: 0, rootMargin: '0px 0px 100px 0px' })
 
-    /* 🖼 Gallery */
-    const { imgUrls, _id } = stay
+        if (ref.current) observer.observe(ref.current)
+
+        return () => observer.disconnect()
+    }, [])
+
+    const pageIdxRef = useRef(0)// todo: last stay Intersection Observer :
+    // const pageIdxRef = useRef(0)
+    // function onNextPage() {
+    //     pageIdxRef.current++
+    //     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
+    //     return isLastPage
+    // }
+
+    // function onPrevPage() {
+    //     pageIdxRef.current--
+    //     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
+    //     return isFirstPage
+    // }
+    const lastPreviewIntersection = () => {
+        /* Toggle .show if stay is Intersecting */
+        const elLastStayObserver = new IntersectionObserver(entries => {
+            const lastCard = entries[0]
+            if (!lastCard.isIntersecting) return
+            // onLoadMoreStays() || onNextPage
+
+            elLastStayObserver.unobserve(lastCard.target)
+            elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
+        }, {})
+
+        elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
+    }
+
+    const { imgUrls, _id, likedByUsers } = stay
+
+    /* GALLERY ~ props*/
     const galleryImgsProps = imgUrls.slice(0, 5).map((url, idx) => ({
         original: url,
         originalClass: "img-gallery-img",
@@ -44,53 +79,15 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
         lazyLoad: true,
     }
 
-    /* stay Intersection Observer */
-    const [isIntersecting, setIsIntersecting] = useState(false)
-    const ref = useRef()
+    /* GALLERY ~ 📝 Wishlist: check if contains stay._id */
+    const isOnWishList = useRef(loggedInUser ? likedByUsers.includes(loggedInUser._id) : false)
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            setIsIntersecting(entry.isIntersecting)
+    /* LINK ~ 👣 User distance:Calc between stay and user */
+    const { loc } = stay
+    const [userDistance, setUserDistance] = useState(null)
+    // setUserDistance(locService.getUserDistance(loc))
 
-            /* if already visible unobserve*/
-            if (entry.isIntersecting) observer.unobserve(entry.target)
-
-        }, { threshold: 1, rootMargin: '0px 0px 500px 0px' })
-
-        if (ref.current) observer.observe(ref.current)
-
-        return () => observer.disconnect()
-    }, [])
-
-    // todo: last stay Intersection Observer :
-    const pageIdxRef = useRef(0)
-    // const pageIdxRef = useRef(0)
-    // function onNextPage() {
-    //     pageIdxRef.current++
-    //     const isLastPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
-    //     return isLastPage
-    // }
-
-    // function onPrevPage() {
-    //     pageIdxRef.current--
-    //     const isFirstPage = (PAGE_SIZE + pageIdxRef.current * PAGE_SIZE >= stays.length)
-    //     return isFirstPage
-    // }
-    const lastPreviewIntersection = () => {
-        /* Toggle .show if stay is Intersecting */
-        const elLastStayObserver = new IntersectionObserver(entries => {
-            const lastCard = entries[0]
-            if (!lastCard.isIntersecting) return
-            // onLoadMoreStays()
-
-            elLastStayObserver.unobserve(lastCard.target)
-            elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
-        }, {})
-
-        elLastStayObserver.observe(document.querySelector('.stay-preview:last-child'))
-    }
-
-    /* Dummy: Discount,Rate,watches*/
+    /* LINK ~ Dummy data: Discount,Rate,watches*/
     const { numberWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
     const isDiscount = useRef(Math.random() < 0.5)
     const RandRate = useRef(getRandomFloatInclusive(4, 5, 2))
@@ -99,13 +96,17 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
     const { propertyType, price, summary } = stay
     const { city } = loc
 
-    return <article className={`stay-preview ${isIntersecting ? 'show' : ''}`} ref={ref}>
+    return <article ref={ref} className={`stay-preview ${isIntersecting ? 'show' : ''}`} >
         <div className="gallery-container">
+           
             {/* WishList */}
-            {loggedInUser && <button className='image-gallery-custom-action' onClick={ev => { onToggleIsInWishlist(stay); ev.stopPropagation() }} >
-                {isOnWishList ? <OnlyIcon iconKey='Favorite' /> : <OnlyIcon iconKey='FavoriteFill' />}
-            </button>}
+            {loggedInUser && (
+                <button className='image-gallery-custom-action' onClick={() => { onToggleIsInWishlist(stay)}} >
+                    {isOnWishList ? <IconApp iconKey='Favorite' /> : <IconApp iconKey='FavoriteFill' />}
+                </button>
+            )}
 
+            {/* Gallery Content */}
             <ImgGallery viewProps={previewGalleryProps} />
         </div>
 
@@ -141,7 +142,7 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickPreviewImg: onC
 
             {/*⭐ rate */}
             <span className="rate">
-                {<OnlyIcon className="fs-small" iconKey="Star" />}
+                {<IconApp className="fs-small" iconKey="Star" />}
                 {RandRate.current}
             </span>
         </Link>

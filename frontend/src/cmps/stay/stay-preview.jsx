@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { utilService } from '../../services/util.service'
 import { ImgGallery } from '../system/img-gallery'
 import IconApp from '../app-icon'
+import { Box,  Skeleton } from '@mui/material'
 
 export const StayPreview = ({ stay, onToggleIsInWishlist, onClickImg, loggedInUser, onSetAvgRate }) => {
     /* PREVIEW Intersection Observer */
@@ -96,12 +97,16 @@ export const StayPreview = ({ stay, onToggleIsInWishlist, onClickImg, loggedInUs
     const { propertyType, price, summary } = stay
     const { city } = loc
 
-    return <article ref={ref} className={`stay-preview ${isIntersecting ? 'show' : ''}`} >
+    return !stay ? (
+        <Box sx={{ display: 'flex', margin: '30px auto' }}>
+            <Skeleton variant="rectangular" width={300} height={300} />
+        </Box>
+    ) : <article ref={ref} className={`stay-preview ${isIntersecting ? 'show' : ''}`} >
         <div className="gallery-container">
-           
+
             {/* WishList */}
             {loggedInUser && (
-                <button className='image-gallery-custom-action' onClick={() => { onToggleIsInWishlist(stay)}} >
+                <button className='image-gallery-custom-action' onClick={() => { onToggleIsInWishlist(stay) }} >
                     {isOnWishList ? <IconApp iconKey='Favorite' /> : <IconApp iconKey='FavoriteFill' />}
                 </button>
             )}

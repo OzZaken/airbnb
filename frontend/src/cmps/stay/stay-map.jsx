@@ -26,7 +26,7 @@ export function GoogleMap() {
                 <AnyReactComponent
                     lat={coordinates.lat}
                     lng={coordinates.lng}
-                    text="❤️"
+                    text="🏡"
                 />
             </GoogleMapReact>
         </div>

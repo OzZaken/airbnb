@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     sortBy: { price: 1 },
     filterBy: {
         txt: '',
-        destination: ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france'],
+        region: [],
         amenities: [],
         placeType: ['Entire home/apt', 'Private room', 'Shared room'],
         propertyType: ['Apartment', 'Guesthouse', 'Hotel', 'House',],

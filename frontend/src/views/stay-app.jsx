@@ -1,31 +1,21 @@
 import { useEffect, useReducer, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-/* services */
-import { utilService } from '../services/util.service'
-import { translationService } from '../services/i18n.service'
-/* hooks */
-import { useViewEffect } from '../hooks/useViewEffect'
-/* actions */
+import { stayService } from '../services/stay.service'
 import { loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList } from '../store/stay.action'
-import { setTitle, updateView } from '../store/system.actions'
-/* cmps */
+import { useViewEffect } from '../hooks/useViewEffect'
+import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
-/* UI UX */
-import { Box, CircularProgress, Skeleton } from '@mui/material'
-import { useEffectUpdate } from '../hooks/useEffectUpdate'
-import { useDebug } from '../hooks/useDebug'
-import IconApp from '../cmps/app-icon'
-import { stayService } from '../services/stay.service'
-// import { UNMOUNTED } from 'react-transition-group/Transition'
 import ScrollTo from '../cmps/scroll-to'
+// import { UNMOUNTED } from 'react-transition-group/Transition'
 
 export const StayApp = () => {
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams()
     const { stays, filterBy } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
+    const amenities = stayService.get('AMENITIES')
 
     useEffect(() => {
         dispatch(loadStays())
@@ -74,6 +64,8 @@ export const StayApp = () => {
     }
 
     /*  Filter  */
+    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
+
     const onChangeFilter = filterBy => {
         const { txt, placeType, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
 
@@ -93,18 +85,13 @@ export const StayApp = () => {
         ]
 
         const activeParams = queryParams.join('&')
-        
-        const filters = JSON.stringify(activeParams)
 
+        const filters = JSON.stringify(activeParams)
+        console.log({ filters })
         // setSearchParams({filters})
     }
 
-    const onChangeRange = (field, range) => dispatch(setFilterBy({ ...filterBy, [field]: range }))
-
-    /* amenities  */
-    const amenities = stayService.getAmenities()
-
-    const onSetFilterByAmenity = (stringParam) => {
+    const onChangeAmenity = (stringParam) => {
         console.log(`🚀 ~ onSetFilterByAmenity:`, stringParam)
         const prevAmenities = searchParams.getAll('amenities')
         console.log(`🚀 ~ onSetFilterByAmenity:`, prevAmenities)
@@ -112,8 +99,9 @@ export const StayApp = () => {
     }
 
     const onChangeSort = sortBy => dispatch(setSortBy(sortBy))
-    const onChangeDestination = destination => dispatch(setSortBy(destination))
-    
+
+    const onChangeDestination = region => dispatch(setSortBy(region))
+
     /*  Click Preview Image */
     const navigate = useNavigate()
     const onClickPreviewImg = (idx, id) => {
@@ -127,34 +115,39 @@ export const StayApp = () => {
 
     const onRemoveFromWishList = stayId => dispatch(removeFromWishList(stayId))
 
-    /* STAY  */
+    /* CRUD  */
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
 
     const onLoadMoreStays = () => dispatch({ type: 'INC_PAGE_IDX' })
 
-    return !stays ? (
-        <Box sx={{ display: 'flex', margin: '30px auto' }}>
-            <Skeleton variant="rectangular" width={300} height={300} />
-        </Box>
-    ) : <section className='stay-app'>
+    const stayFilterProps = {
+        filterBy,
+        allAmenities: amenities,
+        onChangeSort,
+        onChangeDestination,
+        onChangeFilter,
+        onChangeAmenity,
+    }
 
-        <StayFilter filterBy={filterBy} allAmenities={amenities}
-            onChangeSort={onChangeSort}
-            onChangeDestination={onChangeDestination}
-            onChangeFilter={onChangeFilter}
-            onSetFilterByAmenity={onSetFilterByAmenity}
-        />
+    const stayListProps = {
+        stays: stays,
+        loggedInUser,
+        onSetAvgRate,
+        onAddToWishList,
+        onRemoveStay,
+        onRemoveFromWishList,
+        onClickPreviewImg,
+        onUpdateStay
+    }
 
-        <StayList stays={stays} loggedInUser={loggedInUser}
-            onSetAvgRate={onSetAvgRate}
-            onAddToWishList={onAddToWishList}
-            onRemoveStay={onRemoveStay}
-            onRemoveFromWishList={onRemoveFromWishList}
-            onClickPreviewImg={onClickPreviewImg}
-            onUpdateStay={onUpdateStay}
-        />
-    <ScrollTo/> 
+    return <section className='stay-app'>
+
+        <StayFilter {...stayFilterProps} />
+
+        <StayList {...stayListProps} />
+
+        <ScrollTo />
     </section>
 }

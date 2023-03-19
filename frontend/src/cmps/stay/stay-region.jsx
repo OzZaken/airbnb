@@ -6,22 +6,21 @@ import italyImage from '../../assets/imgs/png/italy.png'
 import flexibleImage from '../../assets/imgs/png/flexible.png'
 import franceImage from '../../assets/imgs/png/france.png'
 
-// import {StayDestination} from './stay-destination'
+// import {StayDestination} from './stay-region'
 {/* <StayDestination onChangeDestination={onChangeDestination} /> */}
-
 
 export const StayDestination = ({ onChangeDestination }) => {
     const [selectedDestination, setSelectedDestination] = useState(null)
 
-    const onSetDestination = (destination) => {
-        setSelectedDestination(destination)
-        onChangeDestination(destination)
+    const onSetDestination = (region) => {
+        setSelectedDestination(region)
+        onChangeDestination(region)
     }
 
-    return <div className="stay-destination">
+    return <section className="stay-region">
         {selectedDestination && <p>Recent searches: {selectedDestination}</p>}
 
-        <ul className="destination-by">
+        <ul className="region-by">
             <li>
                 <button onClick={() => onSetDestination(null)}>
                 <img src={flexibleImage} alt="I'm flexible" />
@@ -64,5 +63,5 @@ export const StayDestination = ({ onChangeDestination }) => {
                 </button>
             </li>
         </ul>
-    </div>
+    </section>
 }

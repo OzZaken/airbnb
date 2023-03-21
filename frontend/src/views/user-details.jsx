@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { userService } from '../services/user.service'
 
-export const UserDetails = (props) => {
+export const UserDetails = () => {
     const [user, setUser] = useState(null)
     const params = useParams()
     // const { pathname } = useLocation()
@@ -13,9 +13,7 @@ export const UserDetails = (props) => {
     const loadUser = () => {
         const userId = params.id
         userService.getById(userId)
-            .then(user => {
-                setUser(user)
-            })
+            .then(user => setUser(user))
     }
 
     const navigate = useNavigate()

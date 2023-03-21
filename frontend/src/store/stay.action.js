@@ -14,17 +14,6 @@ export function getActionUpdateStay(stay) {
 }
 
 // CRUD
-export function loadStays() {
-    return async (dispatch, getState) => {
-        const { filterBy } = getState().stayModule
-        try {
-            var LoadStays = await stayService.query(filterBy)
-            dispatch({ type: 'SET_STAYS', stays: LoadStays })
-        } catch (err) {
-            showErrorMsg('Cannot load stays')
-        }
-    }
-}
 export function addStay(stay) {
     return async (dispatch) => {
         try {
@@ -37,6 +26,17 @@ export function addStay(stay) {
         }
         finally {
             showSuccessMsg(`Stay ${saveStay.name} added successfully`)
+        }
+    }
+}
+export function loadStays() {
+    return async (dispatch, getState) => {
+        const { filterBy } = getState().stayModule
+        try {
+            var loadStays = await stayService.query(filterBy)
+            dispatch({ type: 'SET_STAYS', stays: loadStays })
+        } catch (err) {
+            showErrorMsg('Cannot load stays')
         }
     }
 }
@@ -182,18 +182,22 @@ export function setSortBy(sortBy) {
         switch ({ sortBy }) {
             case 'price':
                 stays = stays.sort((t1, t2) => t1.price - t2.price)
+                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'name':
                 stays = stays.sort((t1, t2) => t1.name.localeCompare(t2.name))
+                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'rate':
                 stays = stays.sort((t1, t2) => t1.rate - t2.rate)
+                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'capacity':
                 stays = stays.sort((t1, t2) => t1.capacity - t2.capacity)
+                dispatch({ type: 'SET_STAYS', stays })
                 break
             default:
                 dispatch({ type: 'SET_STAYS', stays })

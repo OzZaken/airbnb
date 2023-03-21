@@ -1,21 +1,24 @@
 export const utilService = {
     delay,
+    
     makeId,
     makeLorem,
-    getRandomDate,
     makeChartDate,
-    numberWithCommas,
+   
+    timeAgo,
+    formatDate,
+
+    getRandomDate,
     getRandomIntInclusive,
     getRandomFloatInclusive,
-    timeAgo,
-    getCababCase,
-    formatDate
+
+    getCamelCase,
+    getKebabCase,
+    getNumWithCommas,
 }
 
 function delay(ms = 1500) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms)
-    })
+    return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 function timeAgo(ms = new Date()) {
@@ -120,10 +123,12 @@ function formatDate(date = new Date(), formatBy) {
     })
 }
 
+/* Math */
 function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    //The maximum is inclusive and the minimum is inclusive 
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function getRandomFloatInclusive(min, max, decimals) {
@@ -134,15 +139,18 @@ function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
 }
 
-/* regex */
-function numberWithCommas(str) {
+/* RegEx */
+function getNumWithCommas(str) {
     return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
-function getCababCase(amenities) {
-    amenities.map(prop => {
+function getCamelCase(str) {
+    return str.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+}
+
+function getKebabCase(str) {
+    return str.map(prop => {
         const regex = /[^A-Za-z0-9]+/g
-        const cababCase = prop.toLowerCase().replace(regex, '-')
-        return cababCase
+        return prop.toLowerCase().replace(regex, '-')
     })
 }

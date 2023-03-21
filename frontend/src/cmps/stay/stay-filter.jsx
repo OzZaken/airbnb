@@ -1,72 +1,70 @@
 import { debounce } from 'lodash'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import TuneIcon from '@mui/icons-material/Tune'
 import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 import Modal from '@mui/material/Modal'
 import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
-import { AmenityList } from './stay-amenity-list'
+import { AmenityList } from '../amenity/amenity-list'
 import { CarouselApp } from '../app-carousel'
 import { StayFilterBy } from './stay-filter-by'
 
-const filterBoxStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 750,
-    height: '90vh',
-    bgcolor: 'background.paper',
-    borderRadius: '10px',
-    boxShadow: 24,
-    p: 2,
-}
+export const StayFilter = ({ stays, filterBy, filters,
+    onUpdateFilter,
+    allAmenities, allPlaceTypes, allPropertyTypes, allRegions,
+    onUpdateRangeBy, onUpdateSortBy, onUpdateRegionBy, onUpdateAmenityBy }) => {
 
-export const StayFilter = ({ filterBy,
-    allAmenities, allPlaceTypes, allPropertyTypes,
-    onChangeFilter, onChangeAmenity, onChangeDestination
-}) => {
-    // console.log(`%c Total of ${allAmenities.length} amenities filterBy ${amenities?.length || 0}`, 'color: yellowgreen;')
-    const [localFilter, setLocalFilter] = useState(filterBy)
-
+    /* USE */
+    const [localFilterBy, setLocalFilterBy] = useState(filterBy)
     const [isFilterByOpen, setIsFilterByOpen] = useState(false)
+    const filtersCount = useRef(0)
+
+    /* EFFECT */
+    useEffect(() => {
+        if (filters) filtersCount.current = Object.keys(filters.length)
+        else filtersCount.current = 0
+        console.log(`🚀 ~ filtersCount.current:`, filtersCount.current)
+    }, [filters])
+
+    /* FUNCS */
     const onOpenFilterBy = () => setIsFilterByOpen(true)
+
     const onCloseFilterBy = () => setIsFilterByOpen(false)
 
+    /* FORM */
     const onSubmit = ev => {
         ev.preventDefault()
-        setLocalFilter(localFilter)
+        setLocalFilterBy(localFilterBy)
         onCloseFilterBy()
     }
 
-    const onResetLocalFilterBy = ev => {
-        ev.preventDefault()
-        setLocalFilter(null)
-    }
-
     const handleFilters = ev => {
-        setLocalFilter(prevFields => ({
-            ...prevFields, [ev.target.name]: ev.target.value
+        setLocalFilterBy(prevFields => ({
+            ...prevFields,
+            [ev.target.name]: ev.target.value
         }))
     }
-
     const debouncedChangeHandler = useMemo(() => debounce(handleFilters, 500), [])
+
+    const onResetLocalFilterBy = ev => {
+        ev.preventDefault()
+        setLocalFilterBy(null)
+    }
 
     const handleFieldCount = ev => {
         const field = ev.target.name
         const val = ev.target.value
-        setLocalFilter(prevFields => ({
-            ...prevFields, [field]: +val
+        setLocalFilterBy(prevFields => ({
+            ...prevFields,
+            [field]: +val
         }))
     }
 
     const handlePropertyType = (ev, propertyT) => {
         ev.preventDefault()
         const type = propertyT
-        setLocalFilter(prevFields => ({
+        setLocalFilterBy(prevFields => ({
             ...prevFields,
             propertyTypes: {
                 ...prevFields.propertyTypes,
@@ -75,55 +73,90 @@ export const StayFilter = ({ filterBy,
         }))
     }
 
-    const handleCheckBox = ({ target }) => {
-        const { checked, name } = target
-        setLocalFilter(prevFields => ({
+    const handleCheckBox = ({ target: { checked, name } }) => {
+        setLocalFilterBy(prevFields => ({
             ...prevFields,
             [name]: {
                 ...prevFields[name],
-                [name]: checked
+                checked
             }
         }))
     }
 
+    /* CMPS */
+    const amenityList = {
+        amenities: allAmenities,
+        isContainsTitle: true,
+        isContainsIcon: true
+    }
 
-    const filterByProps = {
-        filterBy: localFilter,
-        debounce: debouncedChangeHandler,
+    const badge = {
+        color: 'primary',
+        badgeContent: filtersCount.current,
+        className: filtersCount.current ? 'filter-active' : ''
+    }
+
+    const btn = {
+        onClick: () => onOpenFilterBy,
+        className: filtersCount.current ? 'btn-filters active' : 'btn-filters'
+    }
+
+    const box = {
+        sx: {
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 750,
+            height: '90vh',
+            bgcolor: 'background.paper',
+            borderRadius: '10px',
+            boxShadow: 24,
+            p: 2,
+        }
+    }
+
+    const modal = {
+        isOpen: isFilterByOpen,
         onClose: onCloseFilterBy,
+        BackdropComponent: Backdrop,
+        BackdropProps: { timeout: 500 },
+        open: isFilterByOpen || false,
+
+    }
+
+    const stayFilterBy = {
+        filtersCount: 5,
+        staysCount: stays.length,
+        filterBy: localFilterBy,
+        allPlaceTypes, allPropertyTypes, allAmenities,
+        debounce: debouncedChangeHandler,
+        onUpdateFilter,
+        onClose: onCloseFilterBy,
+        onSubmit,
+        onResetLocalFilterBy,
         handleFieldCount,
         handlePropertyType,
         handleCheckBox,
-        allPlaceTypes,
-        allPropertyTypes,
-        allAmenities,
-        onChangeFilter,
-        onSubmit,
-        onResetLocalFilterBy,
     }
 
-    return localFilter && <section className='stay-filter'>
-        {/* Amenities Carousel */}
-        <CarouselApp items={<AmenityList
-            amenities={allAmenities}
-            onSetFilterByAmenity={onSetFilterByAmenity}
-        />} />
+    return <section className='stay-filter'>
+        <CarouselApp items={<AmenityList {...amenityList} />} />
 
-        {/* open FilterBy Modal */}
-        <Badge color="primary" badgeContent={3} className={3 ? 'filter-active' : ''}>
-            <button onClick={onOpenFilterBy} className={`${3 ? 'active' : ''} btn-filters`}>
-                <TuneIcon /> &nbsp;Filters
-            </button>
+        <Badge {...badge}>
+            <button {...btn}>
+                <TuneIcon /> &nbsp;Filters</button>
         </Badge>
 
-        {/* FilterBy Modal */}
-        <Modal open={isFilterByOpen} onClose={onCloseFilterBy}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{ timeout: 500 }}
-        >  <Fade in={isFilterByOpen}>
-                <Box sx={filterBoxStyle}  >
-                    <StayFilterBy {...filterByProps} />
+        <Modal {...modal} closeAfterTransition >
+
+            <Fade in={isFilterByOpen}>
+
+                <Box {...box}>
+
+                    <StayFilterBy {...stayFilterBy} />
                 </Box>
             </Fade>
         </Modal>

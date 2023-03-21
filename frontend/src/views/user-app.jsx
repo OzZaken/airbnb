@@ -5,7 +5,7 @@ import { loadUsers, removeUser, setFilterBy } from '../store/user.action'
 import { UserFilter } from '../cmps/user/user-filter'
 import { UserList } from '../cmps/user/user-list'
 
-export const AdminApp = (props) => {
+export const UserApp = (props) => {
     const { users } = useSelector(state => state.userModule)
     const dispatch = useDispatch()
 

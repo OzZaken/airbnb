@@ -1,26 +1,44 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux'
-/* services */
+import { Box, CircularProgress } from '@mui/material'
 import { stayService } from '../services/stay.service'
-/* hooks */
 import { useViewEffect } from '../hooks/useViewEffect'
-/* cmps */
-import { ImgGallery } from '../cmps/system/img-gallery'
+import { ImgGallery } from '../cmps/img-gallery'
 import { StayOrder } from '../cmps/stay/stay-order'
 import IconApp from '../cmps/app-icon'
-/* UI UX */
-import { Box, CircularProgress } from '@mui/material'
-/* actions */
+import { compact, map, mean, meanBy, values } from 'lodash'
 
 export const _StayDetails = () => {
-    // const dispatch = useDispatch()
-    const [searchParams] = useSearchParams()
+    /* USE */
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    // ↓ Main Func
     const [stay, setStay] = useState(null)
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth)
+
+    const [searchParams] = useSearchParams()
+    const params = useParams()
+
+    const user = useSelector(state => state.userModule.user)
+
+    /* EFFECT */
+    useViewEffect('stay-details')
+
+    useEffect(() => { }, [innerWidth])
+    // useEffect(() => { loadReviews() }, [id])
+
+    useEffect(() => {
+        loadStay()
+
+        window.addEventListener('resize', onSetInnerWidth)
+
+        return () => window.removeEventListener('resize', onSetInnerWidth)
+    }, [])
+
+    /* FUNC */
     const loadStay = async () => {
-        const stayId = id
+        const stayId = params.id
         try {
             let newStay = await stayService.getById(stayId)
             setStay(newStay)
@@ -30,73 +48,56 @@ export const _StayDetails = () => {
         }
     }
 
-    /* ↓  responsive cmps */
-    const [innerWidth, setInnerWidth] = useState(window.innerWidth)
-    const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
-    useEffect(() => { }, [innerWidth])
-
-    /* ↓ Changed based url params Id */
-    const { id } = useParams()
-    useEffect(() => { loadStay() }, [id])
-
-    /* ↓ user*/
-    const user = useSelector(state => state.userModule.user)
-    console.log(`🚀 ~ user:`, user)
-
-    /* ↓ Home Navigation */
-    const navigate = useNavigate()
-    const onBack = () => { navigate('/') }
-
-    /* ↓ cdm ,cwum */
-    useViewEffect('stay-details')
-    useEffect(() => {
-        loadStay()
-        window.addEventListener('resize', onSetInnerWidth)
-
-        return () => {
-            window.removeEventListener('resize', onSetInnerWidth)
-        }
-    }, [])
-
-    // Todo */
-    const onShowReviews = () => {
-        console.log('Swal2 || MUI show reviews:', reviews)
+    const loadReviews = async () => {
+        console.log('loadReviews')
+        // const stay = await stayService.getById(params.id)
+        // loadStay(stay)
+        // dispatch(loadReviews({ hostId: stay.host._id }))
     }
 
-    /* Loader */
-    if (!stay) return (
-        <Box sx={{ display: 'flex', margin: '100px auto' }}>
-            <CircularProgress />
-        </Box>
-    )
+    const onBack = () => { navigate('/') }
+
+    const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
+
+    const onShowReviews = () => console.log('Swal2 || MUI show reviews:', reviews)
+
+    /* STAY */
+    if (!stay) return <Box sx={{ display: 'flex', margin: '100px auto' }}>
+        <CircularProgress />
+    </Box>
     const { imgUrls, name, reviews, host, loc } = stay
 
-    /* Gallery */
-    const galleryImgsProp = stay.imgUrls.slice(0, 5).map((url, idx) => ({
-        // onClick:{()=>{console.log('click')},
-        original: url,
-        originalClass: "img-gallery-img",
-        originalTitle: `${stay.name} Image ${idx + 1}`,
-        originalAlt: `${stay.name} Image ${idx + 1}`,
-        originalIndex: idx,
-        originalObjectFit: "cover",
-    }))
-    const galleryClickedImgProp = parseInt(searchParams.get('clicked-img') || 0)
-    const galleryThumbnailsProps = innerWidth >= 570
-        ? {
-            showThumbnails: true,
-            thumbnailPosition: 'left',
-            items: imgUrls.map(url => ({ original: url, thumbnail: url })),
-        }
-        : {
-            showThumbnails: false,
-            thumbnailPosition: 'bottom',
-            items: imgUrls.map(url => ({ original: url })),
-        }
-    const mainGalleryProps = {
+    const reviewsSortByDate = reviews.sort((revA, revB) =>
+        new Date(revA.date).getTime() > new Date(revB.date).getTime() ? -1 : 1
+    )
+    console.log(`🚀 ~ reviewsSortByDate:`, reviewsSortByDate || null)
+
+    const rating = meanBy(reviews, ({ rating }) => mean(values(rating))).toFixed(2)
+    console.log('rating', rating || null)
+
+    /* PROPS */
+    const galleryThumbnailsProps = innerWidth >= 570 ? {
+        showThumbnails: true,
+        thumbnailPosition: 'left',
+        items: imgUrls.map(url => ({ original: url, thumbnail: url })),
+    } : {
+        showThumbnails: false,
+        thumbnailPosition: 'bottom',
+        items: imgUrls.map(url => ({ original: url })),
+    }
+
+    const galleryProps = {
         showPlayButton: false,
-        items: galleryImgsProp,
-        startIndex: galleryClickedImgProp,
+        items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
+            // onClick:{()=>{console.log('click')},
+            original: url,
+            originalClass: "img-gallery-img",
+            originalTitle: `${stay.name} Image ${idx + 1}`,
+            originalAlt: `${stay.name} Image ${idx + 1}`,
+            originalIndex: idx,
+            originalObjectFit: "cover",
+        })),
+        startIndex: parseInt(searchParams.get('clicked-img') || 0),
         additionalClass: 'full img-gallery-details',
         loading: 'eager',
         lazyLoad: false,
@@ -107,12 +108,13 @@ export const _StayDetails = () => {
         autoPlay: false,
     }
 
+    /* RETURN */
     const { isSuperHost } = host
-
     const { city, country } = loc
+
     return <article className='stay-details'>
         <header className="main-details-heading">
-
+            {/* heading */}
             <div className="flex-inline details-heading">
                 <h1>{name}</h1>
 
@@ -152,12 +154,14 @@ export const _StayDetails = () => {
                 </div>
             </div>
 
-            {/* Gallery */}
-            <ImgGallery id="photos" viewProps={mainGalleryProps} />
+            {/* Gallery || images template based screen size*/}
+            <ImgGallery id="photos" viewProps={galleryProps} />
+            
             <div hidden className="aspect-portrait imgs-template">
-                {imgUrls.map((imgUrl, idx) => <img src={imgUrl} key={idx} alt={`${stay.name} ${idx}`} />)}
+                {imgUrls.map((imgUrl, idx) => <img src={imgUrl} key={`imgs-template-${idx}`} alt={`${stay.name} #${idx}`} />)}
             </div>
 
+            {/* anchors nav on the page */}
             <nav className="transparent details-anchors-nav">
                 <ul className='details-anchors-list'>
                     <li><Link to='#photos'>photos</Link></li>

@@ -1,29 +1,34 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useEffectUpdate } from "./useEffectUpdate"
 
-export const useFormRegister = (initialState, callBack) => {
-
+/* trigger the callback  whenever the fields state changes. */
+export const useFormRegister = (initialState, cb) => {
+    /* create state variables and their setter functions. */
     const [fields, setFields] = useState(initialState)
 
+    // on changed each field if there onChange func trigger it.
     useEffectUpdate(() => {
-        if (callBack) callBack(fields)
+        if (cb) cb(fields)
     }, [fields])
 
+    // handle the change event of the form fields and update the state accordingly.
     const handleChange = ({ target }) => {
         const field = target.name
         let value = target.value
-
         switch (target.type) {
             case 'number':
             case 'range':
                 value = +target.value || ''
-                break;
+                break
+
             case 'checkbox':
                 value = target.checked
-                break;
+                break
+
             case 'date':
                 value = new Date(value)
-                break;
+                break
+
             case 'time':
                 const newDate = new Date()
                 const hours = value.split(':')[0]
@@ -38,19 +43,38 @@ export const useFormRegister = (initialState, callBack) => {
         }
         setFields(prevFields => ({ ...prevFields, [field]: value }))
     }
+    const handleChangeB4Test = ({ target }) => {
+        const field = target.name
+        let value = target.value
 
+        if (target.type === 'checkbox') value = target.checked
+        else if (target.type === 'radio') {
+            if (target.checked) value = target.value
+            else return
+        }
+        else if (target.type === 'date') value = new Date(value).toISOString().slice(0, 10)
+        else if (target.type === 'time') value = new Date(`2000-01-01T${value}`).toISOString().slice(11, 19)
+        else if (target.type === 'number') value = parseInt(value)
+
+        setFields(prevFields => ({ ...prevFields, [field]: value }))
+    }
+
+    // YYYY-MM-DD format.
     const getFormattedDate = (value) => {
         const valueDate = new Date(value)
         return `${valueDate.getFullYear()}-${(valueDate.getMonth() + 1 + '').padStart(2, '0')}-${(valueDate.getDate() + '').padStart(2, '0')}`
     }
-
+    // HH:MM format.
     const getFormattedTime = (value) => {
         const valueTime = new Date(value)
         return `${(valueTime.getHours() + '').padStart(2, '0')}:${(valueTime.getMinutes() + '').padStart(2, '0')}`
     }
 
-
-    const register = (field, type = '', value) => { // value only used when type === 'radio'
+    /** register form fields with their corresponding properties:
+     *  name, type, value, checked, and id.
+     *  It returns an object containing these properties,
+     *  which can be used as props for form input elements. */
+    const register = (field, type = '', value) => {// value only used when type === 'radio'
         const inputProp = {
             onChange: handleChange,
             name: field,
@@ -70,5 +94,4 @@ export const useFormRegister = (initialState, callBack) => {
     }
 
     return [register, setFields, fields]
-
 }

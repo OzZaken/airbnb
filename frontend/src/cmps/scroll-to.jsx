@@ -15,10 +15,10 @@ export default function ScrollTo(props) {
     if (hash) {
       const anchor = document.querySelector(hash)
       anchor?.scrollIntoView({ behavior: "smooth" })
-    } else {
-      // Otherwise, scroll to top
-      window.scrollTo({ top: 0, behavior: "smooth" })
     }
+    
+    // Otherwise, scroll to top
+    else window.scrollTo({ top: 0, behavior: "smooth" })
   }, [location])
 
   return <>{props.children}</>

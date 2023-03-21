@@ -11,17 +11,19 @@ export const userService = {
     signup,
     login,
     logout,
-    getLoggedInUser,
-    saveLocalUser,
-    getUsers,
-    getById,
+
     remove,
     update,
-    changeScore
+    changeExp,
+    
+    getById,
+    getUsers,
+    getLoggedInUser,
+    saveLocalUser,
 }
 
 function getLoggedInUser() {
-    return JSON.parse(sessionStorage.getItem(SESSION_KEY))
+    return JSON.parse(sessionStorage.getItem(SESSION_KEY)) || null
 }
 
 async function login(userCred) {
@@ -84,7 +86,7 @@ async function update(user) {
     return user
 }
 
-async function changeScore(by) {
+async function changeExp(by) {
     const user = getLoggedInUser()
     if (!user) throw new Error('Not loggedin')
     user.score = user.score + by || by
@@ -97,8 +99,8 @@ function saveLocalUser(user) {
     return user
 }
 
-// Debug
-window.userService = userService
+
+window.userService = userService // debug
 // ;(async ()=>{
 //     await userService.signup({fullname: 'Puki Norma', username: 'user1', password:'123',score: 10000, isAdmin: false})
 //     await userService.signup({fullname: 'Master Adminov 2', username: 'admin 2', password:'123', score: 10000, isAdmin: true})

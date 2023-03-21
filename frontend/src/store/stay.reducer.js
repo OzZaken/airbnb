@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+    isLoading: false,
     stays: [],
     wishList: [],
     pageIdx: 0,

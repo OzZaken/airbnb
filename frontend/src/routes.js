@@ -1,58 +1,60 @@
 import { About } from './views/about'
-import { AdminApp } from './views/admin-app'
+
+import { UserApp } from './views/user-app'
 import { UserDetails } from './views/user-details'
 import { UserEdit } from './views/user-edit'
+
 import { StayApp } from './views/stay-app'
 import { StayDetails } from './views/stay-details'
 
-const base = [
+const stayRoutes = [
     {
         path: '',
+        label: 'Home',
         component: <StayApp />,
-        label: 'Home ',
     },
-    {
-        path: 'admin',
-        component: <AdminApp />,
-        label: 'Admin Only'
-    },
-    {
-        path: 'about',
-        component: <About />,
-        label: 'About'
-    },
-]
-const stay = [
     {
         path: 'stay/:id',
-        component: <StayDetails />,
         label: 'UserDetails ',
+        component: <StayDetails />
     },
 ]
-const user = [
 
+const userRoutes = [
     {
         path: 'user',
-        component: <AdminApp />,
-        label: 'Admin Page',
+        label: 'User App',
+        component: <UserApp />
     },
     {
         path: 'user/:id',
-        component: <UserDetails />,
         label: 'UserDetails ',
+        component: <UserDetails />
     },
     {
         path: 'user/edit',
-        component: <UserEdit />,
         label: 'UserEdit ',
+        component: <UserEdit />
     },
     {
         path: 'user/edit/:id',
-        component: <UserEdit />,
         label: 'UserEdit ',
+        component: <UserEdit />
     },
 ]
 
-const routes = [...base,...stay,...user,]
+const otherRoutes = [
+    {
+        path: 'about',
+        label: 'About',
+        component: <About />
+    },
+    {
+        path: 'admin',
+        label: 'DashBoard',
+        component: <></>
+    },
+]
+const routes = [...otherRoutes, ...stayRoutes, ...userRoutes,]
 
 export default routes

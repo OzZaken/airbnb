@@ -19,10 +19,3 @@ export class ImgGallery extends React.Component {
         />
     }
 }
-
-/*  current Image shown  */
-    // const [shownImgIdx, setShownImgIdx] = useState(0)
-    // const onSlide = () => {
-    //     console.log('shownImgIdx', shownImgIdx);
-    //     setShownImgIdx(prevState => prevState + 1)
-    // }

@@ -5,16 +5,26 @@ import Slider, { SliderThumb } from '@mui/material/Slider'
 import Button from '@mui/material'
 import { ReactComponent as CloseIcon } from '../../assets/imgs/svg/close-icon.svg'
 import { styled } from '@mui/material/styles'
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
-export const StayFilterBy = ({ filterBy,
+export const StayFilterBy = ({ stays,filterBy, onUpdateFilter,
     allPlaceTypes, allPropertyTypes, allAmenities,
     debounce, onSubmit, onClose, onResetLocalFilterBy,
     handleFieldCount, handlePropertyType, handleCheckBox
 }) => {
-    const stayCount = useRef(filterBy.stays.length)
-    
-    const [minPrice, maxPrice] = filterBy.priceRange
+    const stayCount = useRef(stays.length)
+    console.log({stayCount})
+
+    // setFilter when unmount
+    useEffect(() => {
+        return () => onUpdateFilter(filterBy)
+    }, [])
+
+    const { priceRange, rateRange, capacityRange, dateRange } = filterBy
+    const [minPrice, maxPrice] = priceRange
+    const [minRate, maxRate] = rateRange
+    const [minCapacity, maxCapacity] = capacityRange
+    const [checkIn, checkOut] = dateRange
 
     return filterBy && <article className='stay-filter-by'>
         <header className="filter-by-header">
@@ -150,16 +160,16 @@ export const StayFilterBy = ({ filterBy,
             </Link>
 
             <button className="filter-btn" onClick={onSubmit}>
-                Show {stayCount} homes
+                Show {stayCount.current} homes
             </button>
         </footer>
     </article>
 }
 
-const _RangeSlider = (props) => {
-    const { children, ...other } = props
-    return <SliderThumb {...other}>{children}</SliderThumb>
-}
+// const _RangeSlider = (props) => {
+//     const { children, ...other } = props
+//     return <SliderThumb {...other}>{children}</SliderThumb>
+// }
 
 // const AirBnbSlider = styled(Slider)(({ theme }) => ({
 //     color: '#3a8589',

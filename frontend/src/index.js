@@ -28,6 +28,7 @@ window.onerror = (message, source, line, column, error) => {
     stack: error.stack
   })
 }
+
 // Create a new logger instance
 // const logger = new Logger({
 //   logDirectory: './logs',
@@ -44,7 +45,7 @@ window.onerror = (message, source, line, column, error) => {
 //   try {
 //     await fs.promises.appendFile(logFilePath, logLine)
 //   } catch (error) {
-//     console.error(`Failed to write to log file: ${error.message}`)
+//     console.log(`Failed to write to log file: ${error.message}`)
 //     logger._logToFile('error', error.message)
 //   }
 // })

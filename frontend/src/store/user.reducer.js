@@ -3,36 +3,28 @@ import { userService } from '../services/user.service.js'
 const initialState = {
     user: userService.getLoggedInUser(),
     users: [],
-    watchedUser : null,
+    watchedUser: null,
     filterBy: {
         txt: '',
-        minScore: Infinity,
-        maxScore: 0,
+        minExp: Infinity,
+        maxExp: 0,
     },
-
 }
 
 export function userReducer(state = initialState, action) {
     var newState = state
     switch (action.type) {
-        case 'INCREMENT':
-            newState = { ...state, count: state.count + 1 }
-            break
-
-        case 'DECREMENT':
-            newState = { ...state, count: state.count - 1 }
-            break
-
-        case 'CHANGE_COUNT':
-            newState = { ...state, count: state.count + action.diff }
+        /* CRUD */
+        case 'ADD_USER':
+            newState = { ...state, users: [...state.users, action.user] }
             break
 
         case 'SET_USER':
             newState = { ...state, user: action.user }
             break
 
-        case 'SET_WATCHED_USER':
-            newState = { ...state, watchedUser: action.user }
+        case 'SET_USERS':
+            newState = { ...state, users: action.users }
             break
 
         case 'REMOVE_USER':
@@ -42,17 +34,26 @@ export function userReducer(state = initialState, action) {
             }
             break
 
-        case 'SET_USERS':
-            newState = { ...state, users: action.users }
+        /* EXP */
+        case 'INCREMENT_USER_EXP':
+            newState = { ...state, exp: { ...state, exp: state.exp + 1 } }
             break
-            
-        case 'SET_SCORE':
-            newState = { ...state, user: { ...state.user, score: action.score } }
+
+        case 'DECREMENT_USER_EXP':
+            newState = { ...state, exp: { ...state, exp: state.exp + 1 } }
+            break
+
+        case 'CHANGE_USER_EXP':
+            newState = { ...state, exp: state.exp + action.exp }
+            break
+
+        /* WATCHED_USER */
+        case 'SET_WATCHED_USER':
+            newState = { ...state, watchedUser: action.user }
             break
         default:
     }
-    // For debug:
-    window.gUserState = newState
+    window.gDebugUserState = newState  //  ← debug: 
     // console.log(`%c ~ UserState Changed By ${action.type}\n: ${JSON.stringify(action,null,0)}`, 'color: grey;')
     return newState
 }

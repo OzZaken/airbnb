@@ -1,49 +1,53 @@
+/**work together with useFormRegister hook to render a filter form
+ *  that can update the state of the userModule
+ *  slice of the store when the input fields are changed. */
 import { useFormRegister } from '../../hooks/useFormRegister'
 import { useSelector } from 'react-redux'
 
-export const UserFilter = (props) => {
+/*  form with various input fields set user filterBy state */
+export const UserFilter = ({ onChangeFilter }) => {
+    /*  access the current state of the userModule */
     const { user, users, filterBy } = useSelector((state) => state.userModule)
-    console.log(`🚀 ~ filterBy:`, filterBy)
-    console.log(`🚀 ~ users:`, users)
-    console.log(`🚀 ~ user:`, user)
+    console.log({ filterBy }, { users }, { user })
 
-
+    /* handle changes in input fields (initialState, callBack). */
     const [register] = useFormRegister({
         model: '',
         type: '',
         minScore: '',
         maxScore: '',
         date: new Date(),
-    }, props.onChangeFilter)
+    }, onChangeFilter)
 
-    const classObj = { className: 'user-filter' }
-    return (
-        <form {...classObj} >
 
-            <div>
-                <label htmlFor="model">Model</label>
-                <input {...register('model', 'text')} />
-            </div>
+    const formProps = { className: 'user-filter' }
 
-            <div>
-                <label htmlFor="type">Type</label>
-                <input {...register('type', 'text')} />
-            </div>
+    return <form {...formProps} >
+        <div>
+            {/* When a user clicks on the label, it will trigger*/}
+            <label htmlFor="model">Model</label>
+            {/* Each input element has a name, type and binds onChange handle from register*/}
+            <input {...register('model', 'text')} />
+        </div>
 
-            <div>
-                <label htmlFor="minScore">minScore</label>
-                <input {...register('minScore', 'number')} />
-            </div>
+        <div>
+            <label htmlFor="type">Type</label>
+            <input {...register('type', 'text')} />
+        </div>
 
-            <div>
-                <label htmlFor="maxScore">maxScore</label>
-                <input {...register('maxScore', 'number')} />
-            </div>
+        <div>
+            <label htmlFor="minScore">minScore</label>
+            <input {...register('minScore', 'number')} />
+        </div>
 
-            <div>
-                <label htmlFor="date">maxScore</label>
-                <input {...register('date', 'date')} />
-            </div>
-        </form>
-    )
+        <div>
+            <label htmlFor="maxScore">maxScore</label>
+            <input {...register('maxScore', 'number')} />
+        </div>
+
+        <div>
+            <label htmlFor="date">maxScore</label>
+            <input {...register('date', 'date')} />
+        </div>
+    </form>
 }

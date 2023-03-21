@@ -3,36 +3,38 @@ import { storageService } from './async-storage.service.js'
 var gDefaultStays = require('../assets/data/stay.json')
 
 const STORAGE_KEY = 'stay'
+
 const PER_PAGE = 20
 
-const REGION = ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france']
-const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
-
-/* {imgSrc:heading} */
+/* {img src: title } */
 const PLACE_TYPES = [
     { 'home': 'Entire home/apt' },
     { 'privet-room': 'Private room' },
     { 'shared-room': 'Shared room' }
 ]
+
 const AMENITIES = [
-    { omg: 'OMG!' },
-    { beach: 'Beach!' },
-    { nationalPark: 'National parks' },
-    { amazingPool: 'Amazing pools' },
-    { amazingViews: 'Amazing views' },
-    { arctic: 'Arctic' },
-    { design: 'Design' },
-    { island: 'Island' },
-    { surfing: 'Surfing' },
+    { 'omg': 'OMG!' },
+    { 'beach': 'Beach!' },
+    { 'national-park': 'National parks' },
+    { 'amazing-pool': 'Amazing pools' },
+    { 'amazing-views': 'Amazing views' },
+    { 'arctic': 'Arctic' },
+    { 'design': 'Design' },
+    { 'island': 'Island' },
+    { 'surfing': 'Surfing' },
 ]
+
+const REGION = ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france']
+
+const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
 
 export const stayService = {
     query,
     save,
     remove,
-    getById,
-
     get,
+    getById,
     AMENITIES,
     PROPERTY_TYPES,
     PLACE_TYPES,
@@ -43,27 +45,31 @@ async function query(filterBy, pageIdx) {
     try {
         var stays = await storageService.query(STORAGE_KEY)
 
-        // DEMO_DATA
+        /* DEMO_DATA */
         if (!stays || !stays.length) {
             storageService.postMany(STORAGE_KEY, gDefaultStays)
             stays = gDefaultStays
         }
 
-        // SORT
+        /* PAGE_IDX */
         pageIdx = pageIdx || 1
         stays = stays.slice(0, pageIdx * PER_PAGE)
         // const startIdx = pageIdx * STAYS_PER_PAGE // sending  backend the relents
+        
+        /* SORT */
 
-        // FILTER
-        var { txt, placeType, propertyType, region, amenities, priceRange, capacityRange, dateRange, rateRange } = filterBy
+        /* FILTER */
+        let { txt, placeType, propertyType, region, amenities, priceRange, capacityRange, dateRange, rateRange } = filterBy
 
-        // BY [] ~ placeType , Amenities , propertyType ,region
+        // BY array ~ placeType , Amenities , propertyType ,region
         placeType = placeType || []
         amenities = amenities || []
         propertyType = propertyType || []
+
+        // BY array ~ placeType , Amenities , propertyType ,region
         // region = region || []
 
-        // BY  ~ price
+        // BY number  ~ price
         let [minPrice, maxPrice] = priceRange
         minPrice = minPrice || 0
         maxPrice = maxPrice || Infinity

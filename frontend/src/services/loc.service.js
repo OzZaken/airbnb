@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { httpService } from './http.service'
@@ -6,7 +5,7 @@ import { utilService } from './util.service'
 import { countryService } from './country.service'
 import { translationService } from './i18n.service'
 
-const COUNTRIES = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
+const countries = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
 
 /* UserMsg with sweetalert2 withReactContent */
 const UserMsg = withReactContent(Swal)
@@ -19,10 +18,9 @@ const USER_LOCS = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
 const USER_LOCS_MAP = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
 
 /* UserPos */
-var gUserPos
-    = sessionStorage.getItem(STORAGE_KEY)
+var gUserPos = sessionStorage.getItem(STORAGE_KEY)
     || USER_LOCS[USER_LOCS.length - 1]
-    || _setUserLocByCountryCode('ISR')/* opt ~ by Default in Israel: _setUserLocByCountryCode('ISR')*/
+    || _setUserLocByCountryCode('ISR') /* debug */
     || null
 
 
@@ -35,13 +33,6 @@ export const locService = {
     getUserPos,
     getUserDistance,
     setUserLocByCountryName,
-}
-/* debug */
-window.gDebugLocService = {
-    gUserPos,
-    USER_LOCS,
-    USER_LOCS_MAP,
-    INVALID_SEARCH_RESULT
 }
 
 async function approvedLocService() {
@@ -80,7 +71,7 @@ async function getLocByAddress(address) {
     if (!_isValidSearch('address', address)) return
     // filter try find in local data 
     const regex = new RegExp(address, "i")
-    const country = COUNTRIES.find(
+    const country = countries.find(
         (c) =>
             c.name.match(regex) ||
             c.region.match(regex) ||
@@ -219,7 +210,7 @@ function _setUserLocByCountryCode(code) {
 
 /* optional for user who !navigator.geolocation */
 function setUserLocByCountryName(preferCountry = 'Israel') {
-    const country = COUNTRIES.find(country => country.name === preferCountry)
+    const country = countries.find(country => country.name === preferCountry)
     _updateUserLoc(_getPosFromCountry(country))
 }
 
@@ -282,7 +273,7 @@ function _updateUserLoc(pos) {
 
 /* find country by code */
 function _getCountryFromAlfaCode(code) {
-    return COUNTRIES.find(c => c.alpha2Code === code || c.alpha3Code === code)
+    return countries.find(c => c.alpha2Code === code || c.alpha3Code === code)
 }
 
 /* uses destructuring to extract the necessary properties from google Api searchResult */

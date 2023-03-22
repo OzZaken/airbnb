@@ -1,4 +1,4 @@
-const TRANS = require('../assets/data/default-translations.json')
+const translate = require('../assets/data/translate.json')
 
 const STORAGE_KEY = 'userLang'
 
@@ -7,8 +7,6 @@ var gTransMap = null
 var gLangCode = _loadLangFromLocalStorage()
     || navigator.language.substring(0, 2)  // eq .split('-')[0]
     || 'en'
-
-// loadTranslations()
 
 export const translationService = {
     doTrans,
@@ -21,6 +19,18 @@ export const translationService = {
     formatDate,
     kmToMiles,
     getEarthRadius,
+}
+
+// loadTranslations()
+async function loadTranslations() {
+    try {
+        const response = await fetch('translations.json')
+        const data = await response.json()
+        gTransMap = data
+        doTrans()
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 function setLang(lang) {
@@ -39,17 +49,6 @@ function getEarthRadius() {
         console.warn('Unknown locale:', lang)
         // TODO:logger.warn('Unknown locale:', lang)
         return 6371 // default to km
-    }
-}
-
-async function loadTranslations() {
-    try {
-        const response = await fetch('translations.json')
-        const data = await response.json()
-        gTransMap = data
-        doTrans()
-    } catch (err) {
-        console.log(err)
     }
 }
 

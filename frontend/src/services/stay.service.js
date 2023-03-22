@@ -6,13 +6,12 @@ const STORAGE_KEY = 'stay'
 
 const PER_PAGE = 20
 
-/* {img src: title } */
 const PLACE_TYPES = [
+    /* {img src key: title } */
     { 'home': 'Entire home/apt' },
     { 'privet-room': 'Private room' },
     { 'shared-room': 'Shared room' }
 ]
-
 const AMENITIES = [
     { 'omg': 'OMG!' },
     { 'beach': 'Beach!' },
@@ -22,19 +21,16 @@ const AMENITIES = [
     { 'arctic': 'Arctic' },
     { 'design': 'Design' },
     { 'island': 'Island' },
-    { 'surfing': 'Surfing' },
 ]
-
 const REGION = ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france']
-
 const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
 
 export const stayService = {
     query,
     save,
     remove,
-    get,
     getById,
+    get,
     AMENITIES,
     PROPERTY_TYPES,
     PLACE_TYPES,
@@ -130,3 +126,18 @@ function get(key) {
 function getById(stayId) {
     return storageService.get(STORAGE_KEY, stayId)
 }
+
+// removeIdsFromFile('../assets/data/stay.json')
+
+// function removeIdsFromFile(filename) {
+//     const stays = require(`./${filename}`)
+  
+//     stays.forEach((stay) => {
+//       delete stay._id
+//       delete stay.id
+//     })
+  
+//     const data = JSON.stringify(stays, null, 2)
+  
+//     fs.writeFileSync(`../assets/data/${filename}`, data, 'utf8')
+//   }

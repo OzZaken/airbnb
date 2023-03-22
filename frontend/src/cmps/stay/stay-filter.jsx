@@ -7,29 +7,34 @@ import Modal from '@mui/material/Modal'
 import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
 import { AmenityList } from '../amenity/amenity-list'
-import { CarouselApp } from '../app-carousel'
 import { StayFilterBy } from './stay-filter-by'
+import { useEffectUpdate } from '../../hooks/useEffectUpdate'
 
-export const StayFilter = ({ stays, filterBy, filters,
-    onUpdateFilter,
+export const StayFilter = ({ stays, filterBy,filters,
+     onUpdateFilter, getRange,
     allAmenities, allPlaceTypes, allPropertyTypes, allRegions,
     onUpdateRangeBy, onUpdateSortBy, onUpdateRegionBy, onUpdateAmenityBy }) => {
-
-    /* USE */
     const [localFilterBy, setLocalFilterBy] = useState(filterBy)
     const [isFilterByOpen, setIsFilterByOpen] = useState(false)
     const filtersCount = useRef(0)
 
-    /* EFFECT */
     useEffect(() => {
         if (filters) filtersCount.current = Object.keys(filters.length)
         else filtersCount.current = 0
         console.log(`🚀 ~ filtersCount.current:`, filtersCount.current)
     }, [filters])
 
-    /* FUNCS */
-    const onOpenFilterBy = () => setIsFilterByOpen(true)
+    // get current range for each stays update. 
+    useEffectUpdate(() => {
+        const fields = ['price', 'capacity']
+        const rangeBy = {}
+        for (let i = 0; i < fields.length; i++) {
+            rangeBy[`${fields[i]}Range`] = getRange(fields[i])
+        }
+        setLocalFilterBy({ ...localFilterBy, ...rangeBy })
+    }, [stays])
 
+    const onOpenFilterBy = () => setIsFilterByOpen(true)
     const onCloseFilterBy = () => setIsFilterByOpen(false)
 
     /* FORM */
@@ -83,42 +88,25 @@ export const StayFilter = ({ stays, filterBy, filters,
         }))
     }
 
-    /* CMPS */
     const amenityList = {
         amenities: allAmenities,
         isContainsTitle: true,
-        isContainsIcon: true
+        isContainsIcon: true,
+        onUpdateFilter
     }
 
-    const badge = {
+    const badgeFilters = {
         color: 'primary',
         badgeContent: filtersCount.current,
         className: filtersCount.current ? 'filter-active' : ''
     }
 
-    const btn = {
+    const btnOpenFilterBy = {
         onClick: () => onOpenFilterBy,
         className: filtersCount.current ? 'btn-filters active' : 'btn-filters'
     }
 
-    const box = {
-        sx: {
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 750,
-            height: '90vh',
-            bgcolor: 'background.paper',
-            borderRadius: '10px',
-            boxShadow: 24,
-            p: 2,
-        }
-    }
-
-    const modal = {
+    const modalFilterBy = {
         isOpen: isFilterByOpen,
         onClose: onCloseFilterBy,
         BackdropComponent: Backdrop,
@@ -128,11 +116,13 @@ export const StayFilter = ({ stays, filterBy, filters,
     }
 
     const stayFilterBy = {
-        filtersCount: 5,
+        filtersCount: filtersCount.current,
         staysCount: stays.length,
         filterBy: localFilterBy,
-        allPlaceTypes, allPropertyTypes, allAmenities,
         debounce: debouncedChangeHandler,
+        allPlaceTypes,
+        allPropertyTypes,
+        allAmenities,
         onUpdateFilter,
         onClose: onCloseFilterBy,
         onSubmit,
@@ -143,22 +133,37 @@ export const StayFilter = ({ stays, filterBy, filters,
     }
 
     return <section className='stay-filter'>
-        <CarouselApp items={<AmenityList {...amenityList} />} />
+        <AmenityList {...amenityList} />
 
-        <Badge {...badge}>
-            <button {...btn}>
+        <Badge {...badgeFilters}>
+            <button {...btnOpenFilterBy}>
                 <TuneIcon /> &nbsp;Filters</button>
         </Badge>
 
-        <Modal {...modal} closeAfterTransition >
-
+        <Modal {...modalFilterBy} closeAfterTransition >
             <Fade in={isFilterByOpen}>
 
-                <Box {...box}>
-
+                <Box {...boxStayFilterBy}>
                     <StayFilterBy {...stayFilterBy} />
                 </Box>
             </Fade>
         </Modal>
     </section>
+}
+
+const boxStayFilterBy = {
+    sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 750,
+        height: '90vh',
+        bgcolor: 'background.paper',
+        borderRadius: '10px',
+        boxShadow: 24,
+        p: 2,
+    }
 }

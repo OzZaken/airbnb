@@ -4,23 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
 import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList } from '../store/stay.action'
 import { useViewEffect } from '../hooks/useViewEffect'
-import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
-import { useNavigate } from 'react-router-dom'
 import ScrollTo from '../cmps/scroll-to'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
 export const StayApp = () => {
-    /* USE  */
     const params = useParams()
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams()
     const { isLoading, stays, filterBy } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
-    const navigate = useNavigate()
 
-    /* EFFECT  */
     useEffect(() => {
         dispatch(loadStays())
         // dispatch(loadAmenities())
@@ -30,27 +25,14 @@ export const StayApp = () => {
             const queryFilter = JSON.parse(searchParams.get('filters'))
             if (queryFilter !== filterBy) {
                 console.log('UT queryFilter !== filterBy')
-                console.log('queryFilter', JSON.parse(queryFilter))
-                console.log('filterBy', filterBy)
                 // dispatch(setFilterBy(queryFilter))
             }
         }
-
     }, [])
 
     useViewEffect('home-page')
 
-    useEffectUpdate(() => {
-        const fields = ['price', 'capacity']
-        const rangeBy = {}
-        for (let i = 0; i < fields.length; i++) {
-            rangeBy[`${fields[i]}Range`] = _getRange(fields[i])
-        }
-        dispatch(setFilterBy({ ...filterBy, ...rangeBy }))
-    }, [stays])
-
-    /* FUNCS  */
-    const _getRange = (field) => {
+    const getRange = (field) => {
         return stays.reduce((accRange, stay) => [
             Math.min(accRange[0], stay[field]),
             Math.max(accRange[1], stay[field])
@@ -70,7 +52,7 @@ export const StayApp = () => {
     /* WISHLIST */
     const onAddToWishList = stayId => dispatch(addToWishList(stayId))
 
-    const onRemoveFromWishList = stayId => dispatch(removeFromWishList(stayId))
+    const onRemoveFromWishList = (stayId) => dispatch(removeFromWishList(stayId))
 
     /* SORT  */
     const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
@@ -106,6 +88,7 @@ export const StayApp = () => {
         // setSearchParams({filters})
     }
 
+    /* Click amenity Carousel List  */
     const onUpdateAmenityBy = (amenityStringParamBy) => {
         console.log(`🚀 ~ stringParam:`, amenityStringParamBy)
         const prevAmenities = searchParams.getAll('amenities')
@@ -122,46 +105,29 @@ export const StayApp = () => {
         }))
     }
 
-    /* NOTE: only on front */
-    const onSetStayAvgRate = (stay) => {
-        const reviews = stay?.reviews || []
-        const reviewsCount = reviews.length
-
-        const avgRate = reviews.reduce((accRate, review) => accRate + review.rate, 0) / reviewsCount || null
-
-        stay.avgRate = avgRate
-        return avgRate
-    }
-
-    /*  Click Preview Image */
-    const onClickPreviewImg = (idx, id) => {
-        console.log(`Click Image!:`, idx, id) // navigate(`/stay/${stay._id}?large-image=${idx}`)
-        window.scrollTo(0, 0)
-        navigate(`/stay/${id}}`)
-    }
-
-    /* PROPS */
-    const filterProps = {
+    const stayFilter = {
         stays,
+        getRange,
         filterBy,
         filters: params.filters,
         allAmenities: stayService.get('AMENITIES'),
         allPlaceTypes: stayService.get('PLACE_TYPES'),
         allPropertyTypes: stayService.get('PROPERTY_TYPES'),
         allRegions: stayService.get('REGIONS'),
-        onUpdateRangeBy,
         onUpdateFilter,
+        onUpdateRangeBy,
         onUpdateSortBy,
         onUpdateRegionBy,
-        onUpdateAmenityBy,
     }
 
-    const listProps = {
+    const stayList = {
         stays,
         loggedInUser,
         isLoading,
+        onUpdateAmenityBy,
         onClickPreviewImg,
-        onSetAvgRate: onSetStayAvgRate,
+        onUpdateFilter,
+        onSetStayAvgRate,
         onRemoveStay,
         onLoadMoreStays,
         onUpdateStay,
@@ -171,10 +137,31 @@ export const StayApp = () => {
 
     return <section className='stay-app'>
 
-        <StayFilter {...filterProps} />
+        <StayFilter {...stayFilter} />
 
-        <StayList {...listProps} />
+        <StayList {...stayList} />
 
         <ScrollTo />
     </section>
 }
+
+/* NOTE: save only on front */
+const onSetStayAvgRate = (stay) => {
+    const reviews = stay?.reviews || []
+    const reviewsCount = reviews.length
+
+    const avgRate = reviews.reduce((accRate, review) => accRate + review.rate, 0) / reviewsCount || null
+
+    stay.avgRate = avgRate
+    return avgRate
+}
+
+/*  Click Preview Image */
+const onClickPreviewImg = (idx, id) => {
+    console.log(`Click Image!:`, idx, id) // navigate(`/stay/${stay._id}?large-image=${idx}`)
+    window.scrollTo(0, 0)
+    window.location.href = `/stay/${id}`
+}
+
+const onNavHome = () => window.history.pushState(null, null, `/`)
+

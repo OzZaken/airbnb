@@ -1,0 +1,391 @@
+.filter-container {
+    overflow-y: scroll;
+}
+
+.inner-filter-container {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #ebebeb
+}
+
+h2.sub-titel {
+    font-size: 1.3em;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0px;
+    padding: 0px;
+    color: #222222;
+    font-family: Circular;
+    padding: 0px 0px 24px;
+}
+
+.property-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, auto);
+    gap: 16px !important;
+    height: 100%;
+
+    .property-img {
+        width: 32px;
+        height: 32px;
+        width: 32px;
+    }
+
+    .inner-property-button {
+        position: relative;
+        min-height: 120px;
+        height: 100%;
+        padding: 16px;
+    }
+
+    .inner-property-button-txt {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: left;
+        padding-top: 24px;
+        white-space: normal;
+    }
+}
+
+
+button[name='bedrooms'] {
+    background-color: #ffffff;
+    color: #222222;
+    border-color: #e3e3e3;
+}
+
+button[name='bedrooms']:hover {
+    border-color: #222222;
+}
+
+button[name='bedrooms'].active {
+    background-color: #000;
+    color: #ffffff;
+}
+
+button[name='bathrooms'] {
+    background-color: #ffffff;
+    color: #222222;
+    border-color: #e3e3e3;
+}
+
+button[name='bathrooms']:hover {
+    border-color: #222222;
+}
+
+button[name='bathrooms'].active {
+    background-color: #000;
+    color: #ffffff;
+}
+
+button[name='beds'] {
+    background-color: #ffffff;
+    color: #222222;
+    border-color: #e3e3e3;
+}
+
+button[name='beds']:hover {
+    border-color: #222222;
+}
+
+button[name='beds'].active {
+    background-color: #000;
+    color: #ffffff;
+}
+
+button.filter-btn {
+    font-family: Circular;
+    font-size: 16px;
+    font-weight: bold;
+    width: 180px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #222222;
+    color: #ffffff;
+}
+
+button.filter-btn:hover {
+
+    background-color: #000;
+    color: #ffffff;
+}
+
+button[name='propertyType'] {
+    background-color: #ffffff;
+    color: #222222;
+    border-color: #e3e3e3;
+}
+
+button[name='propertyType']:hover {
+    border-color: #222222;
+}
+
+button[name='propertyType'].active {
+    background-color: #f7f7f7;
+    border: 1px solid #222222;
+}
+
+.amenitie-checkBox {
+    display: block !important;
+}
+
+.divider {
+    margin-block-start: 20px !important;
+}
+
+.property-type-btn {
+    max-width: 200px;
+}
+
+.amenitie-checkBox {
+    color: #222222;
+}
+
+.filter-footer {
+    border-top: 1px solid #ebebeb;
+    padding: 16px 24px !important;
+}
+
+.css-13xqbvb,
+.css-106c1u2-MuiBadge-badge {
+    top: 4px !important;
+    right: 4px !important;
+    background-color: #222222 !important;
+}
+
+
+.css-1c32n2y-MuiBadge-root{
+    padding-bottom: 7px;
+}
+
+.open-filter-btn {
+
+    display: block;
+    position: relative;
+    float: right;
+    justify-content: space-evenly;
+    margin-inline-start: 25px;
+    width: 88px;
+    height: 48px !important;
+    padding: 7px;
+    font-family: Circular;
+    font-size: 12px !important;
+    color: #222222 !important;
+    border-color: #efefef !important;
+    border-radius: 10px !important;
+    border: 1px solid lightgray;
+
+    &.open-filter-btn.active {
+        border-color: #222222 !important;
+        border: 2px solid #222222;
+    }
+
+    .filter-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.filter-modal {
+    padding: 0px !important;
+}
+
+.filter-container {
+    margin: 0;
+    padding: 24px;
+
+}
+
+.filter-header {
+    min-height: 64px !important;
+    padding-left: 16px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.right-space {
+    flex: 0 0 32px;
+    text-align: right;
+}
+
+.left-space {
+    flex: 0 0 32px;
+    text-align: left;
+}
+
+.filter-modal-title {
+    font-family: Circular;
+    color: #222222;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+}
+
+.amenities-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 100px;
+    grid-row-gap: 20px;
+}
+
+.filter-carousel-container {
+    padding: 0;
+    width: 90%;
+    display: inline-block;
+
+    .icon-btn {
+        gap: 6px;
+        padding-top: 15px;
+        border: none;
+        font-family: Circular;
+        font-size: 12px;
+        line-height: 16px;
+        opacity: 0.6;
+
+        &.icon-btn.active {
+            color: #000000;
+            opacity: 1;
+
+            .hover-border {
+                background-color: #000000;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: #000000;
+            transition: 0.2s;
+            opacity: 1;
+
+            .hover-border {
+                background-color: lightgray;
+            }
+        }
+
+        &:active {
+            transform: scale(0.95);
+            transition: 0.3s;
+        }
+
+        .type-container {
+            gap: 6px;
+
+
+        }
+
+        img.icon-carousel {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .hover-border {
+            background-color: transparent;
+            height: 2px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    }
+}
+
+.filters-container {
+    padding: 0 5px;
+    display: block;
+    position: sticky;
+    z-index: 20;
+    top: 81px;
+    width: 100%;
+
+    .filters-container-wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        max-width: var(--main-layout-width);
+        margin-inline: auto;
+    }
+
+    .filters-container-background {
+        background: #fff;
+    }
+
+    &.stuck {
+        box-shadow: 0px 2px 3px #eee;
+    }
+}
+
+.checkbox-container {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-family: Circular;
+    color: #222222;
+    font-size: 16px !important;
+    line-height: 20px !important;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    // border-width: 1px !important;
+    border: 1px solid #b0b0b0;
+    border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input~.checkmark {
+    border: 1px solid #222222;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked~.checkmark {
+    background-color: #222222;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 8px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.place-type-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    width: 100%;
+}
+

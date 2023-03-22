@@ -1,47 +1,76 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { AmenityPreview } from "./amenity-preview"
+import { imgService } from "../../services/img.service"
 
-export const AmenityList = ({ amenities, cb, isContainsTitle, isContainsIcon }) => {
-    /* USE */
-    const [currItem, setCurrItem] = useState(0)
+const { loadImgs } = imgService
+
+export const AmenityList = ({ amenities, onClick, onUpdateAmenityBy, activeAmenity }) => {
+    const [currAmenityIdx, setCurrAmenityIdx] = useState(0)
+
     const carouselRef = useRef(null)
+    const activeAmenityRef = useRef()
+    const [imgMap, setImgsMap] = useState({})
 
-    /* FUNCS */
-    const handlePrevClick = () => {
-        if (currItem > 0) setCurrItem(currItem - 1)
+    useEffect(() => {
+        const imgKeys = amenities.map(amenity => Object.keys(amenity)[0])
+        loadAmenitiesImgs(imgKeys)
+    }, [amenities])
+
+    const loadAmenitiesImgs = async imgKeys => {
+        const imgs = await loadImgs(imgKeys, 'png')
+        setImgsMap(imgs)
     }
 
-    const handleNextClick = () => {
-        if (currItem < amenities.length - 1) setCurrItem(currItem + 1)
+    const toggleActiveAmenity = (amenity) => {
+        if (amenity === activeAmenity) onUpdateAmenityBy('')
+        else onUpdateAmenityBy(amenity)
+    }
+    
+    const handleClick = (ev) => {
+        ev.preventDefault()
+        const key = ev.target.value
+        toggleActiveAmenity(key)
+    }
+    const onPrevAmenities = () => {
+        if (currAmenityIdx > 0) setCurrAmenityIdx(currAmenityIdx - 1)
     }
 
-    /* PROPS */
-    const previewProps = {
-        cb,
-        isContainsTitle,
-        isContainsIcon
+    const onNextAmenities = () => {
+        if (currAmenityIdx < amenities.length - 1)
+            setCurrAmenityIdx(currAmenityIdx + 1)
+    }
+
+    // props
+    const amenityPreview = {
+        currAmenityIdx,
+        onClick,
+        imgMap
     }
 
     const btnPrev = {
-        className: 'prev-button',
-        onClick: () => handlePrevClick,
-        disabled: currItem === 0,
+        className: "btn btn-prev",
+        onClick: () => onPrevAmenities,
+        disabled: currAmenityIdx === 0,
     }
 
     const btnNext = {
-        className: 'next-button',
-        onClick: () => handleNextClick,
-        disabled: currItem === amenities.length - 1,
+        className: "btn btn-next",
+        onClick: () => onNextAmenities,
+        disabled: currAmenityIdx === amenities.length - 1,
     }
 
-    /* CMPS */
-    const amenityList = amenities.map((amenity, idx) => (
-        <AmenityPreview {...previewProps} amenity={amenity} key={`${Object.keys(amenity)[0]}-${idx}`} />
-    ))
-    return <ul className="amenities-list">
+    return (
+        <ul ref={carouselRef} className="amenities-list">
+            {amenities.map((amenity, idx) => <AmenityPreview
+                amenity={amenity}
+                {...amenityPreview}
+                className={`amenity-preview ${idx === currAmenityIdx ? "active" : ""}`}
+                key={`${Object.keys(amenity)[0]}-${idx}`}
+            />
+            )}
 
-         {amenityList}
-        <button {...btnPrev}>Prev</button>
-        <button {...btnNext}>Next</button>
-    </ul>
+            <button {...btnPrev}>Prev</button>
+            <button {...btnNext}>Next</button>
+        </ul>
+    )
 }

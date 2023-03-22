@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import App from './root-cmp'
 import { ErrorBoundary } from './cmps/error-boundary'
-import reportWebVitals from './reportWebVitals'
+// import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -61,4 +61,4 @@ window.onerror = (message, source, line, column, error) => {
 //   })
 // }
 
-reportWebVitals(App)
+// reportWebVitals(App)

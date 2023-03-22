@@ -9,24 +9,18 @@ import { StayOrder } from '../cmps/stay/stay-order'
 import IconApp from '../cmps/app-icon'
 import { compact, map, mean, meanBy, values } from 'lodash'
 
-export const _StayDetails = () => {
-    /* USE */
+const _StayDetails = () => {
+    const user = useSelector(state => state.userModule.user)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
+    const params = useParams()
 
     const [stay, setStay] = useState(null)
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
 
-    const [searchParams] = useSearchParams()
-    const params = useParams()
-
-    const user = useSelector(state => state.userModule.user)
-
-    /* EFFECT */
     useViewEffect('stay-details')
-
-    useEffect(() => { }, [innerWidth])
-    // useEffect(() => { loadReviews() }, [id])
 
     useEffect(() => {
         loadStay()
@@ -36,7 +30,10 @@ export const _StayDetails = () => {
         return () => window.removeEventListener('resize', onSetInnerWidth)
     }, [])
 
-    /* FUNC */
+    useEffect(() => { }, [innerWidth])
+
+    // useEffect(() => { loadReviews() }, [id])
+
     const loadStay = async () => {
         const stayId = params.id
         try {
@@ -55,27 +52,23 @@ export const _StayDetails = () => {
         // dispatch(loadReviews({ hostId: stay.host._id }))
     }
 
-    const onBack = () => { navigate('/') }
+    const onBack = () => navigate('/')
 
     const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
 
     const onShowReviews = () => console.log('Swal2 || MUI show reviews:', reviews)
 
-    /* STAY */
-    if (!stay) return <Box sx={{ display: 'flex', margin: '100px auto' }}>
-        <CircularProgress />
-    </Box>
-    const { imgUrls, name, reviews, host, loc } = stay
 
-    const reviewsSortByDate = reviews.sort((revA, revB) =>
+    if (!stay) return <Loader />
+    const { imgUrls, name, reviews, host, loc } = stay
+    const { isSuperHost } = host
+    const { city, country } = loc
+
+    const rateToShow = meanBy(reviews, ({ rating }) => mean(values(rating))).toFixed(2)
+    const reviewsToShow = reviews.sort((revA, revB) =>
         new Date(revA.date).getTime() > new Date(revB.date).getTime() ? -1 : 1
     )
-    console.log(`🚀 ~ reviewsSortByDate:`, reviewsSortByDate || null)
 
-    const rating = meanBy(reviews, ({ rating }) => mean(values(rating))).toFixed(2)
-    console.log('rating', rating || null)
-
-    /* PROPS */
     const galleryThumbnailsProps = innerWidth >= 570 ? {
         showThumbnails: true,
         thumbnailPosition: 'left',
@@ -87,6 +80,7 @@ export const _StayDetails = () => {
     }
 
     const galleryProps = {
+        id: "photos",
         showPlayButton: false,
         items: stay.imgUrls.slice(0, 5).map((url, idx) => ({
             // onClick:{()=>{console.log('click')},
@@ -104,107 +98,139 @@ export const _StayDetails = () => {
         useBrowserFullscreen: false,
         showBullets: false,
         showIndex: true,
-        ...galleryThumbnailsProps,
         autoPlay: false,
+        ...galleryThumbnailsProps,
     }
-
-    /* RETURN */
-    const { isSuperHost } = host
-    const { city, country } = loc
+    const detailsHeading = {
+        name,
+        reviews,
+        isSuperHost,
+        city,
+        country,
+        onShowReviews,
+    }
+    const mainDetails = {
+        className: 'main-details',
+        stay,
+        reviews
+    }
+    const imgsTemplate = {
+        imgUrls: stay.imgUrls,
+        name: stay.name
+    }
 
     return <article className='stay-details'>
         <header className="main-details-heading">
-            {/* heading */}
-            <div className="flex-inline details-heading">
-                <h1>{name}</h1>
+            <HeadingDetails {...detailsHeading} />
 
-                <div className='details-sub-heading'>
-                    {/* avg rate & reviews */}
-                    {reviews?.length
-                        ? <>
-                            <span>
-                                <IconApp className="fs-small" iconKey="Star" />
-                                4.98 &nbsp;
-                            </span>
-
-                            <span role="button" onClick={onShowReviews} className='reviews'>
-                                {`${reviews.length + ' reviews'}`}  &#xB7;
-                            </span>
-                        </>
-                        : <span>New &#xB7;</span>}
-
-                    {/* isSuperHost */}
-                    {isSuperHost && <span className='super-host'>
-                        <IconApp iconKey='SuperHost' />SuperHost&#xB7;
-                    </span>}
-
-                    {/* loc */}
-                    <span> {`${city},${country}`}</span>
-
-                    <div hidden className='btns-container'>
-
-                        <button className='btn-link'>
-                            <IconApp iconKey="Share" />share
-                        </button>
-
-                        <button className='btn-link'>
-                            <IconApp iconKey="FavoriteFill" />saved
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Gallery || images template based screen size*/}
-            <ImgGallery id="photos" viewProps={galleryProps} />
-            
-            <div hidden className="aspect-portrait imgs-template">
-                {imgUrls.map((imgUrl, idx) => <img src={imgUrl} key={`imgs-template-${idx}`} alt={`${stay.name} #${idx}`} />)}
-            </div>
-
-            {/* anchors nav on the page */}
-            <nav className="transparent details-anchors-nav">
-                <ul className='details-anchors-list'>
-                    <li><Link to='#photos'>photos</Link></li>
-                    <li><Link to='#amenities'>amenities</Link></li>
-                    <li><Link to='#reviews'>reviews</Link></li>
-                    <li><Link to='#location'>location</Link></li>
-                </ul>
-            </nav>
+            <ImgGallery {...galleryProps} />
+            <ImgsTemplateDetails hidden {...imgsTemplate} />
         </header>
 
-        <main className='main-details'>
-            {/* Main-Details */}
-            <section className='details-container'>
+        <AnchorsNavDetails />
 
-                <div className="main-info-container">
-                    {/* <AirCover /> */}
-                    <div className="stay-details-row air-cover-container">
-                        <div className="img-container">
-                            <IconApp iconKey="airCover" />
-                        </div>
-                        <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
-                        <button className="btn-big"><b>Read more</b></button>
-                    </div>
-                    {/*  <summary/> */}
-                    <div className="stay-details-row summery">
-                        <p>{stay.summary}</p>
-                    </div>
-                    {/*  <amenities/> */}
-                </div>
-
-                <aside className='main-order-container'>
-                    <StayOrder stay={stay} reviewsCount={reviews?.length} />
-                </aside>
-            </section>
-            {/* Reviews */}
-            <div className='stay-reviews'>Reviews</div>
-            {/* Map */}
-            <div className='stay-map'>Map</div>
-        </main>
+        <MainDetails {...mainDetails} />
 
         <button onClick={onBack}>Back</button>
         {/* <Link to='/stay/r1' >Next Stay</Link> */}
     </article>
+}
+
+const ImgsTemplateDetails = ({ imgUrls, name }) => {
+    return <section className="aspect-portrait imgs-template">
+        {imgUrls.map((url, idx) =>
+            <img src={url} key={`imgs-template-${idx}`} alt={`${name} #${idx}`} />
+        )}
+    </section>
+}
+
+const MainDetails = ({ stay, reviews }) => {
+    return <main >
+        <section className='details-container'>
+
+            <div className="main-info-container">
+                <AirCover />
+
+                {/*  <summary/> */}
+                <div className="stay-details-row summery">
+                    <p>{stay.summary}</p>
+                </div>
+                {/*  <amenities/> */}
+            </div>
+
+            <aside className='main-order-container'>
+                <StayOrder stay={stay} reviewsCount={reviews?.length} />
+            </aside>
+        </section>
+
+        <div className='stay-reviews'>Reviews</div>
+
+        <div className='stay-map'>Map</div>
+    </main>
+}
+
+const AirCover = () => {
+    return <div className="stay-details-row air-cover-container">
+        <div className="img-container">
+            <IconApp iconKey="airCover" />
+        </div>
+        <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
+        <button className="btn-big"><b>Read more</b></button>
+    </div>
+}
+
+const Loader = () => {
+    return <Box sx={{ display: 'flex', margin: '100px auto' }}>
+        <CircularProgress />
+    </Box>
+}
+
+const AnchorsNavDetails = () => {
+    return <nav className="transparent details-anchors-nav">
+        <ul className='details-anchors-list'>
+            <li><Link to='#photos'>photos</Link></li>
+            <li><Link to='#amenities'>amenities</Link></li>
+            <li><Link to='#reviews'>reviews</Link></li>
+            <li><Link to='#location'>location</Link></li>
+        </ul>
+    </nav>
+}
+
+const HeadingDetails = ({ name, reviews, onShowReviews, isSuperHost, city, country }) => {
+    return <section className="flex-inline details-heading">
+        <h1>{name}</h1>
+
+        <div className='details-sub-heading'>
+            {/* avg rate or reviews (based user approved get is location)*/}
+            {reviews?.length ? <>
+                <span>
+                    <IconApp className="fs-small" iconKey="Star" />
+                    4.98 &nbsp;
+                </span>
+
+                <span role="button" onClick={onShowReviews} className='reviews'>
+                    {`${reviews.length + ' reviews'}`}  &#xB7;
+                </span>
+            </> : <span>New &#xB7;</span>}
+
+            {isSuperHost && <span className='super-host'>
+                <IconApp iconKey='SuperHost' />SuperHost&#xB7;
+            </span>}
+
+            <span>{`${city},${country}`}</span>
+
+            <div hidden className='btns-container'>
+
+                <button className='btn-link'>
+                    <IconApp iconKey="Share" />share
+                </button>
+
+                <button className='btn-link'>
+                    <IconApp iconKey="FavoriteFill" />saved
+                </button>
+            </div>
+        </div>
+    </section>
 }
 
 function mapStateToProps(state) {

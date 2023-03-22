@@ -1,35 +1,29 @@
 import { Box } from '@mui/system'
 import { Skeleton } from '@mui/material'
-import IconApp from '../app-icon'
 
-export const AmenityPreview = ({ amenity, cb, isContainsTitle, isContainsIcon }) => {
+export const AmenityPreview = ({ amenity, onClick, imgMap }) => {
     const title = Object.values(amenity)
     const amenityKey = Object.keys(amenity)
-
-    var previewProps = {
+  
+    const amenityPreviewProps = {
+        'data-filter-by': amenityKey,
         className: `amenity-preview`,
-        'data-amenity': `amenity-preview`,
     }
 
-    if (cb && typeof cb === 'function') {
-        previewProps = {
-            ...previewProps,
-            className: `btn amenity-preview`,
-            role: `button`,
-            onClick: () => cb(amenityKey)
-        }
-    }
+    if (onClick && typeof onClick === 'function') amenityPreviewProps.onClick = () => onClick(amenityKey)
+    return !imgMap[amenityKey] ? <LoaderAmenity /> : <li {...amenityPreviewProps} >
 
-    return !amenity ? (
-        <Box sx={{ display: 'flex', margin: '5px auto' }}>
+        <button className='btn btn-filter-by-amenity' value={amenityKey}>
 
-            <Skeleton variant="circle" width={30} height={30} />
-        </Box>
+            <span className='amenity-title'>{title}</span>
 
-    ) : <li {...previewProps} >
-
-        {isContainsTitle && <span className='amenity-title'>{title}</span>}
-
-        {isContainsIcon && <IconApp iconKey={amenityKey} />}
+            <img className='amenity-img' role={'presentation'} src={imgMap[amenityKey]} alt={title} />
+        </button>
     </li>
+}
+
+const LoaderAmenity = () => {
+    return <Box sx={{ display: 'flex', margin: '5px auto' }}>
+        <Skeleton variant="circle" width={30} height={30} />
+    </Box>
 }

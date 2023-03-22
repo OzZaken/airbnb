@@ -31,9 +31,8 @@ function addToTrip(toCountry) {
     if (tripCountries[0].code === toCountry.code) {
         showUserMsg('Back to start point...')
         return true
-    } else if (tripCountries.filter(c => c.code === toCountry.code).length > 1) {
-        showUserMsg('Liked it ah?')
-    }
+    } else if (tripCountries.filter(c => c.code === toCountry.code).length > 1) showUserMsg('Liked it ah?')
+    
     return false
 
 }
@@ -54,6 +53,6 @@ function _distance(lat1, lng1, lat2, lng2, unit = 'K') {
     if (unit == "K") { dist = dist * 1.609344 }
     if (unit == "N") { dist = dist * 0.8684 }
 
-    dist = +dist.toFixed(2)
+    dist = +dist.toFixed(2) 
     return dist
 }

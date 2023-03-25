@@ -1,18 +1,11 @@
 import { storageService } from './async-storage.service.js'
-
-var gDefaultStays = require('../assets/data/stay.json')
-
+import { showErrorMsg } from './event-bus.service.js'
+const DEMO_STAYS = require('../assets/data/stay.json')
 const STORAGE_KEY = 'stay'
-
-const PER_PAGE = 20
-
-const PLACE_TYPES = [
+const REGION = ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france']
+const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
+const LABELS = [
     /* {img src key: title } */
-    { 'home': 'Entire home/apt' },
-    { 'privet-room': 'Private room' },
-    { 'shared-room': 'Shared room' }
-]
-const AMENITIES = [
     { 'omg': 'OMG!' },
     { 'beach': 'Beach!' },
     { 'national-park': 'National parks' },
@@ -22,8 +15,16 @@ const AMENITIES = [
     { 'design': 'Design' },
     { 'island': 'Island' },
 ]
-const REGION = ['flexible', 'new york', 'middle-east', 'italy', 'south-america', 'france']
-const PROPERTY_TYPES = ['House', 'Hotel', 'Apartment', 'Guesthouse']
+const AMENITIES = []
+const PLACE_TYPES = [
+    /* {key: title } */
+    { home: 'Entire home/apt' },
+    { privetRoom: 'Private room' },
+    { sharedRoom: 'Shared room' }
+]
+const STAYS_PER_PAGE = 20
+
+var gStays = loadFromLocalStorage() || null
 
 export const stayService = {
     query,
@@ -32,77 +33,80 @@ export const stayService = {
     getById,
     get,
     AMENITIES,
+    LABELS,
     PROPERTY_TYPES,
     PLACE_TYPES,
     REGION,
 }
 
-async function query(filterBy, pageIdx) {
+async function query(filter = { txt: '' }, sort = { price: 1 }) {
+    var stays = gStays
     try {
-        var stays = await storageService.query(STORAGE_KEY)
+        stays = await storageService.query(STORAGE_KEY)
+        if (stays) _saveToLocalStorage(stays)
 
-        /* DEMO_DATA */
-        if (!stays || !stays.length) {
-            storageService.postMany(STORAGE_KEY, gDefaultStays)
-            stays = gDefaultStays
-        }
+        const {
+            isLoading,// Boolean
+            startIdx,// Number
+            regex, region, // String
+            placeTypes, propertyTypes, amenities, // Array 
+            minPrice, maxPrice, minCapacity, maxCapacity, minRate, maxRate,// Range numbers [min,max]
+            checkIn, checkOut // Date range
+        } = _buildFilters(filter)
 
-        /* PAGE_IDX */
-        pageIdx = pageIdx || 1
-        stays = stays.slice(0, pageIdx * PER_PAGE)
-        // const startIdx = pageIdx * STAYS_PER_PAGE // sending  backend the relents
-        
-        /* SORT */
-
-        /* FILTER */
-        let { txt, placeType, propertyType, region, amenities, priceRange, capacityRange, dateRange, rateRange } = filterBy
-
-        // BY array ~ placeType , Amenities , propertyType ,region
-        placeType = placeType || []
-        amenities = amenities || []
-        propertyType = propertyType || []
-
-        // BY array ~ placeType , Amenities , propertyType ,region
-        // region = region || []
-
-        // BY number  ~ price
-        let [minPrice, maxPrice] = priceRange
-        minPrice = minPrice || 0
-        maxPrice = maxPrice || Infinity
-
-        // BY ~ Capacity
-        let [minCapacity, maxCapacity] = capacityRange
-        minCapacity = minCapacity || 0
-        maxCapacity = maxCapacity || Infinity
-
-        // BY ~ Rate
-        let [minRate, maxRate] = rateRange
-        minRate = minRate || 0
-        maxRate = maxRate || 5
-
-        // BY ~ Date
-        let [checkIn, checkOut] = dateRange
-        checkIn = checkIn ? new Date(checkIn) : null
-        checkOut = checkOut ? new Date(checkOut) : null
-
-        const regex = new RegExp(txt, 'i')
-        stays = stays.filter(stay =>
-            regex.test(stay.name.substring(stay.summary))
-            && regex.test(stay.placeType)
-            && placeType.includes(stay.placeType)
-            && propertyType.includes(stay.propertyType)
-            && amenities.every(amenity => stay.amenities.includes(amenity))
-            && stay.price > minPrice && stay.price < maxPrice
-            && stay.capacity > minCapacity && stay.capacity < maxCapacity // OPT ~ if capacity is optinal : USE (!minCapacity || stay.capacity >= minCapacity) && (!maxCapacity || stay.capacity <= maxCapacity)
+        /* filter */
+        stays = stays.filter(stay => {
+            return regex.test(stay.name.substring(stay.summary))
+                // && placeTypes.includes(stay.placeType)
+                // && propertyTypes.includes(stay.propertyType)
+                && amenities.every(amenity => stay.amenities.includes(amenity))
+                && stay.price > minPrice
+                && stay.price < maxPrice
+                && stay.capacity > minCapacity
+                && stay.capacity < maxCapacity
             // && region.includes(stay.region)
             // && (typeof stay.rate === 'number' && stay.rate >= minRate && stay.rate <= maxRate)
             // && (!checkIn || new Date(checkIn) >= new Date(stay.startDate))
             // && (!checkOut || new Date(checkOut) <= new Date(stay.endDate))
-        )
+        })
 
-        return stays
+        /* sort */
+        const [sortByKey, isDesc = null] = Object.entries(sort)[0]
+        switch (sortByKey) {
+            case 'price':
+                stays = stays.sort((t1, t2) => t1.price - t2.price * isDesc)
+                break
+
+            case 'name':
+                stays = stays.sort((t1, t2) => t1.name.localeCompare(t2.name) * isDesc)
+                break
+
+            case 'rate':
+                stays = stays.sort((t1, t2) => t1.rate - t2.rate * isDesc)
+                break
+
+            case 'capacity':
+                stays = stays.sort((t1, t2) => t1.capacity - t2.capacity * isDesc)
+                break
+            default:
+                return stays
+        }
+
+        /* paging */
+        stays = stays.slice(startIdx, startIdx + STAYS_PER_PAGE)
+        console.log(stays.length)
+
     } catch (err) {
         console.log('filterBy from storage has been failed', err)
+    }
+    finally {
+        /* put demo data on fatal error (demonstration only)*/
+        if (!stays || !stays.length) {
+            showErrorMsg('Loading stays Fail')
+            storageService.postMany(STORAGE_KEY, DEMO_STAYS)
+            stays = DEMO_STAYS
+        }
+        return stays
     }
 }
 
@@ -127,17 +131,47 @@ function getById(stayId) {
     return storageService.get(STORAGE_KEY, stayId)
 }
 
-// removeIdsFromFile('../assets/data/stay.json')
+function loadFromLocalStorage() {
+    const stays = localStorage.getItem(STORAGE_KEY)
+    return stays ? JSON.parse(stays) : null
+}
+function _saveToLocalStorage(stays) {
+    localStorage.getItem(STORAGE_KEY, stays)
+}
 
-// function removeIdsFromFile(filename) {
-//     const stays = require(`./${filename}`)
-  
-//     stays.forEach((stay) => {
-//       delete stay._id
-//       delete stay.id
-//     })
-  
-//     const data = JSON.stringify(stays, null, 2)
-  
-//     fs.writeFileSync(`../assets/data/${filename}`, data, 'utf8')
-//   }
+function _buildFilters({ txt, pageIdx, region, placeTypes, propertyTypes, amenities, priceRange, capacityRange, rateRange, dateRange }) {
+
+    const startIdx = pageIdx * STAYS_PER_PAGE
+    const regex = new RegExp(txt, 'i')
+
+    region = region || ''
+    placeTypes = placeTypes || []
+    amenities = amenities || []
+    propertyTypes = propertyTypes || []
+
+    // ranges[min,max]:
+    let [minPrice, maxPrice] = priceRange
+    let [minCapacity, maxCapacity] = capacityRange
+    let [minRate, maxRate] = rateRange
+    let [checkIn, checkOut] = dateRange
+
+    minPrice = minPrice || 0
+    maxPrice = maxPrice || Infinity
+    minCapacity = minCapacity || 0
+    maxCapacity = maxCapacity || Infinity
+    minRate = minRate || 0
+    maxRate = maxRate || 5
+    checkIn = checkIn ? new Date(checkIn) : null
+    checkOut = checkOut ? new Date(checkOut) : null
+
+    return {
+        regex,// text: name and summery 
+        startIdx,// num: front paging 
+        region,// select
+        amenities, placeTypes, propertyTypes,// checkbox
+        minPrice, maxPrice,
+        minCapacity, maxCapacity,
+        minRate, maxRate,
+        checkIn, checkOut // DateRange[min,max]:
+    }
+}

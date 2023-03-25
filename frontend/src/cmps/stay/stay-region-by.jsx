@@ -1,4 +1,5 @@
 import {  useState } from 'react'
+
 import southAmericaImage from '../../assets/imgs/png/south-america.png'
 import newYorkImage from '../../assets/imgs/png/new-york.png'
 import middleEastImage from '../../assets/imgs/png/middle-east.png'
@@ -6,58 +7,56 @@ import italyImage from '../../assets/imgs/png/italy.png'
 import flexibleImage from '../../assets/imgs/png/flexible.png'
 import franceImage from '../../assets/imgs/png/france.png'
 
-// import {StayDestination} from './stay-region'
-{/* <StayDestination onChangeDestination={onChangeDestination} /> */}
 
-export const StayDestination = ({ onChangeDestination }) => {
-    const [selectedDestination, setSelectedDestination] = useState(null)
+export const StayRegionBy = ({ onChangeRegion }) => {
+    const [selectedRegion, setSelectedRegion] = useState(null)
 
-    const onSetDestination = (region) => {
-        setSelectedDestination(region)
-        onChangeDestination(region)
+    const onSetRegionBy = (regionBy) => {
+        setSelectedRegion(regionBy)
+        onChangeRegion(regionBy)
     }
 
     return <section className="stay-region">
-        {selectedDestination && <p>Recent searches: {selectedDestination}</p>}
+        {selectedRegion && <p>Recent searches: {selectedRegion}</p>}
 
         <ul className="region-by">
             <li>
-                <button onClick={() => onSetDestination(null)}>
+                <button onClick={() => onSetRegionBy(null)}>
                 <img src={flexibleImage} alt="I'm flexible" />
                 <span>I'm flexible</span>
                 </button>
             </li>
 
             <li>
-                <button onClick={() => onSetDestination("new-york")}>
+                <button onClick={() => onSetRegionBy('new-york')}>
                 <img src={newYorkImage} alt="New York" />
                 <span>New York</span>
                 </button>
             </li>
 
             <li>
-                <button onClick={() => onSetDestination("middle-east")}>
+                <button onClick={() => onSetRegionBy('middle-east')}>
                 <img src={middleEastImage} alt="Middle East" />
                 <span>Middle East</span>
                 </button>
             </li>
 
             <li>
-                <button onClick={() => onSetDestination("italy")}>
+                <button onClick={() => onSetRegionBy('italy')}>
                 <img src={italyImage} alt="Italy" />
                 <span>Italy</span>
                 </button>
             </li>
 
             <li>
-                <button onClick={() => onSetDestination("south-america")}>
+                <button onClick={() => onSetRegionBy('south-america')}>
                     <img src={southAmericaImage} alt="South America" />
                     <span>South America</span>
                 </button>
             </li>
 
             <li>
-                <button onClick={() => onSetDestination("france")}>
+                <button onClick={() => onSetRegionBy('france')}>
                 <img src={franceImage} alt="France" />
                 <span>France</span>
                 </button>

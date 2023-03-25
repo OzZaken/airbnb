@@ -2,18 +2,26 @@ import { useEffect, useReducer, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
-import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList } from '../store/stay.action'
+import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList, incPageIdx } from '../store/stay.action'
 import { useViewEffect } from '../hooks/useViewEffect'
 import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
 import ScrollTo from '../cmps/scroll-to'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
+const stayData = {
+    allAmenities: stayService.get('AMENITIES'),
+    allLabels: stayService.get('LABELS'),
+    allPlaceTypes: stayService.get('PLACE_TYPES'),
+    allPropertyTypes: stayService.get('PROPERTY_TYPES'),
+    allRegions: stayService.get('REGIONS'),
+}
+
 export const StayApp = () => {
-    const params = useParams()
     const dispatch = useDispatch()
+    const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-    const { isLoading, stays, filterBy } = useSelector(state => state.stayModule)
+    const { stays, filterBy, isLoading } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
 
     useEffect(() => {
@@ -32,13 +40,6 @@ export const StayApp = () => {
 
     useViewEffect('home-page')
 
-    const getRange = (field) => {
-        return stays.reduce((accRange, stay) => [
-            Math.min(accRange[0], stay[field]),
-            Math.max(accRange[1], stay[field])
-        ], [Infinity, -Infinity])
-    }
-
     /* CRUD  */
     const onAddStay = stay => dispatch(addStay(stay))
 
@@ -46,20 +47,25 @@ export const StayApp = () => {
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
 
-    /* PAGING  */
-    const onLoadMoreStays = () => dispatch({ type: 'INC_PAGE_IDX' })
-
-    /* WISHLIST */
+    /* navigation  */
+    const onNavHome = () => window.history.pushState(null, null, `/`)
+    
+    /* paging  */
+    const onLoadMoreStays = () => dispatch(incPageIdx())
+    window.incPageIdx = () => { // debug
+        onLoadMoreStays()
+    }
+    /* wishlist */
     const onAddToWishList = stayId => dispatch(addToWishList(stayId))
 
     const onRemoveFromWishList = (stayId) => dispatch(removeFromWishList(stayId))
 
-    /* SORT  */
+    /* sort  */
     const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
 
-    /* Filter  */
-    const onUpdateFilter = filterBy => {
-        const { txt, placeType, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
+    /* filter  */
+    const onUpdateFilterBy = filterBy => {
+        const { txt, placeType: placeTypes, labels, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
 
         const [minPrice, maxPrice] = priceRange
         const [minRate, maxRate] = rateRange
@@ -68,16 +74,12 @@ export const StayApp = () => {
 
         const queryParams = [
             txt && `&text=${txt}`,
-            placeType && `&place-type=${placeType}`,
-            amenities && amenities.join('&'),
-            minPrice && `&min-price=${minPrice}`,
-            maxPrice && `&max-price=${maxPrice}`,
-            minRate && `&min-rate=${minRate}`,
-            maxRate && `&max-rate=${maxRate}`,
-            minCapacity && `&min-capacity=${minCapacity}`,
-            maxCapacity && `&max-capacity=${maxCapacity}`,
-            checkIn && `&check-in=${checkIn}`,
-            checkOut && `&check-out=${checkOut}`,
+            placeTypes && placeTypes.join('&'),
+            labels && labels.join('&'), amenities && amenities.join('&'),
+            minPrice && `&min-price=${minPrice}`, maxPrice && `&max-price=${maxPrice}`,
+            minRate && `&min-rate=${minRate}`, maxRate && `&max-rate=${maxRate}`,
+            minCapacity && `&min-capacity=${minCapacity}`, maxCapacity && `&max-capacity=${maxCapacity}`,
+            checkIn && `&check-in=${checkIn}`, checkOut && `&check-out=${checkOut}`,
         ]
 
         const activeParams = queryParams.join('&')
@@ -88,12 +90,10 @@ export const StayApp = () => {
         // setSearchParams({filters})
     }
 
-    /* Click amenity Carousel List  */
-    const onUpdateAmenityBy = (amenityStringParamBy) => {
-        console.log(`🚀 ~ stringParam:`, amenityStringParamBy)
-        const prevAmenities = searchParams.getAll('amenities')
-        console.log(`🚀 ~ onSetonUpdateAmenityBy prev:`, prevAmenities)
-        // setSearchParams({ 'filter-by': { 'amenities': JSON.stringify(amenity) } })
+    const onUpdateLabelBy = (labelStringParam) => {
+        const prevLabel = searchParams.get('label')
+        console.log(`🚀 ~ onSetonUpdateAmenityBy prev:`, prevLabel)
+        // setSearchParams({ 'filter-by': { 'labels': JSON.stringify(label) } })
     }
 
     const onUpdateRegionBy = region => dispatch(setFilterBy({ ...filterBy, region }))
@@ -105,16 +105,49 @@ export const StayApp = () => {
         }))
     }
 
+    const getFiltersParam = () => {
+        if (searchParams && searchParams.has('filters')) {
+            const filtersParams = JSON.parse(searchParams.get('filters'))
+            if (filtersParams) return filtersParams
+            else return null
+        }
+    }
+
+    // handle ranges [min,max]
+    const onGetFieldRange = field => stays.reduce((accRange, stay) => [
+        Math.min(accRange[0], stay[field]),
+        Math.max(accRange[1], stay[field])
+    ], [Infinity, -Infinity])
+
+    /* NOTE: save only on front */
+    const onSetStayAvgRate = (stay) => {
+        console.log(`🚀 ~ stay:`, stay)
+        const { reviews } = stay
+        if (!reviews || !reviews.length) return
+
+        const reviewsCount = reviews.length
+
+        const avgRate = reviews.reduce((accRate, review) => accRate + review.rate, 0) / reviewsCount || null
+        console.log(`🚀 ~ avgRate:`, avgRate)
+
+        stay.avgRate = avgRate
+        return avgRate
+    }
+
+    /*  Click Preview Image */
+    const onClickPreviewImg = (idx, id) => {
+        console.log(`Click Image!:`, idx, id) // navigate(`/stay/${stay._id}?large-image=${idx}`)
+        window.scrollTo(0, 0)
+        window.location.href = `/stay/${id}`
+    }
+
+    // object literal
     const stayFilter = {
         stays,
-        getRange,
         filterBy,
-        filters: params.filters,
-        allAmenities: stayService.get('AMENITIES'),
-        allPlaceTypes: stayService.get('PLACE_TYPES'),
-        allPropertyTypes: stayService.get('PROPERTY_TYPES'),
-        allRegions: stayService.get('REGIONS'),
-        onUpdateFilter,
+        filtersParams: getFiltersParam(),
+        onGetFieldRange,
+        onUpdateFilterBy,
         onUpdateRangeBy,
         onUpdateSortBy,
         onUpdateRegionBy,
@@ -124,44 +157,23 @@ export const StayApp = () => {
         stays,
         loggedInUser,
         isLoading,
-        onUpdateAmenityBy,
+        onUpdateAmenityBy: onUpdateLabelBy,
         onClickPreviewImg,
-        onUpdateFilter,
+        onUpdateFilter: onUpdateFilterBy,
         onSetStayAvgRate,
         onRemoveStay,
-        onLoadMoreStays,
         onUpdateStay,
         onAddToWishList,
         onRemoveFromWishList,
+        onLoadMoreStays,
     }
 
     return <section className='stay-app'>
 
-        <StayFilter {...stayFilter} />
+        <StayFilter {...stayData}{...stayFilter} />
 
         <StayList {...stayList} />
 
         <ScrollTo />
     </section>
 }
-
-/* NOTE: save only on front */
-const onSetStayAvgRate = (stay) => {
-    const reviews = stay?.reviews || []
-    const reviewsCount = reviews.length
-
-    const avgRate = reviews.reduce((accRate, review) => accRate + review.rate, 0) / reviewsCount || null
-
-    stay.avgRate = avgRate
-    return avgRate
-}
-
-/*  Click Preview Image */
-const onClickPreviewImg = (idx, id) => {
-    console.log(`Click Image!:`, idx, id) // navigate(`/stay/${stay._id}?large-image=${idx}`)
-    window.scrollTo(0, 0)
-    window.location.href = `/stay/${id}`
-}
-
-const onNavHome = () => window.history.pushState(null, null, `/`)
-

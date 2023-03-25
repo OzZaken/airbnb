@@ -10,7 +10,6 @@ export class UserMsg extends React.Component {
 
   // listen to the event emitted
   componentDidMount() {
-      console.log('userMsg Mount msg:', this.props.msg)
       this.unsubscribe = eventBusService.on('show-user-msg', (msg, duration = 2500) => {
       this.setState({ msg })
       setTimeout(() => { this.setState({ msg: null }) }, duration)

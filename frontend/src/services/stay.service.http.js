@@ -1,12 +1,7 @@
 import { httpService } from './http.service'
 
 const STORAGE_KEY = 'stays'
-
-/* homePage */
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/'
-    : 'http://localhost:3030/#/'
-
+const BASE_URL = 'stay/'
 
 export const stayService = {
     query,

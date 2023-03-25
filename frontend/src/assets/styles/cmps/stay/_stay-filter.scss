@@ -1,7 +1,10 @@
 .stay-filter {
     display: flex;
+    justify-content: center;
+    // position: sticky;
+    align-items: center;
 
-    .amenities-list {
+    .stay-labels-list {
         list-style-type: none;
         position: relative;
         display: flex;
@@ -9,8 +12,18 @@
         margin: auto;
         display: flex;
         transition: all 250ms linear;
+        overflow-y: scroll;
 
         direction: ltr;
+        // box-shadow: none;
+        // transition: box-shadow 0.2s ease;
+        // overflow: hidden;
+        // position: relative;
+        // overflow-x: scroll, hidden;
+        // overscroll-behavior-inline: hidden;
+        // overflow: auto;
+        // scroll-snap-align: start;
+        // scroll-snap-type: x mandatory;
 
         /* hide scrollbar in webkit browser */
         &::-webkit-scrollbar,
@@ -23,20 +36,51 @@
         /* hide scrollbar in Firefox */
         scrollbar-width: none;
 
-        li {
+        .btn-prev,
+        .btn-next {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 24px;
+            background-color: white;
+            border: 1px solid #ddd;
+
+            @media (hover: none) and (pointer: coarse) {
+                display: none;
+            }
+        }
+
+        .btn-prev {
+            left: 24px;
+        }
+
+        .btn-next {
+            right: 24px;
+        }
+
+        .label-preview {
+            padding: 15px;
+            display: flex;
+
+            &:hover {
+                background: transparent;
+                color: black;
+                border-bottom: 2px solid $clr-vector;
+            }
+
 
             img,
             svg {
-                // aspect-ratio: 3/2;
-                width: 100%;
-                max-width: 32px;
+                width: 32px;
                 object-fit: contain;
                 //  remove white background
                 mix-blend-mode: color-burn;
             }
 
-            .btn {
-                @include btn;
+            .btn-filter-by-label {
                 display: flex;
                 position: relative;
                 font-size: 12px;
@@ -46,8 +90,6 @@
 
                 &:hover {
                     background: transparent;
-                    color: black;
-                    border-bottom: 2px solid $clr-vector;
                 }
 
                 &.active {
@@ -58,90 +100,391 @@
                     border-bottom: 2px solid $clr-darken;
                 }
 
-                &btn-prev {
-                    left: 0;
-                }
+
             }
         }
     }
 
     .btn-filters {
         margin-right: $padded-layout;
-        object-fit: cover;
-        display: flex;
-        justify-content: center;
+
+
         height: 48px;
         width: 88px;
         min-width: 88px;
+
+        .active {}
     }
 }
 
-.filter-by-container {
+.box-stay-filter-by {
     display: flex;
-    width: 100%;
-    flex-wrap: nowrap;
-    align-items: center;
-    // position: sticky;
-    top: 80px;
-    box-shadow: none;
-    transition: box-shadow 0.2s ease;
-    overflow: hidden;
-    position: relative;
-    // overflow-x: scroll, hidden;
-    // overscroll-behavior-inline: hidden;
-    overflow: auto;
-    // scroll-snap-align: start;
-    scroll-snap-type: x mandatory;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    ul.filter-nav-list {
-        display: flex;
-
-        li {
-            .btn-filter-by-amenity {}
-        }
-    }
-
-    .btn-prev-filter,
-    .btn-next-filter {
-        position: absolute;
-        background-color: whitesmoke;
-        top: 24%;
-
-        &:not(.btn-prev-filter) {
-            left: 96%;
-        }
-    }
-}
-
-.btn-prev,
-.btn-next {
+    flex-direction: column;
     position: absolute;
-    z-index: 1;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
+    inset: $padded-layout;
     background-color: white;
-    border: 1px solid #ddd;
-}
+    border-radius: 10px;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.75);
+    padding: 16px;
 
-.btn-prev {
-    left: 24px;
-}
+    .stay-filter-by {
+        .filter-by-header {
+            .close-filter-by {}
 
-.btn-next {
-    right: 24px;
-}
+            .filter-by-title {}
+        }
 
-@media (hover: none) and (pointer: coarse) {
+        .filter-by-form {
+            .property-buttons {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(1, auto);
+                gap: 16px !important;
+                height: 100%;
+            
+                .property-img {
+                    width: 32px;
+                    height: 32px;
+                    width: 32px;
+                }
+            
+                .inner-property-button {
+                    position: relative;
+                    min-height: 120px;
+                    height: 100%;
+                    padding: 16px;
+                }
+            
+                .inner-property-button-txt {
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 20px;
+                    text-align: left;
+                    padding-top: 24px;
+                    white-space: normal;
+                }
+            }
+            .inner-filter-container {
+                padding-top: 32px;
+                padding-bottom: 32px;
+                border-bottom: 1px solid #ebebeb
+            }
 
-    .btn-prev,
-    .btn-next {
-        display: none;
+            .title {
+                font-size: 1.3em;
+                font-weight: inherit;
+                line-height: inherit;
+                margin: 0px;
+                padding: 0px;
+                color: #222222;
+                font-family: Circular;
+                padding: 0px 0px 24px;
+            }
+            button[name='propertyType'],
+            button[name='bedrooms'],
+            button[name='beds'],
+            button[name='bathrooms'] {
+                background-color: #ffffff;
+                color: #222222;
+                border-color: #e3e3e3;
+
+                &:hover {
+                    border-color: #222222;
+                }
+
+                .active {
+                    background-color: #000;
+                    color: #ffffff;
+                }
+            }
+            button[name='propertyType'].active {
+                background-color: #f7f7f7;
+                border: 1px solid #222222;
+            }
+
+        }
     }
 }
+
+
+
+button.filter-btn {
+    font-family: Circular;
+    font-size: 16px;
+    font-weight: bold;
+    width: 180px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #222222;
+    color: #ffffff;
+}
+
+button.filter-btn:hover {
+
+    background-color: #000;
+    color: #ffffff;
+}
+
+
+.amenitie-checkBox {
+    display: block !important;
+}
+
+.divider {
+    margin-block-start: 20px !important;
+}
+
+.property-type-btn {
+    max-width: 200px;
+}
+
+.amenitie-checkBox {
+    color: #222222;
+}
+
+.filter-footer {
+    border-top: 1px solid #ebebeb;
+    padding: 16px 24px !important;
+}
+
+.css-13xqbvb,
+.css-106c1u2-MuiBadge-badge {
+    top: 4px !important;
+    right: 4px !important;
+    background-color: #222222 !important;
+}
+
+
+.css-1c32n2y-MuiBadge-root{
+    padding-bottom: 7px;
+}
+
+.open-filter-btn {
+
+    display: block;
+    position: relative;
+    float: right;
+    justify-content: space-evenly;
+    margin-inline-start: 25px;
+    width: 88px;
+    height: 48px !important;
+    padding: 7px;
+    font-family: Circular;
+    font-size: 12px !important;
+    color: #222222 !important;
+    border-color: #efefef !important;
+    border-radius: 10px !important;
+    border: 1px solid lightgray;
+
+    &.open-filter-btn.active {
+        border-color: #222222 !important;
+        border: 2px solid #222222;
+    }
+
+    .filter-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.filter-modal {
+    padding: 0px !important;
+}
+
+.filter-container {
+    margin: 0;
+    padding: 24px;
+
+}
+
+.filter-header {
+    min-height: 64px !important;
+    padding-left: 16px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.right-space {
+    flex: 0 0 32px;
+    text-align: right;
+}
+
+.left-space {
+    flex: 0 0 32px;
+    text-align: left;
+}
+
+.filter-modal-title {
+    font-family: Circular;
+    color: #222222;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+}
+
+.amenities-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 100px;
+    grid-row-gap: 20px;
+}
+
+.filter-carousel-container {
+    padding: 0;
+    width: 90%;
+    display: inline-block;
+
+    .icon-btn {
+        gap: 6px;
+        padding-top: 15px;
+        border: none;
+        font-family: Circular;
+        font-size: 12px;
+        line-height: 16px;
+        opacity: 0.6;
+
+        &.icon-btn.active {
+            color: #000000;
+            opacity: 1;
+
+            .hover-border {
+                background-color: #000000;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: #000000;
+            transition: 0.2s;
+            opacity: 1;
+
+            .hover-border {
+                background-color: lightgray;
+            }
+        }
+
+        &:active {
+            transform: scale(0.95);
+            transition: 0.3s;
+        }
+
+        .type-container {
+            gap: 6px;
+
+
+        }
+
+        img.icon-carousel {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .hover-border {
+            background-color: transparent;
+            height: 2px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    }
+}
+
+.filters-container {
+    padding: 0 5px;
+    display: block;
+    position: sticky;
+    z-index: 20;
+    top: 81px;
+    width: 100%;
+
+    .filters-container-wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        max-width: var(--main-layout-width);
+        margin-inline: auto;
+    }
+
+    .filters-container-background {
+        background: #fff;
+    }
+
+    &.stuck {
+        box-shadow: 0px 2px 3px #eee;
+    }
+}
+
+.checkbox-container {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-family: Circular;
+    color: #222222;
+    font-size: 16px !important;
+    line-height: 20px !important;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    // border-width: 1px !important;
+    border: 1px solid #b0b0b0;
+    border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input~.checkmark {
+    border: 1px solid #222222;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked~.checkmark {
+    background-color: #222222;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 8px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.place-type-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    width: 100%;
+}
+

@@ -1,51 +1,56 @@
 import { debounce } from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { StayLabelList } from './stay-label-list'
+import { StayFilterBy } from './stay-filter-by'
+import { useEffectUpdate } from '../../hooks/useEffectUpdate'
 import TuneIcon from '@mui/icons-material/Tune'
 import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 import Modal from '@mui/material/Modal'
 import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
-import { AmenityList } from '../amenity/amenity-list'
-import { StayFilterBy } from './stay-filter-by'
-import { useEffectUpdate } from '../../hooks/useEffectUpdate'
 
-export const StayFilter = ({ stays, filterBy,filters,
-     onUpdateFilter, getRange,
-    allAmenities, allPlaceTypes, allPropertyTypes, allRegions,
-    onUpdateRangeBy, onUpdateSortBy, onUpdateRegionBy, onUpdateAmenityBy }) => {
-    const [localFilterBy, setLocalFilterBy] = useState(filterBy)
+export const StayFilter = ({
+    stays,
+    filterBy, onUpdateFilterBy,
+    onGetFieldRange, filtersParams,
+    allAmenities, allLabels, allPlaceTypes, allPropertyTypes, allRegions,
+    onUpdateAmenityBy, onUpdateLabelBy, onUpdateRangeBy, onUpdateSortBy, onUpdateRegionBy,
+}) => {
+    const [localFilter, setLocalFilter] = useState(filterBy)
+
     const [isFilterByOpen, setIsFilterByOpen] = useState(false)
-    const filtersCount = useRef(0)
+    const onOpenFilterBy = () => setIsFilterByOpen(true)
+    const onCloseFilterBy = () => setIsFilterByOpen(false)
+
+    const filtersCountRef = useRef(0)
 
     useEffect(() => {
-        if (filters) filtersCount.current = Object.keys(filters.length)
-        else filtersCount.current = 0
-        console.log(`🚀 ~ filtersCount.current:`, filtersCount.current)
-    }, [filters])
+        if (filtersParams) filtersCountRef.current = Object.keys(filtersParams).length
+        else filtersCountRef.current = 0
+        console.log(`🚀 ~ filtersCount.current:`, filtersCountRef.current)
+    }, [filtersParams])
 
-    // get current range for each stays update. 
+    // get current range each stays update. 
     useEffectUpdate(() => {
         const fields = ['price', 'capacity']
         const rangeBy = {}
         for (let i = 0; i < fields.length; i++) {
-            rangeBy[`${fields[i]}Range`] = getRange(fields[i])
+            rangeBy[`${fields[i]}Range`] = onGetFieldRange(fields[i])
         }
-        setLocalFilterBy({ ...localFilterBy, ...rangeBy })
+        setLocalFilter({ ...localFilter, ...rangeBy })
     }, [stays])
-
-    const onOpenFilterBy = () => setIsFilterByOpen(true)
-    const onCloseFilterBy = () => setIsFilterByOpen(false)
 
     /* FORM */
     const onSubmit = ev => {
         ev.preventDefault()
-        setLocalFilterBy(localFilterBy)
+        setLocalFilter(localFilter)
+        onUpdateFilterBy(localFilter)
         onCloseFilterBy()
     }
 
     const handleFilters = ev => {
-        setLocalFilterBy(prevFields => ({
+        setLocalFilter(prevFields => ({
             ...prevFields,
             [ev.target.name]: ev.target.value
         }))
@@ -54,13 +59,13 @@ export const StayFilter = ({ stays, filterBy,filters,
 
     const onResetLocalFilterBy = ev => {
         ev.preventDefault()
-        setLocalFilterBy(null)
+        setLocalFilter(null) // or filterBy 
     }
 
     const handleFieldCount = ev => {
         const field = ev.target.name
         const val = ev.target.value
-        setLocalFilterBy(prevFields => ({
+        setLocalFilter(prevFields => ({
             ...prevFields,
             [field]: +val
         }))
@@ -69,7 +74,7 @@ export const StayFilter = ({ stays, filterBy,filters,
     const handlePropertyType = (ev, propertyT) => {
         ev.preventDefault()
         const type = propertyT
-        setLocalFilterBy(prevFields => ({
+        setLocalFilter(prevFields => ({
             ...prevFields,
             propertyTypes: {
                 ...prevFields.propertyTypes,
@@ -79,7 +84,7 @@ export const StayFilter = ({ stays, filterBy,filters,
     }
 
     const handleCheckBox = ({ target: { checked, name } }) => {
-        setLocalFilterBy(prevFields => ({
+        setLocalFilter(prevFields => ({
             ...prevFields,
             [name]: {
                 ...prevFields[name],
@@ -88,42 +93,41 @@ export const StayFilter = ({ stays, filterBy,filters,
         }))
     }
 
-    const amenityList = {
+    const stayLabelsList = {
+        labels: allLabels,
+        onUpdateFilterBy
+    }
+
+    const amenitiesList = {
         amenities: allAmenities,
-        isContainsTitle: true,
-        isContainsIcon: true,
-        onUpdateFilter
     }
 
     const badgeFilters = {
         color: 'primary',
-        badgeContent: filtersCount.current,
-        className: filtersCount.current ? 'filter-active' : ''
+        badgeContent: filtersCountRef.current,
+        className: filtersCountRef.current ? 'filter-active' : ''
     }
 
     const btnOpenFilterBy = {
-        onClick: () => onOpenFilterBy,
-        className: filtersCount.current ? 'btn-filters active' : 'btn-filters'
+        onClick: () => onOpenFilterBy(),
+        className: filtersCountRef.current ? 'btn-filters active' : 'btn-filters'
     }
 
     const modalFilterBy = {
-        isOpen: isFilterByOpen,
         onClose: onCloseFilterBy,
         BackdropComponent: Backdrop,
         BackdropProps: { timeout: 500 },
         open: isFilterByOpen || false,
-
     }
 
     const stayFilterBy = {
-        filtersCount: filtersCount.current,
+        stays,
+        filtersCount: filtersCountRef.current,
         staysCount: stays.length,
-        filterBy: localFilterBy,
+        localFilter,
         debounce: debouncedChangeHandler,
-        allPlaceTypes,
-        allPropertyTypes,
-        allAmenities,
-        onUpdateFilter,
+        allAmenities, allLabels, allPlaceTypes, allPropertyTypes, 
+        onUpdateFilterBy,
         onClose: onCloseFilterBy,
         onSubmit,
         onResetLocalFilterBy,
@@ -133,7 +137,7 @@ export const StayFilter = ({ stays, filterBy,filters,
     }
 
     return <section className='stay-filter'>
-        <AmenityList {...amenityList} />
+        <StayLabelList {...stayLabelsList} />
 
         <Badge {...badgeFilters}>
             <button {...btnOpenFilterBy}>
@@ -143,27 +147,10 @@ export const StayFilter = ({ stays, filterBy,filters,
         <Modal {...modalFilterBy} closeAfterTransition >
             <Fade in={isFilterByOpen}>
 
-                <Box {...boxStayFilterBy}>
+                <Box className="box-stay-filter-by">
                     <StayFilterBy {...stayFilterBy} />
                 </Box>
             </Fade>
         </Modal>
     </section>
-}
-
-const boxStayFilterBy = {
-    sx: {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 750,
-        height: '90vh',
-        bgcolor: 'background.paper',
-        borderRadius: '10px',
-        boxShadow: 24,
-        p: 2,
-    }
 }

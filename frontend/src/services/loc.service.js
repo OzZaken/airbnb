@@ -7,25 +7,26 @@ import { translationService } from './i18n.service'
 
 const countries = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
 
-/* UserMsg with sweetalert2 withReactContent */
+/* UserMsg using sweetalert2 withReactContent */
 const UserMsg = withReactContent(Swal)
 
 const LOC_KEY = process.env.LOC_KEY
 const STORAGE_KEY = 'userLoc'
 
 /* data [] && {} */
-const USER_LOCS = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
-const USER_LOCS_MAP = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
+const locs = JSON.parse(localStorage.getItem(STORAGE_KEY + 's')) || []
+const locMap = JSON.parse(localStorage.getItem(STORAGE_KEY + 'Map')) || {}
 
 /* UserPos */
 var gUserPos = sessionStorage.getItem(STORAGE_KEY)
-    || USER_LOCS[USER_LOCS.length - 1]
-    || _setUserLocByCountryCode('ISR') /* debug */
-    || null
+    || locs[locs.length - 1]
+    || setUserLocByCountryCode('ISR') /* optional */
+    || null/* ↑ */
 
 
-/* prevent unnecessary requests (if already search same input and type ) */
-const INVALID_SEARCH_RESULT = JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
+/* prevent unnecessary requests. */
+const INVALID_SEARCH_RESULT =
+    JSON.parse(localStorage.getItem('invalidSearchResult')) || {}
 
 export const locService = {
     approvedLocService,
@@ -67,7 +68,7 @@ async function approvedLocService() {
 
 /* By name, region, subregion ,capital*/
 async function getLocByAddress(address) {
-    console.log(`🚀 ~ getLocByAddress(address):`, address)
+    console.log(`🚀 ~ address:`, address)
     if (!_isValidSearch('address', address)) return
     // filter try find in local data 
     const regex = new RegExp(address, "i")
@@ -112,8 +113,9 @@ async function _searchLocByAddress(address) {
     }
 }
 
+/* By code*/
 async function getLocByCountryCode(code) {
-    const country = _getCountryFromAlfaCode(code)
+    const country = _getCountryByCode(code)
     if (country) {
         return {
             lat: country.latlng[0],
@@ -182,7 +184,6 @@ function getUserPos() {
 }
 
 function getUserDistance(loc) {
-    console.log(`🚀 ~ loc:`, loc)
     var stayPos
     /* Handle Undefined lat lng */
     var { lat, lng } = loc
@@ -191,9 +192,7 @@ function getUserDistance(loc) {
         if (countryCode) stayPos = { ...getLocByCountryCode(countryCode) }
 
         else if (address || city || country) stayPos = {
-            ...getLocByAddress(
-                `${address || ''}${city || ''}${country || ''}`
-            )
+            ...getLocByAddress(`${address || ''}${city || ''}${country || ''}`)
         }
         else console.log(`%c undefined Loc ${JSON.stringify(loc)}`, 'color: red;')
     }
@@ -202,8 +201,8 @@ function getUserDistance(loc) {
 }
 
 /* init with Demo Distance */
-function _setUserLocByCountryCode(code) {
-    const country = _getCountryFromAlfaCode(code)
+function setUserLocByCountryCode(code) {
+    const country = _getCountryByCode(code)
     const pos = _getPosFromCountry(country)
     _updateUserLoc(pos)
 }
@@ -262,17 +261,17 @@ function _updateUserLoc(pos) {
 
     // [] 
     const loc = { date: pos }
-    USER_LOCS.push(loc)
-    localStorage.setItem(STORAGE_KEY + 's', JSON.stringify(USER_LOCS))
+    locs.push(loc)
+    localStorage.setItem(STORAGE_KEY + 's', JSON.stringify(locs))
     // {} 
-    USER_LOCS_MAP[date] = pos
-    localStorage.setItem(STORAGE_KEY + 'Map', JSON.stringify(USER_LOCS_MAP))
+    locMap[date] = pos
+    localStorage.setItem(STORAGE_KEY + 'Map', JSON.stringify(locMap))
 
     // httpService.post(STORAGE_KEY,loc)
 }
 
 /* find country by code */
-function _getCountryFromAlfaCode(code) {
+function _getCountryByCode(code) {
     return countries.find(c => c.alpha2Code === code || c.alpha3Code === code)
 }
 

@@ -1,20 +1,23 @@
 export const imgService = {
     uploadImg,
-    loadImgs
+    loadImgs,
+    loadImgsPrm,
 }
 
+/**Uploads an image to Cloudinary,
+ * returns a promise that resolves with the response data. */
 async function uploadImg(ev) {
     const CLOUD_NAME = 'pukicloud'
     const UPLOAD_PRESET = 'CHECK'
     const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
 
-    const FROM_DATA = new FormData()
-    FROM_DATA.append('upload_preset', UPLOAD_PRESET)
-    FROM_DATA.append('file', ev.target.files[0])
+    const formData = new FormData()
+    formData.append('upload_preset', UPLOAD_PRESET)
+    formData.append('file', ev.target.files[0])
     try {
         const res = await fetch(UPLOAD_URL, {
             method: 'POST',
-            body: FROM_DATA
+            body: formData
         })
         return res.json()
     } catch (error) {
@@ -22,7 +25,27 @@ async function uploadImg(ev) {
     }
 }
 
+/**Loads multiple images using dynamic imports,
+ * returns a promise resolves with an object containing the loaded images. */
 async function loadImgs(names, type) {
+    const imgMap = {}
+
+    try {
+        for (const name of names) {
+            const img = await import(`../assets/imgs/${type}/${name}.${type}`)
+            imgMap[name] = img.default
+        }
+
+        return imgMap
+    } catch (error) {
+        console.log(`can't find `, imgMap, error)
+        throw error
+    }
+}
+
+/**more suitable for loading a large number of images.
+ *  similar to `loadImgs`, but it uses promises.  */
+async function loadImgsPrm(names, type) {
     const promises = []
     const imgMap = {}
 
@@ -30,10 +53,11 @@ async function loadImgs(names, type) {
         names.forEach(img => {
             (function (name) {
                 const prm = import(`../assets/imgs/${type}/${name}.${type}`)
-                    // handle errors that occur during the resolution
+                    // handle errors that occur 
                     .then(img => [name, img.default])
-                    .catch(error => {
-                        throw error
+                    .catch(err => {
+                        console.log(`during the resolution image${name}`)
+                        throw err
                     })
                 promises.push(prm)
             })(img)
@@ -41,7 +65,6 @@ async function loadImgs(names, type) {
 
         const results = await Promise.all(promises)
         results.forEach(res => imgMap[res[0]] = res[1])
-        console.log(`🚀 ~ iconMap:`, imgMap)
 
         return imgMap
     } catch (error) {

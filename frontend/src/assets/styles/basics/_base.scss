@@ -4,6 +4,7 @@
     margin: 0;
 }
 
+
 html {
     font-size: 16px;
     scroll-behavior: smooth;
@@ -57,6 +58,9 @@ h2 {
 h3 {
     font-size: em(12px);
 }
+ul {
+    list-style-type: none;
+}
 
 main {
     flex-grow: 1;
@@ -79,9 +83,10 @@ img {
     object-fit: cover;
 }
 
-button{
+button {
     cursor: pointer;
 }
+
 // ! Not Working
 img[title]:hover:after {
     content: attr(title);
@@ -91,7 +96,8 @@ img[title]:hover:after {
     padding: 5px;
     position: absolute;
     z-index: 9999;
-  }
+}
+
 svg {
     display: flex;
     justify-content: center;
@@ -125,7 +131,9 @@ pre {
 }
 
 /* OTHER */
-hr {opacity: .75;}
+hr {
+    opacity: .75;
+}
 
 ::selection {
     background-color: #ff385c;

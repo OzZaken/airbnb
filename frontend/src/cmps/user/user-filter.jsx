@@ -1,10 +1,7 @@
-/**work together with useFormRegister hook to render a filter form
- *  that can update the state of the userModule
- *  slice of the store when the input fields are changed. */
 import { useFormRegister } from '../../hooks/useFormRegister'
 import { useSelector } from 'react-redux'
 
-/*  form with various input fields set user filterBy state */
+/*  form with various input fields set user filter state */
 export const UserFilter = ({ onChangeFilter }) => {
     /*  access the current state of the userModule */
     const { user, users, filterBy } = useSelector((state) => state.userModule)

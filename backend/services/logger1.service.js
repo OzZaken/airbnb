@@ -2,20 +2,20 @@ const fs = require('fs')
 const path = require('path')
 
 // Default log directory and filename, can be overridden in options object.
-const DEFAULT_LOG_DIRECTORY = './logs'
-const DEFAULT_LOG_FILENAME = 'backend.log'
+const LOG_DIRECTORY = './logs'
+const LOG_FILENAME = 'backend.log'
 
 // Constructor function with configurable options for log directory, log filename, logging to console, and log level.
 class Logger {
-    constructor(options = {}) {
+    constructor(opts = {}) {
         // Destructure the options object, and set default values if they're not provided.
         const {
-            logDirectory = DEFAULT_LOG_DIRECTORY,
-            logFilename = DEFAULT_LOG_FILENAME,
+            logSeverity = 'debug', // Set default log level to 'debug'.
+            logDirectory = LOG_DIRECTORY,
+            logFilename = LOG_FILENAME,
             logToConsole = false,
-            logLevel = 'debug', // Set default log level to 'debug'.
             errorServerUrl = null // option for error server URL (frontend)
-        } = options
+        } = opts
 
         // initialize error server URL
         this.errorServerUrl = errorServerUrl
@@ -24,7 +24,7 @@ class Logger {
         this.logDirectory = logDirectory
         this.logFilename = logFilename
         this.logToConsole = logToConsole
-        this.logLevel = logLevel
+        this.logLevel = logSeverity
 
         // Create an array to hold the transports (e.g. file and console).
         this.transports = []
@@ -38,10 +38,8 @@ class Logger {
 
     // Set up the transports based on the options passed to the constructor.
     _setupTransports() {
-        if (this.logToConsole) {
-            // If logging to console is enabled, add the _logToConsole function to the transports array.
-            this.transports.push(this._logToConsole.bind(this))
-        }
+        // If logging to console is enabled, add the _logToConsole function to the transports array.
+        if (this.logToConsole) this.transports.push(this._logToConsole.bind(this))
 
         // Add the _logToFile function to the transports array.
         this.transports.push(this._logToFile.bind(this))
@@ -123,21 +121,22 @@ class Logger {
         }
     }
 
-    _shouldLog(level) {
+    _shouldLog(lvl) {
         const levels = ['debug', 'info', 'warn', 'error']
-        return levels.indexOf(level) >= levels.indexOf(this.logLevel)
+        return levels.indexOf(lvl) >= levels.indexOf(this.logLevel)
     }
 }
 
 module.exports = Logger
-// debug
-const logger = new Logger({
-    logDirectory: './logs',
-    logToConsole: true,
-    logLevel: 'debug'
-})
 
-logger.debug('This is a debug message.')
-logger.info('This is an info message.')
-logger.warn('This is a warning message.')
-logger.error('This is an error message.')
+// debug
+// const logger = new Logger({
+//     logDirectory: './logs',
+//     logToConsole: true,
+//     logLevel: 'debug'
+// })
+
+// logger.debug('This is a debug message.')
+// logger.info('This is an info message.')
+// logger.warn('This is a warning message.')
+// logger.error('This is an error message.')

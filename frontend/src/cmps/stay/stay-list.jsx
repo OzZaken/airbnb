@@ -2,7 +2,8 @@ import { StayPreview } from './stay-preview'
 
 export const StayList = ({ stays, loggedInUser, isLoading,
     onUpdateStay, onRemoveStay, onSetStayAvgRate,
-    onAddToWishList, onRemoveFromWishList, onClickPreviewImg }) => {
+    onAddToWishList, onRemoveFromWishList, onClickPreviewImg,
+    onLoadMoreStays }) => {
 
     const stayPreview = {
         onSetStayAvgRate,
@@ -13,6 +14,7 @@ export const StayList = ({ stays, loggedInUser, isLoading,
         onRemoveFromWishList,
         onRemoveStay,
         onUpdateStay,
+        onLoadMoreStays
     }
 
     return <ul className='stay-list'>

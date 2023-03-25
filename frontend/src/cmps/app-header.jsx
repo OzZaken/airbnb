@@ -9,17 +9,10 @@ import AccountMenu from "./user/user-menu"
 function _AppHeader({ view }) {
     const dispatch = useDispatch()
 
-    // useEffectUpdate(() => { }, [view])
     useEffect(() => { }, [view])
 
-    // filter
-    const onSetFilterBy = (filterBy) => {
-        console.log(`🚀 ~ filterBy:`, filterBy)
-        dispatch(setFilterBy(filterBy))
-    }
-
-    const onSetSearchBy = (searchBy) => {
-        console.log('searchBy:', searchBy);
+    const onSetSearchRef = (focus) => {
+        console.log(':', focus)
         // dispatch(onSetSearchBy(searchBy))
     }
 
@@ -27,7 +20,9 @@ function _AppHeader({ view }) {
         console.log('share this stay:', stay)
     }
 
-    const mainHeaderNav = { onSetSearchBy }
+    // object literal
+    const mainHeaderNav = { onSetSearchRef }
+
     const stayDetailsHeader = { onShareStay }
 
     const isOnStayDetailsPage = document.body.classList.contains('stay-details')

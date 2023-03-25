@@ -5,29 +5,37 @@ import { ImgGallery } from '../img-gallery'
 import IconApp from '../app-icon'
 import { Box, Skeleton } from '@mui/material'
 import { locService } from '../../services/loc.service'
-// const { getUserDistance } = locService
+import { useEffectUpdate } from '../../hooks/useEffectUpdate'
+const { getUserDistance } = locService
 const { getNumWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
 
-export const StayPreview = ({ stay, loggedInUser, isLoading, onToggleIsInWishlist, onSetStayAvgRate, onClickImg }) => {
+export const StayPreview = ({
+    stay, loggedInUser, isLoading,
+    onToggleIsInWishlist, onSetStayAvgRate, onClickImg,
+    onLoadMoreStays
+}) => {
     // props
     const { reviews, _id, likedByUsers, propertyType, price, summary, imgUrls, loc } = stay
     const { city } = loc
-    
-    // useState
+
+    // state
     const [isIntersecting, setIsIntersecting] = useState(false)
     const [userDistance, setUserDistance] = useState(null)
-    // setUserDistance(getUserDistance(loc))
 
-    // useRef
-    const isDiscount = useRef(Math.random() < 0.5)
-    const RandRate = useRef(getRandomFloatInclusive(4, 5, 2))
-    const watchesCount = useRef(getRandomIntInclusive(10000, 70000))
+    setTimeout(() => {
+        setUserDistance(getUserDistance(loc))
+    }, 2000)
 
-    const isOnWishList = useRef(loggedInUser ? likedByUsers.includes(loggedInUser._id) : false)
+    // ref
+    const isDiscountRef = useRef(Math.random() < 0.5)
+    const RandRateRef = useRef(getRandomFloatInclusive(4, 5, 2))
+    const watchesCountRef = useRef(getRandomIntInclusive(10000, 70000))
+
+    const isOnWishListRef = useRef(loggedInUser ? likedByUsers.includes(loggedInUser._id) : false)
     const IntersectionRef = useRef()
 
-    // intersection observer
     useEffect(() => {
+        // intersection observer
         const observer = new IntersectionObserver(([entry]) => {
 
             setIsIntersecting(entry.isIntersecting)
@@ -35,18 +43,19 @@ export const StayPreview = ({ stay, loggedInUser, isLoading, onToggleIsInWishlis
             /* if already visible unobserve*/
             if (entry.isIntersecting) observer.unobserve(entry.target)
 
-        }, { threshold: 0, rootMargin: '0px 0px 100px 0px' })
+        }, { threshold: 1, rootMargin: '100px' })
 
         if (IntersectionRef.current) observer.observe(IntersectionRef.current)
 
         return () => observer.disconnect()
     }, [])
 
+
     // useEffect(() => {
-    //     onSetStayAvgRate()
+    //     onSetStayAvgRate(reviews)
     // }, [reviews])
 
-    // cmps props
+    // object literal
     const stayPreview = {
         ref: IntersectionRef,
         className: 'stay-preview' + isIntersecting ? ' show' : ''
@@ -57,17 +66,17 @@ export const StayPreview = ({ stay, loggedInUser, isLoading, onToggleIsInWishlis
         imgUrls,
         loggedInUser,
         onToggleIsInWishlist,
-        _id, isOnWishList
+        _id, isOnWishList: isOnWishListRef
     }
     const linkStayPreview = {
         propertyType,
         city,
         summary,
         userDistance,
-        watchesCount,
-        isDiscount,
+        watchesCount: watchesCountRef,
+        isDiscount: isDiscountRef,
         price,
-        RandRate,
+        RandRate: RandRateRef,
         _id
     }
 
@@ -91,7 +100,7 @@ const HeadingStayPreview = ({ name, onClickImg, imgUrls, loggedInUser, onToggleI
             // originalTitle: `${stay.name} #${idx + 1}`, // Optional
             originalAlt: `${name} #${idx + 1}`,
             originalIndex: idx,
-            onClick: () => { onClickImg(idx, _id) },
+            onClick: () => onClickImg(_id),
             originalObjectFit: "cover",
         })).flat(),
         infinite: false,
@@ -126,13 +135,11 @@ const LinkStayPreview = ({ _id, propertyType, city, summary, userDistance, watch
 
         <span className="txt summary">{summary}</span>
 
-        {
-            userDistance ? <span className="txt distance">
-                {getNumWithCommas(userDistance)} kilometers
-            </span> : <span className="txt views-count">
-                {getNumWithCommas(watchesCount.current)} watches this month
-            </span>
-        }
+        {userDistance ? <span className="txt distance">
+            {getNumWithCommas(userDistance)} kilometers
+        </span> : <span className="txt views-count">
+            {getNumWithCommas(watchesCount.current)} watches this month
+        </span>}
 
         <div className="txt price">
             {isDiscount.current && <span className="full-night-price">

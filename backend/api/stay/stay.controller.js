@@ -1,6 +1,8 @@
 const logger = require('../../services/logger.service')
 const stayService = require('./stay.service')
 
+const STAYS_PER_QUERY = 80
+
 module.exports = {
   getStays,
   getStayById,
@@ -9,33 +11,13 @@ module.exports = {
   removeStay
 }
 
-// GET LIST
 async function getStays(req, res) {
-  let filterBy = {
-    priceRange: [20, 1900],
-    bedrooms: 0,
-    propertyTypes: {},
-    placeTypes: {},
-    amenities: {}
-  }
+  logger.debug('Getting Stays')
+  const params = req.query.params
+  const { filterBy, sortBy, pageIdx } = JSON.parse(params)
 
   try {
-    // logger.debug('Getting Stays')
-    var params = req.query.params
-
-    if (params) {
-      params = JSON.parse(params)
-      
-      filterBy = {
-        priceRange: params.priceRange,
-        bedrooms: params.bedrooms,
-        propertyTypes: params.propertyTypes,
-        placeTypes: params.placeTypes,
-        amenities: params.amenities
-      }
-    }
-
-    const stays = await stayService.query(filterBy)
+    const stays = await stayService.query(filterBy, sortBy, pageIdx)
     res.json(stays)
   } catch (err) {
     logger.error('Failed to get stays', err)
@@ -43,7 +25,6 @@ async function getStays(req, res) {
   }
 }
 
-// GET BY ID 
 async function getStayById(req, res) {
   try {
     const stayId = req.params.id
@@ -55,7 +36,6 @@ async function getStayById(req, res) {
   }
 }
 
-// POST (add stay)
 async function addStay(req, res) {
   try {
     const stay = req.body
@@ -67,7 +47,6 @@ async function addStay(req, res) {
   }
 }
 
-// PUT (Update stay)
 async function updateStay(req, res) {
   try {
     const stay = req.body
@@ -79,7 +58,6 @@ async function updateStay(req, res) {
   }
 }
 
-// DELETE (Remove Stay)
 async function removeStay(req, res) {
   try {
     const stayId = req.params.id

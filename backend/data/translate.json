@@ -1,0 +1,90 @@
+{
+    "anyWhere": {
+        "en": "anywhere?",
+        "he": "כל מקום"
+    },
+    "anyWeek": {
+        "en": "any week?",
+        "he": "כל שבוע"
+    },
+    "addGuests": {
+        "en": "add guests",
+        "he": "הוסף אורח"
+    },
+    "addGuests": {
+        "en": "add guests",
+        "he": "הוסף אורח"
+    },
+    "profile": {
+        "en": "Profile",
+        "he": "פרופיל"
+    },
+    "myAccount": {
+        "en": "MyAccount",
+        "he": "החשבון שלי"
+    },
+    "addAnotherAccount": {
+        "en": "AddAnotherAccount",
+        "he": "להוסיף חשבון נוסף"
+    },
+    "settings": {
+        "en": "Settings",
+        "he": " הגדרות"
+    },
+    "logout": {
+        "en": "Logout",
+        "he": "התנתק"
+    },
+    "OMG!": {
+        "en": "OMG",
+        "he": "ואו!"
+    },
+    "beach": {
+        "en": "Beach",
+        "he": "חוף ים"
+    },
+    "nationalParks": {
+        "en": "NationalParks",
+        "he": "פארקים לאומיים"
+    },
+    "amazingPools": {
+        "en": "AmazingPools",
+        "he": "בריכות מדהימות"
+    },
+    "amazingViews": {
+        "en": "AmazingViews",
+        "he": "נופים משגעים"
+    },
+    "arctic": {
+        "en": "Arctic",
+        "he": "קוטבי"
+    },
+    "design": {
+        "en": "Design",
+        "he": "עיצוב"
+    },
+    "island": {
+        "en": "Island",
+        "he": "איים"
+    },
+    "surfing": {
+        "en": "Surfing",
+        "he": "גלישה"
+    },
+    "explore": {
+        "en": "Explore",
+        "he": "לחקור"
+    },
+    "wishList": {
+        "en": "WishList",
+        "he": "רשימת המשאלות"
+    },
+    "tips": {
+        "en": "Tips",
+        "he": "טיפים"
+    },
+    "inbox": {
+        "en": "Inbox",
+        "he": "הודעות"
+    }
+}

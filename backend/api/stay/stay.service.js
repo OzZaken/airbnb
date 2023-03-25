@@ -10,8 +10,8 @@ module.exports = {
     remove
 }
 
-async function query(filterBy = {}) {
-    const criteria = _buildCriteria(filterBy)
+async function query(filterBy,sortBy) {
+    const criteria = _buildCriteria(filterBy,sortBy)
     try {
         const collection = await dbService.getCollection('stay')
         var stays = await collection.find(criteria).toArray()
@@ -68,13 +68,24 @@ async function update(stay) {
     }
 }
 
-function _buildCriteria(filterBy) {
-    const criteria = {
-        price: {}
-    }
-    
-    const { priceRange, bedrooms, propertyTypes, placeTypes, amenities } = filterBy
+// helper function that constructs a MongoDB query criteria object based on the provided params.
+function _buildCriteria({
+    txt, pageIdx,
+    placeType, propertyType,
+    region, amenities, bedrooms,
+    priceRange, capacityRange, rateRange, dateRange }) {
+    const criteria = {}
+
     const [minPrice, maxPrice] = priceRange
+    const [minRate, maxRate] = rateRange
+    const [minCapacity, maxCapacity] = capacityRange
+    const [checkIn, checkOut] = dateRange
+
+    if (minPrice || maxPrice) {
+        criteria.price = {}
+        if (minPrice) criteria.price.$gte = minPrice;
+        if (maxPrice) criteria.price.$lte = maxPrice;
+    }
 
     const chosePropertyTypes = Object.keys(propertyTypes).filter(
         (p) => propertyTypes[p]
@@ -84,7 +95,7 @@ function _buildCriteria(filterBy) {
         (p) => placeTypes[p]
     )
 
-    const checkedAmenities = Object.keys(amenities).filter((a) => amenities[a])
+    const checkedAmenities = Object.keys(amenities).filter(a => amenities[a])
 
     if (chosePropertyTypes.length) {
         const typesRegex = chosePropertyTypes.map(
@@ -102,11 +113,8 @@ function _buildCriteria(filterBy) {
 
     if (checkedPlaceTypes.length) criteria.placeType = { $in: checkedPlaceTypes }
 
-    if (minPrice) criteria.price = { ...criteria.price, $gte: minPrice }
-    
-    if (maxPrice) criteria.price = { ...criteria.price, $lte: maxPrice }
-    
+
     if (bedrooms) criteria.bedrooms = { $eq: bedrooms }
-    
+
     return criteria
 }

@@ -1,3 +1,4 @@
+// import { ReactComponent as CloseIcon } from '../../assets/imgs/svg/close-icon.svg'
 import Airbnb from '../assets/imgs/svg/airbnb.svg'
 import Flag from '@mui/icons-material/Flag'
 import IosShareIcon from '@mui/icons-material/IosShare'

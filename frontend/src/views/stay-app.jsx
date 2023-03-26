@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
 import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList, incPageIdx } from '../store/stay.action'
@@ -20,6 +20,7 @@ const stayData = {
 export const StayApp = () => {
     const dispatch = useDispatch()
     const params = useParams()
+    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const { stays, filterBy, isLoading } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
@@ -46,26 +47,37 @@ export const StayApp = () => {
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
-
-    /* navigation  */
-    const onNavHome = () => window.history.pushState(null, null, `/`)
-    
-    /* paging  */
+    /* Pagination  */
     const onLoadMoreStays = () => dispatch(incPageIdx())
+
     window.incPageIdx = () => { // debug
         onLoadMoreStays()
     }
-    /* wishlist */
+
+    /* Navigation  */
+    const onNavHome = () => {
+        scrollTo({ top: 160, behavior: 'smooth' })
+        window.history.pushState(null, null, `/`)
+    }
+
+    const onClickPreviewImg = (idx, id) => {
+        console.log(`Click Image!:`, idx, id)
+        navigate(`/stay/${id}?large-image=${idx}`)
+        window.scrollTo(0, 0)
+        // window.location.href = `/stay/${id}`
+    }
+
+    /* Wishlist */
     const onAddToWishList = stayId => dispatch(addToWishList(stayId))
 
     const onRemoveFromWishList = (stayId) => dispatch(removeFromWishList(stayId))
 
-    /* sort  */
+    /* Sort  */
     const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
 
-    /* filter  */
+    /* Filter  */
     const onUpdateFilterBy = filterBy => {
-        const { txt, placeType: placeTypes, labels, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
+        const { txt, placeTypes, labels, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
 
         const [minPrice, maxPrice] = priceRange
         const [minRate, maxRate] = rateRange
@@ -134,13 +146,6 @@ export const StayApp = () => {
         return avgRate
     }
 
-    /*  Click Preview Image */
-    const onClickPreviewImg = (idx, id) => {
-        console.log(`Click Image!:`, idx, id) // navigate(`/stay/${stay._id}?large-image=${idx}`)
-        window.scrollTo(0, 0)
-        window.location.href = `/stay/${id}`
-    }
-
     // object literal
     const stayFilter = {
         stays,
@@ -170,7 +175,7 @@ export const StayApp = () => {
 
     return <section className='stay-app'>
 
-        <StayFilter {...stayData}{...stayFilter} />
+        <StayFilter {...stayData} {...stayFilter} />
 
         <StayList {...stayList} />
 

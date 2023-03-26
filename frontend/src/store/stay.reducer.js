@@ -41,17 +41,17 @@ export function stayReducer(state = INITIAL_STATE, action) {
             newState = { ...state, stays: state.stays.filter(stay => stay._id !== action.stayId) }
             break
 
-        /* sort */
+        /* Sort */
         case 'SET_SORT_BY':
             newState = { ...state, sortBy: { ...action.sortBy } }
             break
 
-        /* filter */
+        /* Filter */
         case 'SET_FILTER_BY':
             newState = { ...state, filterBy: { ...action.filterBy } }
             break
 
-        /* wishlist */
+        /* Wishlist */
         case 'ADD_TO_WISHLIST':
             newState = { ...state, wishList: [...state.wishList, action.stay] }
             break
@@ -65,7 +65,7 @@ export function stayReducer(state = INITIAL_STATE, action) {
             newState = { ...state, wishList: [] }
             break
 
-        /* page-idx */
+        /* Pagination */
         case 'INC_PAGE_IDX':
             newState = { ...state, pageIdx: action.pageIdx + 1 }
             break
@@ -80,6 +80,6 @@ export function stayReducer(state = INITIAL_STATE, action) {
         default:
     }
     window.stateStay = newState // debug
-    console.log(action)
+    console.log({action})
     return newState
 }

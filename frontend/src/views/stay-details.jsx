@@ -56,8 +56,7 @@ const _StayDetails = () => {
 
     const onSetInnerWidth = () => setInnerWidth(window.innerWidth)
 
-    const onShowReviews = () => console.log('Swal2 || MUI show reviews:', reviews)
-
+    const onShowReviews = () => console.log('show reviews:', reviews)
 
     if (!stay) return <Loader />
     const { imgUrls, name, reviews, host, loc } = stay

@@ -1,7 +1,8 @@
 # airbnb 
+
 ## Description
 
-Airbnb clone using react redux
+Airbnb clone
 
 - create a user account(actions in the app arr authorized via jwt)
 - search ,filter and sort  users/stays entites.

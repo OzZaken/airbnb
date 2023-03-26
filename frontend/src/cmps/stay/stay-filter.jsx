@@ -12,56 +12,77 @@ import Fade from '@mui/material/Fade'
 
 export const StayFilter = ({
     stays,
-    filterBy, onUpdateFilterBy,
-    onGetFieldRange, filtersParams,
+    filterBy, sortBy, filtersParams,
     allAmenities, allLabels, allPlaceTypes, allPropertyTypes, allRegions,
-    onUpdateAmenityBy, onUpdateLabelBy, onUpdateRangeBy, onUpdateSortBy, onUpdateRegionBy,
+    onUpdateFilterBy, onUpdateSortBy,
+    getRange,
+    onUpdateLabelBy, onUpdateRegionBy,
 }) => {
-    const [localFilter, setLocalFilter] = useState(filterBy)
+    const [localFilterBy, setLocalFilter] = useState(filterBy)
+    const [localSortBy, setLocalSort] = useState(sortBy)
 
+    /* Modal */
     const [isFilterByOpen, setIsFilterByOpen] = useState(false)
     const onOpenFilterBy = () => setIsFilterByOpen(true)
     const onCloseFilterBy = () => setIsFilterByOpen(false)
 
+    /* FiltersParams */
     const filtersCountRef = useRef(0)
-
     useEffect(() => {
         if (filtersParams) filtersCountRef.current = Object.keys(filtersParams).length
         else filtersCountRef.current = 0
-        console.log(`🚀 ~ filtersCount.current:`, filtersCountRef.current)
     }, [filtersParams])
 
-    // get current range each stays update. 
+    /* each stays update, update current localFilter ranges. */
     useEffectUpdate(() => {
         const fields = ['price', 'capacity']
         const rangeBy = {}
         for (let i = 0; i < fields.length; i++) {
-            rangeBy[`${fields[i]}Range`] = onGetFieldRange(fields[i])
+            rangeBy[`${fields[i]}Range`] = getRange(stays, fields[i])
         }
-        setLocalFilter({ ...localFilter, ...rangeBy })
+        console.log(`🚀 ~ rangeBy:`, rangeBy)
+        setLocalFilter({ ...localFilterBy, ...rangeBy })
     }, [stays])
 
-    /* FORM */
+    /* FORM   */
     const onSubmit = ev => {
         ev.preventDefault()
-        setLocalFilter(localFilter)
-        onUpdateFilterBy(localFilter)
+        setLocalFilter(localFilterBy)
+        onUpdateFilterBy(localFilterBy)
         onCloseFilterBy()
     }
 
-    const handleFilters = ev => {
-        setLocalFilter(prevFields => ({
-            ...prevFields,
-            [ev.target.name]: ev.target.value
-        }))
+    // const handleFilterByTarget = ev => {
+    //     setLocalFilter(prevLocalFilterBy => ({
+    //         ...prevLocalFilterBy,
+    //         [ev.target.name]: ev.target.value
+    //     }))
+    // }
+
+    // const debouncedChangeHandler = useMemo(
+    //     () => debounce(handleFilterByTarget, 500)
+    //     , []
+    // )
+
+    const getFieldProps = (field, type) => {
+        const valueField = 'defaultValue'
+        const onChange = debouncedChangeHandler
+        return {
+            onChange,
+            name: field,
+            id: field,
+            [valueField]: localFilterBy[field],
+            type
+        }
     }
-    const debouncedChangeHandler = useMemo(() => debounce(handleFilters, 500), [])
 
     const onResetLocalFilterBy = ev => {
         ev.preventDefault()
-        setLocalFilter(null) // or filterBy 
+        setLocalFilter(filterBy)
     }
 
+
+    // handle numeric input value
     const handleFieldCount = ev => {
         const field = ev.target.name
         const val = ev.target.value
@@ -71,18 +92,40 @@ export const StayFilter = ({
         }))
     }
 
-    const handlePropertyType = (ev, propertyT) => {
+    // handle array input value
+    const handleFieldArr = ev => {
         ev.preventDefault()
-        const type = propertyT
+        const field = ev.target.name
+        const val = ev.target.value
+
+        setLocalFilter(prevFields => {
+            const updatedTypes = [...prevFields.propertyTypes]
+            const currTypeIdx = updatedTypes.indexOf(field)
+
+            if (currTypeIdx === -1) updatedTypes.push(field)
+            else updatedTypes.splice(currTypeIdx, 1)
+
+            return {
+                ...prevFields,
+                propertyTypes: updatedTypes
+            }
+        })
+    }
+
+    // handle object input value
+    const handleFieldMap = (ev, val) => {
+        ev.preventDefault()
+        const currType = val
         setLocalFilter(prevFields => ({
             ...prevFields,
             propertyTypes: {
                 ...prevFields.propertyTypes,
-                [type]: !prevFields.propertyTypes[type]
+                [currType]: !prevFields.propertyTypes[currType]
             }
         }))
     }
 
+    // handle checkbox input value
     const handleCheckBox = ({ target: { checked, name } }) => {
         setLocalFilter(prevFields => ({
             ...prevFields,
@@ -124,15 +167,15 @@ export const StayFilter = ({
         stays,
         filtersCount: filtersCountRef.current,
         staysCount: stays.length,
-        localFilter,
+        localFilter: localFilterBy,
         debounce: debouncedChangeHandler,
-        allAmenities, allLabels, allPlaceTypes, allPropertyTypes, 
+        allAmenities, allLabels, allPlaceTypes, allPropertyTypes,
         onUpdateFilterBy,
         onClose: onCloseFilterBy,
         onSubmit,
         onResetLocalFilterBy,
         handleFieldCount,
-        handlePropertyType,
+        handlePropertyType: handleFieldMap,
         handleCheckBox,
     }
 

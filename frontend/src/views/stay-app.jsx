@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
@@ -9,37 +9,66 @@ import { StayFilter } from "../cmps/stay/stay-filter"
 import ScrollTo from '../cmps/scroll-to'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
+const { getData, getRange, setRate } = stayService
+
+const data = getData()
+
 const stayData = {
-    allAmenities: stayService.get('AMENITIES'),
-    allLabels: stayService.get('LABELS'),
-    allPlaceTypes: stayService.get('PLACE_TYPES'),
-    allPropertyTypes: stayService.get('PROPERTY_TYPES'),
-    allRegions: stayService.get('REGIONS'),
+    allAmenities: data.AMENITIES,
+    allLabels: data.LABELS,
+    allPlaceTypes: data.PLACE_TYPES,
+    allPropertyTypes: data.PROPERTY_TYPES,
+    allRegions: data.REGIONS,
 }
 
 export const StayApp = () => {
     const dispatch = useDispatch()
-    const params = useParams()
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams()
-    const { stays, filterBy, isLoading } = useSelector(state => state.stayModule)
+    const params = useParams()
+
+    const { stays, filterBy, sortBy, isLoading } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const [isSticky, setIsSticky] = useState(false)
+    const filterRef = useRef(null)
 
     useEffect(() => {
         dispatch(loadStays())
-        // dispatch(loadAmenities())
 
         /* queryParams*/
-        if (searchParams.has('filters')) {
+        if (searchParams.has('filter-by')) {
             const queryFilter = JSON.parse(searchParams.get('filters'))
             if (queryFilter !== filterBy) {
                 console.log('UT queryFilter !== filterBy')
                 // dispatch(setFilterBy(queryFilter))
             }
         }
+
+        document.addEventListener('scroll', onSetIsSticky, true)
+        return () => document.removeEventListener('scroll', onSetIsSticky, true)
     }, [])
 
+    useEffect(() => {
+        const elFilter = filterRef.current
+        // if (isSticky) filterRef.current.classList.add('sticky')
+        // else filterRef.current.classList.remove('sticky')
+
+        if (elFilter) {
+            elFilter.style.position = isSticky ? 'sticky' : 'static'
+            elFilter.style.top = isSticky ? '80' : 'auto'
+        }
+    }, [isSticky])
+
     useViewEffect('home-page')
+
+    const onSetIsSticky = () => {
+        const posY = window.scrollY
+        if (posY > 20) {
+            if (!isSticky) setIsSticky(true)
+        } else setIsSticky(false)
+    }
 
     /* CRUD  */
     const onAddStay = stay => dispatch(addStay(stay))
@@ -47,37 +76,53 @@ export const StayApp = () => {
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
+
+    /* Wishlist */
+    const onAddToWishlist = stayId => dispatch(addToWishList(stayId))
+
+    const onRemoveFromWishlist = (stayId) => dispatch(removeFromWishList(stayId))
+
     /* Pagination  */
     const onLoadMoreStays = () => dispatch(incPageIdx())
 
-    window.incPageIdx = () => { // debug
-        onLoadMoreStays()
+    /* Navigation  */
+    const getQueryParams = () => {
+        const filterByParam = _.get(searchParams, 'filter-by')
+        const sortByParam = _.get(searchParams, 'sort-by')
+
+        const queryParams = {
+            filterBy: filterByParam ? JSON.parse(filterByParam) : null,
+            sortBy: sortByParam ? JSON.parse(sortByParam) : null
+        }
+
+        return queryParams
     }
 
-    /* Navigation  */
     const onNavHome = () => {
         scrollTo({ top: 160, behavior: 'smooth' })
-        window.history.pushState(null, null, `/`)
+        // window.location.href = `/`
+        history.pushState(null, null, `/`)
     }
 
-    const onClickPreviewImg = (idx, id) => {
-        console.log(`Click Image!:`, idx, id)
+    const onNavStayDetails = (idx, id) => {
+        console.log(`onNavStayDetails:`, idx, id)
+        scrollTo(0, 0)
         navigate(`/stay/${id}?large-image=${idx}`)
-        window.scrollTo(0, 0)
-        // window.location.href = `/stay/${id}`
     }
 
-    /* Wishlist */
-    const onAddToWishList = stayId => dispatch(addToWishList(stayId))
-
-    const onRemoveFromWishList = (stayId) => dispatch(removeFromWishList(stayId))
-
-    /* Sort  */
+    /* Sort */
     const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
 
-    /* Filter  */
-    const onUpdateFilterBy = filterBy => {
-        const { txt, placeTypes, labels, amenities, priceRange, rateRange, capacityRange, dateRange } = filterBy
+    /* Filter */
+    const onUpdateFilterBy = filterBy => dispatch(setFilterBy({ ...filterBy, filterBy }))
+
+    const onUpdateFilterByQueryParams = currFilterBy => {
+        const {
+            pageIdx,
+            txt, region,
+            placeTypes, propertyTypes, labels, amenities,
+            priceRange, rateRange, capacityRange, dateRange
+        } = currFilterBy
 
         const [minPrice, maxPrice] = priceRange
         const [minRate, maxRate] = rateRange
@@ -85,8 +130,9 @@ export const StayApp = () => {
         const [checkIn, checkOut] = dateRange
 
         const queryParams = [
-            txt && `&text=${txt}`,
-            placeTypes && placeTypes.join('&'),
+            pageIdx && `&page=${pageIdx}`,
+            txt && `&text=${txt}`, region && `&region=${region}`,
+            placeTypes && placeTypes.join('&'), propertyTypes && propertyTypes.join('&'),
             labels && labels.join('&'), amenities && amenities.join('&'),
             minPrice && `&min-price=${minPrice}`, maxPrice && `&max-price=${maxPrice}`,
             minRate && `&min-rate=${minRate}`, maxRate && `&max-rate=${maxRate}`,
@@ -94,84 +140,53 @@ export const StayApp = () => {
             checkIn && `&check-in=${checkIn}`, checkOut && `&check-out=${checkOut}`,
         ]
 
-        const activeParams = queryParams.join('&')
-        console.log(`🚀 ~ length:`, activeParams.length)
+        const queryStringParam = queryParams.join('')
+        console.log('queryParams.length', queryParams.length)// todo: put on activeFiltersCountRef
 
-        const filters = JSON.stringify(activeParams)
-        console.log({ filters })
-        // setSearchParams({filters})
+        const filterBy = JSON.stringify(queryStringParam)
+        console.log({ filterBy: currFilterBy })
+        // setSearchParams({filterBy})
     }
 
-    const onUpdateLabelBy = (labelStringParam) => {
-        const prevLabel = searchParams.get('label')
-        console.log(`🚀 ~ onSetonUpdateAmenityBy prev:`, prevLabel)
-        // setSearchParams({ 'filter-by': { 'labels': JSON.stringify(label) } })
-    }
-
-    const onUpdateRegionBy = region => dispatch(setFilterBy({ ...filterBy, region }))
-
-    const onUpdateRangeBy = (field, range) => {
+    const onUpdateFilterByField = (field, val) => {
         return dispatch(setFilterBy({
             ...filterBy,
-            [field]: range
+            [field]: val
         }))
     }
 
-    const getFiltersParam = () => {
-        if (searchParams && searchParams.has('filters')) {
-            const filtersParams = JSON.parse(searchParams.get('filters'))
-            if (filtersParams) return filtersParams
-            else return null
-        }
-    }
-
-    // handle ranges [min,max]
-    const onGetFieldRange = field => stays.reduce((accRange, stay) => [
-        Math.min(accRange[0], stay[field]),
-        Math.max(accRange[1], stay[field])
-    ], [Infinity, -Infinity])
-
-    /* NOTE: save only on front */
+    /* NOTE: save only in Front */
     const onSetStayAvgRate = (stay) => {
-        console.log(`🚀 ~ stay:`, stay)
-        const { reviews } = stay
-        if (!reviews || !reviews.length) return
-
-        const reviewsCount = reviews.length
-
-        const avgRate = reviews.reduce((accRate, review) => accRate + review.rate, 0) / reviewsCount || null
-        console.log(`🚀 ~ avgRate:`, avgRate)
-
-        stay.avgRate = avgRate
-        return avgRate
+        const rate = setRate(stay)
+        console.log(`🚀 ~ rate:`, rate)
     }
 
-    // object literal
+    /* object literal */
     const stayFilter = {
         stays,
-        filterBy,
-        filtersParams: getFiltersParam(),
-        onGetFieldRange,
-        onUpdateFilterBy,
-        onUpdateRangeBy,
-        onUpdateSortBy,
-        onUpdateRegionBy,
+        ref: filterRef.current,
+        filterBy, sortBy,
+        getQueryParams,
+        onUpdateFilterBy, onUpdateSortBy,
+        onUpdateFilterByField,
+        getRange,
     }
 
     const stayList = {
         stays,
-        loggedInUser,
         isLoading,
-        onUpdateAmenityBy: onUpdateLabelBy,
-        onClickPreviewImg,
-        onUpdateFilter: onUpdateFilterBy,
+        loggedInUser,
+        onClickPreviewImg: onNavStayDetails,
         onSetStayAvgRate,
-        onRemoveStay,
-        onUpdateStay,
-        onAddToWishList,
-        onRemoveFromWishList,
+        onRemoveStay, onUpdateStay,
+        onAddToWishlist, onRemoveFromWishlist,
         onLoadMoreStays,
     }
+
+    // Debug:
+    window.debugNavHome = () => { onNavHome() }
+    window.debugIncPageIdx = () => { onLoadMoreStays() }
+    window.debugSetStayAvgRate = () => { console.log(`onLoadMoreStays:`, onLoadMoreStays(stays[0])) }
 
     return <section className='stay-app'>
 
@@ -179,6 +194,6 @@ export const StayApp = () => {
 
         <StayList {...stayList} />
 
-        <ScrollTo />
+        {/* <ScrollTo /> */}
     </section>
 }

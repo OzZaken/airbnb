@@ -111,32 +111,27 @@ export function DecPageIdx() {
 /* sort */
 export function setSortBy(sortBy) {
     return (dispatch, getState) => {
-        dispatch({ type: 'SET_SORT_BY', sortBy })
         let { stays } = getState().stayModule
 
         switch ({ sortBy }) {
             case 'price':
                 stays = stays.sort((t1, t2) => t1.price - t2.price)
-                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'name':
                 stays = stays.sort((t1, t2) => t1.name.localeCompare(t2.name))
-                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'rate':
                 stays = stays.sort((t1, t2) => t1.rate - t2.rate)
-                dispatch({ type: 'SET_STAYS', stays })
                 break
 
             case 'capacity':
                 stays = stays.sort((t1, t2) => t1.capacity - t2.capacity)
-                dispatch({ type: 'SET_STAYS', stays })
                 break
             default:
-                dispatch({ type: 'SET_STAYS', stays })
         }
+        dispatch({ type: 'SET_STAYS', stays })
     }
 }
 

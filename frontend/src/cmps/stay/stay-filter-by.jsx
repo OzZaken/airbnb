@@ -32,12 +32,6 @@ export const StayFilterBy = ({ stays, localFilter,
 }) => {
     const staysCountRef = useRef(stays.length)
 
-    const { priceRange, rateRange, capacityRange, dateRange } = localFilter
-    const [minPrice, maxPrice] = priceRange
-    const [minRate, maxRate] = rateRange
-    const [minCapacity, maxCapacity] = capacityRange
-    const [checkIn, checkOut] = dateRange
-
     const formFilterBy = {
         onClose, onSubmit, localFilter,
         allAmenities, allLabels, allPlaceTypes, allPropertyTypes, handleCheckBox
@@ -81,18 +75,30 @@ const FormFilterBy = ({
     allAmenities, allLabels, allPlaceTypes, allPropertyTypes
 }) => {
 
-    const { priceRange } = localFilter
+    const { priceRange, rateRange, capacityRange, dateRange } = localFilter
+
+    const [minPrice, maxPrice] = priceRange
+    const [minRate, maxRate] = rateRange
+    const [minCapacity, maxCapacity] = capacityRange
+    const [checkIn, checkOut] = dateRange
+
 
     return <form className='filter-by-form' {...onSubmit}>
 
-        <FilterByPrice {...priceRange} />
+        <FilterByPrice range={[minPrice, maxPrice]} />
 
         <FilterByPlaceType PlaceTypes={allPlaceTypes} />
+
         <FilterByBedrooms />
+
         <FilterByBathrooms />
+
         <FilterByBads />
+
         <FilterPropertyType />
-        <FilterByAmenities />
+
+        <FilterByAmenities amenities={allAmenities} />
+
         <StaySortBy />
 
         <button onClick={ev => {

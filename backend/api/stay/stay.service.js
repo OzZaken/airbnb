@@ -10,8 +10,8 @@ module.exports = {
     remove
 }
 
-async function query(filterBy,sortBy) {
-    const criteria = _buildCriteria(filterBy,sortBy)
+async function query(filterBy, sortBy) {
+    const criteria = _buildCriteria(filterBy, sortBy)
     try {
         const collection = await dbService.getCollection('stay')
         var stays = await collection.find(criteria).toArray()

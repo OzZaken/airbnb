@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffectUpdate } from "./useEffectUpdate"
 
-/* trigger the callback  whenever the fields state changes. */
+/* trigger the callback whenever the fields state changes. */
 export const useFormRegister = (initialState, cb) => {
     /* create state variables and their setter functions. */
     const [fields, setFields] = useState(initialState)
@@ -41,9 +41,11 @@ export const useFormRegister = (initialState, cb) => {
             default:
                 break
         }
+        handleChangeElseIf()
         setFields(prevFields => ({ ...prevFields, [field]: value }))
     }
-    const handleChangeB4Test = ({ target }) => {
+
+    const handleChangeElseIf = ({ target }) => {
         const field = target.name
         let value = target.value
 
@@ -55,8 +57,9 @@ export const useFormRegister = (initialState, cb) => {
         else if (target.type === 'date') value = new Date(value).toISOString().slice(0, 10)
         else if (target.type === 'time') value = new Date(`2000-01-01T${value}`).toISOString().slice(11, 19)
         else if (target.type === 'number') value = parseInt(value)
-
-        setFields(prevFields => ({ ...prevFields, [field]: value }))
+        console.log('...prevFields, [field]: value:')
+        console.log({ ...prevFields, [field]: value })
+        // setFields(prevFields => ({ ...prevFields, [field]: value }))
     }
 
     // YYYY-MM-DD format.

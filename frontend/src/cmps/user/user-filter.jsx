@@ -15,15 +15,13 @@ export const UserFilter = ({ onChangeFilter }) => {
         maxScore: '',
         date: new Date(),
     }, onChangeFilter)
-
+    /* Each input element has a name, type and binds onChange handle from register*/
 
     const formProps = { className: 'user-filter' }
 
     return <form {...formProps} >
         <div>
-            {/* When a user clicks on the label, it will trigger*/}
             <label htmlFor="model">Model</label>
-            {/* Each input element has a name, type and binds onChange handle from register*/}
             <input {...register('model', 'text')} />
         </div>
 

@@ -15,11 +15,8 @@ const LoaderMap = {
             <Skeleton variant="square" width={30} height={30} />
         </Box>
     ),
-    search: (
-        <Box>
-            <CircularProgress css={override} />
-        </Box>
-    )
+    search: <Box><CircularProgress css={override} /></Box>
+
 }
 
 export default function LoaderApp({ from }) {

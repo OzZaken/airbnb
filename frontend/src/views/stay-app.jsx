@@ -1,24 +1,25 @@
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useEffect, useReducer, useRef, forwardRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { stayService } from '../services/stay.service'
-import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList, incPageIdx } from '../store/stay.action'
+import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList, incPageIdx, setPageIdx } from '../store/stay.action'
 import { useViewEffect } from '../hooks/useViewEffect'
 import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
 import ScrollTo from '../cmps/scroll-to'
+import { useEffectUpdate } from '../hooks/useEffectUpdate'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
-const { getData, getRange, setRate } = stayService
+const { getData, getRange, setRate, setRates } = stayService
 
-const data = getData()
+const DATA = getData()
 
 const stayData = {
-    allAmenities: data.AMENITIES,
-    allLabels: data.LABELS,
-    allPlaceTypes: data.PLACE_TYPES,
-    allPropertyTypes: data.PROPERTY_TYPES,
-    allRegions: data.REGIONS,
+    allAmenities: DATA.AMENITIES,
+    allLabels: DATA.LABELS,
+    allPlaceTypes: DATA.PLACE_TYPES,
+    allPropertyTypes: DATA.PROPERTY_TYPES,
+    allRegions: DATA.REGIONS,
 }
 
 export const StayApp = () => {
@@ -31,44 +32,64 @@ export const StayApp = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [isSticky, setIsSticky] = useState(false)
-    const filterRef = useRef(null)
+    /* sticky filter using observer  */
+    const targetRef = useRef(null)// attach to the element to make sticky.
+
+    // Wrap the StayFilter with forwardRef and add the ref parameter to the props:
+    const StayFilterRef = forwardRef((props, ref) => (
+        <StayFilter {...props} forwardedRef={ref} />
+    ))
 
     useEffect(() => {
         dispatch(loadStays())
-
         /* queryParams*/
-        if (searchParams.has('filter-by')) {
-            const queryFilter = JSON.parse(searchParams.get('filters'))
-            if (queryFilter !== filterBy) {
-                console.log('UT queryFilter !== filterBy')
-                // dispatch(setFilterBy(queryFilter))
+
+        const queryParams = getQueryParams()
+        if (queryParams) {
+            const { filterBy: queryFilterBy, sortBy: querySortBy } = queryParams
+
+            if (queryFilterBy !== filterBy) {
+                console.log(`🚀 ~ queryParams.filterBy!== filterBy:`, queryParams.filterBy !== filterBy)
             }
+            if (querySortBy !== sortBy) {
+                console.log(`🚀 ~ queryParams.sortBy!== sortBy:`, queryParams.sortBy !== sortBy)
+            }
+            console.log('QueryParams !=== filterBy')
         }
 
-        document.addEventListener('scroll', onSetIsSticky, true)
-        return () => document.removeEventListener('scroll', onSetIsSticky, true)
+        /* sticky Filter */
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                targetRef.current.classList.add('sticky')
+                console.log('sticky ADDED')
+            }
+            else {
+                targetRef.current.classList.remove('sticky')
+                console.log('sticky REMOVED')
+            }
+        }, { threshold: 0 })
+
+        if (targetRef.current) observer.observe(targetRef.current)
+
+        return () => {
+            observer.unobserve(targetRef.current)
+        }
+
     }, [])
 
-    useEffect(() => {
-        const elFilter = filterRef.current
-        // if (isSticky) filterRef.current.classList.add('sticky')
-        // else filterRef.current.classList.remove('sticky')
-
-        if (elFilter) {
-            elFilter.style.position = isSticky ? 'sticky' : 'static'
-            elFilter.style.top = isSticky ? '80' : 'auto'
+    /* each stays update, update current localFilter ranges. */
+    useEffectUpdate(() => {
+        const fields = ['price', 'capacity', 'bathrooms', 'bedrooms']
+        const rangeMap = {}
+        for (let i = 0; i < fields.length; i++) {
+            rangeMap[fields[i]] = getRange(stays, fields[i])
         }
-    }, [isSticky])
+        setRates(stays)
+        console.log(`🚀 ~ rangeBy:`, rangeMap)
+    }, [stays])
 
+    /* VIEW EFFECT  */
     useViewEffect('home-page')
-
-    const onSetIsSticky = () => {
-        const posY = window.scrollY
-        if (posY > 20) {
-            if (!isSticky) setIsSticky(true)
-        } else setIsSticky(false)
-    }
 
     /* CRUD  */
     const onAddStay = stay => dispatch(addStay(stay))
@@ -85,19 +106,9 @@ export const StayApp = () => {
     /* Pagination  */
     const onLoadMoreStays = () => dispatch(incPageIdx())
 
+    const onSetPageIdx = (idx) => dispatch(setPageIdx(idx))
+
     /* Navigation  */
-    const getQueryParams = () => {
-        const filterByParam = _.get(searchParams, 'filter-by')
-        const sortByParam = _.get(searchParams, 'sort-by')
-
-        const queryParams = {
-            filterBy: filterByParam ? JSON.parse(filterByParam) : null,
-            sortBy: sortByParam ? JSON.parse(sortByParam) : null
-        }
-
-        return queryParams
-    }
-
     const onNavHome = () => {
         scrollTo({ top: 160, behavior: 'smooth' })
         // window.location.href = `/`
@@ -110,34 +121,67 @@ export const StayApp = () => {
         navigate(`/stay/${id}?large-image=${idx}`)
     }
 
-    /* Sort */
-    const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
+    /* Query Params  */
+    const getQueryParams = () => {
+        const filterByParam = _.get(searchParams, 'filter-by')
+        const sortByParam = _.get(searchParams, 'sort-by')
 
-    /* Filter */
-    const onUpdateFilterBy = filterBy => dispatch(setFilterBy({ ...filterBy, filterBy }))
+        const queryParams = {
+            filterBy: filterByParam ? JSON.parse(filterByParam) : null,
+            sortBy: sortByParam ? JSON.parse(sortByParam) : null
+        }
 
-    const onUpdateFilterByQueryParams = currFilterBy => {
+        if (!queryParams.filterBy) delete queryParams.filterBy
+        if (!queryParams.sortBy) delete queryParams.sortBy
+        if (!queryParams.filterBy && !queryParams.sortBy) return null
+        return queryParams
+    }
+    
+    const onUpdateFilterByQueryParams = () => {
         const {
             pageIdx,
-            txt, region,
-            placeTypes, propertyTypes, labels, amenities,
-            priceRange, rateRange, capacityRange, dateRange
-        } = currFilterBy
+            txt,
+            region, label,
+            placeTypes, propertyTypes, amenities,
+            prices, rates, capacities, dates
+        } = filterBy
 
-        const [minPrice, maxPrice] = priceRange
-        const [minRate, maxRate] = rateRange
-        const [minCapacity, maxCapacity] = capacityRange
-        const [checkIn, checkOut] = dateRange
+        const [minPrice, maxPrice] = prices
+        const [minRate, maxRate] = rates
+        const [minCapacity, maxCapacity] = capacities
+        const [checkIn, checkOut] = dates
+        const [minBathroom, maxBathroom] = bathrooms
+        const [minBedroom, maxBedroom] = bedrooms
 
         const queryParams = [
+            txt && `&text=${txt}`,
             pageIdx && `&page=${pageIdx}`,
-            txt && `&text=${txt}`, region && `&region=${region}`,
-            placeTypes && placeTypes.join('&'), propertyTypes && propertyTypes.join('&'),
-            labels && labels.join('&'), amenities && amenities.join('&'),
-            minPrice && `&min-price=${minPrice}`, maxPrice && `&max-price=${maxPrice}`,
-            minRate && `&min-rate=${minRate}`, maxRate && `&max-rate=${maxRate}`,
-            minCapacity && `&min-capacity=${minCapacity}`, maxCapacity && `&max-capacity=${maxCapacity}`,
-            checkIn && `&check-in=${checkIn}`, checkOut && `&check-out=${checkOut}`,
+
+            region && `&region=${region}`,
+            label && `&label=${label}`,
+
+            placeTypes && placeTypes.join('&'),
+            propertyTypes && propertyTypes.join('&'),
+            amenities && amenities.join('&'),
+
+            checkIn && `&check-in=${checkIn}`,
+            checkOut && `&check-out=${checkOut}`,
+
+            minPrice && `&min-price=${minPrice}`,
+            maxPrice && `&max-price=${maxPrice}`,
+
+            minRate && `&min-rate=${minRate}`,
+            maxRate && `&max-rate=${maxRate}`,
+
+            minCapacity && `&min-capacity=${minCapacity}`,
+            maxCapacity && `&max-capacity=${maxCapacity}`,
+            // minBeds && `&min-beds=${minBed}`, maxRate && `&max-beds=${maxBed}`,
+
+            minBathroom && `&min-bathrooms=${minBathroom}`,
+            maxBathroom && `&max-bathrooms=${maxBathroom}`,
+
+            minBedroom && `&min-bedrooms=${minBedroom}`,
+            maxBedroom && `&max-bedrooms=${maxBedroom}`,
         ]
 
         const queryStringParam = queryParams.join('')
@@ -147,6 +191,12 @@ export const StayApp = () => {
         console.log({ filterBy: currFilterBy })
         // setSearchParams({filterBy})
     }
+
+    /* Sort */
+    const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
+
+    /* Filter */
+    const onUpdateFilterBy = filterBy => dispatch(setFilterBy({ ...filterBy, filterBy }))
 
     const onUpdateFilterByField = (field, val) => {
         return dispatch(setFilterBy({
@@ -163,8 +213,8 @@ export const StayApp = () => {
 
     /* object literal */
     const stayFilter = {
+        ...stayData,
         stays,
-        ref: filterRef.current,
         filterBy, sortBy,
         getQueryParams,
         onUpdateFilterBy, onUpdateSortBy,
@@ -177,23 +227,18 @@ export const StayApp = () => {
         isLoading,
         loggedInUser,
         onClickPreviewImg: onNavStayDetails,
-        onSetStayAvgRate,
+        onSetStayAvgRate,// when emit from socket ADD_REVIEW
         onRemoveStay, onUpdateStay,
         onAddToWishlist, onRemoveFromWishlist,
         onLoadMoreStays,
     }
 
-    // Debug:
-    window.debugNavHome = () => { onNavHome() }
-    window.debugIncPageIdx = () => { onLoadMoreStays() }
-    window.debugSetStayAvgRate = () => { console.log(`onLoadMoreStays:`, onLoadMoreStays(stays[0])) }
-
     return <section className='stay-app'>
-
-        <StayFilter {...stayData} {...stayFilter} />
+        {/* <StayFilter ref={targetRef} {...stayFilter} /> */}
+        <StayFilterRef ref={targetRef} {...stayFilter} />
 
         <StayList {...stayList} />
 
-        {/* <ScrollTo /> */}
+        <ScrollTo />
     </section>
 }

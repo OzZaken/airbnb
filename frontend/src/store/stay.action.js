@@ -31,10 +31,10 @@ export function addStay(stay) {
 }
 export function loadStays() {
     return async (dispatch, getState) => {
-        const { filterBy } = getState().stayModule
+        const { filterBy, sortBy } = getState().stayModule
         try {
-            var loadStays = await stayService.query(filterBy)
-            dispatch({ type: 'SET_STAYS', stays: loadStays })
+            var stays = await stayService.query(filterBy, sortBy)
+            dispatch({ type: 'SET_STAYS', stays })
         } catch (err) {
             showErrorMsg('Cannot load stays')
         }

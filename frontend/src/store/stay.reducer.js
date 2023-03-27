@@ -20,7 +20,7 @@ const INITIAL_STATE = {
         bathrooms: [0, Infinity],
         bedrooms: [0, Infinity],
         beds: [0, Infinity],
-        /* first shown stays with availability of minimum 3 days. */
+        /* first shown stays filter with availability of minimum 3 days. */
         dates: [
             Date.now(),
             Date.now() + 3 * 24 * 60 * 60 * 1000, /*day hour min sec millisecond*/
@@ -88,8 +88,5 @@ export function stayReducer(state = INITIAL_STATE, action) {
             break
         default:
     }
-    window.stateStay = newState // debug
-    console.log(action.type)
     return newState
 }
-

@@ -11,7 +11,7 @@ const { getNumWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = uti
 
 export const StayPreview = ({
     stay, loggedInUser, isLoading,
-    onToggleIsInWishlist, onSetStayAvgRate, onClickImg,
+    onToggleIsInWishlist, onClickImg,
     onLoadMoreStays
 }) => {
     // props

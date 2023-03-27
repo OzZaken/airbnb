@@ -70,16 +70,18 @@ async function update(stay) {
 
 // helper function that constructs a MongoDB query criteria object based on the provided params.
 function _buildCriteria({
-    txt, pageIdx,
-    placeType, propertyType,
-    region, amenities, bedrooms,
-    priceRange, capacityRange, rateRange, dateRange }) {
+    txt,
+    pageIdx,
+    placeType, propertyType, amenities,
+    region, label,
+    bedrooms,
+    prices, capacities, rates, dates }) {
     const criteria = {}
 
-    const [minPrice, maxPrice] = priceRange
-    const [minRate, maxRate] = rateRange
-    const [minCapacity, maxCapacity] = capacityRange
-    const [checkIn, checkOut] = dateRange
+    const [minPrice, maxPrice] = prices
+    const [minRate, maxRate] = rates
+    const [minCapacity, maxCapacity] = capacities
+    const [checkIn, checkOut] = dates
 
     if (minPrice || maxPrice) {
         criteria.price = {}

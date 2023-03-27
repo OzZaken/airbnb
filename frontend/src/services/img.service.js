@@ -43,7 +43,7 @@ async function loadImgs(names, type) {
     }
 }
 
-/**more suitable for loading a large number of images.
+/** more suitable for loading a large number of images.
  *  similar to `loadImgs`, but it uses promises.  */
 async function loadImgsPrm(names, type) {
     const promises = []
@@ -73,3 +73,9 @@ async function loadImgsPrm(names, type) {
         throw error
     }
 }
+
+/** // TODO: proccess env
+ *   CLOUD_NAME = 'pukicloud'
+     UPLOAD_PRESET = 'CHECK'
+     UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+ */

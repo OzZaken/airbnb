@@ -8,7 +8,7 @@ export const useViewEffect = (str) => {
     
     useEffect(() => {
         // translationService.doTrans()
-        console.log(`%c useViewEffect: ${str}`, 'color: blue;')
+        // console.log(`%c useViewEffect: ${str}`, 'color: blue;')
         document.body.classList.add(str)
         return () => {
             document.body.classList.remove(str)

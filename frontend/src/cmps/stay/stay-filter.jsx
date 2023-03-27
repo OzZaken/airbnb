@@ -33,16 +33,7 @@ export const StayFilter = ({
         else filtersCountRef.current = 0
     }, [filtersParams])
 
-    /* each stays update, update current localFilter ranges. */
-    useEffectUpdate(() => {
-        const fields = ['price', 'capacity']
-        const rangeBy = {}
-        for (let i = 0; i < fields.length; i++) {
-            rangeBy[`${fields[i]}Range`] = getRange(stays, fields[i])
-        }
-        console.log(`🚀 ~ rangeBy:`, rangeBy)
-        setLocalFilter({ ...localFilterBy, ...rangeBy })
-    }, [stays])
+   
 
     /* FORM   */
     const onSubmit = ev => {
@@ -168,7 +159,7 @@ export const StayFilter = ({
         filtersCount: filtersCountRef.current,
         staysCount: stays.length,
         localFilter: localFilterBy,
-        debounce: debouncedChangeHandler,
+        // debounce: debouncedChangeHandler,
         allAmenities, allLabels, allPlaceTypes, allPropertyTypes,
         onUpdateFilterBy,
         onClose: onCloseFilterBy,

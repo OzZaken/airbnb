@@ -13,7 +13,6 @@ function _AppHeader({ view }) {
 
     const onSetSearchRef = (focus) => {
         console.log(':', focus)
-        // dispatch(onSetSearchBy(searchBy))
     }
 
     const onShareStay = (stay) => {
@@ -25,12 +24,11 @@ function _AppHeader({ view }) {
 
     const stayDetailsHeader = { onShareStay }
 
-    const isOnStayDetailsPage = document.body.classList.contains('stay-details')
     return <header className='full main-header'>
 
         <MainHeaderNav {...mainHeaderNav} />
 
-        {isOnStayDetailsPage && <StayDetailsHeader {...stayDetailsHeader} />}
+        {view==='stay-details' && <StayDetailsHeader {...stayDetailsHeader} />}
     </header>
 }
 

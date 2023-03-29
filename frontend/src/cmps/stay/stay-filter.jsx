@@ -17,6 +17,7 @@ export const StayFilter = ({
     onUpdateFilterBy, onUpdateSortBy,
     getRange,
     onUpdateLabelBy, onUpdateRegionBy,
+    totalAvgPriceRef
 }) => {
     const [localFilterBy, setLocalFilter] = useState(filterBy)
     const [localSortBy, setLocalSort] = useState(sortBy)
@@ -32,8 +33,6 @@ export const StayFilter = ({
         if (filtersParams) filtersCountRef.current = Object.keys(filtersParams).length
         else filtersCountRef.current = 0
     }, [filtersParams])
-
-   
 
     /* FORM   */
     const onSubmit = ev => {
@@ -71,7 +70,6 @@ export const StayFilter = ({
         ev.preventDefault()
         setLocalFilter(filterBy)
     }
-
 
     // handle numeric input value
     const handleFieldCount = ev => {
@@ -156,6 +154,7 @@ export const StayFilter = ({
 
     const stayFilterBy = {
         stays,
+        totalAvgPriceRef,
         filtersCount: filtersCountRef.current,
         staysCount: stays.length,
         localFilter: localFilterBy,

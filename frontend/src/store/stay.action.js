@@ -93,10 +93,8 @@ export function setPageIdx(pageIdx = 0) {
 }
 
 export function incPageIdx() {
-    console.log(`🚀 ~ incPageIdx:`)
     return (dispatch, getState) => {
         const { pageIdx } = getState().stayModule.filterBy
-        console.log(`🚀 ~ pageIdx:`, pageIdx)
         dispatch({ type: 'INC_PAGE_IDX', pageIdx })
     }
 }

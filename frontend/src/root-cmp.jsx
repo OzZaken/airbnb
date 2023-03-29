@@ -1,47 +1,37 @@
-import { Route, Routes } from 'react-router-dom'
-import routes from './routes'
-import { About } from './views/about'
+import { useEffect, useRef } from 'react'
 import { AppHeader } from './cmps/app-header'
-import { UserMsg } from './cmps/user/user-msg'
 import { AppFooter } from './cmps/app-footer'
+import { UserMsg } from './cmps/user/user-msg'
+import { RoutesApp } from './app-routes'
+
+// import { stayService } from '../../services/stay.service'
+
 import './assets/styles/main.scss'
+
+// updateReviews(reviews)
+// stayService.save(stay)
+
+
 function App() {
+    // const totalAvgPriceRef = useRef(0)
+
     document.title = 'Welcome to Airbnb!'
+
+    useEffect(() => {
+        // totalAvgPriceRef.current = +getAvgPrice(DATA.gStays).toFixed(2)
+
+        return () => {
+
+        }
+    }, [])
 
     return (
         <div className="main-layout">
             <AppHeader />
-            <main className='main-content'>
-                <Routes>
-                    {routes.map(route => <Route key={route.path} element={route.component} path={route.path} /* exact={true} */ />)}
-                    <Route path='about' element={<About />} >
-                        <Route path='team' element={<Team />} />
-                        <Route path='vision' element={<Vision />} />
-                    </Route>
-                </Routes>
-            </main>
+            <main className='main-content'><RoutesApp /></main>
             <AppFooter />
             <UserMsg />
         </div>
-    )
-}
-
-const Team = () => {
-    return (
-        <ul>
-            <li>Moshe Leon</li>
-            <li>Lala Ben Regev</li>
-            <li>Shimon DiCaprio</li>
-        </ul>
-    )
-}
-
-const Vision = () => {
-    return (
-        <ol>
-            <li>Save the world with odur users</li>
-            <li>Take over the world with our users</li>
-        </ol>
     )
 }
 

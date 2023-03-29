@@ -2,13 +2,14 @@ const translate = require('../assets/data/translate.json')
 
 const STORAGE_KEY = 'userLang'
 
-var gTransMap = null
-
+var gTranslationMap = null
 var gLangCode = _loadLangFromLocalStorage()
     || navigator.language.substring(0, 2)  // eq .split('-')[0]
-    || 'en'
+    || 'en' // Default
 
-export const translationService = {
+// loadTranslations()
+
+export const transService = {
     doTrans,
     getTranslationValue,
     setLang,
@@ -21,12 +22,11 @@ export const translationService = {
     getEarthRadius,
 }
 
-// loadTranslations()
 async function loadTranslations() {
     try {
         const response = await fetch('translations.json')
         const data = await response.json()
-        gTransMap = data
+        gTranslationMap = data
         doTrans()
     } catch (err) {
         console.log(err)
@@ -46,8 +46,7 @@ function getEarthRadius() {
     if (kmLocales.includes(lang)) return 6371 // Earth's radius in km
     else if (milesLocales.includes(lang)) return 3959 // Earth's radius in miles
     else {
-        console.warn('Unknown locale:', lang)
-        // TODO:logger.warn('Unknown locale:', lang)
+        logger.warn('Unknown locale:', lang)
         return 6371 // default to km
     }
 }
@@ -64,7 +63,7 @@ function doTrans() {
 }
 
 function getTranslationValue(translationKey) {
-    return gTransMap[translationKey]?.[gLangCode]
+    return gTranslationMap[translationKey]?.[gLangCode]
 }
 
 function getCurrencyPrice(price) {
@@ -92,11 +91,17 @@ function formatNum(num) {
     return new Intl.NumberFormat(gLangCode).format(num)
 }
 
-function formatCurrency(num) {
-    return new Intl.NumberFormat(
-        'he-IL',
-        { style: 'currency', currency: 'ILS' }
-    ).format(num)
+function formatCurrency(num, fromCurr='USD', toCurr = 'USD') {
+    const rateMap = {
+        USD: 1,
+        ILS: 3.67, // 1 USD = 3.67 ILS
+        EUR: 0.90, // 1 USD = 0.90 EUR
+    }
+    const convertedNum = num / rateMap[fromCurr] * rateMap[toCurr]
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: toCurr
+    }).format(convertedNum)
 }
 
 function formatDate(time) {

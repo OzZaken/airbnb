@@ -8,12 +8,14 @@ import { StayList } from '../cmps/stay/stay-list'
 import { StayFilter } from "../cmps/stay/stay-filter"
 import ScrollTo from '../cmps/scroll-to'
 import { useEffectUpdate } from '../hooks/useEffectUpdate'
+import { transService } from '../services/i18n.service'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
 
-const { getData, getRange, setRate, setRates } = stayService
+const { getData, getRange, setAvgRate, getAvgRates, getRangeMap, getAvgPrice } = stayService
+
+const { formatCurrency } = transService
 
 const DATA = getData()
-
 const stayData = {
     allAmenities: DATA.AMENITIES,
     allLabels: DATA.LABELS,
@@ -21,7 +23,7 @@ const stayData = {
     allPropertyTypes: DATA.PROPERTY_TYPES,
     allRegions: DATA.REGIONS,
 }
-
+const totalAvgPriceRef = { current: 24 }
 export const StayApp = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -32,64 +34,54 @@ export const StayApp = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    /* sticky filter using observer  */
-    const targetRef = useRef(null)// attach to the element to make sticky.
+    const queryParamsCountRef = useRef(0)
+    const rangeMapRef = useRef({})
+    const avgPriceRef = useRef(0)
 
-    // Wrap the StayFilter with forwardRef and add the ref parameter to the props:
-    const StayFilterRef = forwardRef((props, ref) => (
-        <StayFilter {...props} forwardedRef={ref} />
-    ))
+    /* store an object data contains rates calc forEach stay, etc.*/
+    const UpdatedDataToSendRef = useRef({})
 
     useEffect(() => {
-        dispatch(loadStays())
+
         /* queryParams*/
+        const [filterByParam, sortByParam] = getQueryParams()
+        if (filterByParam || sortByParam) {
 
-        const queryParams = getQueryParams()
-        if (queryParams) {
-            const { filterBy: queryFilterBy, sortBy: querySortBy } = queryParams
+            if (filterByParam) dispatch(loadStays(filterByParam))
 
-            if (queryFilterBy !== filterBy) {
-                console.log(`🚀 ~ queryParams.filterBy!== filterBy:`, queryParams.filterBy !== filterBy)
-            }
-            if (querySortBy !== sortBy) {
-                console.log(`🚀 ~ queryParams.sortBy!== sortBy:`, queryParams.sortBy !== sortBy)
-            }
-            console.log('QueryParams !=== filterBy')
-        }
-
-        /* sticky Filter */
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                targetRef.current.classList.add('sticky')
-                console.log('sticky ADDED')
-            }
+            // Sort by what necessary
             else {
-                targetRef.current.classList.remove('sticky')
-                console.log('sticky REMOVED')
+                const [field, isDesc] = Object.entries(sortByParam)
+
+                // if not same field
+                if (!sortBy[field]) {
+                    console.log(`🚀 ~ !sortBy[field:`, !sortBy[field])
+                }
+
+                // if not same field return -1
+                if (isDesc * sortBy[field] === 1) {
+                    console.log(`🚀 ~ (isDesc * sortBy[field] === 1):`, (isDesc * sortBy[field] === 1))
+                }
+
+                else {//debug
+                    console.log('(isDesc * sortBy[field] !== 1)')
+                }
             }
-        }, { threshold: 0 })
-
-        if (targetRef.current) observer.observe(targetRef.current)
-
-        return () => {
-            observer.unobserve(targetRef.current)
         }
 
+        dispatch(loadStays())
     }, [])
 
     /* each stays update, update current localFilter ranges. */
     useEffectUpdate(() => {
-        const fields = ['price', 'capacity', 'bathrooms', 'bedrooms']
-        const rangeMap = {}
-        for (let i = 0; i < fields.length; i++) {
-            rangeMap[fields[i]] = getRange(stays, fields[i])
-        }
-        setRates(stays)
-        console.log(`🚀 ~ rangeBy:`, rangeMap)
+        getAvgRates(stays) // NOTE: front only
+        rangeMapRef.current = getRangeMap(stays)
+        avgPriceRef.current = getAvgPrice(stays)
+        console.log(`🚀 ~ avgPriceRef.current:`, avgPriceRef.current)
     }, [stays])
 
-    /* VIEW EFFECT  */
-    useViewEffect('home-page')
+   
+    useViewEffect('home-page') 
 
     /* CRUD  */
     const onAddStay = stay => dispatch(addStay(stay))
@@ -110,8 +102,8 @@ export const StayApp = () => {
 
     /* Navigation  */
     const onNavHome = () => {
+        // location.href = `/`
         scrollTo({ top: 160, behavior: 'smooth' })
-        // window.location.href = `/`
         history.pushState(null, null, `/`)
     }
 
@@ -123,20 +115,17 @@ export const StayApp = () => {
 
     /* Query Params  */
     const getQueryParams = () => {
-        const filterByParam = _.get(searchParams, 'filter-by')
-        const sortByParam = _.get(searchParams, 'sort-by')
+        // get the query params options
+        const filterStrParam = _.get(searchParams, 'filter-by')
+        const sortStrParam = _.get(searchParams, 'sort-by')
 
-        const queryParams = {
-            filterBy: filterByParam ? JSON.parse(filterByParam) : null,
-            sortBy: sortByParam ? JSON.parse(sortByParam) : null
-        }
+        // parse the value or return null
+        const filterByPara = filterStrParam ? JSON.parse(filterStrParam) : null
+        const sortByParam = sortStrParam ? JSON.parse(sortStrParam) : null
 
-        if (!queryParams.filterBy) delete queryParams.filterBy
-        if (!queryParams.sortBy) delete queryParams.sortBy
-        if (!queryParams.filterBy && !queryParams.sortBy) return null
-        return queryParams
+        return [filterByPara, sortByParam]
     }
-    
+
     const onUpdateFilterByQueryParams = () => {
         const {
             pageIdx,
@@ -154,15 +143,16 @@ export const StayApp = () => {
         const [minBedroom, maxBedroom] = bedrooms
 
         const queryParams = [
-            txt && `&text=${txt}`,
             pageIdx && `&page=${pageIdx}`,
+
+            txt && `&text=${txt}`,
 
             region && `&region=${region}`,
             label && `&label=${label}`,
 
+            amenities && amenities.join('&'),
             placeTypes && placeTypes.join('&'),
             propertyTypes && propertyTypes.join('&'),
-            amenities && amenities.join('&'),
 
             checkIn && `&check-in=${checkIn}`,
             checkOut && `&check-out=${checkOut}`,
@@ -175,21 +165,26 @@ export const StayApp = () => {
 
             minCapacity && `&min-capacity=${minCapacity}`,
             maxCapacity && `&max-capacity=${maxCapacity}`,
-            // minBeds && `&min-beds=${minBed}`, maxRate && `&max-beds=${maxBed}`,
 
             minBathroom && `&min-bathrooms=${minBathroom}`,
             maxBathroom && `&max-bathrooms=${maxBathroom}`,
 
             minBedroom && `&min-bedrooms=${minBedroom}`,
             maxBedroom && `&max-bedrooms=${maxBedroom}`,
+
+            // minBed && `&min-Beds=${minBed}`, 
+            // maxBed && `&max-Beds=${maxBed}`,
         ]
 
-        const queryStringParam = queryParams.join('')
-        console.log('queryParams.length', queryParams.length)// todo: put on activeFiltersCountRef
+        queryParamsCountRef.current = queryParams.length
 
-        const filterBy = JSON.stringify(queryStringParam)
-        console.log({ filterBy: currFilterBy })
-        // setSearchParams({filterBy})
+        const queryStringParam = queryParams.join('')
+        console.log(`🚀 ~ queryStringParam:`, queryStringParam)
+
+        const filterStrParam = JSON.stringify(queryStringParam)
+        console.log(`🚀 ~ filterStrParam:`, filterStrParam)
+        // setSearchParams('filter-by',filterStrParam)
+        // setSearchParams({filterStrParam})
     }
 
     /* Sort */
@@ -207,16 +202,15 @@ export const StayApp = () => {
 
     /* NOTE: save only in Front */
     const onSetStayAvgRate = (stay) => {
-        const rate = setRate(stay)
-        console.log(`🚀 ~ rate:`, rate)
+        const avgRate = setAvgRate(stay)
     }
 
     /* object literal */
     const stayFilter = {
         ...stayData,
+        totalAvgPriceRef,
         stays,
         filterBy, sortBy,
-        getQueryParams,
         onUpdateFilterBy, onUpdateSortBy,
         onUpdateFilterByField,
         getRange,
@@ -227,15 +221,14 @@ export const StayApp = () => {
         isLoading,
         loggedInUser,
         onClickPreviewImg: onNavStayDetails,
-        onSetStayAvgRate,// when emit from socket ADD_REVIEW
+        onSetStayAvgRate, // 01.when preview first load // todo: 02.when emit from socket ADD_REVIEW 
         onRemoveStay, onUpdateStay,
         onAddToWishlist, onRemoveFromWishlist,
         onLoadMoreStays,
     }
 
     return <section className='stay-app'>
-        {/* <StayFilter ref={targetRef} {...stayFilter} /> */}
-        <StayFilterRef ref={targetRef} {...stayFilter} />
+        <StayFilter {...stayFilter} />
 
         <StayList {...stayList} />
 

@@ -4,28 +4,23 @@ const INITIAL_STATE = {
     wishList: [],
     sortBy: { price: 1 },
     filterBy: {
-        pageIdx: 0,/* number ~ pagination */
-        txt: '',/* string ~  regex  */
-        /* string ~ select */
-        region: '',
+        pageIdx: 0,
+        txt: '', 
+        region: '', 
         label: '',
-        /* array ~ checkbox */
         amenities: [],
         placeTypes: [],
         propertyTypes: [],
-        /* range ~ slider */
-        rates: [0, 5],
         prices: [0, Infinity],
         capacities: [0, Infinity],
         bathrooms: [0, Infinity],
         bedrooms: [0, Infinity],
+        // ↓ todo
+        rates: [0, 5],
         beds: [0, Infinity],
-        /* first shown stays filter with availability of minimum 3 days. */
         dates: [
-            Date.now(),
-            Date.now() + 3 * 24 * 60 * 60 * 1000, /*day hour min sec millisecond*/
-            new Date(new Date().setDate(new Date().getDate() + 3)),/* debug same value second as Date*/
-            new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)/* debug */
+            Date.now(),/*day hour min sec millisecond*/
+            Date.now() + 3 * 24 * 60 * 60 * 1000, 
         ]
     }
 }

@@ -6,25 +6,25 @@ import IconApp from '../app-icon'
 import { Box, Skeleton } from '@mui/material'
 import { locService } from '../../services/loc.service'
 import { useEffectUpdate } from '../../hooks/useEffectUpdate'
+
 const { getUserDistance } = locService
 const { getNumWithCommas, getRandomFloatInclusive, getRandomIntInclusive } = utilService
 
-export const StayPreview = ({
-    stay, loggedInUser, isLoading,
-    onToggleIsInWishlist, onClickImg,
-    onLoadMoreStays
-}) => {
-    // props
+// just for the demo data
+const updateReviews = (reviews) => {
+    reviews.forEach(review => {
+        review.rate = getRandomFloatInclusive(4, 5, 2)
+    })
+}
+
+export const StayPreview = ({ stay, loggedInUser, isLoading,
+    onToggleIsInWishlist, onSetStayAvgRate, onClickImg, onLoadMoreStays, onUpdateStay }) => {
+
     const { reviews, _id, likedByUsers, propertyType, price, summary, imgUrls, loc } = stay
     const { city } = loc
 
-    // state
     const [isIntersecting, setIsIntersecting] = useState(false)
     const [userDistance, setUserDistance] = useState(null)
-
-    setTimeout(() => {
-        setUserDistance(getUserDistance(loc))
-    }, 2000)
 
     // ref
     const isDiscountRef = useRef(Math.random() < 0.5)
@@ -34,14 +34,23 @@ export const StayPreview = ({
     const isOnWishListRef = useRef(loggedInUser ? likedByUsers.includes(loggedInUser._id) : false)
     const IntersectionRef = useRef()
 
+    setTimeout(() => {
+        setUserDistance(getUserDistance(loc))
+        // console.log(`🚀 ~ userDistance:`, userDistance)
+    }, 3000)
+
     useEffect(() => {
+        updateReviews(reviews)
+        console.log('stay', stay)
         // intersection observer
         const observer = new IntersectionObserver(([entry]) => {
-
             setIsIntersecting(entry.isIntersecting)
 
             /* if already visible unobserve*/
-            if (entry.isIntersecting) observer.unobserve(entry.target)
+            if (entry.isIntersecting) {
+                onSetStayAvgRate(stay)
+                observer.unobserve(entry.target)
+            }
 
         }, { threshold: 1, rootMargin: '100px' })
 

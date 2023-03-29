@@ -135,7 +135,7 @@ function getRandomIntInclusive(min, max) {
 }
 
 function getRandomFloatInclusive(min, max, decimals) {
-    return ((Math.random() * (max - min)) + min).toFixed(decimals)
+    return +((Math.random() * (max - min)) + min).toFixed(decimals)
 }
 
 /* Random */

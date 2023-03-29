@@ -1,19 +1,14 @@
-import _ from 'lodash'
-import { Link } from 'react-router-dom'
-import { IconButton } from '@mui/material'
 import { useEffect, useRef } from "react"
+import { Link } from 'react-router-dom'
+import _ from 'lodash'
+import { transService } from '../../services/i18n.service'
 
+import { IconButton } from '@mui/material'
 import Button from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { Grid, Typography } from "@material-ui/core"
 
-import { Grid, Typography } from "@material-ui/core";
-
-const prices = []
-for (let i = 0; i < 500; i++) {
-    prices.push(Math.floor(Math.random() * 80) + 1)
-}
-const min = 30
-const max = 1000
+const { formatCurrency } = transService
 
 // const RoomButton = styled(Button)(({ theme }) => ({
 //     color: theme.palette.getContrastText('#ffffff'),
@@ -23,6 +18,47 @@ const max = 1000
 //         color: theme.palette.getContrastText('#000000'),
 //     },
 // }))
+
+const FormFilterBy = ({
+    localFilter,
+    totalAvgPriceRef,
+    onSubmit, onClose,
+    handleCheckBox,
+    allAmenities, allLabels, allPlaceTypes, allPropertyTypes
+}) => {
+
+    const { prices, rates, capacities, dates } = localFilter
+    console.log(`🚀 ~ totalAvgPriceRef:`, totalAvgPriceRef)
+
+    const [minPrice, maxPrice] = prices
+    const [minRate, maxRate] = rates
+    const [minCapacity, maxCapacity] = capacities
+    const [checkIn, checkOut] = dates
+
+    const filterByPrice = {
+        defaultRange:[40, 2500],
+        currentRange:[minPrice, maxPrice],
+        totalAvgPriceRef,
+    }
+    return <form className='filter-by-form' {...onSubmit}>
+
+        <FilterByPrice {...filterByPrice} />
+
+        {/* <FilterByPlaceType PlaceTypes={allPlaceTypes} /> */}
+
+        {/* <FilterByBedrooms />
+        <FilterByBathrooms />
+        <FilterByBads />
+        <FilterPropertyType />
+        <FilterByAmenities amenities={allAmenities} />
+        <StaySortBy />
+ */}
+        <button onClick={ev => {
+            ev.preventDefault()
+            onClose()
+        }}>filter</button>
+    </form>
+}
 
 export const StayFilterBy = ({ stays, localFilter,
     onClose, onSubmit, onUpdateFilterBy,
@@ -67,45 +103,6 @@ const FooterFilterBy = ({ onResetLocalFilterBy, onSubmit, staysCountRef }) => {
             Show {staysCountRef.current} homes
         </button>
     </footer>
-}
-
-const FormFilterBy = ({
-    localFilter, handleCheckBox,
-    onSubmit, onClose,
-    allAmenities, allLabels, allPlaceTypes, allPropertyTypes
-}) => {
-
-    const { priceRange, rateRange, capacityRange, dateRange } = localFilter
-
-    const [minPrice, maxPrice] = priceRange
-    const [minRate, maxRate] = rateRange
-    const [minCapacity, maxCapacity] = capacityRange
-    const [checkIn, checkOut] = dateRange
-
-
-    return <form className='filter-by-form' {...onSubmit}>
-
-        <FilterByPrice range={[minPrice, maxPrice]} />
-
-        <FilterByPlaceType PlaceTypes={allPlaceTypes} />
-
-        <FilterByBedrooms />
-
-        <FilterByBathrooms />
-
-        <FilterByBads />
-
-        <FilterPropertyType />
-
-        <FilterByAmenities amenities={allAmenities} />
-
-        <StaySortBy />
-
-        <button onClick={ev => {
-            ev.preventDefault()
-            onClose()
-        }}>filter</button>
-    </form>
 }
 
 const FilterByAmenities = () => {
@@ -204,6 +201,8 @@ const FilterByBedrooms = () => {
 }
 
 const FilterByPlaceType = (placeTypes) => {
+    console.log(`🚀 ~ placeTypes:`, placeTypes)
+
     return <section className="filter-by-place-type">
         <h2 className="title place-type-title">Type of place</h2>
 
@@ -226,21 +225,6 @@ const FilterByPlaceType = (placeTypes) => {
             })}
         </div>
     </section>
-}
-
-const FilterByPrice = ({ priceRange }) => {
-    return <Grid container className="filter-by-price">
-
-        <Grid item xs={12} style={{ textAlign: "center" }}>
-            Grid checking
-        </Grid>
-
-        <label className="title price-title" id="filter-by-price">Price</label>
-
-        <Grid item xs={12} lg={8}>
-
-        </Grid>
-    </Grid>
 }
 
 const StaySortBy = ({ onChangeSort }) => {
@@ -269,4 +253,39 @@ const StaySortBy = ({ onChangeSort }) => {
 
         <button onClick={onSetSortBy}>Sort</button>
     </div>
+}
+
+const FilterByPrice = ({ totalAvgPriceRef,defaultRange, currentRange }) => {
+    console.log(`🚀 ~ totalAvgPriceRef:`, totalAvgPriceRef)
+    const [minPrice, maxPrice] = currentRange
+    const [defaultMin, defaultMax] = defaultRange
+
+    const handleChange = (event, newValue) => {
+        // handle change of the slider
+    }
+    // console.log('Total stays avg price:', formatCurrency(totalAvgPriceRef.current))
+
+    return (
+        <Grid container className="filter-by-price">
+            <label className="title price-title" id="filter-by-price">Price range</label>
+            {/* <span>The average nightly price is {formatCurrency((minPrice + maxPrice) / 2)}</span> */}
+
+
+            {/* <RangeSlider
+                value={[minPrice, maxPrice]}
+                onChange={handleChange}
+                min={defaultMin}
+                max={defaultMax}
+                aria-labelledby="range-slider"
+                marks={[
+                    { value: defaultMin, label: formatCurrency(defaultMin) },
+                    { value: defaultMax, label: formatCurrency(defaultMax) },
+                ]}
+                valueLabelDisplay="on"
+                valueLabelFormat={formatCurrency}
+                track="normal"
+                disableSwap
+            /> */}
+        </Grid>
+    );
 }

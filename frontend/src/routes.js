@@ -7,19 +7,23 @@ import { UserEdit } from './views/user-edit'
 import { StayApp } from './views/stay-app'
 import { StayDetails } from './views/stay-details'
 
-const stayRoutes = [
+const base = [
     {
         path: '',
         label: 'Home',
         component: <StayApp />,
     },
     {
-        path: 'stay/:id',
-        label: 'UserDetails ',
-        component: <StayDetails />
+        path: 'about',
+        label: 'About',
+        component: <About />
+    },
+    {
+        path: 'admin',
+        label: 'DashBoard',
+        component: <></>
     },
 ]
-
 const userRoutes = [
     {
         path: 'user',
@@ -42,19 +46,15 @@ const userRoutes = [
         component: <UserEdit />
     },
 ]
-
-const otherRoutes = [
+const stayRoutes = [
+    
     {
-        path: 'about',
-        label: 'About',
-        component: <About />
-    },
-    {
-        path: 'admin',
-        label: 'DashBoard',
-        component: <></>
+        path: 'stay/:id',
+        label: 'UserDetails ',
+        component: <StayDetails />
     },
 ]
-const routes = [...otherRoutes, ...stayRoutes, ...userRoutes,]
+
+const routes = [...base, ...stayRoutes, ...userRoutes,]
 
 export default routes

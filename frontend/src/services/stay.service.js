@@ -1,6 +1,8 @@
 import { storageService } from './async-storage.service.js'
 import { showErrorMsg } from './event-bus.service.js'
 const DEMO_STAYS = require('../assets/data/stay.json')
+
+// Stay Data
 const REGIONS = ['flexible', 'new-york', 'middle-east', 'italy', 'south-america', 'france']
 const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
 const AMENITIES = [
@@ -24,6 +26,7 @@ const AMENITIES = [
     "hot-water",
     "host-greets-you"
 ]
+
 /* {image src key: title } */
 const PLACE_TYPES = [
     { 'home': 'Entire home/apt' },
@@ -54,7 +57,10 @@ export const stayService = {
     getById,
     getData,
     getRange,
-    setRates, setRate,
+    getAvgRates,
+    setAvgRate,
+    getRangeMap,
+    getAvgPrice,
 }
 
 async function query(filterBy, sortBy) {
@@ -62,10 +68,9 @@ async function query(filterBy, sortBy) {
     const pageMap = {}
     try {
         stays = await storageService.query(STORAGE_KEY)
-        if (stays) {
-            pageMap.totalPageIdx = Math.ceil(stays.length / STAYS_PER_PAGE)
-            _saveToLocalStorage(stays)
-        }
+        // if(stays)_saveToLocalStorage(stays)
+
+        pageMap.totalPageIdx = Math.ceil(stays.length / STAYS_PER_PAGE)
 
         /* filter */
         const criteria = _buildCriteria(filterBy)
@@ -97,6 +102,19 @@ async function query(filterBy, sortBy) {
     }
 }
 
+function getData(askKey = null) {
+    const data = {
+        gStays,
+        AMENITIES,
+        LABELS,
+        PLACE_TYPES,
+        PROPERTY_TYPES,
+        REGIONS,
+    }
+    if (askKey) return data[askKey]
+    else return data
+}
+
 function remove(stayId) {
     return storageService.remove(STORAGE_KEY, stayId)
 }
@@ -110,23 +128,19 @@ function save(stay) {
     }
 }
 
-function getData(askKey = null) {
-    const data = {
-        AMENITIES,
-        LABELS,
-        PLACE_TYPES,
-        PROPERTY_TYPES,
-        REGIONS,
-    }
-    if (askKey) return data[askKey]
-    else return data
-}
-
 function getById(stayId) {
     return storageService.get(STORAGE_KEY, stayId)
 }
 
-// return [min,max]
+/* range */
+function getRangeMap(stays) {
+    const fields = ['price', 'capacity', 'bathrooms', 'bedrooms']// All Active ranges on the
+    const rangeMap = {}
+    for (let i = 0; i < fields.length; i++) {
+        rangeMap[fields[i]] = getRange(stays, fields[i])
+    }
+}
+// [min,max]
 function getRange(stays, field) {
     return stays.reduce((accRange, stay) => [
         Math.min(accRange[0], stay[field]),
@@ -134,13 +148,23 @@ function getRange(stays, field) {
     ], [Infinity, -Infinity])
 }
 
-function setRates(stays) {
+/* rate */
+function getAvgRates(stays) {
+    const rates = []
     for (let i = 0; i < stays.length; i++) {
-        setRate(stays[i])
+        const stay = stays[i]
+        const avgRate = setAvgRate(stay)
+        if (avgRate) rates.push(avgRate)
     }
-}
 
-function setRate(stay) {
+    if (rates.length === 0) return null
+
+    const total = rates.reduce((acc, rate) => acc + rate, 0)
+    const avgRate = total / rates.length
+    return avgRate
+}
+// NOTE: save only on Client side?
+function setAvgRate(stay) {
     const { reviews } = stay
     if (!reviews || !reviews.length) return null
 
@@ -154,7 +178,14 @@ function setRate(stay) {
     return avgRate
 }
 
-// filter helper
+/* price */
+function getAvgPrice(stays) {
+    const total = stays.reduce((acc, stay) => acc + stay.price, 0)
+    const avgPrice = total / stays.length
+    return avgPrice
+}
+
+/* filter and sort helpers */
 function _buildCriteria({
     pageIdx,
     txt,
@@ -287,12 +318,12 @@ function _getStaysSortBy(stays, sortBy) {
     return stays
 }
 
-// Storage
+/* Storage */
 function _loadFromLocalStorage() {
     const stays = localStorage.getItem(STORAGE_KEY)
     return stays ? JSON.parse(stays) : null
 }
 
 function _saveToLocalStorage(stays) {
-    localStorage.getItem(STORAGE_KEY, stays)
+    localStorage.setItem(STORAGE_KEY, stays)
 }

@@ -3,7 +3,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { httpService } from './http.service'
 import { utilService } from './util.service'
 import { countryService } from './country.service'
-import { translationService } from './i18n.service'
+import { transService } from './i18n.service'
 
 const countries = countryService.getCountries() // const COUNTRIES = require('../assets/data/countries.json')
 
@@ -289,7 +289,7 @@ function _getPosFromCountry(country) {
 }
 
 function _calcDistance(posA, posB) {
-    const radius = translationService.getEarthRadius()
+    const radius = transService.getEarthRadius()
 
     const dLat = (posB.lat - posA.lat) * Math.PI / 180
     const dLon = (posB.lng - posA.lng) * Math.PI / 180

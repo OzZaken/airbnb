@@ -7,50 +7,73 @@ export const storageService = {
     postMany,
 }
 
-function query(entityType, delay = 200, isReject = false) {
-    var entities = JSON.parse(localStorage.getItem(entityType))
-    return new Promise((resolve, reject) => {
-        setTimeout(() => { !isReject ? resolve(entities) : reject(entities) }, delay)
-    })
+function query(entityType, delay = 200) {
+    try {
+        const entities = JSON.parse(localStorage.getItem(entityType))
+        return new Promise(resolve => {
+            setTimeout(() => resolve(entities), delay)
+        })
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 function post(entityType, newEntity) {
-    newEntity._id = _makeId()
-    return query(entityType)
-        .then(entities => {
+    try {
+        newEntity._id = _makeId()
+        return query(entityType).then((entities) => {
             entities.push(newEntity)
             _save(entityType, entities)
             return newEntity
         })
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 function postMany(entityType, entities) {
-    _save(entityType, entities)
-    return Promise.resolve(entities)
+    try {
+        _save(entityType, entities)
+        return Promise.resolve(entities)
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 function get(entityType, entityId) {
-    return query(entityType)
-        .then(entities => entities.find(entity => entity._id === entityId))
+    try {
+        return query(entityType)
+            .then((entities) => entities.find((entity) => entity._id === entityId))
+    } catch (err) {
+        return Promise.reject(err)
+    }
 }
 
 function put(entityType, updatedEntity) {
-    return query(entityType)
-        .then(entities => {
-            const idx = entities.findIndex(entity => entity._id === updatedEntity._id)
-            entities.splice(idx, 1, updatedEntity)
-            _save(entityType, entities)
-            return updatedEntity
-        })
+    try {
+        return query(entityType)
+            .then((entities) => {
+                const idx = entities.findIndex((entity) => entity._id === updatedEntity._id);
+                entities.splice(idx, 1, updatedEntity)
+                _save(entityType, entities)
+                return updatedEntity
+            })
+    } catch (err) {
+        return Promise.reject(err)
+    }
 }
 
 function remove(entityType, entityId) {
-    return query(entityType)
-        .then(entities => {
-            const idx = entities.findIndex(entity => entity._id === entityId)
-            entities.splice(idx, 1)
-            _save(entityType, entities)
-        })
+    try {
+        return query(entityType)
+            .then((entities) => {
+                const idx = entities.findIndex((entity) => entity._id === entityId)
+                entities.splice(idx, 1)
+                _save(entityType, entities)
+            })
+    } catch (err) {
+        return Promise.reject(err)
+    }
 }
 
 function _save(entityType, entities) {

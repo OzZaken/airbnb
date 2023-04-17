@@ -1,26 +1,5 @@
-3/23/2023, 8:38:12 AM - INFO - Server is running on port: 3030
-3/23/2023, 8:45:53 AM - INFO - Server is running on port: 30303/23/2023, 2:46:40 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:47:01 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:47:29 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:47:38 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:04 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:09 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:16 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:30 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:37 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:48:43 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:49:00 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:50:36 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:50:46 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:51:03 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:52:38 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:53:16 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:53:54 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:54:06 PM - INFO - Server is running on port: 3030
-3/23/2023, 2:56:58 PM - INFO - Server is running on port: 3030
-3/23/2023, 3:03:17 PM - INFO - Server is running on port: 3030
-3/23/2023, 3:03:22 PM - INFO - Server is running on port: 3030
-3/23/2023, 6:09:32 PM - INFO - Server is running on port: 3030
-3/25/2023, 1:42:20 AM - DEBUG - Getting Stays
-3/25/2023, 5:02:26 PM - INFO - Server is running on port: 3030
-3/25/2023, 6:02:26 AM - DEBUG - Filter Stays
+4/18/2023, 1:05:43 AM - INFO - Server listening at port %d | 3030
+4/18/2023, 1:06:39 AM - INFO - Server listening at port %d | 3030
+4/18/2023, 1:07:32 AM - INFO - Server listening at port %d | 3030
+4/18/2023, 1:08:01 AM - INFO - Server listening at port %d | 3030
+4/18/2023, 1:08:41 AM - INFO - Server listening at port %d | 3030

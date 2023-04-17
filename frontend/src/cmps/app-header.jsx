@@ -41,7 +41,7 @@ export const AppHeader = connect(mapStateToProps,)(_AppHeader)
 
 const MainHeaderNav = ({ onSetSearchBy }) => {
     return <section className="main-header-nav">
-        <Link to={''} className="logo"></Link>
+        <Link to='' className="logo"></Link>
 
         <section className="container main-search-container">
             <button onClick={onSetSearchBy} className="btn-circle btn-search-by">

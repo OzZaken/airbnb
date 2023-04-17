@@ -2,7 +2,9 @@ import { stayService } from "../services/stay.service"
 import { showSuccessMsg, showErrorMsg, showUserMsg } from '../services/event-bus.service'
 import { storageService } from "../services/async-storage.service"
 
-// Action Creators:
+const STORAGE_KEY = 'stay'
+
+// -------------------------------   Action Creators:    -------------------------------
 export function getActionRemoveStay(stayId) {
     return { type: 'REMOVE_STAY', stayId }
 }
@@ -12,8 +14,7 @@ export function getActionAddStay(stay) {
 export function getActionUpdateStay(stay) {
     return { type: 'UPDATE_STAY', stay }
 }
-
-// CRUD
+// -------------------------------   CRUD    -------------------------------
 export function addStay(stay) {
     return async (dispatch) => {
         try {
@@ -29,17 +30,19 @@ export function addStay(stay) {
         }
     }
 }
+
 export function loadStays() {
     return async (dispatch, getState) => {
         const { filterBy, sortBy } = getState().stayModule
         try {
-            var stays = await stayService.query(filterBy, sortBy)
+            const stays = await stayService.query(filterBy, sortBy)
             dispatch({ type: 'SET_STAYS', stays })
         } catch (err) {
             showErrorMsg('Cannot load stays')
         }
     }
 }
+
 export function updateStay(stay) {
     return async (dispatch) => {
         var updateStay = stayService.save(stay)
@@ -55,6 +58,7 @@ export function updateStay(stay) {
         }
     }
 }
+
 export function removeStay(stayId) {
     return async (dispatch) => {
         try {
@@ -68,41 +72,30 @@ export function removeStay(stayId) {
     }
 }
 
-/* WishList */
+// -------------------------------   WishList    -------------------------------
 export function addToWishList(stay) {
     return (dispatch) => {
         dispatch({ type: 'ADD_TO_WISHLIST', stay })
     }
 }
+
 export function removeFromWishList(stayId) {
     return (dispatch) => {
         dispatch({ type: 'REMOVE_FROM_WISHLIST', stayId })
     }
 }
+
 export function clearWishList() {
     return (dispatch) => {
         dispatch({ type: 'CLEAR_WISHLIST' })
     }
 }
 
-/* page-idx */
-export function setPageIdx(pageIdx = 0) {
+// -------------------------------   Query Params    -------------------------------
+/* filter */
+export function setFilterBy(filterBy) {
     return (dispatch) => {
-        dispatch({ type: 'SET_PAGE_IDX', pageIdx })
-    }
-}
-
-export function incPageIdx() {
-    return (dispatch, getState) => {
-        const { pageIdx } = getState().stayModule.filterBy
-        dispatch({ type: 'INC_PAGE_IDX', pageIdx })
-    }
-}
-
-export function DecPageIdx() {
-    return (dispatch, getState) => {
-        const { pageIdx } = getState().stayModule.filterBy
-        dispatch({ type: 'DEC_PAGE_IDX', pageIdx })
+        dispatch({ type: 'SET_FILTER_BY', filterBy })
     }
 }
 
@@ -133,15 +126,28 @@ export function setSortBy(sortBy) {
     }
 }
 
-/* filter */
-export function setFilterBy(filterBy) {
+/* pagination */
+export function setPageIdx(pageIdx = 0) {
     return (dispatch) => {
-        dispatch({ type: 'SET_FILTER_BY', filterBy })
+        dispatch({ type: 'SET_PAGE_IDX', pageIdx })
     }
 }
 
-// Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
-const STORAGE_KEY = 'stay'
+export function incPageIdx() {
+    return (dispatch, getState) => {
+        const { pageIdx } = getState().stayModule.filterBy
+        dispatch({ type: 'INC_PAGE_IDX', pageIdx })
+    }
+}
+
+export function DecPageIdx() {
+    return (dispatch, getState) => {
+        const { pageIdx } = getState().stayModule.filterBy
+        dispatch({ type: 'DEC_PAGE_IDX', pageIdx })
+    }
+}
+
+//--------Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
 export function onLoadStaysPWA() {
     const storageStays = storageService.query(STORAGE_KEY)
     // dispatch({ type: 'SET_STAYS', stays: storageStays })

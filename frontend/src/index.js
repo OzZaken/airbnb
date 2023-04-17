@@ -12,15 +12,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
     <Router>
+
       <ErrorBoundary>
-      <App />
+        <App />
       </ErrorBoundary>
+
     </Router>
   </Provider>
 )
 
 window.onerror = (message, source, line, column, error) => {
-  console.log({
+  console.log('error',{
     message,
     source,
     line,

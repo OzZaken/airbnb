@@ -71,7 +71,7 @@ async function emitToUser({ type, data, userId }) {
     }
 }
 
-// If possible, send to all sockets BUT not the current socket 
+// If possible, send to all sockets BUT not the current socket. 
 // Optionally, broadcast to a room / to all
 async function broadcast({ type, data, room = null, userId }) {
     userId = userId.toString()
@@ -103,6 +103,7 @@ async function _getAllSockets() {
     return await gIo.fetchSockets()
 }
 
+/* logs */
 async function _printSockets() {
     const sockets = await _getAllSockets()
     sockets.forEach(_printSocket)

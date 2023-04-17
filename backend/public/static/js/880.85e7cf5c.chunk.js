@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[880],{1880:function(e,n,t){e.exports=t.p+"static/media/btn-filter-next-links.28d2584d386cb7b80c80.svg"}}]);

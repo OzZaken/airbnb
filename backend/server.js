@@ -1,24 +1,27 @@
 const express = require('express')
 const path = require('path')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
-
 const app = express()
 const http = require('http').createServer(app)
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
+const { setupSocketAPI } = require('./services/socket.service')
+const port = process.env.PORT || 3030
+const logger = require('./services/logger.service')
+
+setupSocketAPI(http)
 
 app.use(cookieParser())
 app.use(express.json())
 
-/* Express serve static files on production environment*/
+/* Express serve static files (on production environment)*/
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')))
-} 
-
-/* Configuring CORS on development */
-else { 
-/* Make sure origin contains the url frontend is running on*/
-const corsOptions = {
+}
+else {
+    app.get('/favicon.ico', (req, res) => res.status(204))
+    /*  Configuring CORS Make sure origin contains the url frontend is running on*/
+    const corsOptions = {
         origin: [
             'http://127.0.0.1:5173',
             'http://127.0.0.1:8080',
@@ -32,10 +35,9 @@ const corsOptions = {
     app.use(cors(corsOptions))
 }
 
-/* Async Local Storage */
+/* Routes */
 app.all('*', setupAsyncLocalStorage)
 
-/* Routes */
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const stayRoutes = require('./api/stay/stay.routes')
@@ -48,16 +50,16 @@ app.use('/api/review', reviewRoutes)
 app.use('/api/stay', stayRoutes)
 app.use('/api/order', orderRoutes)
 
+// return home when not find
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
-/* Web Socket */
-const { setupSocketAPI } = require('./services/socket.service')
-setupSocketAPI(http)
+// const ANSI_COLOR_BLUE = '\x1b[34m'
+const ANSI_COLOR_RESET = '\x1b[0m'
+const ANSI_COLOR_GREEN = '\x1b[32m'
 
-/* Logs */
-const logger = require('./services/logger.service')
-const port = process.env.PORT || 3030
-
-http.listen(port, () => logger.info('Server is running on port: ' + port))
+http.listen(port, () => {
+    logger.info('Server listening at port %d', port)
+    console.log(`Server listening at port: ${ANSI_COLOR_GREEN}${port}${ANSI_COLOR_RESET}`)
+})

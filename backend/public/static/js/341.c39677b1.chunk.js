@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[341],{3341:function(e,t,n){e.exports=n.p+"static/media/right-arrow.6562d499338ed24d933f.svg"}}]);

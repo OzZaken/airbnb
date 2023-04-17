@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[415],{9415:function(e,t,c){e.exports=c.p+"static/media/favorite-fill.1c0c619ba007b0dc76f9.svg"}}]);

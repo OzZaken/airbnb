@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[990],{7990:function(e,s,t){e.exports=t.p+"static/media/empty-user.ba2b20d445e5f594195a.svg"}}]);

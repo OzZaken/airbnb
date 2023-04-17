@@ -28,6 +28,8 @@ function requireAdmin(req, res, next) {
 function requireHost(req, res, next) {
   const stayId = req.params.id
   const stay = stayService.getById(stayId)
+  const loginToken = req.cookies.loginToken
+  const loggedinUser = authService.validateToken(loginToken)
 
   if (!stay) return res.status(404).send('Stay not found')
   

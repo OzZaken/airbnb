@@ -1,0 +1,74 @@
+{
+    "regions": [
+        "flexible",
+        "new-york",
+        "middle-east",
+        "italy",
+        "south-america",
+        "france"
+    ],
+    "propertyTypes": [
+        "house",
+        "hotel",
+        "apartment",
+        "guesthouse"
+    ],
+    "placeTypes": [
+        {
+            "home": "Entire home/apt"
+        },
+        {
+            "privet-room": "Private room"
+        },
+        {
+            "shared-room": "Shared room"
+        }
+    ],
+    "labels": [
+        {
+            "omg": "OMG!"
+        },
+        {
+            "beach": "Beach!"
+        },
+        {
+            "national-park": "National parks"
+        },
+        {
+            "amazing-pool": "Amazing pools"
+        },
+        {
+            "amazing-views": "Amazing views"
+        },
+        {
+            "arctic": "Arctic"
+        },
+        {
+            "design": "Design"
+        },
+        {
+            "island": "Island"
+        }
+    ],
+    "amenities": [
+        "internet",
+        "wifi",
+        "wheelchair-accessible",
+        "kitchen",
+        "free-parking-on-premises",
+        "elevator",
+        "free-street-parking",
+        "indoor-fireplace",
+        "heating",
+        "washer",
+        "essentials",
+        "lock-on-bedroom-door",
+        "24-hour-check-in",
+        "hangers",
+        "iron",
+        "laptop-friendly-workspace",
+        "tV",
+        "hot-water",
+        "host-greets-you"
+    ]
+}

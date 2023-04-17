@@ -17,14 +17,15 @@ const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
 const baseUrl = (process.env.NODE_ENV === 'production') ? '' : '//localhost:3030'
 export const socketService = createSocketService()
+
 // export const socketService = createDummySocketService()
 
-// window.socketService = socketService // for debugging from console
+window.socketService = socketService // for debugging from console
 
 socketService.setup()
 
 function createSocketService() {
-    var socket = null;
+    var socket = null
     const socketService = {
         setup() {
             socket = io(baseUrl)
@@ -95,12 +96,10 @@ function createDummySocketService() {
     return socketService
 }
 
-
-// Basic Tests
-// function cb(x) {console.log('Socket Test - Expected Puk, Actual:', x)}
-// socketService.on('baba', cb)
-// socketService.on('baba', cb)
-// socketService.on('baba', cb)
-// socketService.on('mama', cb)
-// socketService.emit('baba', 'Puk')
-// socketService.off('baba', cb)
+/** Basic Tests 
+ * function cb(x) {console.log('Socket Test - Expected Puk, Actual:', x)}
+ * socketService.on('baba', cb)
+ * socketService.on('mama', cb)
+ * socketService.emit('baba', 'Puk'
+ * socketService.off('baba', cb)
+ * */

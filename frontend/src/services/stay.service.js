@@ -1,83 +1,48 @@
-import { storageService } from './async-storage.service.js'
+import { storageService } from './async-storage.service.js' // when backend is set import { httpService } from './http.service.js'
 import { showErrorMsg } from './event-bus.service.js'
+const DATA = require('../assets/data/stay-data.json')
 const DEMO_STAYS = require('../assets/data/stay.json')
-
-// Stay Data
-const REGIONS = ['flexible', 'new-york', 'middle-east', 'italy', 'south-america', 'france']
-const PROPERTY_TYPES = ['house', 'hotel', 'apartment', 'guesthouse']
-const AMENITIES = [
-    "tV",
-    "internet",
-    "wifi",
-    "wheelchair-accessible",
-    "kitchen",
-    "free-parking-on-premises",
-    "elevator",
-    "free-street-parking",
-    "indoor-fireplace",
-    "heating",
-    "washer",
-    "essentials",
-    "lock-on-bedroom-door",
-    "24-hour-check-in",
-    "hangers",
-    "iron",
-    "laptop-friendly-workspace",
-    "hot-water",
-    "host-greets-you"
-]
-
-/* {image src key: title } */
-const PLACE_TYPES = [
-    { 'home': 'Entire home/apt' },
-    { 'privet-room': 'Private room' },
-    { 'shared-room': 'Shared room' }
-]
-const LABELS = [
-    { 'omg': 'OMG!' },
-    { 'beach': 'Beach!' },
-    { 'national-park': 'National parks' },
-    { 'amazing-pool': 'Amazing pools' },
-    { 'amazing-views': 'Amazing views' },
-    { 'arctic': 'Arctic' },
-    { 'design': 'Design' },
-    { 'island': 'Island' },
-]
-
 const STORAGE_KEY = 'stay'
-
-const STAYS_PER_PAGE = 20 // todo move to backend
+const STAYS_PER_PAGE = 20 // move to backend
 
 var gStays = _loadFromLocalStorage() || null
 
 export const stayService = {
-    query,
-    save,
-    remove,
-    getById,
-    getData,
-    getRange,
-    getAvgRates,
-    setAvgRate,
-    getRangeMap,
-    getAvgPrice,
+    save,       /* Create, Update */
+    remove,     /* Delete */
+    getById,    /* Read */
+    query,      /* List */
+    getStays,   /* stays from Local Storage */
+    getData,    /* data */
+    getStat,    /* statistic */
+    getRange,   /* range */
+    getAvg      /* average */
 }
 
-async function query(filterBy, sortBy) {
+async function query(filterBy, sortBy = null) {
     var stays = gStays
     const pageMap = {}
+
     try {
+        /* put demo data on error (demonstration only)*/
+        if (!stays || !stays.length) {
+            console.log('!stays || !stays.length', !stays || !stays.length)
+            // showErrorMsg('Loading stays Fail')
+            storageService.postMany(STORAGE_KEY, DEMO_STAYS)
+            stays = DEMO_STAYS
+            // return null
+        }
+
         stays = await storageService.query(STORAGE_KEY)
         // if(stays)_saveToLocalStorage(stays)
-
         pageMap.totalPageIdx = Math.ceil(stays.length / STAYS_PER_PAGE)
 
         /* filter */
         const criteria = _buildCriteria(filterBy)
-        stays = _getStaysFilterBy(stays, criteria)
+        stays = _getFilterBy(stays, criteria)
 
         /* sort */
-        stays = _getStaysSortBy(stays, sortBy)
+        stays = _getSortBy(stays, sortBy)
 
         /* pagination */
         const { pageIdx } = filterBy
@@ -90,29 +55,8 @@ async function query(filterBy, sortBy) {
         console.log('filterBy from storage has been failed', err)
     }
     finally {
-        /* put demo data on fatal error (demonstration only)*/
-        if (!stays || !stays.length) {
-            console.log('!stays || !stays.length', !stays || !stays.length)
-            showErrorMsg('Loading stays Fail')
-            storageService.postMany(STORAGE_KEY, DEMO_STAYS)
-            stays = DEMO_STAYS
-            return null
-        }
         return stays
     }
-}
-
-function getData(askKey = null) {
-    const data = {
-        gStays,
-        AMENITIES,
-        LABELS,
-        PLACE_TYPES,
-        PROPERTY_TYPES,
-        REGIONS,
-    }
-    if (askKey) return data[askKey]
-    else return data
 }
 
 function remove(stayId) {
@@ -132,60 +76,84 @@ function getById(stayId) {
     return storageService.get(STORAGE_KEY, stayId)
 }
 
-/* range */
-function getRangeMap(stays) {
-    const fields = ['price', 'capacity', 'bathrooms', 'bedrooms']// All Active ranges on the
-    const rangeMap = {}
-    for (let i = 0; i < fields.length; i++) {
-        rangeMap[fields[i]] = getRange(stays, fields[i])
-    }
-}
-// [min,max]
-function getRange(stays, field) {
-    return stays.reduce((accRange, stay) => [
-        Math.min(accRange[0], stay[field]),
-        Math.max(accRange[1], stay[field])
-    ], [Infinity, -Infinity])
+function getStays() {
+    return gStays
 }
 
-/* rate */
-function getAvgRates(stays) {
+function getData(field = null) {
+    if (field) return DATA[field]
+    else return DATA
+}
+
+function getStat(field = null) {
+    if (!field) {
+        const stat = {
+            avgPrice: getAvgPrice(),
+            avgRate: _getAvgRates()
+        }
+        return stat
+    }
+    else return STAT[field]()
+}
+
+function getRange(stays = gStays, field) {
+    if (field) return _getMinMax(stays, field)
+
+    const rangeMap = {}
+    const fields = ['price', 'capacity', 'bathrooms', 'bedrooms']
+    for (let i = 0; i < fields.length; i++) {
+        rangeMap[fields[i]] = _getMinMax(stays, fields[i])
+    }
+    return rangeMap
+}
+
+function getAvg(stays = gStays, field = null) {
+    // ['capacity', 'bathrooms', 'bedrooms']
+    if (field === 'rate') {
+        if (stays && stays.length === 1) _getAvgRate(stays) // NOTE: stay`s` contain 1 Entity.
+        else _getAvgRates(stays)
+    }
+    else if (field === 'price') {
+        const totalPrice = stays.reduce((acc, stay) => acc + stay.price, 0)
+        const avgPrice = totalPrice / stays.length || null
+        return avgPrice
+    }
+}
+
+function _getAvgRates(stays = gStays) {
     const rates = []
     for (let i = 0; i < stays.length; i++) {
         const stay = stays[i]
-        const avgRate = setAvgRate(stay)
+        const avgRate = _getAvgRate(stay)
         if (avgRate) rates.push(avgRate)
     }
-
     if (rates.length === 0) return null
 
     const total = rates.reduce((acc, rate) => acc + rate, 0)
     const avgRate = total / rates.length
     return avgRate
 }
-// NOTE: save only on Client side?
-function setAvgRate(stay) {
+
+function _getAvgRate(stay) {
     const { reviews } = stay
     if (!reviews || !reviews.length) return null
 
     const reviewsCount = reviews.length
-
     const avgRate = reviews.reduce(
         (accRate, review) => accRate + review.rate, 0
     ) / reviewsCount || null
 
-    stay.avgRate = avgRate
-    return avgRate
+    if (!avgRate) {
+        console.log('!avgRate')
+        return null
+    }
+
+    const formatRate = +avgRate.toFixed(2)
+    // stay.avgRate = formatRate // NOTE: save only on Client side
+    return formatRate
 }
 
-/* price */
-function getAvgPrice(stays) {
-    const total = stays.reduce((acc, stay) => acc + stay.price, 0)
-    const avgPrice = total / stays.length
-    return avgPrice
-}
-
-/* filter and sort helpers */
+/* criteria helper */
 function _buildCriteria({
     pageIdx,
     txt,
@@ -255,7 +223,8 @@ function _buildCriteria({
     }
 }
 
-function _getStaysFilterBy(stays, {
+/* filter */
+function _getFilterBy(stays = gStays, {
     regex,
     region, label,
     amenities, placeTypes, propertyTypes,
@@ -294,9 +263,13 @@ function _getStaysFilterBy(stays, {
     return stays
 }
 
-function _getStaysSortBy(stays, sortBy) {
-    const [sortByKey, isDesc = null] = Object.entries(sortBy)[0]
-    switch (sortByKey) {
+/* sort */
+function _getSortBy(stays = gStays, sortBy) {
+    // shuffle array random sort
+    if (!sortBy) return stays.sort(() => Math.random() - 0.5)
+
+    const [field, isDesc = null] = Object.entries(sortBy)[0]
+    switch (field) {
         case 'price':
             stays = stays.sort((t1, t2) => t1.price - t2.price * isDesc)
             break
@@ -324,6 +297,13 @@ function _loadFromLocalStorage() {
     return stays ? JSON.parse(stays) : null
 }
 
-function _saveToLocalStorage(stays) {
-    localStorage.setItem(STORAGE_KEY, stays)
+function _saveToLocalStorage() {
+    localStorage.setItem(STORAGE_KEY, gStays)
+}
+
+function _getMinMax(entities, field) {
+    return entities.reduce((accRange, entity) => [
+        Math.min(accRange[0], entity[field]),
+        Math.max(accRange[1], entity[field])
+    ], [Infinity, -Infinity]) || null
 }

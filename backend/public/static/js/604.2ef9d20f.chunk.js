@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[604],{1604:function(e,a,t){e.exports=t.p+"static/media/favorite-border.537e7c5b9a34a2af0ba5.svg"}}]);

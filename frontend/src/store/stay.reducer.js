@@ -19,7 +19,7 @@ const INITIAL_STATE = {
         rates: [0, 5],
         beds: [0, Infinity],
         dates: [
-            Date.now(),/*day hour min sec millisecond*/
+            Date.now(),/* days hours mins secs milliseconds */
             Date.now() + 3 * 24 * 60 * 60 * 1000, 
         ]
     }

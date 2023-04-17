@@ -1,5 +1,6 @@
 const dbService = require('../../services/db.service')
 const logger = require('../../services/logger.service')
+
 const ObjectId = require('mongodb').ObjectId
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
 }
 
 async function query(filterBy, sortBy) {
+    console.log(`🚀 ~ query:`, filterBy,sortBy)
     const criteria = _buildCriteria(filterBy, sortBy)
     try {
         const collection = await dbService.getCollection('stay')
@@ -68,7 +70,7 @@ async function update(stay) {
     }
 }
 
-// helper function that constructs a MongoDB query criteria object based on the provided params.
+// Helper function that constructs a MongoDB query criteria object based on the provided params.
 function _buildCriteria({
     txt,
     pageIdx,

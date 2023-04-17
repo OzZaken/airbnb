@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[50],{7050:function(e,t,a){e.exports=a.p+"static/media/avatar-empty.b244f3856bda2c227520.jpg"}}]);

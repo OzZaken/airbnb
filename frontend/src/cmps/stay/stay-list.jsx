@@ -1,7 +1,8 @@
 import { StayPreview } from './stay-preview'
 
 export const StayList = ({
-    stays,  isLoading, loggedInUser, /* State */
+    stays, isLoading, loggedInUser, /* State */
+    staysToDispatchRef,/* Ref */
     onUpdateStay, onRemoveStay, /* CRUD */
     onAddToWishlist, onRemoveFromWishlist,  /* Wishlist */
     onClickPreviewImg, onLoadMoreStays,   /* NAV */
@@ -11,6 +12,7 @@ export const StayList = ({
     const stayPreview = {
         isLoading,
         loggedInUser,
+        staysToDispatchRef,
         onSetStayAvgRate,
         onCLickImg: onClickPreviewImg,
         onAddToWishlist,

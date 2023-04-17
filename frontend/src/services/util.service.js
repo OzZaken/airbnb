@@ -14,6 +14,7 @@ export const utilService = {
     // math
     getRandomIntInclusive,
     getRandomFloatInclusive,
+    formatFixedNum,
     // regex
     getCamelCase,
     getKebabCase,
@@ -24,6 +25,7 @@ export const utilService = {
     isValidDate,
     isValidTime,
 }
+
 
 function delay(ms = 1500) {
     return new Promise(resolve => setTimeout(resolve, ms))
@@ -138,6 +140,9 @@ function getRandomFloatInclusive(min, max, decimals) {
     return +((Math.random() * (max - min)) + min).toFixed(decimals)
 }
 
+function formatFixedNum(num, toFixed = 2) {
+    return +num.toFixed(toFixed)
+}
 /* Random */
 function getRandomColor() {
     const letters = '0123456789ABCDEF'

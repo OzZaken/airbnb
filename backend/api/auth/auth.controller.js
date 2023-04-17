@@ -7,7 +7,7 @@ module.exports = {
     logout
 }
 
-/** Authenticates a user's login request,
+/** Authenticates a user's login request.
  *  Generates a login token
  *  Sends it back to the client along with the user object if authentication is successful.
  *  Otherwise, it sends an error message to the client. */
@@ -50,7 +50,7 @@ async function signup(req, res) {
     }
 }
 
-/** Clears the login token cookie and sends a success message to the client.
+/** Clear login token cookie and sends a success message to the client.
  *  If there is an error clearing the cookie and sends an error message to the client. */
 async function logout(req, res) {
     try {

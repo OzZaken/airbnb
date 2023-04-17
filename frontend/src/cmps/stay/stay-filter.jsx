@@ -11,9 +11,8 @@ import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
 
 export const StayFilter = ({
-    stays,
+    stays, dataRef,
     filterBy, sortBy, filtersParams,
-    allAmenities, allLabels, allPlaceTypes, allPropertyTypes, allRegions,
     onUpdateFilterBy, onUpdateSortBy,
     getRange,
     onUpdateLabelBy, onUpdateRegionBy,
@@ -125,6 +124,13 @@ export const StayFilter = ({
         }))
     }
 
+    const {
+        labels: allLabels,
+        amenities: allAmenities,
+        placeTypes: allPlaceTypes,
+        propertyTypes: allPropertyTypes
+    } = dataRef.current
+    // ---------------------------------   object literal   ---------------------------------  
     const stayLabelsList = {
         labels: allLabels,
         onUpdateFilterBy

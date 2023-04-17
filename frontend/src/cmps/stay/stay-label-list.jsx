@@ -8,7 +8,7 @@ export const StayLabelList = ({ labels, onClick, onUpdateLabelBy, activeLabel })
     const [currLabelIdx, setCurrLabelIdx] = useState(0)
 
     const carouselRef = useRef(null)
-    const activeLabelRef = useRef()
+    const activeLabelRef = useRef('')
     const [imgMap, setImgsMap] = useState({})
 
     useEffect(() => {

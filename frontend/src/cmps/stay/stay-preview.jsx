@@ -17,9 +17,9 @@ const updateReviews = (reviews) => {
     })
 }
 
-export const StayPreview = ({ stay, loggedInUser, isLoading,
-    onToggleIsInWishlist, onSetStayAvgRate, onClickImg, onLoadMoreStays, onUpdateStay }) => {
-
+export const StayPreview = ({stay, staysToDispatchRef,
+    loggedInUser, isLoading,
+    onToggleIsInWishlist, onSetStayAvgRate, onClickImg, onLoadMoreStays, onUpdateStay}) => {
     const { reviews, _id, likedByUsers, propertyType, price, summary, imgUrls, loc } = stay
     const { city } = loc
 
@@ -41,14 +41,15 @@ export const StayPreview = ({ stay, loggedInUser, isLoading,
 
     useEffect(() => {
         updateReviews(reviews)
-        console.log('stay', stay)
+
         // intersection observer
         const observer = new IntersectionObserver(([entry]) => {
             setIsIntersecting(entry.isIntersecting)
 
             /* if already visible unobserve*/
             if (entry.isIntersecting) {
-                onSetStayAvgRate(stay)
+                // onSetStayAvgRate(stay)
+                staysToDispatchRef.current[stay._id] = stay
                 observer.unobserve(entry.target)
             }
 

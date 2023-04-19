@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { showSuccessMsg } from '../services/event-bus.service.js'
-import { onLogin } from '../store/user.action.js'
-
+import { showSuccessMsg } from '../services/user-msg.service'
+import { onLogin } from '../store/user.action'
 import MUILink from '@mui/material/Link'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'

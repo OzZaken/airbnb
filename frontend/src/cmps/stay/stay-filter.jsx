@@ -10,14 +10,7 @@ import Modal from '@mui/material/Modal'
 import Backdrop from '@mui/material/Backdrop'
 import Fade from '@mui/material/Fade'
 
-export const StayFilter = ({
-    stays, dataRef,
-    filterBy, sortBy, filtersParams,
-    onUpdateFilterBy, onUpdateSortBy,
-    getRange,
-    onUpdateLabelBy, onUpdateRegionBy,
-    totalAvgPriceRef
-}) => {
+const StayFilter = ({ stays, dataRef, filterBy, sortBy, filtersParams, onUpdateFilterBy, onUpdateSortBy, getRange, onUpdateLabelBy, onUpdateRegionBy, totalAvgPriceRef }) => {
     const [localFilterBy, setLocalFilter] = useState(filterBy)
     const [localSortBy, setLocalSort] = useState(sortBy)
 
@@ -193,3 +186,5 @@ export const StayFilter = ({
         </Modal>
     </section>
 }
+
+export default StayFilter

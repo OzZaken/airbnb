@@ -1,35 +1,77 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+// import { reportErrorToService } from './errorReportingService'
 
-export class ErrorBoundary extends React.Component {
-    state = { error: null, errorInfo: null }
+class ErrorBoundary extends React.Component {
+    static propTypes = {
+        children: PropTypes.node.isRequired,
+    }
+
+    state = {
+        error: null,
+        errorInfo: null,
+        hasError: false,
+    }
 
     componentDidCatch(error, errorInfo) {
-        console.log(`🚀 ~ ErrorBoundary ~ error`, error)
-        console.log(`🚀 ~ ErrorBoundary ~ errorInfo`, errorInfo)
-        // Catch errors in children and re-render with error message
-        // Note: in development the error is still presented on screen and you need to ESC to see the fallback UI
         this.setState({
             error,
-            errorInfo
+            errorInfo,
+            hasError: true,
         })
-        // TODO: Log error to an error reporting service on the backend
-        // logger.report(error)
+
+        // reportErrorToService(error, errorInfo)
     }
+
+    handleResetClick = () => {
+        this.setState({
+            error: null,
+            errorInfo: null,
+            hasError: false,
+        })
+    }
+
+    renderErrorState() {
+        const { error } = this.state
+        return (
+            <div>
+                <h2>Something went wrong!</h2>
+                <p>Our apologies, something went wrong. Please try refreshing the page or contact support if the problem persists.</p>
+
+                <button onClick={this.handleResetClick}>Reset</button><br />
+                <details style={{ whiteSpace: 'pre-wrap' }}><br />
+                    {this.state.error && this.state.error.toString()}
+                    <hr />
+                    {this.state.errorInfo.componentStack}
+                </details>
+            </div>
+        )
+    }
+
     render() {
-        if (this.state.errorInfo) {
-            // Error path
-            return (
-                <div>
-                    <h2>Something went wrong!!!</h2>
-                    <details style={{ whiteSpace: 'pre-wrap' }}>
-                        {this.state.error && this.state.error.toString()}
-                        <br />
-                        {this.state.errorInfo.componentStack}
-                    </details>
-                </div>
-            )
-        }
-        // Normally, just render children
+        const { hasError } = this.state
+        if (hasError) return this.renderErrorState()
         return this.props.children
     }
 }
+
+export default ErrorBoundary
+// ---------------------------------   debug   ---------------------------------  
+window.onerror = (message, source, line, column, error) => {
+    const data = {
+        message,
+        source,
+        line,
+        column,
+        stack: error.stack
+    }
+    console.log('error', data)
+}
+  // ↓↓ move to backend
+// Create a new logger instance
+// const logger = new Logger({
+//   logDirectory: './logs',
+//   logFilename: 'frontend.log',
+//   logToConsole: true,
+//   logLevel: 'debug'
+// })

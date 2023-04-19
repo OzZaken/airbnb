@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 
-export const useEffectUpdate = (callBack, dependencies) => {
+const useEffectUpdate = (callBack, dependencies) => {
 
     const isFirst = useRef(true)
 
@@ -15,3 +15,5 @@ export const useEffectUpdate = (callBack, dependencies) => {
 
     }, dependencies)// dependencies (an array of values) that the useEffect hook will monitor for changes.
 }
+
+export default useEffectUpdate

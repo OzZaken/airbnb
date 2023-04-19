@@ -1,24 +1,27 @@
 import { storageService } from './async-storage.service.js' // when backend is set import { httpService } from './http.service.js'
+import { saveToLocalStorage, loadFromLocalStorage } from './browser-storage.service.js' 
 import { showErrorMsg } from './event-bus.service.js'
 const DATA = require('../assets/data/stay-data.json')
 const DEMO_STAYS = require('../assets/data/stay.json')
 const STORAGE_KEY = 'stay'
-const STAYS_PER_PAGE = 20 // move to backend
+const STAYS_PER_PAGE = 20 
 
-var gStays = _loadFromLocalStorage() || null
+var gStays = loadFromLocalStorage(STORAGE_KEY) || null
 
-export const stayService = {
+const stayService = {
     save,       /* Create, Update */
     remove,     /* Delete */
     getById,    /* Read */
     query,      /* List */
     getStays,   /* stays from Local Storage */
-    getData,    /* data */
-    getStat,    /* statistic */
+    getData,    /* stays data (in typescript convert to file of types and instance) */
     getRange,   /* range */
     getAvg      /* average */
 }
 
+export default stayService
+
+// ---------------------------------   CRUD   ---------------------------------  
 async function query(filterBy, sortBy = null) {
     var stays = gStays
     const pageMap = {}
@@ -76,6 +79,7 @@ function getById(stayId) {
     return storageService.get(STORAGE_KEY, stayId)
 }
 
+// ---------------------------------   statistic   ---------------------------------  
 function getStays() {
     return gStays
 }
@@ -83,17 +87,6 @@ function getStays() {
 function getData(field = null) {
     if (field) return DATA[field]
     else return DATA
-}
-
-function getStat(field = null) {
-    if (!field) {
-        const stat = {
-            avgPrice: getAvgPrice(),
-            avgRate: _getAvgRates()
-        }
-        return stat
-    }
-    else return STAT[field]()
 }
 
 function getRange(stays = gStays, field) {
@@ -107,7 +100,7 @@ function getRange(stays = gStays, field) {
     return rangeMap
 }
 
-function getAvg(stays = gStays, field = null) {
+function getAvg(stays = gStays, field) {
     // ['capacity', 'bathrooms', 'bedrooms']
     if (field === 'rate') {
         if (stays && stays.length === 1) _getAvgRate(stays) // NOTE: stay`s` contain 1 Entity.
@@ -120,40 +113,8 @@ function getAvg(stays = gStays, field = null) {
     }
 }
 
-function _getAvgRates(stays = gStays) {
-    const rates = []
-    for (let i = 0; i < stays.length; i++) {
-        const stay = stays[i]
-        const avgRate = _getAvgRate(stay)
-        if (avgRate) rates.push(avgRate)
-    }
-    if (rates.length === 0) return null
-
-    const total = rates.reduce((acc, rate) => acc + rate, 0)
-    const avgRate = total / rates.length
-    return avgRate
-}
-
-function _getAvgRate(stay) {
-    const { reviews } = stay
-    if (!reviews || !reviews.length) return null
-
-    const reviewsCount = reviews.length
-    const avgRate = reviews.reduce(
-        (accRate, review) => accRate + review.rate, 0
-    ) / reviewsCount || null
-
-    if (!avgRate) {
-        console.log('!avgRate')
-        return null
-    }
-
-    const formatRate = +avgRate.toFixed(2)
-    // stay.avgRate = formatRate // NOTE: save only on Client side
-    return formatRate
-}
-
-/* criteria helper */
+// ---------------------------------   query params   ---------------------------------  
+/* criteria */
 function _buildCriteria({
     pageIdx,
     txt,
@@ -175,7 +136,7 @@ function _buildCriteria({
     placeTypes = placeTypes || []
     propertyTypes = propertyTypes || []
 
-    /* Range Array */
+    /* Ranges */
     let [checkIn, checkOut] = dates
     let [minPrice, maxPrice] = prices
     let [minCapacity, maxCapacity] = capacities
@@ -291,19 +252,43 @@ function _getSortBy(stays = gStays, sortBy) {
     return stays
 }
 
-/* Storage */
-function _loadFromLocalStorage() {
-    const stays = localStorage.getItem(STORAGE_KEY)
-    return stays ? JSON.parse(stays) : null
-}
-
-function _saveToLocalStorage() {
-    localStorage.setItem(STORAGE_KEY, gStays)
-}
-
-function _getMinMax(entities, field) {
-    return entities.reduce((accRange, entity) => [
-        Math.min(accRange[0], entity[field]),
-        Math.max(accRange[1], entity[field])
+// ---------------------------------   Privates   ---------------------------------  
+function _getMinMax(stays, field) {
+    return stays.reduce((accRange, stay) => [
+        Math.min(accRange[0], stay[field]),
+        Math.max(accRange[1], stay[field])
     ], [Infinity, -Infinity]) || null
+}
+
+function _getAvgRates(stays = gStays) {
+    const rates = []
+    for (let i = 0; i < stays.length; i++) {
+        const stay = stays[i]
+        const avgRate = _getAvgRate(stay)
+        if (avgRate) rates.push(avgRate)
+    }
+    if (rates.length === 0) return null
+
+    const total = rates.reduce((acc, rate) => acc + rate, 0)
+    const avgRate = total / rates.length
+    return avgRate
+}
+
+function _getAvgRate(stay) {
+    const { reviews } = stay
+    if (!reviews || !reviews.length) return null
+
+    const reviewsCount = reviews.length
+    const avgRate = reviews.reduce(
+        (accRate, review) => accRate + review.rate, 0
+    ) / reviewsCount || null
+
+    if (!avgRate) {
+        console.log('!avgRate')
+        return null
+    }
+
+    const formatRate = +avgRate.toFixed(2)
+    // stay.avgRate = formatRate // NOTE: save only on Client side
+    return formatRate
 }

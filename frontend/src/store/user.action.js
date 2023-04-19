@@ -1,5 +1,5 @@
 import { userService } from "../services/user.service"
-import { showErrorMsg } from '../services/event-bus.service'
+import { showErrorMsg } from '../services/user-msg.service'
 
 export function onSignup(credentials) {
     return async (dispatch) => {

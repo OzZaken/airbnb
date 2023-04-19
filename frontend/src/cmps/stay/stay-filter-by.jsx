@@ -1,14 +1,12 @@
 import { useEffect, useRef } from "react"
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { transService } from '../../services/i18n.service'
+import { formatCurrency } from '../../services/i18n.service'
 
 import { IconButton } from '@mui/material'
 import Button from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Grid, Typography } from "@material-ui/core"
-
-const { formatCurrency } = transService
 
 // const RoomButton = styled(Button)(({ theme }) => ({
 //     color: theme.palette.getContrastText('#ffffff'),
@@ -36,8 +34,8 @@ const FormFilterBy = ({
     const [checkIn, checkOut] = dates
 
     const filterByPrice = {
-        defaultRange:[40, 2500],
-        currentRange:[minPrice, maxPrice],
+        defaultRange: [40, 2500],
+        currentRange: [minPrice, maxPrice],
         totalAvgPriceRef,
     }
     return <form className='filter-by-form' {...onSubmit}>
@@ -255,7 +253,7 @@ const StaySortBy = ({ onChangeSort }) => {
     </div>
 }
 
-const FilterByPrice = ({ totalAvgPriceRef,defaultRange, currentRange }) => {
+const FilterByPrice = ({ totalAvgPriceRef, defaultRange, currentRange }) => {
     console.log(`🚀 ~ totalAvgPriceRef:`, totalAvgPriceRef)
     const [minPrice, maxPrice] = currentRange
     const [defaultMin, defaultMax] = defaultRange

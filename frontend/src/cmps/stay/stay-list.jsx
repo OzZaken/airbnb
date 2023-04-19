@@ -1,6 +1,6 @@
 import { StayPreview } from './stay-preview'
 
-export const StayList = ({
+const StayList = ({
     stays, isLoading, loggedInUser, /* State */
     staysToDispatchRef,/* Ref */
     onUpdateStay, onRemoveStay, /* CRUD */
@@ -28,3 +28,4 @@ export const StayList = ({
         </li>)}
     </ul>
 }
+export default StayList

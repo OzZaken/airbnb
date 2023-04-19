@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useEffectUpdate } from "./useEffectUpdate"
+import useEffectUpdate from "./useEffectUpdate"
 
 /* trigger the callback whenever the fields state changes. */
 export const useFormRegister = (initialState, cb) => {

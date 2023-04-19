@@ -1,5 +1,8 @@
-import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
+import { legacy_createStore as createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
+
+// import thunkMiddleware from 'redux-thunk';
+// import { createLogger } from 'redux-logger';
 
 /* reducers */
 import { systemReducer } from './system.reducer'
@@ -21,5 +24,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 /* create store */
 export const store = createStore(
     rootReducer,
+    // composeEnhancers enable the use of the Redux DevTools browser extension
     composeEnhancers(applyMiddleware(thunk))
 )

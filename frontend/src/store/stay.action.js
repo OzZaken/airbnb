@@ -1,10 +1,7 @@
-import { stayService } from "../services/stay.service"
-import { showSuccessMsg, showErrorMsg, showUserMsg } from '../services/event-bus.service'
-import { storageService } from "../services/async-storage.service"
+import stayService from '../services/stay.service'
+import { showSuccessMsg, showErrorMsg, showUserMsg } from '../services/user-msg.service'
 
-const STORAGE_KEY = 'stay'
-
-// -------------------------------   Action Creators:    -------------------------------
+// -------------------------------   Action Creators:    
 export function getActionRemoveStay(stayId) {
     return { type: 'REMOVE_STAY', stayId }
 }
@@ -14,7 +11,8 @@ export function getActionAddStay(stay) {
 export function getActionUpdateStay(stay) {
     return { type: 'UPDATE_STAY', stay }
 }
-// -------------------------------   CRUD    -------------------------------
+
+// -------------------------------   CRUD    
 export function addStay(stay) {
     return async (dispatch) => {
         try {
@@ -72,7 +70,7 @@ export function removeStay(stayId) {
     }
 }
 
-// -------------------------------   WishList    -------------------------------
+// -------------------------------   WishList    
 export function addToWishList(stay) {
     return (dispatch) => {
         dispatch({ type: 'ADD_TO_WISHLIST', stay })
@@ -91,7 +89,7 @@ export function clearWishList() {
     }
 }
 
-// -------------------------------   Query Params    -------------------------------
+// -------------------------------   Query Params    
 /* filter */
 export function setFilterBy(filterBy) {
     return (dispatch) => {
@@ -147,10 +145,11 @@ export function DecPageIdx() {
     }
 }
 
-//--------Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
+// ---------------------------------   PWA     
+// Optimistic Mutation  (IOW - Assuming the server call will work, so updating the UI first)
 export function onLoadStaysPWA() {
-    const storageStays = storageService.query(STORAGE_KEY)
-    // dispatch({ type: 'SET_STAYS', stays: storageStays })
+    const storageStays = stayService.getStays()
+    dispatch({ type: 'SET_STAYS', stays: storageStays })
 
     return async (dispatch, getState) => {
         const state = getState()

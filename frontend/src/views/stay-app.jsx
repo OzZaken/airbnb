@@ -1,16 +1,17 @@
 import { useEffect, useReducer, useRef, forwardRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { stayService } from '../services/stay.service'
+import stayService from '../services/stay.service'
 import { addStay, loadStays, removeStay, setSortBy, updateStay, setFilterBy, removeFromWishList, addToWishList, incPageIdx, setPageIdx } from '../store/stay.action'
-import { useViewEffect } from '../hooks/useViewEffect'
-import { StayList } from '../cmps/stay/stay-list'
-import { StayFilter } from "../cmps/stay/stay-filter"
+import useEffectView from '../hooks/useEffectView'
+import useEffectUpdate from '../hooks/useEffectUpdate'
+import StayList from '../cmps/stay/stay-list'
+import StayFilter from "../cmps/stay/stay-filter"
 import ScrollTo from '../cmps/scroll-to'
-import { useEffectUpdate } from '../hooks/useEffectUpdate'
-import { transService } from '../services/i18n.service'
+import transService from '../services/i18n.service'
 // import { UNMOUNTED } from 'react-transition-group/Transition'
-const { getRange, getAvgRate, getAvgRates, getRangeMap, getAvgPrice, getData, getStat } = stayService
+
+const { getRange, getAvg, getData } = stayService
 const { formatCurrency } = transService
 
 export const StayApp = () => {
@@ -20,55 +21,46 @@ export const StayApp = () => {
     const { stays, filterBy, sortBy, isLoading } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
     const [searchParams, setSearchParams] = useSearchParams()
+    // ---------------------------------   UseRef     
+    const stayDataTypeRef = useRef(getData())
+    const stayStatRef = useRef({}) /* current statistics */
+    const staysToPatchRef = useRef([]) /* store array contains update just a part of a stay (reviews) [{`stayId`:`updated reviews`} ] */
 
-    const stayMap = {
-        data: getData(),
-        stat: getStat(),
-        rangeMap: {}
-    }
-    
-    const stayDataRef = useRef(getData())
-    const stayStatRef = useRef(getStat())
-    const rangeMapRef = useRef({})
-    const totalAvgPriceRef = useRef(0)
-
-    /* store an object data contains [{stayId:stayUpdate}, ] */
-    const staysToDispatchRef = useRef([])
+    // ---------------------------------   UseEffect     
+    useEffectView('home-page')
 
     useEffect(() => {
         // handleQueryParams()
         dispatch(loadStays())
-        return () => { console.log(`🚀 ~ staysToDispatchRef:`, staysToDispatchRef) }
+        return () => {
+            console.log(`🚀 ~ staysToDispatchRef:`, staysToPatchRef)
+        }
     }, [])
 
-    /* each stays update, update current ranges. */
+    /* each stays update, update current statistics */
     useEffectUpdate(() => {
-        getAvgRates(stays) // NOTE: front only
-        rangeMapRef.current = getRangeMap(stays)
-        totalAvgPriceRef.current = getAvgPrice(stays)
-        console.log(`🚀 ~ avgPriceRef.current:`, totalAvgPriceRef.current)
+        stayStatRef.current.avg = getAvg(stays) // NOTE: front only
+        stayStatRef.current.range = getRange(stays)
     }, [stays])
 
-    useViewEffect('home-page')
-
-    /* CRUD  */
+    // --------------------------------   CRUD    ---------------------------------
     const onAddStay = stay => dispatch(addStay(stay))
 
     const onRemoveStay = stayId => dispatch(removeStay(stayId))
 
     const onUpdateStay = stay => dispatch(updateStay(stay))
 
-    /* Wishlist */
+    // --------------------------------   Wishlist    ---------------------------------
     const onAddToWishlist = stayId => dispatch(addToWishList(stayId))
 
     const onRemoveFromWishlist = stayId => dispatch(removeFromWishList(stayId))
 
-    /* Pagination  */
+    //  --------------------------------   pagination    ---------------------------------
     const onLoadMoreStays = () => dispatch(incPageIdx())
 
     const onSetPageIdx = idx => dispatch(setPageIdx(idx))
 
-    /* Navigation ~ location.href = `/` */
+    // --------------------------------   Navigation    ---------------------------------
     const onNavHome = () => {
         scrollTo({ top: 160, behavior: 'smooth' })
         history.pushState(null, null, `/`)
@@ -80,7 +72,18 @@ export const StayApp = () => {
         navigate(`/stay/${id}?large-image=${idx}`)
     }
 
-    /* Query Params  */
+    // --------------------------------   Query Params    ---------------------------------
+    const getQueryParams = () => {
+        const filterStrParam = _.get(searchParams, 'filter-by')
+        const sortStrParam = _.get(searchParams, 'sort-by')
+
+        // parse the value or return null
+        const filterByPara = filterStrParam ? JSON.parse(filterStrParam) : null
+        const sortByParam = sortStrParam ? JSON.parse(sortStrParam) : null
+
+        return [filterByPara, sortByParam]
+    }
+
     const handleQueryParams = () => {
         const [filterByParam, sortByParam] = getQueryParams()
         if (filterByParam || sortByParam) {
@@ -105,17 +108,6 @@ export const StayApp = () => {
                 }
             }
         }
-    }
-
-    const getQueryParams = () => {
-        const filterStrParam = _.get(searchParams, 'filter-by')
-        const sortStrParam = _.get(searchParams, 'sort-by')
-
-        // parse the value or return null
-        const filterByPara = filterStrParam ? JSON.parse(filterStrParam) : null
-        const sortByParam = sortStrParam ? JSON.parse(sortStrParam) : null
-
-        return [filterByPara, sortByParam]
     }
 
     const onUpdateFilterByQueryParams = () => {
@@ -177,22 +169,20 @@ export const StayApp = () => {
         // setSearchParams({filterStrParam})
     }
 
-    /* Sort */
+    // -----------------   sort 
     const onUpdateSortBy = sortBy => dispatch(setSortBy(sortBy))
 
-    /* Filter */
+    // -----------------   filter 
     const onUpdateFilterBy = filterBy => dispatch(setFilterBy({ ...filterBy, filterBy }))
 
     const onUpdateFilterByField = (field, val) => dispatch(setFilterBy({ ...filterBy, [field]: val }))
 
-    /* NOTE: save only in Front */
-    const onSetStayAvgRate = (stay) => {
-        const avgRate = getAvgRate(stay)
-    }
+    // --------------------------------   statistics     
+    const onGetStayAvgRate = (stay) => getAvg(stay, 'rate')
 
-    /* object literal */
+    // --------------------------------   object literal     
     const stayFilter = {
-        dataRef: stayDataRef,
+        dataRef: stayDataTypeRef,
         stays,
         filterBy, sortBy,
         onUpdateFilterBy, onUpdateSortBy,
@@ -204,19 +194,20 @@ export const StayApp = () => {
         stays,
         isLoading,
         loggedInUser,
-        staysToDispatchRef,
+        staysToDispatchRef: staysToPatchRef,
         onClickPreviewImg: onNavStayDetails,
-        onSetStayAvgRate, // 01.when preview first load // todo: 02.when emit from socket ADD_REVIEW 
+        onSetStayAvgRate: onGetStayAvgRate, // 01.when preview first load // todo: 02.when emit from socket ADD_REVIEW 
         onRemoveStay, onUpdateStay,
         onAddToWishlist, onRemoveFromWishlist,
         onLoadMoreStays,
     }
 
     return <section className='stay-app'>
-        <StayFilter {...stayFilter} />
+        <ScrollTo>
+            <StayFilter {...stayFilter} />
 
-        <StayList {...stayList} />
+            <StayList {...stayList} />
 
-        <ScrollTo />
+        </ScrollTo>
     </section>
 }

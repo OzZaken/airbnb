@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { connect, useDispatch, useSelector } from 'react-redux'
 import { Box, CircularProgress } from '@mui/material'
-import { stayService } from '../services/stay.service'
-import { useViewEffect } from '../hooks/useViewEffect'
+import  stayService  from '../services/stay.service'
+import  useEffectView   from '../hooks/useEffectView'
 import { ImgGallery } from '../cmps/img-gallery'
 import { StayOrder } from '../cmps/stay/stay-order'
 import IconApp from '../cmps/app-icon'
@@ -20,7 +20,7 @@ const _StayDetails = () => {
     const [stay, setStay] = useState(null)
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
 
-    useViewEffect('stay-details')
+    useEffectView('stay-details')
 
     useEffect(() => {
         loadStay()

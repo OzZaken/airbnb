@@ -7,17 +7,6 @@ export const storageService = {
     postMany,
 }
 
-function query(entityType, delay = 200) {
-    try {
-        const entities = JSON.parse(localStorage.getItem(entityType))
-        return new Promise(resolve => {
-            setTimeout(() => resolve(entities), delay)
-        })
-    } catch (error) {
-        return Promise.reject(error)
-    }
-}
-
 function post(entityType, newEntity) {
     try {
         newEntity._id = _makeId()
@@ -26,15 +15,6 @@ function post(entityType, newEntity) {
             _save(entityType, entities)
             return newEntity
         })
-    } catch (error) {
-        return Promise.reject(error)
-    }
-}
-
-function postMany(entityType, entities) {
-    try {
-        _save(entityType, entities)
-        return Promise.resolve(entities)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -76,6 +56,27 @@ function remove(entityType, entityId) {
     }
 }
 
+function query(entityType, delay = 200) {
+    try {
+        const entities = JSON.parse(localStorage.getItem(entityType))
+        return new Promise(resolve => {
+            setTimeout(() => resolve(entities), delay)
+        })
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+function postMany(entityType, entities) {
+    try {
+        _save(entityType, entities)
+        return Promise.resolve(entities)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// ---------------------------------   private     
 function _save(entityType, entities) {
     localStorage.setItem(entityType, JSON.stringify(entities))
 }

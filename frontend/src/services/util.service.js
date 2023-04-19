@@ -1,21 +1,16 @@
-export const utilService = {
+const utilService = {
     delay,
-    // make
     makeId,
     makeLorem,
     makeChart,
-    // format
     timeAgo,
     getFormatDate,
     getFormatTime,
-    // random
     getRandomDate,
     getRandomColor,
-    // math
     getRandomIntInclusive,
     getRandomFloatInclusive,
     formatFixedNum,
-    // regex
     getCamelCase,
     getKebabCase,
     getNumWithCommas,
@@ -26,12 +21,13 @@ export const utilService = {
     isValidTime,
 }
 
+export default utilService
 
 function delay(ms = 1500) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-/* Make */
+// ---------------------------------   Make & Random  ---------------------------------  
 function makeId(length = 6) {
     var txt = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -75,16 +71,21 @@ function makeLorem(size = 100) {
     return txt;
 }
 
-/* Date & Time */
+function getRandomColor() {
+    const letters = '0123456789ABCDEF'
+    let color = '#'
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)]
+    }
+    return color
+}
 
+// ---------------------------------   Date & Time   ---------------------------------  
 /* human-readable string that represents the time difference in terms of:
   years, months, weeks, days, hours, minutes, or seconds 
   (depending on the largest time range that the difference fits into).
-  examples: if the function is called on March 26, 2023 at 10:30:00 AM UTC, the output could be:
-  "in 1 year" if the ms parameter is set to March 26, 2024 at 10:30:00 AM UTC.
-  "1 year ago" if the ms parameter is set to March 26, 2022 at 10:30:00 AM UTC.
-  "in 6 months" if the ms parameter is set to September 26, 2023 at 10:30:00 AM UTC.
-  "6 months ago", "in 2 weeks", "2 weeks ago" etc.*/
+    "in 1 year", "in 6 months","6 months ago","in 2 weeks","2 weeks ago"
+  */
 function timeAgo(ms = new Date()) {
     const date = ms instanceof Date ? ms : new Date(ms)
     const formatter = new Intl.RelativeTimeFormat('en')
@@ -116,19 +117,24 @@ function timeAgo(ms = new Date()) {
     }
 }
 
-// YYYY-MM-DD format.
+// ----------------    YYYY-MM-DD format     
 function getFormatDate(millisecond) {
     const valueDate = new Date(millisecond)
     return `${valueDate.getFullYear()}-${(valueDate.getMonth() + 1 + '').padStart(2, '0')}-${(valueDate.getDate() + '').padStart(2, '0')}`
 }
 
-// HH:MM format.
+// ----------------    HH:MM format     
 function getFormatTime(millisecond) {
     const valueTime = new Date(millisecond)
     return `${(valueTime.getHours() + '').padStart(2, '0')}:${(valueTime.getMinutes() + '').padStart(2, '0')}`
 }
 
-/* Math */
+// ----------------    from 01/01/2020 until today     
+function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
+}
+
+// ---------------------------------   Math   ---------------------------------  
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
@@ -143,22 +149,8 @@ function getRandomFloatInclusive(min, max, decimals) {
 function formatFixedNum(num, toFixed = 2) {
     return +num.toFixed(toFixed)
 }
-/* Random */
-function getRandomColor() {
-    const letters = '0123456789ABCDEF'
-    let color = '#'
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
-}
 
-// from 01/01/2020 until today
-function getRandomDate(start = new Date(2020, 0, 1), end = new Date()) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime()
-}
-
-/* RegEx */
+// ---------------------------------  string & RegEx   ---------------------------------  
 function getNumWithCommas(str) {
     return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
@@ -182,6 +174,7 @@ function getCamelFromKebab(str) {
     return str.replace(/[-_]\w/g, (match) => match.charAt(1).toUpperCase())
 }
 
+// ---------------------------------  validations   ---------------------------------  
 function isValidEmail(str) {
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     return regex.test(str)
@@ -197,7 +190,7 @@ function isValidTime(str) {
     return regex.test(str)
 }
 
-//? todo: ↓↓ should be the backend?
+//? ----------------  ↓↓ should be the backend?
 /** Explanation:
  * Start with a letter (both upper and lowercase) or a number
  * Have a length of at least 2 characters and at most 21 characters

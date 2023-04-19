@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { utilService } from '../../services/util.service'
+import  utilService  from '../../services/util.service'
 import { ImgGallery } from '../img-gallery'
 import IconApp from '../app-icon'
 import { Box, Skeleton } from '@mui/material'

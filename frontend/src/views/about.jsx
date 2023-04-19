@@ -1,8 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom"
-import { useViewEffect } from "../hooks/useViewEffect"
+import useEffectView from "../hooks/useEffectView"
 
 export function About() {
-    useViewEffect('about')
+    useEffectView('about')
 
     return (
         <section className="about">
@@ -25,7 +25,7 @@ export const AboutMe = () => {
     return (
         <div>
             <h2>About Me</h2>
-            
+
             <p><strong>As a full-stack developer</strong>, I am passionate about creating innovative and impactful solutions to complex problems.</p>
 
             <p>With a <em>degree from Coding Academy</em> and <em>CCNA certification</em>, I bring a diverse skill set and a strong foundation in both front-end and back-end development.</p>

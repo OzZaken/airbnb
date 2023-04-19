@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import { useEffectUpdate } from "../hooks/useEffectUpdate"
+import useEffectUpdate from "../hooks/useEffectUpdate"
 import IconApp from "./app-icon"
-import {BtnApp} from '../cmps/app-btn'
+import { BtnApp } from '../cmps/app-btn'
 
 function _AppFooter({ view }) {
-    useEffectUpdate(() => { }, [view])
+    useEffectUpdate(() => {
+
+    }, [view])
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth)
     useEffect(() => {
@@ -73,4 +75,6 @@ function mapStateToProps(state) {
     return { view }
 }
 
-export const AppFooter = connect(mapStateToProps,)(_AppFooter)
+const AppFooter = connect(mapStateToProps,)(_AppFooter)
+
+export default AppFooter

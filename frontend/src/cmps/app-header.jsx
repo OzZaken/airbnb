@@ -37,7 +37,7 @@ function mapStateToProps(state) {
     return { view }
 }
 
-export const AppHeader = connect(mapStateToProps,)(_AppHeader)
+const AppHeader = connect(mapStateToProps,)(_AppHeader)
 
 const MainHeaderNav = ({ onSetSearchBy }) => {
     return <section className="main-header-nav">
@@ -83,3 +83,5 @@ const StayDetailsHeader = ({ onShareStay }) => {
         </div>
     </section>
 }
+
+export default AppHeader

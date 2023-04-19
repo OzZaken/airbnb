@@ -1,11 +1,11 @@
-//* Setup *\\
+// Setup
 @import 'setup/_normalize';
 @import 'setup/_functions';
 @import 'setup/_variables';
 @import 'setup/_mixins';
 @import 'setup/_typography';
 
-//* Basics *\\
+// Basics
 @import 'basics/_base';
 @import 'basics/_layout';
 @import 'basics/_helpers';
@@ -13,29 +13,30 @@
 @import 'basics/_links';
 @import 'basics/_btns';
 
-//* Views *\\
+//* Views
 @import 'views/_about';
-/* stay */
+// Views ~ stay
 @import 'views/stay/_stay-app';
 @import 'views/stay/_stay-edit';
 @import 'views/stay/_stay-details';
-/* user */
+// Views ~ user
 @import 'views/user/_admin-app';
 @import 'views/user/_user-edit';
 @import 'views/user/_user-details';
 
-//* Cmps *\\
+//* components
+@import 'cmps/_app-loader';
 @import 'cmps/_app-header';
 @import 'cmps/_app-footer';
 @import 'cmps/_user-msg';
 @import "~react-image-gallery/styles/scss/image-gallery";
-/* stay */
+// components ~ stay 
 @import 'cmps/stay/_stay-filter';
 @import 'cmps/stay/_stay-list';
 @import 'cmps/stay/_stay-preview';
 @import 'cmps/stay/_stay-order';
 @import 'cmps/stay/_stay-region';
-/* user */
+// components ~ user 
 @import 'cmps/user/_user-filter';
 @import 'cmps/user/_user-list';
 @import 'cmps/user/_user-preview';

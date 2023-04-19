@@ -21,12 +21,12 @@ export const StayApp = () => {
     const { stays, filterBy, sortBy, isLoading } = useSelector(state => state.stayModule)
     const { loggedInUser } = useSelector(state => state.userModule)
     const [searchParams, setSearchParams] = useSearchParams()
-    // ---------------------------------   UseRef     
+    // ---------------------------------   UseRef     ---------------------------------
     const stayDataTypeRef = useRef(getData())
     const stayStatRef = useRef({}) /* current statistics */
     const staysToPatchRef = useRef([]) /* store array contains update just a part of a stay (reviews) [{`stayId`:`updated reviews`} ] */
 
-    // ---------------------------------   UseEffect     
+    // ---------------------------------   UseEffect     ---------------------------------
     useEffectView('home-page')
 
     useEffect(() => {

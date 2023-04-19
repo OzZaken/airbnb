@@ -18,7 +18,7 @@ root.render(
     <Provider store={store}>
       <Router>
         <MemoizedErrorBoundary>
-          <Suspense fallback={<div className='app-loading'>first Loading app</div>}>
+          <Suspense fallback={<div className='app-loader'></div>}>
             <App />
           </Suspense>
         </MemoizedErrorBoundary>
